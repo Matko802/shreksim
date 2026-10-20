@@ -25,7 +25,7 @@ void sky() {
 """
 	var sky_mat := ShaderMaterial.new()
 	sky_mat.shader = sky_shader
-	sky_mat.set_shader_parameter("face", load("res://assets/images/sky_shrek.png"))
+	sky_mat.set_shader_parameter("face", load("res://assets/images/sky_starface.png"))
 	var sky := Sky.new()
 	sky.sky_material = sky_mat
 	env.background_mode = Environment.BG_SKY

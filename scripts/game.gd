@@ -194,7 +194,7 @@ func _build_world() -> void:
 	sky_shader.code = SKY_CUBE_SHADER
 	var sky_mat_ref := ShaderMaterial.new()
 	sky_mat_ref.shader = sky_shader
-	sky_mat_ref.set_shader_parameter("face", load("res://assets/images/sky_shrek.png"))
+	sky_mat_ref.set_shader_parameter("face", load("res://assets/images/sky_starface.png"))
 	var sky := Sky.new()
 	sky.sky_material = sky_mat_ref
 	env.sky = sky
