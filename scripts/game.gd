@@ -24,21 +24,24 @@ const TREE_TEXTURES := [
 ]
 
 const PHASES := [
-	{"top": Color(0.3, 0.52, 0.85), "horizon": Color(0.8, 0.88, 0.86), "fog": 0.00016, "sun": 1.35, "sun_color": Color(1.0, 0.97, 0.9), "ambient_energy": 1.0, "grass": Color(0.5, 0.68, 0.4), "sky_affect": 0.1},
-	{"top": Color(0.42, 0.64, 0.95), "horizon": Color(0.88, 0.94, 0.94), "fog": 0.00012, "sun": 1.6, "sun_color": Color(1.0, 1.0, 0.98), "ambient_energy": 1.15, "grass": Color(0.55, 0.74, 0.44), "sky_affect": 0.02},
-	{"top": Color(0.36, 0.55, 0.8), "horizon": Color(0.85, 0.82, 0.7), "fog": 0.0002, "sun": 1.3, "sun_color": Color(1.0, 0.93, 0.82), "ambient_energy": 1.0, "grass": Color(0.5, 0.66, 0.4), "sky_affect": 0.12},
-	{"top": Color(0.3, 0.4, 0.62), "horizon": Color(0.9, 0.7, 0.48), "fog": 0.00025, "sun": 1.05, "sun_color": Color(1.0, 0.78, 0.55), "ambient_energy": 0.85, "grass": Color(0.46, 0.58, 0.34), "sky_affect": 0.22},
-	{"top": Color(0.22, 0.24, 0.42), "horizon": Color(0.75, 0.5, 0.35), "fog": 0.0006, "sun": 0.7, "sun_color": Color(1.0, 0.55, 0.35), "ambient_energy": 0.62, "grass": Color(0.38, 0.44, 0.26), "sky_affect": 0.42},
-	{"top": Color(0.1, 0.11, 0.26), "horizon": Color(0.35, 0.26, 0.3), "fog": 0.0012, "sun": 0.4, "sun_color": Color(0.7, 0.4, 0.45), "ambient_energy": 0.45, "grass": Color(0.26, 0.3, 0.2), "sky_affect": 0.62},
-	{"top": Color(0.045, 0.055, 0.15), "horizon": Color(0.12, 0.1, 0.14), "fog": 0.0022, "sun": 0.22, "sun_color": Color(0.4, 0.32, 0.55), "ambient_energy": 0.32, "grass": Color(0.16, 0.2, 0.13), "sky_affect": 0.78},
-	{"top": Color(0.012, 0.02, 0.05), "horizon": Color(0.035, 0.045, 0.06), "fog": 0.0035, "sun": 0.1, "sun_color": Color(0.3, 0.35, 0.55), "ambient_energy": 0.22, "grass": Color(0.11, 0.15, 0.1), "sky_affect": 0.9},
-	{"top": Color(0.004, 0.008, 0.02), "horizon": Color(0.012, 0.015, 0.02), "fog": 0.005, "sun": 0.03, "sun_color": Color(0.2, 0.25, 0.4), "ambient_energy": 0.14, "grass": Color(0.08, 0.12, 0.08), "sky_affect": 0.97},
+	{"top": Color(0.3, 0.52, 0.85), "horizon": Color(0.8, 0.88, 0.86), "fog": 0.00016, "sun": 1.35, "sun_color": Color(1.0, 0.97, 0.9), "ambient_energy": 1.0, "grass": Color(0.5, 0.68, 0.4), "sky_affect": 0.12, "day": 1.0},
+	{"top": Color(0.42, 0.64, 0.95), "horizon": Color(0.88, 0.94, 0.94), "fog": 0.00012, "sun": 1.6, "sun_color": Color(1.0, 1.0, 0.98), "ambient_energy": 1.15, "grass": Color(0.55, 0.74, 0.44), "sky_affect": 0.1, "day": 1.0},
+	{"top": Color(0.36, 0.55, 0.8), "horizon": Color(0.85, 0.82, 0.7), "fog": 0.0002, "sun": 1.3, "sun_color": Color(1.0, 0.93, 0.82), "ambient_energy": 1.0, "grass": Color(0.5, 0.66, 0.4), "sky_affect": 0.16, "day": 0.85},
+	{"top": Color(0.3, 0.4, 0.62), "horizon": Color(0.9, 0.7, 0.48), "fog": 0.00025, "sun": 1.05, "sun_color": Color(1.0, 0.78, 0.55), "ambient_energy": 0.85, "grass": Color(0.46, 0.58, 0.34), "sky_affect": 0.2, "day": 0.6},
+	{"top": Color(0.22, 0.24, 0.42), "horizon": Color(0.75, 0.5, 0.35), "fog": 0.0006, "sun": 0.7, "sun_color": Color(1.0, 0.55, 0.35), "ambient_energy": 0.62, "grass": Color(0.38, 0.44, 0.26), "sky_affect": 0.24, "day": 0.4},
+	{"top": Color(0.1, 0.11, 0.26), "horizon": Color(0.35, 0.26, 0.3), "fog": 0.0012, "sun": 0.4, "sun_color": Color(0.7, 0.4, 0.45), "ambient_energy": 0.45, "grass": Color(0.26, 0.3, 0.2), "sky_affect": 0.28, "day": 0.2},
+	{"top": Color(0.045, 0.055, 0.15), "horizon": Color(0.12, 0.1, 0.14), "fog": 0.0022, "sun": 0.22, "sun_color": Color(0.4, 0.32, 0.55), "ambient_energy": 0.32, "grass": Color(0.16, 0.2, 0.13), "sky_affect": 0.32, "day": 0.05},
+	{"top": Color(0.012, 0.02, 0.05), "horizon": Color(0.035, 0.045, 0.06), "fog": 0.0035, "sun": 0.1, "sun_color": Color(0.3, 0.35, 0.55), "ambient_energy": 0.22, "grass": Color(0.11, 0.15, 0.1), "sky_affect": 0.36, "day": 0.0},
+	{"top": Color(0.004, 0.008, 0.02), "horizon": Color(0.012, 0.015, 0.02), "fog": 0.005, "sun": 0.03, "sun_color": Color(0.2, 0.25, 0.4), "ambient_energy": 0.14, "grass": Color(0.08, 0.12, 0.08), "sky_affect": 0.4, "day": 0.0},
 ]
 
 const SKY_CUBE_SHADER: String = """
 shader_type sky;
 
 uniform sampler2D face : source_color, filter_linear_mipmap;
+uniform vec3 day_top : source_color = vec3(0.24, 0.53, 0.88);
+uniform vec3 day_horizon : source_color = vec3(0.68, 0.83, 1.0);
+uniform float day_mix : hint_range(0.0, 1.0) = 0.0;
 
 void sky() {
 	vec3 dir = normalize(EYEDIR);
@@ -51,7 +54,10 @@ void sky() {
 	} else {
 		uv = vec2(dir.x, dir.y) / a.z;
 	}
-	COLOR = texture(face, uv * 0.5 + 0.5).rgb;
+	vec3 night_col = texture(face, uv * 0.5 + 0.5).rgb;
+	float h = clamp(dir.y, 0.0, 1.0);
+	vec3 day_col = mix(day_horizon, day_top, pow(h, 0.75));
+	COLOR = mix(night_col, day_col, day_mix);
 }
 """
 
@@ -70,6 +76,8 @@ var time_left := START_TIME
 var player: SwampPlayer
 var env: Environment
 var sun: DirectionalLight3D
+var sky_mat: ShaderMaterial
+var _day_mix := 1.0
 var ground_mat: StandardMaterial3D
 
 var enemy: Sprite3D
@@ -195,10 +203,12 @@ func _build_world() -> void:
 	var sky_mat_ref := ShaderMaterial.new()
 	sky_mat_ref.shader = sky_shader
 	sky_mat_ref.set_shader_parameter("face", load("res://assets/images/sky/sky_starface.png"))
+	sky_mat_ref.set_shader_parameter("day_mix", 1.0)
+	sky_mat = sky_mat_ref
 	var sky := Sky.new()
 	sky.sky_material = sky_mat_ref
 	env.sky = sky
-	env.background_energy_multiplier = 0.2
+	env.background_energy_multiplier = 1.0
 	env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
 	env.ambient_light_color = Color(0.18, 0.26, 0.2)
 	env.ambient_light_energy = 1.0
@@ -383,7 +393,7 @@ func _update_threat(delta: float) -> void:
 		return
 	static_time += delta
 	var threat_frames: Array[Texture2D] = [static_frames[0], static_frames[2], static_frames[3], static_frames[4]]
-	hud.show_static(threat_frames[int(static_time / 0.07) % threat_frames.size()], pow(threat, 1.6) * 0.85)
+	hud.show_static(threat_frames[int(static_time / 0.07) % threat_frames.size()], pow(threat, 1.6) * 0.5)
 
 func _update_prompt() -> void:
 	var hit := _ray_onion()
@@ -491,6 +501,8 @@ func _lerp_phase(weight: float) -> void:
 	env.fog_density = lerpf(env.fog_density, t["fog"], weight)
 	env.fog_sky_affect = lerpf(env.fog_sky_affect, t["sky_affect"], weight)
 	env.ambient_light_energy = lerpf(env.ambient_light_energy, t["ambient_energy"], weight)
+	_day_mix = lerpf(_day_mix, t["day"], weight)
+	sky_mat.set_shader_parameter("day_mix", _day_mix)
 	sun.light_energy = lerpf(sun.light_energy, t["sun"], weight)
 	sun.light_color = sun.light_color.lerp(t["sun_color"], weight)
 	ground_mat.albedo_color = ground_mat.albedo_color.lerp(t["grass"], weight)

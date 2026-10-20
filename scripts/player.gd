@@ -34,11 +34,11 @@ const ZOOM_SMOOTHING: float = 10.0
 const ZOOM_SCROLL_STEP: float = 5.0
 const ZOOM_MIN_STEPS: float = 2.0
 
-const FLASHLIGHT_LAG_FACTOR: float = 0.4
+const FLASHLIGHT_LAG_FACTOR: float = 0.22
 const FLASHLIGHT_LAG_MAX: float = deg_to_rad(10.0)
 const FLASHLIGHT_LAG_RESPONSE: float = 8.0
-const FLASHLIGHT_LAG_RETURN: float = 2.0
-const FLASHLIGHT_LAG_HOLD: float = 0.08
+const FLASHLIGHT_LAG_RETURN: float = 7.0
+const FLASHLIGHT_LAG_HOLD: float = 0.05
 const VM_MODEL_SCALE: float = 14.0
 const VM_LIGHT_ENERGY: float = 5600.0
 const VM_POSE_RESET: Vector3 = Vector3(16.716, -20.216, -9.1)

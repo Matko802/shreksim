@@ -13,7 +13,7 @@ config_version=5
 config/name="Swamp Horror Simulator 3D"
 run/main_scene="res://scenes/menu.tscn"
 config/features=PackedStringArray("4.8", "GL Compatibility")
-config/icon="res://assets/images/onion.png"
+config/icon="res://assets/images/items/onion.png"
 
 [autoload]
 
