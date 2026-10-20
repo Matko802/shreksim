@@ -1,0 +1,5 @@
+.godot/
+*.tmp
+/tmp/
+/thumbs.db
+.DS_Store
