@@ -1,4 +1,5 @@
 .godot/
+android/build/
 *.tmp
 /tmp/
 /thumbs.db
