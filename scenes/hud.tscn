@@ -1,24 +1,22 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene format=3 uid="uid://d3sgguq0rclma"]
 
-[ext_resource type="Script" path="res://scripts/hud.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://assets/images/cube_crosshair.png" id="2_cross"]
-[ext_resource type="Texture2D" path="res://assets/images/onion.png" id="3_onion"]
+[ext_resource type="Script" uid="uid://n5shjfshme74" path="res://scripts/hud.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://cb7sy8nc8ihjg" path="res://assets/images/cube_crosshair.png" id="2_cross"]
+[ext_resource type="Texture2D" uid="uid://duq7xk2feblfy" path="res://android/build/src/main/assets/assets/images/onion.png" id="3_onion"]
 
 [sub_resource type="LabelSettings" id="ls_objective"]
 font_size = 30
 shadow_color = Color(0, 0.1, 0, 1)
-shadow_offset_y = 2
 
 [sub_resource type="LabelSettings" id="ls_result"]
 font_size = 28
 shadow_color = Color(0, 0, 0, 1)
-shadow_offset_y = 2
 
-[node name="HUD" type="CanvasLayer"]
+[node name="HUD" type="CanvasLayer" unique_id=167437608]
 layer = 5
 script = ExtResource("1_script")
 
-[node name="Root" type="Control" parent="."]
+[node name="Root" type="Control" parent="." unique_id=1469234991]
 unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 15
@@ -28,7 +26,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="CrosshairBox" type="CenterContainer" parent="Root"]
+[node name="CrosshairBox" type="CenterContainer" parent="Root" unique_id=1866906897]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -37,39 +35,38 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Crosshair" type="TextureRect" parent="Root/CrosshairBox"]
+[node name="Crosshair" type="TextureRect" parent="Root/CrosshairBox" unique_id=1522908424]
 unique_name_in_owner = true
+texture_filter = 1
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 mouse_filter = 2
 texture = ExtResource("2_cross")
 expand_mode = 1
 stretch_mode = 5
-texture_filter = 1
-self_modulate = Color(1, 1, 1, 1)
 
-[node name="TopBar" type="MarginContainer" parent="Root"]
+[node name="TopBar" type="MarginContainer" parent="Root" unique_id=1629441635]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 70.0
 grow_horizontal = 2
+mouse_filter = 2
 theme_override_constants/margin_left = 18
 theme_override_constants/margin_top = 14
 theme_override_constants/margin_right = 18
-mouse_filter = 2
 
-[node name="TopRow" type="HBoxContainer" parent="Root/TopBar"]
+[node name="TopRow" type="HBoxContainer" parent="Root/TopBar" unique_id=1717656805]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 10
 
-[node name="CounterBox" type="HBoxContainer" parent="Root/TopBar/TopRow"]
+[node name="CounterBox" type="HBoxContainer" parent="Root/TopBar/TopRow" unique_id=323411806]
 layout_mode = 2
-theme_override_constants/separation = 10
 mouse_filter = 2
+theme_override_constants/separation = 10
 
-[node name="OnionIcon" type="TextureRect" parent="Root/TopBar/TopRow/CounterBox"]
+[node name="OnionIcon" type="TextureRect" parent="Root/TopBar/TopRow/CounterBox" unique_id=688439351]
 custom_minimum_size = Vector2(44, 44)
 layout_mode = 2
 mouse_filter = 2
@@ -77,28 +74,28 @@ texture = ExtResource("3_onion")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="PagesLabel" type="Label" parent="Root/TopBar/TopRow/CounterBox"]
+[node name="PagesLabel" type="Label" parent="Root/TopBar/TopRow/CounterBox" unique_id=1807573875]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 36
 theme_override_colors/font_outline_color = Color(0, 0, 0, 0.85)
 theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 36
 text = "0 / 8"
 
-[node name="Spacer" type="Control" parent="Root/TopBar/TopRow"]
+[node name="Spacer" type="Control" parent="Root/TopBar/TopRow" unique_id=667073723]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="TimerLabel" type="Label" parent="Root/TopBar/TopRow"]
+[node name="TimerLabel" type="Label" parent="Root/TopBar/TopRow" unique_id=1418741852]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 36
 theme_override_colors/font_outline_color = Color(0, 0, 0, 0.85)
 theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 36
 text = "90"
 
-[node name="BottomLeft" type="MarginContainer" parent="Root"]
+[node name="BottomLeft" type="MarginContainer" parent="Root" unique_id=2144347491]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -108,10 +105,10 @@ offset_top = -110.0
 offset_right = 300.0
 offset_bottom = -16.0
 grow_vertical = 0
-theme_override_constants/margin_top = 0
 mouse_filter = 2
+theme_override_constants/margin_top = 0
 
-[node name="PromptLabel" type="Label" parent="Root"]
+[node name="PromptLabel" type="Label" parent="Root" unique_id=1443126366]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 12
@@ -122,31 +119,13 @@ offset_top = -208.0
 offset_bottom = -164.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_font_sizes/font_size = 24
 theme_override_colors/font_color = Color(1, 1, 1, 0.97)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 0.85)
 theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 24
 horizontal_alignment = 1
 
-[node name="HintLabel" type="Label" parent="Root"]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -46.0
-offset_bottom = -16.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_font_sizes/font_size = 15
-theme_override_colors/font_color = Color(1, 1, 1, 0.55)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.6)
-theme_override_constants/outline_size = 4
-horizontal_alignment = 1
-text = "WASD move   SHIFT sprint   CTRL crouch   SPACE jump   RMB zoom   ESC pause"
-
-[node name="ObjectiveLabel" type="Label" parent="Root"]
+[node name="ObjectiveLabel" type="Label" parent="Root" unique_id=425077231]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 10
@@ -157,10 +136,10 @@ grow_horizontal = 2
 theme_override_font_sizes/font_size = 30
 label_settings = SubResource("ls_objective")
 horizontal_alignment = 1
-text = ""
 
-[node name="StaticOverlay" type="TextureRect" parent="Root"]
+[node name="StaticOverlay" type="TextureRect" parent="Root" unique_id=2102963550]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -170,10 +149,10 @@ grow_vertical = 2
 mouse_filter = 2
 expand_mode = 1
 stretch_mode = 6
-visible = false
 
-[node name="ResultLabel" type="Label" parent="Root"]
+[node name="ResultLabel" type="Label" parent="Root" unique_id=1329578772]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -183,10 +162,9 @@ offset_top = -140.0
 offset_bottom = -88.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_font_sizes/font_size = 28
 theme_override_colors/font_outline_color = Color(0, 0, 0, 0.9)
 theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 28
+text = "CLICK TO CONTINUE"
 label_settings = SubResource("ls_result")
 horizontal_alignment = 1
-visible = false
-text = "CLICK TO CONTINUE"

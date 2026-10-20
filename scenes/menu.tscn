@@ -65,6 +65,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -4.0
+offset_top = -6.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
@@ -74,9 +76,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 250.0
-offset_top = 8.0
-offset_right = -250.0
+offset_left = 212.0
+offset_right = -212.0
 offset_bottom = -406.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -84,14 +85,39 @@ texture = ExtResource("2_card")
 expand_mode = 1
 stretch_mode = 5
 
+[node name="Remake" type="Label" parent="Card" unique_id=1194174010]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 264.00003
+offset_top = -10.000046
+offset_right = 264.0
+offset_bottom = -10.000061
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -0.2617994
+theme_override_colors/font_color = Color(0.21960784, 0.53333336, 0.7647059, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 51
+text = "Godot Remake!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Version" type="Label" parent="." unique_id=1116473186]
-layout_mode = 0
-offset_top = 808.0
-offset_right = 394.0
-offset_bottom = 839.0
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -36.0
+offset_right = 604.0
+offset_bottom = -6.0
+grow_vertical = 0
 theme_override_colors/font_color = Color(0.55, 1, 0, 1)
 theme_override_font_sizes/font_size = 22
-text = "Godot Remake v1.0!"
+text = "Version 1.1"
 
 [node name="ButtonBox" type="VBoxContainer" parent="." unique_id=627943233]
 layout_mode = 1

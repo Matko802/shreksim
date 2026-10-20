@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene format=3 uid="uid://bbjgyipgkd5qs"]
 
-[ext_resource type="Script" path="res://tests/skyprobe.gd" id="1"]
+[ext_resource type="Script" uid="uid://qgrfgjvm352u" path="res://tests/skyprobe.gd" id="1"]
 
-[node name="SkyProbe" type="Node3D"]
+[node name="SkyProbe" type="Node3D" unique_id=145691316]
 script = ExtResource("1")

@@ -20,9 +20,9 @@ func _ready() -> void:
 		return
 	Input.emulate_mouse_from_touch = false
 	var dpi := float(DisplayServer.screen_get_dpi())
-	ui_scale = clampf(dpi / 160.0, 1.0, 2.4)
+	ui_scale = clampf(dpi / 220.0, 0.9, 1.6)
 	screen = get_viewport().get_visible_rect().size
-	joy_radius = 92.0 * ui_scale
+	joy_radius = 76.0 * ui_scale
 	_build_ui()
 
 func _exit_tree() -> void:
@@ -74,11 +74,11 @@ func _add_button(id: String, text: String, size: float, center: Vector2, color: 
 
 func _build_ui() -> void:
 	var safe := _safe_rect()
-	var m := 26.0 * ui_scale
+	var m := 20.0 * ui_scale
 	var end := safe.position + safe.size
-	var small := 78.0 * ui_scale
-	var jump := 112.0 * ui_scale
-	var gap := 16.0 * ui_scale
+	var small := 58.0 * ui_scale
+	var jump := 88.0 * ui_scale
+	var gap := 12.0 * ui_scale
 
 	_add_button("jump", "JUMP", jump, end - Vector2(m + jump * 0.5, m + jump * 0.5), Color(0.18, 0.5, 0.24, 0.42))
 	_add_button("sprint", "RUN", small, end - Vector2(m + small * 0.5, m + jump + gap + small * 0.5), Color(0.5, 0.38, 0.12, 0.42))
@@ -223,11 +223,9 @@ func _handle_drag(idx: int, pos: Vector2, _rel: Vector2) -> void:
 		_send_look(delta)
 
 func _send_look(delta: Vector2) -> void:
-	var mm := InputEventMouseMotion.new()
-	mm.relative = delta
-	mm.position = screen * 0.5
-	mm.global_position = mm.position
-	Input.parse_input_event(mm)
+	var g := get_parent()
+	if g != null and g.has_method("_touch_look"):
+		g._touch_look(delta)
 
 func _joy_axis(v: float) -> float:
 	return clampf(v, -1.0, 1.0)

@@ -1,7 +1,7 @@
 extends Node3D
 
 const WORLD_HALF := 2000.0
-const TREE_COUNT := 130
+const TREE_COUNT := 40
 const TREE_RADIUS := 64.0
 const TOTAL_PAGES := 8
 const START_TIME := 90.0
@@ -22,18 +22,46 @@ const TREE_TEXTURES := [
 	"res://assets/images/tree2.png",
 	"res://assets/images/tree5.png",
 ]
-const BUSH_CARVE := "res://assets/images/bush.png"
 
 const PHASES := [
-	{"top": Color(0.25, 0.45, 0.85), "horizon": Color(0.78, 0.85, 0.72), "ground_low": Color(0.16, 0.3, 0.12), "fog": 0.00022, "sun": 1.25, "sun_color": Color(1.0, 0.96, 0.86), "ambient_energy": 1.0, "grass": Color(0.55, 0.72, 0.42)},
-	{"top": Color(0.5, 0.52, 0.72), "horizon": Color(0.95, 0.62, 0.38), "ground_low": Color(0.13, 0.22, 0.09), "fog": 0.00045, "sun": 0.85, "sun_color": Color(1.0, 0.78, 0.52), "ambient_energy": 0.8, "grass": Color(0.45, 0.56, 0.33)},
-	{"top": Color(0.1, 0.09, 0.24), "horizon": Color(0.6, 0.3, 0.22), "ground_low": Color(0.07, 0.11, 0.05), "fog": 0.0012, "sun": 0.4, "sun_color": Color(0.75, 0.55, 0.5), "ambient_energy": 0.5, "grass": Color(0.28, 0.34, 0.2)},
-	{"top": Color(0.012, 0.02, 0.045), "horizon": Color(0.04, 0.06, 0.05), "ground_low": Color(0.015, 0.03, 0.02), "fog": 0.0035, "sun": 0.07, "sun_color": Color(0.45, 0.55, 0.8), "ambient_energy": 0.3, "grass": Color(0.14, 0.19, 0.11)},
-	{"top": Color(0.0, 0.0, 0.0), "horizon": Color(0.015, 0.02, 0.018), "ground_low": Color(0.005, 0.012, 0.008), "fog": 0.0055, "sun": 0.03, "sun_color": Color(0.35, 0.45, 0.7), "ambient_energy": 0.16, "grass": Color(0.1, 0.14, 0.09)},
+	{"top": Color(0.3, 0.52, 0.85), "horizon": Color(0.8, 0.88, 0.86), "fog": 0.00016, "sun": 1.35, "sun_color": Color(1.0, 0.97, 0.9), "ambient_energy": 1.0, "grass": Color(0.5, 0.68, 0.4), "sky_affect": 0.1},
+	{"top": Color(0.42, 0.64, 0.95), "horizon": Color(0.88, 0.94, 0.94), "fog": 0.00012, "sun": 1.6, "sun_color": Color(1.0, 1.0, 0.98), "ambient_energy": 1.15, "grass": Color(0.55, 0.74, 0.44), "sky_affect": 0.02},
+	{"top": Color(0.36, 0.55, 0.8), "horizon": Color(0.85, 0.82, 0.7), "fog": 0.0002, "sun": 1.3, "sun_color": Color(1.0, 0.93, 0.82), "ambient_energy": 1.0, "grass": Color(0.5, 0.66, 0.4), "sky_affect": 0.12},
+	{"top": Color(0.3, 0.4, 0.62), "horizon": Color(0.9, 0.7, 0.48), "fog": 0.00025, "sun": 1.05, "sun_color": Color(1.0, 0.78, 0.55), "ambient_energy": 0.85, "grass": Color(0.46, 0.58, 0.34), "sky_affect": 0.22},
+	{"top": Color(0.22, 0.24, 0.42), "horizon": Color(0.75, 0.5, 0.35), "fog": 0.0006, "sun": 0.7, "sun_color": Color(1.0, 0.55, 0.35), "ambient_energy": 0.62, "grass": Color(0.38, 0.44, 0.26), "sky_affect": 0.42},
+	{"top": Color(0.1, 0.11, 0.26), "horizon": Color(0.35, 0.26, 0.3), "fog": 0.0012, "sun": 0.4, "sun_color": Color(0.7, 0.4, 0.45), "ambient_energy": 0.45, "grass": Color(0.26, 0.3, 0.2), "sky_affect": 0.62},
+	{"top": Color(0.045, 0.055, 0.15), "horizon": Color(0.12, 0.1, 0.14), "fog": 0.0022, "sun": 0.22, "sun_color": Color(0.4, 0.32, 0.55), "ambient_energy": 0.32, "grass": Color(0.16, 0.2, 0.13), "sky_affect": 0.78},
+	{"top": Color(0.012, 0.02, 0.05), "horizon": Color(0.035, 0.045, 0.06), "fog": 0.0035, "sun": 0.1, "sun_color": Color(0.3, 0.35, 0.55), "ambient_energy": 0.22, "grass": Color(0.11, 0.15, 0.1), "sky_affect": 0.9},
+	{"top": Color(0.004, 0.008, 0.02), "horizon": Color(0.012, 0.015, 0.02), "fog": 0.005, "sun": 0.03, "sun_color": Color(0.2, 0.25, 0.4), "ambient_energy": 0.14, "grass": Color(0.08, 0.12, 0.08), "sky_affect": 0.97},
 ]
+
+const SKY_CUBE_SHADER: String = """
+shader_type sky;
+
+uniform sampler2D face : source_color, filter_linear_mipmap;
+
+void sky() {
+	vec3 dir = normalize(EYEDIR);
+	vec3 a = vec3(abs(dir.x), abs(dir.y), abs(dir.z));
+	vec2 uv;
+	if (a.x > a.y && a.x > a.z) {
+		uv = vec2(-dir.z, dir.y) / a.x;
+	} else if (a.y > a.x && a.y > a.z) {
+		uv = vec2(dir.x, -dir.z) / a.y;
+	} else {
+		uv = vec2(dir.x, dir.y) / a.z;
+	}
+	COLOR = texture(face, uv * 0.5 + 0.5).rgb;
+}
+"""
+
+const PHASE_SMOOTHING := 1.6
 
 var endless := false
 var game_over := false
+var phase := 0
+var _phase_target: Dictionary = {}
+var _phase_started := false
 var won := false
 var paused := false
 var pages := 0
@@ -43,8 +71,6 @@ var player: SwampPlayer
 var env: Environment
 var sun: DirectionalLight3D
 var ground_mat: StandardMaterial3D
-
-var phase := 0
 
 var enemy: Sprite3D
 var enemy_active := false
@@ -76,7 +102,7 @@ func _ready() -> void:
 		_build_enemy()
 	_build_ui()
 	_build_audio()
-	_apply_phase(3)
+	_apply_phase(0)
 	_start_music_phase(0)
 	hud.set_timer_visible(not endless)
 	hud.set_pages_text(_pages_text())
@@ -164,11 +190,15 @@ func _build_world() -> void:
 		walls.add_child(ws)
 	add_child(walls)
 
-	var sky_mat_ref: PanoramaSkyMaterial = PanoramaSkyMaterial.new()
-	sky_mat_ref.panorama = load("res://assets/images/sky_shrek.png")
+	var sky_shader := Shader.new()
+	sky_shader.code = SKY_CUBE_SHADER
+	var sky_mat_ref := ShaderMaterial.new()
+	sky_mat_ref.shader = sky_shader
+	sky_mat_ref.set_shader_parameter("face", load("res://assets/images/sky_shrek.png"))
 	var sky := Sky.new()
 	sky.sky_material = sky_mat_ref
 	env.sky = sky
+	env.background_energy_multiplier = 0.2
 	env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
 	env.ambient_light_color = Color(0.18, 0.26, 0.2)
 	env.ambient_light_energy = 1.0
@@ -190,51 +220,44 @@ func _build_world() -> void:
 	tree_positions.clear()
 
 	for i in TREE_COUNT:
-		var pos := _random_tree_pos()
+		var pos := _tree_pos()
 		tree_positions.append(pos)
 		var use_tex := randi() % TREE_TEXTURES.size()
-		var carve := randf() < 0.1
-		var s := randf_range(0.75, 1.35)
-		var tex_path: String = BUSH_CARVE if carve else TREE_TEXTURES[use_tex]
+		var tex_path: String = TREE_TEXTURES[use_tex]
 		var tex: Texture2D = load(tex_path)
+		var s := randf_range(0.75, 1.35)
 		var h := tex.get_height() * 0.22 * s
-		if carve:
-			var bush := Sprite3D.new()
-			bush.texture = tex
-			bush.billboard = StandardMaterial3D.BILLBOARD_FIXED_Y
-			bush.shaded = true
-			bush.alpha_cut = SpriteBase3D.ALPHA_CUT_DISCARD
-			bush.pixel_size = 0.22
-			bush.scale = Vector3(s, s, s)
-			bush.position = Vector3(pos.x, h * 0.46, pos.y)
-			bush.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-			add_child(bush)
-		else:
-			for ang in [45.0, -45.0]:
-				var tr := Sprite3D.new()
-				tr.texture = tex
-				tr.billboard = BaseMaterial3D.BILLBOARD_DISABLED
-				tr.shaded = true
-				tr.alpha_cut = SpriteBase3D.ALPHA_CUT_DISCARD
-				tr.pixel_size = 0.22
-				tr.scale = Vector3(s, s, s)
-				tr.position = Vector3(pos.x, h * 0.46, pos.y)
-				tr.rotation.y = deg_to_rad(ang)
-				tr.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-				add_child(tr)
-		if not carve:
-			var cshape := CollisionShape3D.new()
-			var cyl := CylinderShape3D.new()
-			cyl.radius = TREE_RADIUS * s * 0.55
-			cyl.height = 800.0
-			cshape.shape = cyl
-			cshape.position = Vector3(pos.x, 400, pos.y)
-			trees.add_child(cshape)
+		for ang in [45.0, -45.0]:
+			var tr := Sprite3D.new()
+			tr.texture = tex
+			tr.billboard = BaseMaterial3D.BILLBOARD_DISABLED
+			tr.shaded = true
+			tr.alpha_cut = SpriteBase3D.ALPHA_CUT_DISCARD
+			tr.pixel_size = 0.22
+			tr.scale = Vector3(s, s, s)
+			tr.position = Vector3(pos.x, h * 0.46, pos.y)
+			tr.rotation.y = deg_to_rad(ang)
+			tr.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+			add_child(tr)
+		var cshape := CollisionShape3D.new()
+		var cyl := CylinderShape3D.new()
+		cyl.radius = TREE_RADIUS * s * 0.55
+		cyl.height = 800.0
+		cshape.shape = cyl
+		cshape.position = Vector3(pos.x, 400, pos.y)
+		trees.add_child(cshape)
 
-func _random_tree_pos() -> Vector2:
-	for attempt in 30:
-		var p := Vector2(randf_range(-WORLD_HALF + 140, WORLD_HALF - 140), randf_range(-WORLD_HALF + 140, WORLD_HALF - 140))
-		if p.length() > 460.0:
+func _tree_pos() -> Vector2:
+	for attempt in 40:
+		var ang := randf() * TAU
+		var rad := sqrt(lerpf(460.0 * 460.0, 1150.0 * 1150.0, randf()))
+		var p := Vector2(cos(ang), sin(ang)) * rad
+		var ok := true
+		for tp in tree_positions:
+			if tp.distance_to(p) < 260.0:
+				ok = false
+				break
+		if ok:
 			return p
 	return Vector2(460, 0)
 
@@ -273,7 +296,9 @@ func _spawn_onion() -> Area3D:
 
 func _onion_pos() -> Vector2:
 	for attempt in 40:
-		var p := Vector2(randf_range(-WORLD_HALF + 260, WORLD_HALF - 260), randf_range(-WORLD_HALF + 260, WORLD_HALF - 260))
+		var ang := randf() * TAU
+		var rad := sqrt(lerpf(520.0 * 520.0, 1150.0 * 1150.0, randf()))
+		var p := Vector2(cos(ang), sin(ang)) * rad
 		if p.length() <= 520.0:
 			continue
 		var ok := true
@@ -311,10 +336,7 @@ func _build_audio() -> void:
 	onion_sound.stream = load("res://assets/sounds/sfx_onion.wav")
 	add_child(onion_sound)
 
-	player.set_footstep_streams(
-		load("res://assets/sounds/sfx_footstep1.wav"),
-		[load("res://assets/sounds/sfx_footstep2.wav"), load("res://assets/sounds/sfx_grass.wav")],
-	)
+	player.set_footstep_streams(load("res://assets/sounds/sfx_footstep1.wav"))
 
 func _objective_text() -> void:
 	if endless:
@@ -345,6 +367,7 @@ func _process(delta: float) -> void:
 	_update_prompt()
 	if not endless:
 		_time_tick(delta)
+	_lerp_phase(clampf(1.0 - exp(-PHASE_SMOOTHING * delta), 0.0, 1.0))
 
 func _update_threat(delta: float) -> void:
 	if not enemy_active or enemy == null or not enemy.visible:
@@ -442,26 +465,34 @@ func _collect(onion: Area3D) -> void:
 	onion.queue_free()
 	if endless:
 		onions.append(_spawn_onion())
+		_apply_phase(mini(pages, 8))
 		_start_music_phase(mini((pages + 1) / 2, 4))
 		return
 	var pp := mini((pages + 1) / 2, 4)
-	_apply_phase(mini(pp + 2, 4))
+	_apply_phase(pages)
 	_start_music_phase(pp)
 	if pages >= TOTAL_PAGES:
 		_win()
 
 func _apply_phase(ph: int) -> void:
 	phase = ph
-	var p: Dictionary = PHASES[ph]
-	env.fog_light_color = p["horizon"] * 0.55 + p["top"] * 0.45
-	env.fog_density = p["fog"]
-	env.ambient_light_energy = p["ambient_energy"]
-	sun.light_energy = p["sun"]
-	sun.light_color = p["sun_color"]
-	ground_mat.albedo_color = p["grass"]
+	_phase_target = PHASES[ph]
+	if not _phase_started:
+		_phase_started = true
+		_lerp_phase(1.0)
 	for o in onions:
 		if is_instance_valid(o):
-			(o.get_child(0) as Sprite3D).shaded = phase >= 2
+			(o.get_child(0) as Sprite3D).shaded = ph < 4
+
+func _lerp_phase(weight: float) -> void:
+	var t: Dictionary = _phase_target
+	env.fog_light_color = env.fog_light_color.lerp(t["horizon"] * 0.55 + t["top"] * 0.45, weight)
+	env.fog_density = lerpf(env.fog_density, t["fog"], weight)
+	env.fog_sky_affect = lerpf(env.fog_sky_affect, t["sky_affect"], weight)
+	env.ambient_light_energy = lerpf(env.ambient_light_energy, t["ambient_energy"], weight)
+	sun.light_energy = lerpf(sun.light_energy, t["sun"], weight)
+	sun.light_color = sun.light_color.lerp(t["sun_color"], weight)
+	ground_mat.albedo_color = ground_mat.albedo_color.lerp(t["grass"], weight)
 
 func _start_music_phase(ph: int) -> void:
 	if allstar != null and allstar.playing:
@@ -590,6 +621,10 @@ func _toggle_pause() -> void:
 	hud.set_crosshair(not paused)
 	hud.set_prompt("")
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if paused else Input.MOUSE_MODE_CAPTURED
+
+func _touch_look(delta: Vector2) -> void:
+	if player:
+		player.touch_look(delta)
 
 func _pause_audio(on: bool) -> void:
 	for node in find_children("*", "AudioStreamPlayer", true, false):

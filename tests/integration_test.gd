@@ -81,19 +81,20 @@ func _ready() -> void:
 
 	game._collect(pool[1])
 	game._collect(pool[2])
-	var pano: PanoramaSkyMaterial = game.env.sky.sky_material
-	if pano.panorama == null:
+	var pano: ShaderMaterial = game.env.sky.sky_material
+	if pano.get_shader_parameter("face") == null:
 		failures += 1
 		print("FAIL custom sky missing")
 
 	for i in range(3, 7):
 		game._collect(pool[i])
 		await get_tree().process_frame
-	print("DEBUG pages=", game.pages, " fog=", game.env.fog_density, " phase4fog=", game.PHASES[4]["fog"])
+	game._lerp_phase(1.0)
+	print("DEBUG pages=", game.pages, " fog=", game.env.fog_density, " phase7fog=", game.PHASES[7]["fog"])
 	if game.pages != 7:
 		failures += 1
 		print("FAIL pages count after 7")
-	if not is_equal_approx(game.env.fog_density, game.PHASES[4]["fog"]):
+	if not is_equal_approx(game.env.fog_density, game.PHASES[7]["fog"]):
 		failures += 1
 		print("FAIL deep night fog")
 

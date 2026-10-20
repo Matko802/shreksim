@@ -37,7 +37,9 @@ const ZOOM_SCROLL_STEP: float = 5.0
 const ZOOM_MIN_STEPS: float = 2.0
 
 const FLASHLIGHT_LAG_FACTOR: float = 0.4
-const FLASHLIGHT_ROTATION_SMOOTHING: float = 12.0
+const FLASHLIGHT_LAG_MAX: float = deg_to_rad(2.0)
+const FLASHLIGHT_LAG_RETURN: float = 2.0
+const FLASHLIGHT_LAG_HOLD: float = 0.08
 const VM_MODEL_SCALE: float = 14.0
 const VM_LIGHT_ENERGY: float = 5600.0
 const VM_POSE_RESET: Vector3 = Vector3(16.716, -20.216, -9.1)
@@ -54,6 +56,9 @@ const FLASHLIGHT_ALBEDO: Texture2D = preload("res://assets/textures/flashlight_a
 var head_rest_pos: Vector3 = Vector3(0.0, STANDING_HEAD_Y, 0.0)
 
 var _flashlight_on: bool = true
+var _lag_yaw: float = 0.0
+var _lag_pitch: float = 0.0
+var _lag_stall: float = 0.0
 var _look_yaw_target: float = 0.0
 var _look_pitch: float = 0.0
 var _look_yaw_applied: float = 0.0
@@ -78,8 +83,6 @@ var _zoom_target: float = ZOOM_FOV_MAX
 var _last_zoom: float = ZOOM_FOV_MAX - ZOOM_SCROLL_STEP * ZOOM_MIN_STEPS
 
 var footstep_loop_stream: AudioStream
-var footstep_oneshot_streams: Array[AudioStream] = []
-
 var head: Node3D
 var camera: Camera3D
 var flashlight_container: Node3D
@@ -87,7 +90,6 @@ var flashlight_light: SpotLight3D
 var flashlight_model_animator: AnimationPlayer
 var flashlight_toggle_player: AudioStreamPlayer3D
 var footstep_player: AudioStreamPlayer3D
-var footstep_oneshot_player: AudioStreamPlayer3D
 var _collider: CollisionShape3D
 var _collider_shape: Shape3D
 
@@ -121,12 +123,6 @@ func _ready() -> void:
 	footstep_player.max_distance = 700.0
 	footstep_player.max_polyphony = 2
 	add_child(footstep_player)
-
-	footstep_oneshot_player = AudioStreamPlayer3D.new()
-	footstep_oneshot_player.unit_size = 168.0
-	footstep_oneshot_player.max_distance = 700.0
-	footstep_oneshot_player.max_polyphony = 2
-	add_child(footstep_oneshot_player)
 
 	flashlight_toggle_player = AudioStreamPlayer3D.new()
 	flashlight_toggle_player.stream = load("res://assets/sounds/sfx_flashlight_toggle.wav")
@@ -246,9 +242,8 @@ func _process(delta: float) -> void:
 		_zoom_fov = _zoom_target
 	camera.fov = _zoom_fov
 
-func set_footstep_streams(loop: AudioStream, one_shots: Array[AudioStream]) -> void:
+func set_footstep_streams(loop: AudioStream) -> void:
 	footstep_loop_stream = loop
-	footstep_oneshot_streams = one_shots
 	if loop != null:
 		var wav := loop as AudioStreamWAV
 		if wav != null:
@@ -264,6 +259,9 @@ func toggle_flashlight() -> void:
 	flashlight_model_animator.play(&"model_draw" if _flashlight_on else &"model_holster")
 	flashlight_toggle_player.play()
 	flashlight_toggled.emit(_flashlight_on)
+	flashlight_model_animator.play(&"model_draw" if _flashlight_on else &"model_holster")
+	flashlight_toggle_player.play()
+	flashlight_toggled.emit(_flashlight_on)
 
 func set_flashlight_on(on: bool) -> void:
 	if _flashlight_on == on:
@@ -274,6 +272,11 @@ func set_flashlight_on(on: bool) -> void:
 
 func is_flashlight_on() -> bool:
 	return _flashlight_on
+
+func touch_look(delta: Vector2) -> void:
+	_look_yaw_target += -delta.x * SettingsBus.mouse_sensitivity
+	_look_pitch += -delta.y * SettingsBus.mouse_sensitivity
+	_look_pitch = clampf(_look_pitch, deg_to_rad(-89.0), deg_to_rad(89.0))
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
@@ -307,11 +310,14 @@ func _physics_process(delta: float) -> void:
 	if absf(pending_yaw) > 0.00001:
 		rotate_y(pending_yaw)
 		_last_applied_yaw = _look_yaw_target
-		if SettingsBus.camera_effects_enabled:
-			flashlight_container.rotate_y(-pending_yaw * FLASHLIGHT_LAG_FACTOR)
+		if SettingsBus.camera_effects_enabled and _flashlight_on:
+			_lag_yaw = clampf(_lag_yaw - pending_yaw * FLASHLIGHT_LAG_FACTOR, -FLASHLIGHT_LAG_MAX, FLASHLIGHT_LAG_MAX)
+			_lag_stall = 0.0
 	var pending_pitch: float = _look_pitch - _look_pitch_applied
-	if absf(pending_pitch) > 0.00001 and SettingsBus.camera_effects_enabled:
-		flashlight_container.rotate_x(-pending_pitch * FLASHLIGHT_LAG_FACTOR)
+	if absf(pending_pitch) > 0.00001:
+		if SettingsBus.camera_effects_enabled and _flashlight_on:
+			_lag_pitch = clampf(_lag_pitch - pending_pitch * FLASHLIGHT_LAG_FACTOR, -FLASHLIGHT_LAG_MAX, FLASHLIGHT_LAG_MAX)
+			_lag_stall = 0.0
 	_look_yaw_applied = _look_yaw_target
 	_look_pitch_applied = _look_pitch
 
@@ -356,10 +362,18 @@ func _physics_process(delta: float) -> void:
 	_update_flashlight_rotation(delta)
 
 func _update_flashlight_rotation(delta: float) -> void:
-	var k: float = 1.0 - exp(-FLASHLIGHT_ROTATION_SMOOTHING * delta)
-	flashlight_container.quaternion = flashlight_container.quaternion.slerp(Quaternion.IDENTITY, k)
-	if flashlight_container.quaternion.is_equal_approx(Quaternion.IDENTITY):
+	if not _flashlight_on or not SettingsBus.camera_effects_enabled:
 		flashlight_container.quaternion = Quaternion.IDENTITY
+		_lag_yaw = 0.0
+		_lag_pitch = 0.0
+		_lag_stall = FLASHLIGHT_LAG_HOLD
+		return
+	_lag_stall += delta
+	if _lag_stall > FLASHLIGHT_LAG_HOLD:
+		var kr: float = 1.0 - exp(-FLASHLIGHT_LAG_RETURN * delta)
+		_lag_yaw = lerpf(_lag_yaw, 0.0, kr)
+		_lag_pitch = lerpf(_lag_pitch, 0.0, kr)
+	flashlight_container.rotation = Vector3(_lag_pitch, _lag_yaw, 0.0)
 
 func _is_sprinting() -> bool:
 	if _is_crouching:
@@ -421,15 +435,16 @@ func _update_camera_tilt(delta: float) -> void:
 		_step_radians = PI * 0.5
 
 func _apply_head_transform() -> void:
+	var fx: float = 1.0 if SettingsBus.camera_effects_enabled else 0.0
 	var phase: float = fposmod(_step_radians, TAU)
 	var bob_shape: float = sin(phase * 2.0)
 	bob_shape = bob_shape * bob_shape
-	var bob: float = bob_shape * BOB_AMPLITUDE * _move_factor * _bob_factor
-	var sway: float = sin(phase * 2.0) * SWAY_AMPLITUDE * _move_factor * _bob_factor
-	var roll_amount: float = -_strafe_tilt * TILT_AMPLITUDE * _move_factor
-	var forward_lean: float = -_forward_tilt * LEAN_AMPLITUDE * _move_factor
+	var bob: float = bob_shape * BOB_AMPLITUDE * _move_factor * _bob_factor * fx
+	var sway: float = sin(phase * 2.0) * SWAY_AMPLITUDE * _move_factor * _bob_factor * fx
+	var roll_amount: float = -_strafe_tilt * TILT_AMPLITUDE * _move_factor * fx
+	var forward_lean: float = -_forward_tilt * LEAN_AMPLITUDE * _move_factor * fx
 	head.rotation = Vector3(_look_pitch_applied + bob + forward_lean, sway, roll_amount)
-	head.position = _head_pos + Vector3(0.0, _land_bounce, 0.0)
+	head.position = _head_pos + Vector3(0.0, _land_bounce * fx, 0.0)
 
 func _update_head_position(delta: float) -> void:
 	var target_pos: Vector3 = head_rest_pos
@@ -455,11 +470,8 @@ func _update_footsteps(_delta: float) -> void:
 	var horizontal_speed: float = Vector2(velocity.x, velocity.z).length()
 	var on_floor := is_on_floor()
 
-	if _was_on_floor and not on_floor and velocity.y > 0.0:
-		_play_step_oneshot(randf_range(1.25, 1.45), 0.5)
-	elif not _was_on_floor and on_floor:
+	if not _was_on_floor and on_floor:
 		_land_bounce = -1.2
-		_play_step_oneshot(randf_range(0.75, 0.95), 1.0)
 	_was_on_floor = on_floor
 
 	var walking := on_floor and horizontal_speed > 2.0
@@ -473,11 +485,3 @@ func _update_footsteps(_delta: float) -> void:
 		footstep_player.stream = footstep_loop_stream
 		footstep_player.volume_db = 0.0
 		footstep_player.play()
-
-func _play_step_oneshot(pitch: float, volume: float) -> void:
-	if footstep_oneshot_streams.is_empty():
-		return
-	footstep_oneshot_player.stream = footstep_oneshot_streams[randi() % footstep_oneshot_streams.size()]
-	footstep_oneshot_player.pitch_scale = pitch
-	footstep_oneshot_player.volume_db = linear_to_db(volume)
-	footstep_oneshot_player.play()
