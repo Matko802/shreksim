@@ -18,9 +18,9 @@ const OBSERVE_DOT := 0.62
 const OBSERVE_RANGE := 1100.0
 
 const TREE_TEXTURES := [
-	"res://assets/images/tree1.png",
-	"res://assets/images/tree2.png",
-	"res://assets/images/tree5.png",
+	"res://assets/images/trees/tree1.png",
+	"res://assets/images/trees/tree2.png",
+	"res://assets/images/trees/tree5.png",
 ]
 
 const PHASES := [
@@ -120,7 +120,7 @@ func _build_ui() -> void:
 	pause_menu.restart_requested.connect(_restart)
 	pause_menu.menu_requested.connect(_to_menu)
 	for i in 5:
-		static_frames.append(load("res://assets/images/static%d.png" % i))
+		static_frames.append(load("res://assets/images/static/static%d.png" % i))
 
 func _build_player() -> void:
 	player = SwampPlayer.new()
@@ -194,7 +194,7 @@ func _build_world() -> void:
 	sky_shader.code = SKY_CUBE_SHADER
 	var sky_mat_ref := ShaderMaterial.new()
 	sky_mat_ref.shader = sky_shader
-	sky_mat_ref.set_shader_parameter("face", load("res://assets/images/sky_starface.png"))
+	sky_mat_ref.set_shader_parameter("face", load("res://assets/images/sky/sky_starface.png"))
 	var sky := Sky.new()
 	sky.sky_material = sky_mat_ref
 	env.sky = sky
@@ -271,7 +271,7 @@ func _spawn_onion() -> Area3D:
 	area.collision_layer = 2
 
 	var sprite := Sprite3D.new()
-	sprite.texture = load("res://assets/images/onion.png")
+	sprite.texture = load("res://assets/images/items/onion.png")
 	sprite.billboard = StandardMaterial3D.BILLBOARD_FIXED_Y
 	sprite.shaded = false
 	sprite.pixel_size = 0.31
@@ -382,7 +382,8 @@ func _update_threat(delta: float) -> void:
 		hud.hide_static()
 		return
 	static_time += delta
-	hud.show_static(static_frames[int(static_time / 0.07) % static_frames.size()], pow(threat, 1.6) * 0.85)
+	var threat_frames: Array[Texture2D] = [static_frames[0], static_frames[2], static_frames[3], static_frames[4]]
+	hud.show_static(threat_frames[int(static_time / 0.07) % threat_frames.size()], pow(threat, 1.6) * 0.85)
 
 func _update_prompt() -> void:
 	var hit := _ray_onion()
@@ -417,7 +418,7 @@ func _time_tick(delta: float) -> void:
 	if time_left <= 0.0:
 		time_left = 0.0
 		hud.set_time(int(ceil(time_left)), true)
-		_die()
+		_die(false)
 		return
 	hud.set_time(int(ceil(time_left)), time_left < 20.0)
 
@@ -573,13 +574,13 @@ func _win() -> void:
 	game_over = true
 	GameState.total_escapes += 1
 	GameState.save_stats()
-	_end_sequence("res://assets/images/win2.png", false)
+	_end_sequence("res://assets/images/results/win2.png", false)
 
-func _die() -> void:
+func _die(caught: bool = true) -> void:
 	if game_over:
 		return
 	game_over = true
-	_end_sequence("res://assets/images/fail2.png", true)
+	_end_sequence("res://assets/images/results/fail2.png", caught)
 
 func _end_sequence(result_path: String, with_static: bool) -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
@@ -597,15 +598,19 @@ func _end_sequence(result_path: String, with_static: bool) -> void:
 			static_sound.stream = load("res://assets/sounds/sfx_static.wav")
 			add_child(static_sound)
 		static_sound.play()
-		hud.show_static(static_frames[0], 1.0)
+		hud.show_static(static_frames[1], 1.0)
 		hud.result_label.visible = false
 	else:
 		hud.show_result(load(result_path), true)
 
 func _static_tick(delta: float) -> void:
 	static_time += delta
-	hud.show_static(static_frames[int(static_time / 0.06) % 5], 1.0)
-	if static_time >= 2.4:
+	var slot := int(static_time / 1.0)
+	if slot == 0:
+		hud.show_static(static_frames[1], 1.0)
+	elif slot == 1:
+		hud.show_static(static_frames[2], 1.0)
+	else:
 		static_playing = false
 		if static_sound != null and static_sound.playing:
 			static_sound.stop()

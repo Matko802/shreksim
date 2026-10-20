@@ -122,7 +122,7 @@ func _ready() -> void:
 		print("FAIL static not playing")
 	await _wait(2.6)
 	var tex: Texture2D = g2.hud.static_overlay.texture
-	if tex == null or tex.resource_path != "res://assets/images/fail2.png":
+	if tex == null or tex.resource_path != "res://assets/images/results/fail2.png":
 		failures += 1
 		print("FAIL fail screen texture: ", tex.resource_path if tex else "null")
 

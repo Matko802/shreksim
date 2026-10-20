@@ -9,11 +9,9 @@ const SPRINT_SPEED: float = 168.0
 const JUMP_VELOCITY: float = 112.0
 const BOB_AMPLITUDE: float = 0.030
 const SWAY_AMPLITUDE: float = 0.014
-const LEAN_AMPLITUDE: float = 0.055
 const TILT_AMPLITUDE: float = 0.045
 const TILT_SMOOTHING: float = 10.0
 const STRAFE_SMOOTHING: float = 8.0
-const FORWARD_TILT_SMOOTHING: float = 8.0
 const BOB_OMEGA_SMOOTHING: float = 18.0
 const BOB_HZ: float = 1.8
 const BOB_DEADZONE: float = 8.4
@@ -37,7 +35,8 @@ const ZOOM_SCROLL_STEP: float = 5.0
 const ZOOM_MIN_STEPS: float = 2.0
 
 const FLASHLIGHT_LAG_FACTOR: float = 0.4
-const FLASHLIGHT_LAG_MAX: float = deg_to_rad(2.0)
+const FLASHLIGHT_LAG_MAX: float = deg_to_rad(10.0)
+const FLASHLIGHT_LAG_RESPONSE: float = 8.0
 const FLASHLIGHT_LAG_RETURN: float = 2.0
 const FLASHLIGHT_LAG_HOLD: float = 0.08
 const VM_MODEL_SCALE: float = 14.0
@@ -58,6 +57,8 @@ var head_rest_pos: Vector3 = Vector3(0.0, STANDING_HEAD_Y, 0.0)
 var _flashlight_on: bool = true
 var _lag_yaw: float = 0.0
 var _lag_pitch: float = 0.0
+var _lag_yaw_target: float = 0.0
+var _lag_pitch_target: float = 0.0
 var _lag_stall: float = 0.0
 var _look_yaw_target: float = 0.0
 var _look_pitch: float = 0.0
@@ -71,7 +72,6 @@ var _step_radians: float = PI * 0.5
 var _step_omega: float = 0.0
 var _move_factor: float = 0.0
 var _strafe_tilt: float = 0.0
-var _forward_tilt: float = 0.0
 var _bob_factor: float = 1.0
 var _input_dir: Vector2 = Vector2.ZERO
 var _head_pos: Vector3 = head_rest_pos
@@ -311,12 +311,12 @@ func _physics_process(delta: float) -> void:
 		rotate_y(pending_yaw)
 		_last_applied_yaw = _look_yaw_target
 		if SettingsBus.camera_effects_enabled and _flashlight_on:
-			_lag_yaw = clampf(_lag_yaw - pending_yaw * FLASHLIGHT_LAG_FACTOR, -FLASHLIGHT_LAG_MAX, FLASHLIGHT_LAG_MAX)
+			_lag_yaw_target = clampf(_lag_yaw_target - pending_yaw * FLASHLIGHT_LAG_FACTOR, -FLASHLIGHT_LAG_MAX, FLASHLIGHT_LAG_MAX)
 			_lag_stall = 0.0
 	var pending_pitch: float = _look_pitch - _look_pitch_applied
 	if absf(pending_pitch) > 0.00001:
 		if SettingsBus.camera_effects_enabled and _flashlight_on:
-			_lag_pitch = clampf(_lag_pitch - pending_pitch * FLASHLIGHT_LAG_FACTOR, -FLASHLIGHT_LAG_MAX, FLASHLIGHT_LAG_MAX)
+			_lag_pitch_target = clampf(_lag_pitch_target - pending_pitch * FLASHLIGHT_LAG_FACTOR, -FLASHLIGHT_LAG_MAX, FLASHLIGHT_LAG_MAX)
 			_lag_stall = 0.0
 	_look_yaw_applied = _look_yaw_target
 	_look_pitch_applied = _look_pitch
@@ -366,13 +366,18 @@ func _update_flashlight_rotation(delta: float) -> void:
 		flashlight_container.quaternion = Quaternion.IDENTITY
 		_lag_yaw = 0.0
 		_lag_pitch = 0.0
+		_lag_yaw_target = 0.0
+		_lag_pitch_target = 0.0
 		_lag_stall = FLASHLIGHT_LAG_HOLD
 		return
 	_lag_stall += delta
 	if _lag_stall > FLASHLIGHT_LAG_HOLD:
-		var kr: float = 1.0 - exp(-FLASHLIGHT_LAG_RETURN * delta)
-		_lag_yaw = lerpf(_lag_yaw, 0.0, kr)
-		_lag_pitch = lerpf(_lag_pitch, 0.0, kr)
+		var kd: float = 1.0 - exp(-FLASHLIGHT_LAG_RETURN * delta)
+		_lag_yaw_target = lerpf(_lag_yaw_target, 0.0, kd)
+		_lag_pitch_target = lerpf(_lag_pitch_target, 0.0, kd)
+	var kr: float = 1.0 - exp(-FLASHLIGHT_LAG_RESPONSE * delta)
+	_lag_yaw = lerpf(_lag_yaw, _lag_yaw_target, kr)
+	_lag_pitch = lerpf(_lag_pitch, _lag_pitch_target, kr)
 	flashlight_container.rotation = Vector3(_lag_pitch, _lag_yaw, 0.0)
 
 func _is_sprinting() -> bool:
@@ -415,22 +420,18 @@ func _update_camera_tilt(delta: float) -> void:
 
 	_move_factor = lerpf(_move_factor, speed_ratio, clampf(TILT_SMOOTHING * delta, 0.0, 1.0))
 	var target_strafe_tilt: float = _input_dir.x
-	var target_forward_tilt: float = _input_dir.y
 	if SettingsBus.camera_effects_enabled:
 		_strafe_tilt = lerpf(_strafe_tilt, target_strafe_tilt, clampf(STRAFE_SMOOTHING * delta, 0.0, 1.0))
-		_forward_tilt = lerpf(_forward_tilt, target_forward_tilt, clampf(FORWARD_TILT_SMOOTHING * delta, 0.0, 1.0))
 	else:
 		_strafe_tilt = 0.0
-		_forward_tilt = 0.0
 	var target_hz: float = BOB_HZ * (horizontal_speed / SPRINT_SPEED)
 	var target_omega: float = TAU * target_hz * 0.5
 	_step_omega = lerpf(_step_omega, target_omega, clampf(BOB_OMEGA_SMOOTHING * delta, 0.0, 1.0))
 	_step_radians += _step_omega * delta
 	_bob_factor = lerpf(_bob_factor, 1.0 if is_on_floor() else 0.0, clampf(TILT_SMOOTHING * delta, 0.0, 1.0))
-	if _move_factor < 0.001 and absf(_strafe_tilt) < 0.001 and absf(_forward_tilt) < 0.001:
+	if _move_factor < 0.001 and absf(_strafe_tilt) < 0.001:
 		_move_factor = 0.0
 		_strafe_tilt = 0.0
-		_forward_tilt = 0.0
 		_step_omega = 0.0
 		_step_radians = PI * 0.5
 
@@ -442,8 +443,7 @@ func _apply_head_transform() -> void:
 	var bob: float = bob_shape * BOB_AMPLITUDE * _move_factor * _bob_factor * fx
 	var sway: float = sin(phase * 2.0) * SWAY_AMPLITUDE * _move_factor * _bob_factor * fx
 	var roll_amount: float = -_strafe_tilt * TILT_AMPLITUDE * _move_factor * fx
-	var forward_lean: float = -_forward_tilt * LEAN_AMPLITUDE * _move_factor * fx
-	head.rotation = Vector3(_look_pitch_applied + bob + forward_lean, sway, roll_amount)
+	head.rotation = Vector3(_look_pitch_applied + bob, sway, roll_amount)
 	head.position = _head_pos + Vector3(0.0, _land_bounce * fx, 0.0)
 
 func _update_head_position(delta: float) -> void:

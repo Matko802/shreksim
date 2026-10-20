@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://dysdwlt6pqy6q"]
 
 [ext_resource type="Script" uid="uid://chwyjrg8xd1b2" path="res://scripts/menu.gd" id="1_menu"]
-[ext_resource type="Texture2D" uid="uid://70lmscfbv656" path="res://assets/images/menu_card_main.png" id="2_card"]
-[ext_resource type="Texture2D" uid="uid://dx0mu7r2e5aer" path="res://assets/images/enemy_ogshrek.png" id="3_shrek"]
-[ext_resource type="Texture2D" uid="uid://cv476erly3vdg" path="res://assets/images/enemy_tpose.png" id="4_tpose"]
-[ext_resource type="Texture2D" uid="uid://63i6jkn8x5i7" path="res://assets/images/enemy_babyshrek.png" id="5_baby"]
-[ext_resource type="Texture2D" uid="uid://y6trhc0x14ft" path="res://assets/images/enemy_slenderman.png" id="6_slender"]
+[ext_resource type="Texture2D" uid="uid://70lmscfbv656" path="res://assets/images/menu/menu_card_main.png" id="2_card"]
+[ext_resource type="Texture2D" uid="uid://dx0mu7r2e5aer" path="res://assets/images/enemies/enemy_ogshrek.png" id="3_shrek"]
+[ext_resource type="Texture2D" uid="uid://cv476erly3vdg" path="res://assets/images/enemies/enemy_tpose.png" id="4_tpose"]
+[ext_resource type="Texture2D" uid="uid://63i6jkn8x5i7" path="res://assets/images/enemies/enemy_babyshrek.png" id="5_baby"]
+[ext_resource type="Texture2D" uid="uid://y6trhc0x14ft" path="res://assets/images/enemies/enemy_slenderman.png" id="6_slender"]
 
 [sub_resource type="StyleBoxFlat" id="sb_btn"]
 content_margin_top = 4.0

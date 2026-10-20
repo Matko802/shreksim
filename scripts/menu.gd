@@ -14,6 +14,15 @@ var playing_meme := false
 @onready var howto_panel: PanelContainer = %HowtoPanel
 @onready var pages_label: Label = %PagesLabel
 @onready var esc_label: Label = %EscLabel
+@onready var remake_label: Label = $Card/Remake
+
+var menu_time := 0.0
+
+func _process(delta: float) -> void:
+	menu_time += delta
+	var pulse := 1.0 + 0.055 * sin(menu_time * 1.6)
+	remake_label.pivot_offset = remake_label.size * 0.5
+	remake_label.scale = Vector2(pulse, pulse)
 
 func _ready() -> void:
 	music = AudioStreamPlayer.new()

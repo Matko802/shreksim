@@ -3,10 +3,10 @@ extends Node
 enum EnemySkin { SLENDER, OG_SHREK, TPOSE, BABY }
 
 const SKIN_PATHS := {
-	EnemySkin.SLENDER: "res://assets/images/enemy_slenderman.png",
-	EnemySkin.OG_SHREK: "res://assets/images/enemy_ogshrek.png",
-	EnemySkin.TPOSE: "res://assets/images/enemy_tpose.png",
-	EnemySkin.BABY: "res://assets/images/enemy_babyshrek.png",
+	EnemySkin.SLENDER: "res://assets/images/enemies/enemy_slenderman.png",
+	EnemySkin.OG_SHREK: "res://assets/images/enemies/enemy_ogshrek.png",
+	EnemySkin.TPOSE: "res://assets/images/enemies/enemy_tpose.png",
+	EnemySkin.BABY: "res://assets/images/enemies/enemy_babyshrek.png",
 }
 const SAVE_PATH := "user://swampsim_stats.cfg"
 
