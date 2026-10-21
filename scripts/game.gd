@@ -1,15 +1,16 @@
 extends Node3D
 
-const WORLD_HALF := 2000.0
-const TREE_COUNT := 96
-const FAR_TREE_COUNT := 140
+const WORLD_HALF := 3200.0
+const TREE_COUNT := 204
+const FAR_TREE_COUNT := 200
 const TREE_RADIUS := 64.0
 const TREE_BILLBOARD_DIST := 750.0
-const TREE_RING_N := [21, 32, 43]
-const TREE_RING_R := [600.0, 880.0, 1120.0]
-const ONION_RADII := [820.0, 900.0, 940.0, 1400.0, 1500.0, 1700.0, 820.0, 900.0, 940.0]
+const TREE_RING_N := [30, 44, 58, 72]
+const TREE_RING_R := [900.0, 1350.0, 1800.0, 2250.0]
+const ONION_RADII := [560.0, 640.0, 700.0, 1060.0, 1150.0, 1560.0, 1630.0, 1950.0, 2100.0, 2450.0, 2600.0, 2900.0]
+const LOOKOUTS := [[Vector2(1060, 140), 187.0], [Vector2(-1140, 1080), 317.0], [Vector2(1620, -1130), 145.0], [Vector2(60, -1090), 93.0]]
 const TOTAL_PAGES := 8
-const START_TIME := 90.0
+const START_TIME := 150.0
 const KILL_RADIUS := 70.0
 const CAMERA_HEIGHT := 44.0
 const ONION_RANGE := 360.0
@@ -156,6 +157,71 @@ func _build_player() -> void:
 	player.position = Vector3(0, CAMERA_HEIGHT, 0)
 	add_child(player)
 
+func _terrain_height(x: float, z: float) -> float:
+	var dist := Vector2(x, z).length()
+	var edge := clampf((float(WORLD_HALF) - dist) / 900.0, 0.0, 1.0)
+	var spawn := clampf((dist - 240.0) / 400.0, 0.0, 1.0)
+	var moat := clampf((dist - float(WORLD_HALF) + 500.0) / 500.0, 0.0, 1.0)
+	var tops := sin(x * 0.0012 + 1.7) * cos(z * 0.0009 - 2.3) * 30.0
+	var mids := sin((x + z) * 0.0022 - 0.8) * 13.0
+	var bumps := sin(x * 0.0051) * cos(z * 0.0054) * 3.5
+	return (tops + mids + bumps) * edge * spawn - 55.0 * moat
+
+func _terrain_normal(x: float, z: float) -> Vector3:
+	var e := 12.0
+	var dhx := (_terrain_height(x + e, z) - _terrain_height(x - e, z)) / (2.0 * e)
+	var dhz := (_terrain_height(x, z + e) - _terrain_height(x, z - e)) / (2.0 * e)
+	return Vector3(-dhx, 1.0, -dhz).normalized()
+
+func _make_box(body: StaticBody3D, pos: Vector3, size: Vector3, mat: StandardMaterial3D) -> void:
+	var mesh_inst := MeshInstance3D.new()
+	var box_bad_mesh := BoxMesh.new()
+	box_bad_mesh.size = size
+	mesh_inst.mesh = box_bad_mesh
+	mesh_inst.material_override = mat
+	body.add_child(mesh_inst)
+	var cs := CollisionShape3D.new()
+	var bs := BoxShape3D.new()
+	bs.size = size
+	cs.shape = bs
+	cs.position = pos
+	body.add_child(cs)
+	mesh_inst.position = pos
+
+func _build_lookout(base: Vector2, facing: float) -> void:
+	var gh := _terrain_height(base.x, base.y)
+	var body := StaticBody3D.new()
+	body.collision_layer = 1
+	body.position = Vector3(base.x, 0.0, base.y)
+	body.rotation.y = deg_to_rad(facing)
+	add_child(body)
+	var wood := StandardMaterial3D.new()
+	wood.albedo_color = Color(0.44, 0.29, 0.17)
+	wood.roughness = 0.9
+	for lx in [-10.0, 10.0]:
+		for lz in [-10.0, 10.0]:
+			_make_box(body, Vector3(lx, gh + 12.0, lz), Vector3(2.4, 30.0, 2.4), wood)
+	_make_box(body, Vector3(0, gh + 25.2, 0), Vector3(30, 2.4, 30), wood)
+	_make_box(body, Vector3(0, gh + 28.6, -14.4), Vector3(30, 3.2, 1.2), wood)
+	_make_box(body, Vector3(0, gh + 28.6, 14.4), Vector3(30, 3.2, 1.2), wood)
+	_make_box(body, Vector3(-14.4, gh + 28.6, 0), Vector3(1.2, 3.2, 30), wood)
+	_make_box(body, Vector3(14.4, gh + 28.6, 0), Vector3(1.2, 3.2, 30), wood)
+	var ramp := Node3D.new()
+	ramp.position = Vector3(0, gh + 12.2, 35.0)
+	ramp.rotation.x = deg_to_rad(35.0)
+	body.add_child(ramp)
+	var ramp_mesh := MeshInstance3D.new()
+	var ramp_mesh_box := BoxMesh.new()
+	ramp_mesh_box.size = Vector3(3.4, 2.4, 50.0)
+	ramp_mesh.mesh = ramp_mesh_box
+	ramp_mesh.material_override = wood
+	ramp.add_child(ramp_mesh)
+	var ramp_cs := CollisionShape3D.new()
+	var ramp_bs := BoxShape3D.new()
+	ramp_bs.size = Vector3(3.4, 2.4, 50.0)
+	ramp_cs.shape = ramp_bs
+	ramp.add_child(ramp_cs)
+
 func _build_world() -> void:
 	env = Environment.new()
 	env.background_mode = Environment.BG_SKY
@@ -195,23 +261,70 @@ func _build_world() -> void:
 	ground.mesh = ground_mesh
 	ground.material_override = ground_mat
 	ground.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	ground.position = Vector3(0, -55, 0)
 	add_child(ground)
+
+	var half := float(WORLD_HALF)
+	var segs := 120
+	var step := half * 2.0 / float(segs)
+	var verts := PackedVector3Array()
+	var norms := PackedVector3Array()
+	var uvs := PackedVector2Array()
+	var idx := PackedInt32Array()
+	for gy in segs + 1:
+		for gx in segs + 1:
+			var x := -half + float(gx) * step
+			var z := -half + float(gy) * step
+			verts.append(Vector3(x, _terrain_height(x, z), z))
+			norms.append(_terrain_normal(x, z))
+			uvs.append(Vector2(x / 24000.0 + 0.5, z / 24000.0 + 0.5))
+	for gy in segs:
+		for gx in segs:
+			var a := (segs + 1) * gy + gx
+			var b := a + 1
+			var c := a + segs + 1
+			var d := c + 1
+			idx.append(a)
+			idx.append(c)
+			idx.append(b)
+			idx.append(b)
+			idx.append(c)
+			idx.append(d)
+	var terrain_mesh := ArrayMesh.new()
+	var arrays := []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = verts
+	arrays[Mesh.ARRAY_NORMAL] = norms
+	arrays[Mesh.ARRAY_TEX_UV] = uvs
+	arrays[Mesh.ARRAY_INDEX] = idx
+	terrain_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	var terrain := MeshInstance3D.new()
+	terrain.mesh = terrain_mesh
+	terrain.material_override = ground_mat
+	terrain.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	add_child(terrain)
 
 	var ground_body := StaticBody3D.new()
 	ground_body.collision_layer = 1
 	var gb_shape := CollisionShape3D.new()
-	var plane_shape := WorldBoundaryShape3D.new()
-	gb_shape.shape = plane_shape
+	var terrain_shape := terrain_mesh.create_trimesh_shape()
+	gb_shape.shape = terrain_shape
 	ground_body.add_child(gb_shape)
 	add_child(ground_body)
+	var floor_safety := CollisionShape3D.new()
+	var safety_box := BoxShape3D.new()
+	safety_box.size = Vector3(9600, 2, 9600)
+	floor_safety.shape = safety_box
+	floor_safety.position = Vector3(0, -260, 0)
+	ground_body.add_child(floor_safety)
 
 	var walls := StaticBody3D.new()
 	walls.collision_layer = 1
 	var wall_positions := [
-		[Vector3(WORLD_HALF, 200, 0), Vector3(6, 400, WORLD_HALF * 2.4)],
-		[Vector3(-WORLD_HALF, 200, 0), Vector3(6, 400, WORLD_HALF * 2.4)],
-		[Vector3(0, 200, WORLD_HALF), Vector3(WORLD_HALF * 2.4, 400, 6)],
-		[Vector3(0, 200, -WORLD_HALF), Vector3(WORLD_HALF * 2.4, 400, 6)],
+		[Vector3(WORLD_HALF, 145, 0), Vector3(6, 400, WORLD_HALF * 2.4)],
+		[Vector3(-WORLD_HALF, 145, 0), Vector3(6, 400, WORLD_HALF * 2.4)],
+		[Vector3(0, 145, WORLD_HALF), Vector3(WORLD_HALF * 2.4, 400, 6)],
+		[Vector3(0, 145, -WORLD_HALF), Vector3(WORLD_HALF * 2.4, 400, 6)],
 	]
 	for wp in wall_positions:
 		var ws := CollisionShape3D.new()
@@ -224,7 +337,7 @@ func _build_world() -> void:
 
 	for i in FAR_TREE_COUNT:
 		var far_ang := 2.399963229728653 * float(i)
-		var far_rad := 2150.0 + 1250.0 * fmod(float(i) * 0.137 + float(i % 5) * 0.043, 1.0)
+		var far_rad := 3400.0 + 1600.0 * fmod(float(i) * 0.137 + float(i % 5) * 0.043, 1.0)
 		var far_pos := Vector2(cos(far_ang), sin(far_ang)) * far_rad
 		var far_tex: Texture2D = load(TREE_TEXTURES[(i * 7 + 2) % TREE_TEXTURES.size()])
 		var far_s := 1.0 + 0.9 * absf(sin(float(i) * 0.83))
@@ -237,7 +350,7 @@ func _build_world() -> void:
 		far_tree.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 		far_tree.pixel_size = 0.5
 		far_tree.scale = Vector3(far_s, far_s, far_s)
-		far_tree.position = Vector3(far_pos.x, far_h * 0.5, far_pos.y)
+		far_tree.position = Vector3(far_pos.x, far_h * 0.5 - 55.0, far_pos.y)
 		far_tree.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 		add_child(far_tree)
 
@@ -285,19 +398,23 @@ func _build_world() -> void:
 		var tex: Texture2D = load(TREE_TEXTURES[(i * 7 + k * 3) % TREE_TEXTURES.size()])
 		var s := clampf(1.2 + 0.45 * sin(float(i) * 0.61 + float(k) * 2.1) + 0.25 * cos(float(i) * 2.17), 0.6, 1.9)
 		var h := tex.get_height() * 0.22 * s
-		var near_a := _make_tree_plane(tex, pos, h, s, 45.0, false)
-		var near_b := _make_tree_plane(tex, pos, h, s, -45.0, false)
-		var flat := _make_tree_plane(tex, pos, h, s, 0.0, true)
+		var gh := _terrain_height(pos.x, pos.y)
+		var near_a := _make_tree_plane(tex, pos, h, s, 45.0, false, gh)
+		var near_b := _make_tree_plane(tex, pos, h, s, -45.0, false, gh)
+		var flat := _make_tree_plane(tex, pos, h, s, 0.0, true, gh)
 		tree_planes.append([near_a, near_b, flat])
 		var cshape := CollisionShape3D.new()
 		var cyl := CylinderShape3D.new()
 		cyl.radius = TREE_RADIUS * s * 0.55
 		cyl.height = 800.0
 		cshape.shape = cyl
-		cshape.position = Vector3(pos.x, 400, pos.y)
+		cshape.position = Vector3(pos.x, gh + 400, pos.y)
 		trees.add_child(cshape)
 
-func _make_tree_plane(tex: Texture2D, pos: Vector2, h: float, s: float, ang_deg: float, billboard: bool) -> Sprite3D:
+	for entry in LOOKOUTS:
+		_build_lookout(entry[0], entry[1])
+
+func _make_tree_plane(tex: Texture2D, pos: Vector2, h: float, s: float, ang_deg: float, billboard: bool, gh: float) -> Sprite3D:
 	var tr := Sprite3D.new()
 	tr.texture = tex
 	tr.billboard = BaseMaterial3D.BILLBOARD_FIXED_Y if billboard else BaseMaterial3D.BILLBOARD_DISABLED
@@ -306,7 +423,7 @@ func _make_tree_plane(tex: Texture2D, pos: Vector2, h: float, s: float, ang_deg:
 	tr.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	tr.pixel_size = 0.22
 	tr.scale = Vector3(s, s, s)
-	tr.position = Vector3(pos.x, h * 0.46, pos.y)
+	tr.position = Vector3(pos.x, gh + h * 0.46, pos.y)
 	tr.rotation.y = deg_to_rad(ang_deg)
 	tr.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	tr.visible = not billboard
@@ -358,9 +475,10 @@ func _spawn_onion() -> Area3D:
 	area.add_child(shape)
 
 	var pos := _next_onion_spot()
-	area.position = Vector3(pos.x, 0, pos.y)
+	var gh := _terrain_height(pos.x, pos.y)
+	area.position = Vector3(pos.x, gh, pos.y)
 	area.set_meta("onion", true)
-	area.set_meta("base_y", 0.0)
+	area.set_meta("base_y", gh)
 	add_child(area)
 	return area
 
@@ -392,7 +510,7 @@ func _objective_text() -> void:
 	if endless:
 		hud.show_objective("ENDLESS SWAMP - grab all the onions you want")
 	else:
-		hud.show_objective("Collect 8 onions before the 90 seconds run out")
+		hud.show_objective("Collect 8 onions before the 150 seconds run out")
 
 func _pages_text() -> String:
 	if endless:
@@ -411,7 +529,7 @@ func _process(delta: float) -> void:
 	onion_bob_t += delta
 	for o in onions:
 		if is_instance_valid(o):
-			o.position.y = sin(onion_bob_t * 2.0 + o.position.x * 0.01) * 3.0
+			o.position.y = float(o.get_meta("base_y")) + sin(onion_bob_t * 2.0 + o.position.x * 0.01) * 3.0
 			o.rotation.y += delta * 0.9
 	_update_threat(delta)
 	tree_swap_time -= delta
@@ -636,7 +754,7 @@ func _tick_enemy(delta: float) -> void:
 	var speed: float = ENEMY_FOLLOW_BASE + ENEMY_FOLLOW_PER_PAGE * pages
 	speed = minf(speed, ENEMY_SPEED_CAP)
 	enemy.global_position += Vector3(dir.x, 0.0, dir.z) * speed * delta
-	enemy.position.y = 125.0 + sin(enemy_bob_t * 2.2) * 6.0
+	enemy.position.y = _terrain_height(enemy.position.x, enemy.position.z) + 125.0 + sin(enemy_bob_t * 2.2) * 6.0
 
 func _spawn_enemy_behind() -> void:
 	var fwd := -player.camera.global_basis.z
@@ -645,7 +763,7 @@ func _spawn_enemy_behind() -> void:
 	var p := Vector2(player.global_position.x, player.global_position.z) + behind * d
 	p.x = clampf(p.x, -WORLD_HALF + 140, WORLD_HALF - 140)
 	p.y = clampf(p.y, -WORLD_HALF + 140, WORLD_HALF - 140)
-	enemy.global_position = Vector3(p.x, 125.0, p.y)
+	enemy.global_position = Vector3(p.x, _terrain_height(p.x, p.y) + 125.0, p.y)
 	enemy.visible = true
 
 func _win() -> void:
