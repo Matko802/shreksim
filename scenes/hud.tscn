@@ -26,6 +26,19 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
+[node name="StaticOverlay" type="TextureRect" parent="Root" unique_id=2102963550]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 6
+
 [node name="CrosshairBox" type="CenterContainer" parent="Root" unique_id=1866906897]
 layout_mode = 1
 anchors_preset = 15
@@ -136,19 +149,6 @@ grow_horizontal = 2
 theme_override_font_sizes/font_size = 30
 label_settings = SubResource("ls_objective")
 horizontal_alignment = 1
-
-[node name="StaticOverlay" type="TextureRect" parent="Root" unique_id=2102963550]
-unique_name_in_owner = true
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-expand_mode = 1
-stretch_mode = 6
 
 [node name="ResultLabel" type="Label" parent="Root" unique_id=1329578772]
 unique_name_in_owner = true

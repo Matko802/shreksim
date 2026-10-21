@@ -1,6 +1,7 @@
 extends SceneTree
 
 const WORLD_HALF := 3200.0
+const TOWER_SCALE := 4.0
 const GRASS_BLOCKS := [
 	"res://assets/textures/godotcraft/grass_top.png",
 ]
@@ -15,6 +16,18 @@ func terrain_h(x: float, z: float) -> float:
 	var mids := sin((x + z) * 0.0016 - 0.8) * 32.0
 	var bumps := sin(x * 0.0041) * cos(z * 0.0043) * 8.0
 	return (tops + ridge + mids + bumps) * edge * spawn
+
+func apron_h(x: float, z: float) -> float:
+	var out := clampf((maxf(absf(x), absf(z)) - WORLD_HALF) / 1800.0, 0.0, 1.0)
+	var tops := sin(x * 0.0012 + 1.7) * cos(z * 0.0009 - 2.3) * 60.0
+	var mids := sin((x + z) * 0.0016 - 0.8) * 20.0
+	var bumps := sin(x * 0.0041) * cos(z * 0.0043) * 8.0
+	return (tops + mids + bumps) * out
+
+func surface_h(x: float, z: float) -> float:
+	if maxf(absf(x), absf(z)) <= WORLD_HALF:
+		return terrain_h(x, z)
+	return apron_h(x, z)
 
 func make_ground_texture() -> void:
 	var block := 16
@@ -43,8 +56,8 @@ func make_ground_texture() -> void:
 	img.save_png("res://assets/textures/terrain_grass.png")
 
 func save_terrain_data() -> void:
-	var n := 121
-	var half := WORLD_HALF
+	var n := 241
+	var half := WORLD_HALF * 2.0
 	var step := half * 2.0 / float(n - 1)
 	var data: Resource = load("res://scripts/terrain_data.gd").new()
 	data.grid_half = half
@@ -55,13 +68,13 @@ func save_terrain_data() -> void:
 		for gx in n:
 			var x := -half + float(gx) * step
 			var z := -half + float(gy) * step
-			data.heights[gy * n + gx] = terrain_h(x, z)
+			data.heights[gy * n + gx] = surface_h(x, z)
 	var err := ResourceSaver.save(data, "res://assets/maps/terrain_data.tres")
 	print("BAKE data err %d" % err)
 
 func save_terrain_mesh() -> void:
-	var n := 121
-	var half := WORLD_HALF
+	var n := 241
+	var half := WORLD_HALF * 2.0
 	var step := half * 2.0 / float(n - 1)
 	var verts := PackedVector3Array()
 	var norms := PackedVector3Array()
@@ -71,9 +84,9 @@ func save_terrain_mesh() -> void:
 			var x := -half + float(gx) * step
 			var z := -half + float(gy) * step
 			var e := step
-			var dhx := (terrain_h(x + e, z) - terrain_h(x - e, z)) / (2.0 * e)
-			var dhz := (terrain_h(x, z + e) - terrain_h(x, z - e)) / (2.0 * e)
-			verts.append(Vector3(x, terrain_h(x, z), z))
+			var dhx := (surface_h(x + e, z) - surface_h(x - e, z)) / (2.0 * e)
+			var dhz := (surface_h(x, z + e) - surface_h(x, z - e)) / (2.0 * e)
+			verts.append(Vector3(x, surface_h(x, z), z))
 			norms.append(Vector3(-dhx, 1.0, -dhz).normalized())
 			uvs.append(Vector2(x / 24000.0 + 0.5, z / 24000.0 + 0.5))
 	var idx := PackedInt32Array()
@@ -130,10 +143,10 @@ func save_map_scene() -> void:
 	text += "[sub_resource type=\"BoxShape3D\" id=\"wall_ns\"]\nsize = Vector3(%s, 400, 6)\n\n" % (WORLD_HALF * 2.4)
 	text += "[sub_resource type=\"BoxShape3D\" id=\"wall_ew\"]\nsize = Vector3(6, 400, %s)\n\n" % (WORLD_HALF * 2.4)
 	text += "[sub_resource type=\"BoxShape3D\" id=\"floor_safety\"]\nsize = Vector3(9600, 2, 9600)\n\n"
-	text += "[sub_resource type=\"BoxShape3D\" id=\"deck_box\"]\nsize = Vector3(47, 6, 60)\n\n"
-	text += "[sub_resource type=\"BoxShape3D\" id=\"rail_side\"]\nsize = Vector3(1.8, 4.8, 60)\n\n"
-	text += "[sub_resource type=\"BoxShape3D\" id=\"rail_back\"]\nsize = Vector3(47, 4.8, 1.8)\n\n"
-	text += "[sub_resource type=\"BoxShape3D\" id=\"ramp_box\"]\nsize = Vector3(5, 4, 140)\n\n"
+	text += "[sub_resource type=\"BoxShape3D\" id=\"deck_box\"]\nsize = Vector3(%s, %s, %s)\n\n" % [23.5 * TOWER_SCALE, 3.0 * TOWER_SCALE, 30 * TOWER_SCALE]
+	text += "[sub_resource type=\"BoxShape3D\" id=\"rail_side\"]\nsize = Vector3(%s, %s, %s)\n\n" % [0.9 * TOWER_SCALE, 2.4 * TOWER_SCALE, 30 * TOWER_SCALE]
+	text += "[sub_resource type=\"BoxShape3D\" id=\"rail_back\"]\nsize = Vector3(%s, %s, %s)\n\n" % [23.5 * TOWER_SCALE, 2.4 * TOWER_SCALE, 0.9 * TOWER_SCALE]
+	text += "[sub_resource type=\"BoxShape3D\" id=\"ramp_box\"]\nsize = Vector3(%s, %s, %s)\n\n" % [2.5 * TOWER_SCALE, 2.0 * TOWER_SCALE, 70 * TOWER_SCALE]
 	text += "[node name=\"Map\" type=\"Node3D\"]\n\n"
 	text += "[node name=\"Terrain\" type=\"MeshInstance3D\" parent=\".\"]\n"
 	text += "mesh = ExtResource(\"%s\")\n" % ids.mesh
@@ -172,22 +185,22 @@ func save_map_scene() -> void:
 		text += "collision_layer = 1\n"
 		text += "transform = %s\n\n" % tf_string(yaw, Vector3(base.x, 0.0, base.y))
 		text += "[node name=\"Tower\" parent=\"Lookout%d\" instance=ExtResource(\"%s\")]\n" % [li, ids.tower]
-		text += "transform = %s\n\n" % tf_string(Basis.from_scale(Vector3(2, 2, 2)), Vector3(0, gh, 0))
+		text += "transform = %s\n\n" % tf_string(Basis.from_scale(Vector3(TOWER_SCALE, TOWER_SCALE, TOWER_SCALE)), Vector3(0, gh, 0))
 		text += "[node name=\"Deck\" type=\"CollisionShape3D\" parent=\"Lookout%d\"]\n" % li
 		text += "shape = SubResource(\"deck_box\")\n"
-		text += "position = Vector3(0, %s, 10)\n\n" % (gh + 77.0)
+		text += "position = Vector3(0, %s, %s)\n\n" % [gh + 38.5 * TOWER_SCALE, 5.0 * TOWER_SCALE]
 		text += "[node name=\"RailEast\" type=\"CollisionShape3D\" parent=\"Lookout%d\"]\n" % li
 		text += "shape = SubResource(\"rail_side\")\n"
-		text += "position = Vector3(22.5, %s, 10)\n\n" % (gh + 83.6)
+		text += "position = Vector3(%s, %s, %s)\n\n" % [11.25 * TOWER_SCALE, gh + 41.8 * TOWER_SCALE, 5.0 * TOWER_SCALE]
 		text += "[node name=\"RailWest\" type=\"CollisionShape3D\" parent=\"Lookout%d\"]\n" % li
 		text += "shape = SubResource(\"rail_side\")\n"
-		text += "position = Vector3(-22.5, %s, 10)\n\n" % (gh + 83.6)
+		text += "position = Vector3(%s, %s, %s)\n\n" % [-11.25 * TOWER_SCALE, gh + 41.8 * TOWER_SCALE, 5.0 * TOWER_SCALE]
 		text += "[node name=\"RailBack\" type=\"CollisionShape3D\" parent=\"Lookout%d\"]\n" % li
 		text += "shape = SubResource(\"rail_back\")\n"
-		text += "position = Vector3(0, %s, -19.4)\n\n" % (gh + 83.6)
+		text += "position = Vector3(0, %s, %s)\n\n" % [gh + 41.8 * TOWER_SCALE, -9.7 * TOWER_SCALE]
 		text += "[node name=\"Ramp\" type=\"CollisionShape3D\" parent=\"Lookout%d\"]\n" % li
 		text += "shape = SubResource(\"ramp_box\")\n"
-		text += "transform = %s\n\n" % tf_string(ramp_basis, Vector3(0, gh + 38.5, 97.3))
+		text += "transform = %s\n\n" % tf_string(ramp_basis, Vector3(0, gh + 19.93 * TOWER_SCALE, 48.67 * TOWER_SCALE))
 		li += 1
 	var f := FileAccess.open("res://scenes/map.tscn", FileAccess.WRITE)
 	f.store_string(text)

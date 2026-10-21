@@ -186,6 +186,9 @@ func _build_world() -> void:
 		var far_tex: Texture2D = load(TREE_TEXTURES[(i * 7 + 2) % TREE_TEXTURES.size()])
 		var far_s := 1.0 + 0.9 * absf(sin(float(i) * 0.83))
 		var far_h := far_tex.get_height() * 0.5 * far_s
+		var far_gh := _terrain_height(far_pos.x, far_pos.y)
+		var far_cross_a: Sprite3D = null
+		var far_cross_b: Sprite3D = null
 		for yaw in [45.0, -45.0]:
 			var far_tree := Sprite3D.new()
 			far_tree.texture = far_tex
@@ -196,9 +199,26 @@ func _build_world() -> void:
 			far_tree.pixel_size = 0.5
 			far_tree.scale = Vector3(far_s, far_s, far_s)
 			far_tree.rotation.y = deg_to_rad(far_ang) + deg_to_rad(yaw)
-			far_tree.position = Vector3(far_pos.x, far_h * 0.5 - 55.0, far_pos.y)
+			far_tree.position = Vector3(far_pos.x, far_gh + far_h * 0.5 - 3.0, far_pos.y)
 			far_tree.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+			far_tree.visible = false
 			add_child(far_tree)
+			if yaw > 0.0:
+				far_cross_a = far_tree
+			else:
+				far_cross_b = far_tree
+		var far_flat := Sprite3D.new()
+		far_flat.texture = far_tex
+		far_flat.billboard = StandardMaterial3D.BILLBOARD_FIXED_Y
+		far_flat.shaded = true
+		far_flat.alpha_cut = SpriteBase3D.ALPHA_CUT_DISCARD
+		far_flat.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+		far_flat.pixel_size = 0.5
+		far_flat.scale = Vector3(far_s, far_s, far_s)
+		far_flat.position = Vector3(far_pos.x, far_gh + far_h * 0.5 - 3.0, far_pos.y)
+		far_flat.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		add_child(far_flat)
+		tree_planes.append([far_cross_a, far_cross_b, far_flat])
 
 	var sky_shader := Shader.new()
 	sky_shader.code = SKY_CUBE_SHADER
@@ -243,7 +263,7 @@ func _build_world() -> void:
 		tree_positions.append(pos)
 		var open := true
 		for spot in lookout_spots:
-			if pos.distance_to(spot) < 180.0:
+			if pos.distance_to(spot) < 320.0:
 				open = false
 		if not open:
 			continue

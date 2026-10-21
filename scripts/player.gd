@@ -7,7 +7,7 @@ signal flashlight_toggled(on: bool)
 const WALK_SPEED: float = 84.0
 const SPRINT_SPEED: float = 168.0
 const JUMP_VELOCITY: float = 112.0
-const BOB_AMPLITUDE: float = 0.0
+const BOB_AMPLITUDE: float = 0.030
 const SWAY_AMPLITUDE: float = 0.0
 const TILT_AMPLITUDE: float = 0.045
 const TILT_SMOOTHING: float = 10.0
