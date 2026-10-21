@@ -15,19 +15,19 @@ size = Vector3(6, 400, 7680.0)
 size = Vector3(9600, 2, 9600)
 
 [sub_resource type="BoxShape3D" id="shaft_box"]
-size = Vector3(2820.0, 4800.0, 3600.0)
+size = Vector3(360.0, 360.0, 400.0)
 
 [sub_resource type="BoxShape3D" id="deck_box"]
-size = Vector3(2820.0, 360.0, 3600.0)
+size = Vector3(480.0, 24.0, 480.0)
 
 [sub_resource type="BoxShape3D" id="rail_side"]
-size = Vector3(108.0, 288.0, 3600.0)
+size = Vector3(16.0, 40.0, 480.0)
 
 [sub_resource type="BoxShape3D" id="rail_back"]
-size = Vector3(2820.0, 288.0, 108.0)
+size = Vector3(480.0, 40.0, 16.0)
 
 [sub_resource type="BoxShape3D" id="ramp_box"]
-size = Vector3(300.0, 240.0, 8400.0)
+size = Vector3(40.0, 32.0, 628.0)
 
 [node name="Map" type="Node3D"]
 
@@ -82,122 +82,122 @@ collision_layer = 1
 transform = Transform3D(-0.99254614114761, 0.0, 0.12186945229769, 0.0, 1.0, 0.0, -0.12186945229769, 0.0, -0.99254614114761, 1060.0, 0.0, 140.0)
 
 [node name="Tower" parent="Lookout1" instance=ExtResource("4_tower")]
-transform = Transform3D(120.0, 0.0, 0.0, 0.0, 120.0, 0.0, 0.0, 0.0, 120.0, 0.0, 47.5097389221191, 0.0)
+transform = Transform3D(800.0, 0.0, 0.0, 0.0, 800.0, 0.0, 0.0, 0.0, 800.0, 0.0, 47.5097389221191, 0.0)
 
 [node name="Shaft" type="CollisionShape3D" parent="Lookout1"]
 shape = SubResource("shaft_box")
-position = Vector3(0, 2447.50973806103, 600.0)
+position = Vector3(0, 227.509738061027, 16.0)
 
 [node name="Deck" type="CollisionShape3D" parent="Lookout1"]
 shape = SubResource("deck_box")
-position = Vector3(0, 4667.50973806103, 600.0)
+position = Vector3(0, 395.509738061027, 16.0)
 
 [node name="RailEast" type="CollisionShape3D" parent="Lookout1"]
 shape = SubResource("rail_side")
-position = Vector3(1350.0, 5063.50973806103, 600.0)
+position = Vector3(224.0, 427.509738061027, 16.0)
 
 [node name="RailWest" type="CollisionShape3D" parent="Lookout1"]
 shape = SubResource("rail_side")
-position = Vector3(-1350.0, 5063.50973806103, 600.0)
+position = Vector3(-224.0, 427.509738061027, 16.0)
 
 [node name="RailBack" type="CollisionShape3D" parent="Lookout1"]
 shape = SubResource("rail_back")
-position = Vector3(0, 5063.50973806103, -1164.0)
+position = Vector3(0, 427.509738061027, -208.0)
 
 [node name="Ramp" type="CollisionShape3D" parent="Lookout1"]
 shape = SubResource("ramp_box")
-transform = Transform3D(1.0, 0.0, 0.0, 0.0, 0.81915205717087, 0.5735764503479, 0.0, -0.5735764503479, 0.81915205717087, 0.0, 2439.10961914062, 5840.39990234375)
+transform = Transform3D(1.0, 0.0, 0.0, 0.0, 0.81915205717087, 0.5735764503479, 0.0, -0.5735764503479, 0.81915205717087, 0.0, 227.509735107422, 512.799987792969)
 
 [node name="Lookout2" type="StaticBody3D" parent="."]
 collision_layer = 1
 transform = Transform3D(0.73135381937027, 0.0, 0.68199825286865, 0.0, 1.0, 0.0, -0.68199825286865, 0.0, 0.73135381937027, -1140.0, 0.0, 1080.0)
 
 [node name="Tower" parent="Lookout2" instance=ExtResource("4_tower")]
-transform = Transform3D(120.0, 0.0, 0.0, 0.0, 120.0, 0.0, 0.0, 0.0, 120.0, 0.0, -11.8209714889526, 0.0)
+transform = Transform3D(800.0, 0.0, 0.0, 0.0, 800.0, 0.0, 0.0, 0.0, 800.0, 0.0, -11.8209714889526, 0.0)
 
 [node name="Shaft" type="CollisionShape3D" parent="Lookout2"]
 shape = SubResource("shaft_box")
-position = Vector3(0, 2388.17902874257, 600.0)
+position = Vector3(0, 168.17902874257, 16.0)
 
 [node name="Deck" type="CollisionShape3D" parent="Lookout2"]
 shape = SubResource("deck_box")
-position = Vector3(0, 4608.17902874257, 600.0)
+position = Vector3(0, 336.17902874257, 16.0)
 
 [node name="RailEast" type="CollisionShape3D" parent="Lookout2"]
 shape = SubResource("rail_side")
-position = Vector3(1350.0, 5004.17902874257, 600.0)
+position = Vector3(224.0, 368.17902874257, 16.0)
 
 [node name="RailWest" type="CollisionShape3D" parent="Lookout2"]
 shape = SubResource("rail_side")
-position = Vector3(-1350.0, 5004.17902874257, 600.0)
+position = Vector3(-224.0, 368.17902874257, 16.0)
 
 [node name="RailBack" type="CollisionShape3D" parent="Lookout2"]
 shape = SubResource("rail_back")
-position = Vector3(0, 5004.17902874257, -1164.0)
+position = Vector3(0, 368.17902874257, -208.0)
 
 [node name="Ramp" type="CollisionShape3D" parent="Lookout2"]
 shape = SubResource("ramp_box")
-transform = Transform3D(1.0, 0.0, 0.0, 0.0, 0.81915205717087, 0.5735764503479, 0.0, -0.5735764503479, 0.81915205717087, 0.0, 2379.77905273438, 5840.39990234375)
+transform = Transform3D(1.0, 0.0, 0.0, 0.0, 0.81915205717087, 0.5735764503479, 0.0, -0.5735764503479, 0.81915205717087, 0.0, 168.17903137207, 512.799987792969)
 
 [node name="Lookout3" type="StaticBody3D" parent="."]
 collision_layer = 1
 transform = Transform3D(-0.81915205717087, 0.0, -0.5735764503479, 0.0, 1.0, 0.0, 0.5735764503479, 0.0, -0.81915205717087, 1620.0, 0.0, -1130.0)
 
 [node name="Tower" parent="Lookout3" instance=ExtResource("4_tower")]
-transform = Transform3D(120.0, 0.0, 0.0, 0.0, 120.0, 0.0, 0.0, 0.0, 120.0, 0.0, 27.0631237030029, 0.0)
+transform = Transform3D(800.0, 0.0, 0.0, 0.0, 800.0, 0.0, 0.0, 0.0, 800.0, 0.0, 27.0631237030029, 0.0)
 
 [node name="Shaft" type="CollisionShape3D" parent="Lookout3"]
 shape = SubResource("shaft_box")
-position = Vector3(0, 2427.06312355972, 600.0)
+position = Vector3(0, 207.063123559724, 16.0)
 
 [node name="Deck" type="CollisionShape3D" parent="Lookout3"]
 shape = SubResource("deck_box")
-position = Vector3(0, 4647.06312355972, 600.0)
+position = Vector3(0, 375.063123559724, 16.0)
 
 [node name="RailEast" type="CollisionShape3D" parent="Lookout3"]
 shape = SubResource("rail_side")
-position = Vector3(1350.0, 5043.06312355972, 600.0)
+position = Vector3(224.0, 407.063123559724, 16.0)
 
 [node name="RailWest" type="CollisionShape3D" parent="Lookout3"]
 shape = SubResource("rail_side")
-position = Vector3(-1350.0, 5043.06312355972, 600.0)
+position = Vector3(-224.0, 407.063123559724, 16.0)
 
 [node name="RailBack" type="CollisionShape3D" parent="Lookout3"]
 shape = SubResource("rail_back")
-position = Vector3(0, 5043.06312355972, -1164.0)
+position = Vector3(0, 407.063123559724, -208.0)
 
 [node name="Ramp" type="CollisionShape3D" parent="Lookout3"]
 shape = SubResource("ramp_box")
-transform = Transform3D(1.0, 0.0, 0.0, 0.0, 0.81915205717087, 0.5735764503479, 0.0, -0.5735764503479, 0.81915205717087, 0.0, 2418.6630859375, 5840.39990234375)
+transform = Transform3D(1.0, 0.0, 0.0, 0.0, 0.81915205717087, 0.5735764503479, 0.0, -0.5735764503479, 0.81915205717087, 0.0, 207.063125610352, 512.799987792969)
 
 [node name="Lookout4" type="StaticBody3D" parent="."]
 collision_layer = 1
 transform = Transform3D(-0.05233594030142, 0.0, -0.99862951040268, 0.0, 1.0, 0.0, 0.99862951040268, 0.0, -0.05233594030142, 60.0, 0.0, -1090.0)
 
 [node name="Tower" parent="Lookout4" instance=ExtResource("4_tower")]
-transform = Transform3D(120.0, 0.0, 0.0, 0.0, 120.0, 0.0, 0.0, 0.0, 120.0, 0.0, -79.8076324462891, 0.0)
+transform = Transform3D(800.0, 0.0, 0.0, 0.0, 800.0, 0.0, 0.0, 0.0, 800.0, 0.0, -79.8076324462891, 0.0)
 
 [node name="Shaft" type="CollisionShape3D" parent="Lookout4"]
 shape = SubResource("shaft_box")
-position = Vector3(0, 2320.19236443704, 600.0)
+position = Vector3(0, 100.19236443704, 16.0)
 
 [node name="Deck" type="CollisionShape3D" parent="Lookout4"]
 shape = SubResource("deck_box")
-position = Vector3(0, 4540.19236443704, 600.0)
+position = Vector3(0, 268.19236443704, 16.0)
 
 [node name="RailEast" type="CollisionShape3D" parent="Lookout4"]
 shape = SubResource("rail_side")
-position = Vector3(1350.0, 4936.19236443704, 600.0)
+position = Vector3(224.0, 300.19236443704, 16.0)
 
 [node name="RailWest" type="CollisionShape3D" parent="Lookout4"]
 shape = SubResource("rail_side")
-position = Vector3(-1350.0, 4936.19236443704, 600.0)
+position = Vector3(-224.0, 300.19236443704, 16.0)
 
 [node name="RailBack" type="CollisionShape3D" parent="Lookout4"]
 shape = SubResource("rail_back")
-position = Vector3(0, 4936.19236443704, -1164.0)
+position = Vector3(0, 300.19236443704, -208.0)
 
 [node name="Ramp" type="CollisionShape3D" parent="Lookout4"]
 shape = SubResource("ramp_box")
-transform = Transform3D(1.0, 0.0, 0.0, 0.0, 0.81915205717087, 0.5735764503479, 0.0, -0.5735764503479, 0.81915205717087, 0.0, 2311.79248046875, 5840.39990234375)
+transform = Transform3D(1.0, 0.0, 0.0, 0.0, 0.81915205717087, 0.5735764503479, 0.0, -0.5735764503479, 0.81915205717087, 0.0, 100.192367553711, 512.799987792969)
 

@@ -1,7 +1,7 @@
 extends SceneTree
 
 const WORLD_HALF := 3200.0
-const TOWER_SCALE := 120.0
+const TOWER_SCALE := 800.0
 const GRASS_BLOCKS := [
 	"res://assets/textures/godotcraft/grass_top.png",
 ]
@@ -143,11 +143,11 @@ func save_map_scene() -> void:
 	text += "[sub_resource type=\"BoxShape3D\" id=\"wall_ns\"]\nsize = Vector3(%s, 400, 6)\n\n" % (WORLD_HALF * 2.4)
 	text += "[sub_resource type=\"BoxShape3D\" id=\"wall_ew\"]\nsize = Vector3(6, 400, %s)\n\n" % (WORLD_HALF * 2.4)
 	text += "[sub_resource type=\"BoxShape3D\" id=\"floor_safety\"]\nsize = Vector3(9600, 2, 9600)\n\n"
-	text += "[sub_resource type=\"BoxShape3D\" id=\"shaft_box\"]\nsize = Vector3(%s, %s, %s)\n\n" % [23.5 * TOWER_SCALE, 40.0 * TOWER_SCALE, 30 * TOWER_SCALE]
-	text += "[sub_resource type=\"BoxShape3D\" id=\"deck_box\"]\nsize = Vector3(%s, %s, %s)\n\n" % [23.5 * TOWER_SCALE, 3.0 * TOWER_SCALE, 30 * TOWER_SCALE]
-	text += "[sub_resource type=\"BoxShape3D\" id=\"rail_side\"]\nsize = Vector3(%s, %s, %s)\n\n" % [0.9 * TOWER_SCALE, 2.4 * TOWER_SCALE, 30 * TOWER_SCALE]
-	text += "[sub_resource type=\"BoxShape3D\" id=\"rail_back\"]\nsize = Vector3(%s, %s, %s)\n\n" % [23.5 * TOWER_SCALE, 2.4 * TOWER_SCALE, 0.9 * TOWER_SCALE]
-	text += "[sub_resource type=\"BoxShape3D\" id=\"ramp_box\"]\nsize = Vector3(%s, %s, %s)\n\n" % [2.5 * TOWER_SCALE, 2.0 * TOWER_SCALE, 70 * TOWER_SCALE]
+	text += "[sub_resource type=\"BoxShape3D\" id=\"shaft_box\"]\nsize = Vector3(%s, %s, %s)\n\n" % [0.45 * TOWER_SCALE, 0.45 * TOWER_SCALE, 0.50 * TOWER_SCALE]
+	text += "[sub_resource type=\"BoxShape3D\" id=\"deck_box\"]\nsize = Vector3(%s, %s, %s)\n\n" % [0.60 * TOWER_SCALE, 0.03 * TOWER_SCALE, 0.60 * TOWER_SCALE]
+	text += "[sub_resource type=\"BoxShape3D\" id=\"rail_side\"]\nsize = Vector3(%s, %s, %s)\n\n" % [0.02 * TOWER_SCALE, 0.05 * TOWER_SCALE, 0.60 * TOWER_SCALE]
+	text += "[sub_resource type=\"BoxShape3D\" id=\"rail_back\"]\nsize = Vector3(%s, %s, %s)\n\n" % [0.60 * TOWER_SCALE, 0.05 * TOWER_SCALE, 0.02 * TOWER_SCALE]
+	text += "[sub_resource type=\"BoxShape3D\" id=\"ramp_box\"]\nsize = Vector3(%s, %s, %s)\n\n" % [0.05 * TOWER_SCALE, 0.04 * TOWER_SCALE, 0.785 * TOWER_SCALE]
 	text += "[node name=\"Map\" type=\"Node3D\"]\n\n"
 	text += "[node name=\"Terrain\" type=\"MeshInstance3D\" parent=\".\"]\n"
 	text += "mesh = ExtResource(\"%s\")\n" % ids.mesh
@@ -189,22 +189,22 @@ func save_map_scene() -> void:
 		text += "transform = %s\n\n" % tf_string(Basis.from_scale(Vector3(TOWER_SCALE, TOWER_SCALE, TOWER_SCALE)), Vector3(0, gh, 0))
 		text += "[node name=\"Shaft\" type=\"CollisionShape3D\" parent=\"Lookout%d\"]\n" % li
 		text += "shape = SubResource(\"shaft_box\")\n"
-		text += "position = Vector3(0, %s, %s)\n\n" % [gh + 20.0 * TOWER_SCALE, 5.0 * TOWER_SCALE]
+		text += "position = Vector3(0, %s, %s)\n\n" % [gh + 0.225 * TOWER_SCALE, 0.02 * TOWER_SCALE]
 		text += "[node name=\"Deck\" type=\"CollisionShape3D\" parent=\"Lookout%d\"]\n" % li
 		text += "shape = SubResource(\"deck_box\")\n"
-		text += "position = Vector3(0, %s, %s)\n\n" % [gh + 38.5 * TOWER_SCALE, 5.0 * TOWER_SCALE]
+		text += "position = Vector3(0, %s, %s)\n\n" % [gh + 0.435 * TOWER_SCALE, 0.02 * TOWER_SCALE]
 		text += "[node name=\"RailEast\" type=\"CollisionShape3D\" parent=\"Lookout%d\"]\n" % li
 		text += "shape = SubResource(\"rail_side\")\n"
-		text += "position = Vector3(%s, %s, %s)\n\n" % [11.25 * TOWER_SCALE, gh + 41.8 * TOWER_SCALE, 5.0 * TOWER_SCALE]
+		text += "position = Vector3(%s, %s, %s)\n\n" % [0.28 * TOWER_SCALE, gh + 0.475 * TOWER_SCALE, 0.02 * TOWER_SCALE]
 		text += "[node name=\"RailWest\" type=\"CollisionShape3D\" parent=\"Lookout%d\"]\n" % li
 		text += "shape = SubResource(\"rail_side\")\n"
-		text += "position = Vector3(%s, %s, %s)\n\n" % [-11.25 * TOWER_SCALE, gh + 41.8 * TOWER_SCALE, 5.0 * TOWER_SCALE]
+		text += "position = Vector3(%s, %s, %s)\n\n" % [-0.28 * TOWER_SCALE, gh + 0.475 * TOWER_SCALE, 0.02 * TOWER_SCALE]
 		text += "[node name=\"RailBack\" type=\"CollisionShape3D\" parent=\"Lookout%d\"]\n" % li
 		text += "shape = SubResource(\"rail_back\")\n"
-		text += "position = Vector3(0, %s, %s)\n\n" % [gh + 41.8 * TOWER_SCALE, -9.7 * TOWER_SCALE]
+		text += "position = Vector3(0, %s, %s)\n\n" % [gh + 0.475 * TOWER_SCALE, -0.26 * TOWER_SCALE]
 		text += "[node name=\"Ramp\" type=\"CollisionShape3D\" parent=\"Lookout%d\"]\n" % li
 		text += "shape = SubResource(\"ramp_box\")\n"
-		text += "transform = %s\n\n" % tf_string(ramp_basis, Vector3(0, gh + 19.93 * TOWER_SCALE, 48.67 * TOWER_SCALE))
+		text += "transform = %s\n\n" % tf_string(ramp_basis, Vector3(0, gh + 0.225 * TOWER_SCALE, 0.641 * TOWER_SCALE))
 		li += 1
 	var f := FileAccess.open("res://scenes/map.tscn", FileAccess.WRITE)
 	f.store_string(text)
