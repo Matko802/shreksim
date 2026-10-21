@@ -8,8 +8,7 @@ const TREE_BILLBOARD_DIST := 750.0
 const TREE_RING_N := [30, 44, 58, 72]
 const TREE_RING_R := [900.0, 1350.0, 1800.0, 2250.0]
 const ONION_RADII := [560.0, 640.0, 700.0, 1060.0, 1150.0, 1560.0, 1630.0, 1950.0, 2100.0, 2450.0, 2600.0, 2900.0]
-const LOOKOUTS := [[Vector2(1060, 140), 187.0], [Vector2(-1140, 1080), 317.0], [Vector2(1620, -1130), 145.0], [Vector2(60, -1090), 93.0]]
-const LOOKOUT_SCENE := preload("res://assets/models/watchtower.glb")
+const TERRAIN_DATA := preload("res://assets/maps/terrain_data.tres")
 const TOTAL_PAGES := 8
 const START_TIME := 150.0
 const KILL_RADIUS := 70.0
@@ -26,10 +25,6 @@ const TREE_TEXTURES := [
 	"res://assets/images/trees/tree1.png",
 	"res://assets/images/trees/tree2.png",
 	"res://assets/images/trees/tree5.png",
-]
-
-const GROUND_BLOCKS := [
-	"res://assets/textures/godotcraft/grass_top.png",
 ]
 
 const PHASES := [
@@ -90,6 +85,7 @@ var sun: DirectionalLight3D
 var sky_mat: ShaderMaterial
 var _day_mix := 1.0
 var ground_mat: StandardMaterial3D
+var lookout_spots: PackedVector2Array = PackedVector2Array()
 var tree_planes: Array = []
 var tree_swap_time := 0.0
 var onion_spot := -1
@@ -159,168 +155,29 @@ func _build_player() -> void:
 	add_child(player)
 
 func _terrain_height(x: float, z: float) -> float:
-	var dist := Vector2(x, z).length()
-	var edge := clampf((float(WORLD_HALF) - dist) / 900.0, 0.0, 1.0)
-	var spawn := clampf((dist - 240.0) / 400.0, 0.0, 1.0)
-	var moat := clampf((dist - float(WORLD_HALF) + 500.0) / 500.0, 0.0, 1.0)
-	var tops := sin(x * 0.0012 + 1.7) * cos(z * 0.0009 - 2.3) * 70.0
-	var mids := sin((x + z) * 0.0022 - 0.8) * 28.0
-	var bumps := sin(x * 0.0051) * cos(z * 0.0054) * 6.0
-	return (tops + mids + bumps) * edge * spawn - 55.0 * moat
-
-func _terrain_normal(x: float, z: float) -> Vector3:
-	var e := 12.0
-	var dhx := (_terrain_height(x + e, z) - _terrain_height(x - e, z)) / (2.0 * e)
-	var dhz := (_terrain_height(x, z + e) - _terrain_height(x, z - e)) / (2.0 * e)
-	return Vector3(-dhx, 1.0, -dhz).normalized()
-
-func _make_shape(body: StaticBody3D, pos: Vector3, size: Vector3) -> void:
-	var cs := CollisionShape3D.new()
-	var bs := BoxShape3D.new()
-	bs.size = size
-	cs.shape = bs
-	cs.position = pos
-	body.add_child(cs)
-
-func _build_lookout(base: Vector2, facing: float) -> void:
-	var gh := _terrain_height(base.x, base.y)
-	var body := StaticBody3D.new()
-	body.collision_layer = 1
-	body.position = Vector3(base.x, 0.0, base.y)
-	body.rotation.y = deg_to_rad(facing)
-	add_child(body)
-	_make_shape(body, Vector3(0, gh + 24.4, 1.5), Vector3(31.2, 4.0, 34.2))
-	_make_shape(body, Vector3(14.9, gh + 28.6, 1.5), Vector3(1.2, 3.2, 34.2))
-	_make_shape(body, Vector3(-14.9, gh + 28.6, 1.5), Vector3(1.2, 3.2, 34.2))
-	_make_shape(body, Vector3(0, gh + 28.6, -15.0), Vector3(31.2, 3.2, 1.2))
-	var tower: Node3D = LOOKOUT_SCENE.instantiate()
-	tower.position = Vector3(0, gh, 0)
-	tower.scale = Vector3(0.66, 0.66, 0.66)
-	body.add_child(tower)
-	var ramp := Node3D.new()
-	ramp.position = Vector3(0, gh + 12.2, 35.0)
-	ramp.rotation.x = deg_to_rad(35.0)
-	body.add_child(ramp)
-	var ramp_cs := CollisionShape3D.new()
-	var ramp_bs := BoxShape3D.new()
-	ramp_bs.size = Vector3(3.4, 2.4, 50.0)
-	ramp_cs.shape = ramp_bs
-	ramp.add_child(ramp_cs)
+	var n: int = TERRAIN_DATA.grid_size
+	var half: float = TERRAIN_DATA.grid_half
+	var fx := clampf((x + half) / (half * 2.0), 0.0, 1.0) * float(n - 1)
+	var fz := clampf((z + half) / (half * 2.0), 0.0, 1.0) * float(n - 1)
+	var ix := clampi(int(fx), 0, n - 2)
+	var iz := clampi(int(fz), 0, n - 2)
+	var diff_x := fx - float(ix)
+	var diff_z := fz - float(iz)
+	var hs: PackedFloat32Array = TERRAIN_DATA.heights
+	var h00 := hs[iz * n + ix]
+	var h10 := hs[iz * n + ix + 1]
+	var h01 := hs[(iz + 1) * n + ix]
+	var h11 := hs[(iz + 1) * n + ix + 1]
+	return lerp(lerp(h00, h10, diff_x), lerp(h01, h11, diff_x), diff_z)
 
 func _build_world() -> void:
 	env = Environment.new()
 	env.background_mode = Environment.BG_SKY
-	var img := Image.create(512, 512, false, Image.FORMAT_RGBA8)
-	var block := 16
-	var grid := img.get_width() / block
-	var variants: Array[Image] = []
-	for tex_path in GROUND_BLOCKS:
-		var crop := (load(tex_path) as Texture2D).get_image()
-		crop.convert(Image.FORMAT_RGBA8)
-		variants.append(crop)
-		var fx := crop.duplicate() as Image
-		fx.flip_x()
-		variants.append(fx)
-		var fy := crop.duplicate() as Image
-		fy.flip_y()
-		variants.append(fy)
-		var fxy := crop.duplicate() as Image
-		fxy.flip_x()
-		fxy.flip_y()
-		variants.append(fxy)
-	var full := Rect2i(0, 0, block, block)
-	for gy in grid:
-		for gx in grid:
-			img.blit_rect(variants[((gx * 7 + gy * 13 + gx * gy * 5) + 3) % variants.size()], full, Vector2i(gx * block, gy * block))
-	img.generate_mipmaps()
-	var nt := ImageTexture.create_from_image(img)
-	ground_mat = StandardMaterial3D.new()
-	ground_mat.roughness = 1.0
-	ground_mat.cull_mode = BaseMaterial3D.CULL_DISABLED
-	ground_mat.albedo_texture = nt
-	ground_mat.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST_WITH_MIPMAPS
-	ground_mat.uv1_scale = Vector3(90, 90, 90)
-	ground_mat.albedo_color = PHASES[0]["grass"]
-	var ground_mesh := PlaneMesh.new()
-	ground_mesh.size = Vector2(24000, 24000)
-	var ground := MeshInstance3D.new()
-	ground.mesh = ground_mesh
-	ground.material_override = ground_mat
-	ground.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-	ground.position = Vector3(0, -55, 0)
-	add_child(ground)
-
-	var half := float(WORLD_HALF)
-	var segs := 120
-	var step := half * 2.0 / float(segs)
-	var verts := PackedVector3Array()
-	var norms := PackedVector3Array()
-	var uvs := PackedVector2Array()
-	var idx := PackedInt32Array()
-	for gy in segs + 1:
-		for gx in segs + 1:
-			var x := -half + float(gx) * step
-			var z := -half + float(gy) * step
-			verts.append(Vector3(x, _terrain_height(x, z), z))
-			norms.append(_terrain_normal(x, z))
-			uvs.append(Vector2(x / 24000.0 + 0.5, z / 24000.0 + 0.5))
-	for gy in segs:
-		for gx in segs:
-			var a := (segs + 1) * gy + gx
-			var b := a + 1
-			var c := a + segs + 1
-			var d := c + 1
-			idx.append(a)
-			idx.append(c)
-			idx.append(b)
-			idx.append(b)
-			idx.append(c)
-			idx.append(d)
-	var terrain_mesh := ArrayMesh.new()
-	var arrays := []
-	arrays.resize(Mesh.ARRAY_MAX)
-	arrays[Mesh.ARRAY_VERTEX] = verts
-	arrays[Mesh.ARRAY_NORMAL] = norms
-	arrays[Mesh.ARRAY_TEX_UV] = uvs
-	arrays[Mesh.ARRAY_INDEX] = idx
-	terrain_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
-	var terrain := MeshInstance3D.new()
-	terrain.mesh = terrain_mesh
-	terrain.material_override = ground_mat
-	terrain.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-	add_child(terrain)
-
-	var ground_body := StaticBody3D.new()
-	ground_body.collision_layer = 1
-	var gb_shape := CollisionShape3D.new()
-	var terrain_shape := terrain_mesh.create_trimesh_shape()
-	terrain_shape.backface_collision = true
-	gb_shape.shape = terrain_shape
-	ground_body.add_child(gb_shape)
-	add_child(ground_body)
-	var floor_safety := CollisionShape3D.new()
-	var safety_box := BoxShape3D.new()
-	safety_box.size = Vector3(9600, 2, 9600)
-	floor_safety.shape = safety_box
-	floor_safety.position = Vector3(0, -260, 0)
-	ground_body.add_child(floor_safety)
-
-	var walls := StaticBody3D.new()
-	walls.collision_layer = 1
-	var wall_positions := [
-		[Vector3(WORLD_HALF, 145, 0), Vector3(6, 400, WORLD_HALF * 2.4)],
-		[Vector3(-WORLD_HALF, 145, 0), Vector3(6, 400, WORLD_HALF * 2.4)],
-		[Vector3(0, 145, WORLD_HALF), Vector3(WORLD_HALF * 2.4, 400, 6)],
-		[Vector3(0, 145, -WORLD_HALF), Vector3(WORLD_HALF * 2.4, 400, 6)],
-	]
-	for wp in wall_positions:
-		var ws := CollisionShape3D.new()
-		var box := BoxShape3D.new()
-		box.size = wp[1]
-		ws.shape = box
-		ws.position = wp[0]
-		walls.add_child(ws)
-	add_child(walls)
+	ground_mat = (get_node("Map/Terrain") as MeshInstance3D).material_override
+	lookout_spots = PackedVector2Array()
+	for c in get_node("Map").get_children():
+		if c is StaticBody3D and c.name.begins_with("Lookout"):
+			lookout_spots.append(Vector2(c.position.x, c.position.z))
 
 	for i in FAR_TREE_COUNT:
 		var far_ang := 2.399963229728653 * float(i)
@@ -329,17 +186,19 @@ func _build_world() -> void:
 		var far_tex: Texture2D = load(TREE_TEXTURES[(i * 7 + 2) % TREE_TEXTURES.size()])
 		var far_s := 1.0 + 0.9 * absf(sin(float(i) * 0.83))
 		var far_h := far_tex.get_height() * 0.5 * far_s
-		var far_tree := Sprite3D.new()
-		far_tree.texture = far_tex
-		far_tree.billboard = StandardMaterial3D.BILLBOARD_FIXED_Y
-		far_tree.shaded = false
-		far_tree.alpha_cut = SpriteBase3D.ALPHA_CUT_DISCARD
-		far_tree.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
-		far_tree.pixel_size = 0.5
-		far_tree.scale = Vector3(far_s, far_s, far_s)
-		far_tree.position = Vector3(far_pos.x, far_h * 0.5 - 55.0, far_pos.y)
-		far_tree.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-		add_child(far_tree)
+		for yaw in [45.0, -45.0]:
+			var far_tree := Sprite3D.new()
+			far_tree.texture = far_tex
+			far_tree.billboard = BaseMaterial3D.BILLBOARD_DISABLED
+			far_tree.shaded = true
+			far_tree.alpha_cut = SpriteBase3D.ALPHA_CUT_DISCARD
+			far_tree.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+			far_tree.pixel_size = 0.5
+			far_tree.scale = Vector3(far_s, far_s, far_s)
+			far_tree.rotation.y = deg_to_rad(far_ang) + deg_to_rad(yaw)
+			far_tree.position = Vector3(far_pos.x, far_h * 0.5 - 55.0, far_pos.y)
+			far_tree.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+			add_child(far_tree)
 
 	var sky_shader := Shader.new()
 	sky_shader.code = SKY_CUBE_SHADER
@@ -362,7 +221,7 @@ func _build_world() -> void:
 	add_child(world_env)
 
 	sun = DirectionalLight3D.new()
-	sun.rotation_degrees = Vector3(-48, 32, 0)
+	sun.rotation_degrees = Vector3(-36, 32, 0)
 	sun.shadow_enabled = false
 	sun.directional_shadow_max_distance = 1000.0
 	add_child(sun)
@@ -382,6 +241,12 @@ func _build_world() -> void:
 		var ang := TAU * (float(local) / float(n)) + float(k) * 1.1
 		var pos: Vector2 = Vector2(cos(ang), sin(ang)) * TREE_RING_R[k]
 		tree_positions.append(pos)
+		var open := true
+		for spot in lookout_spots:
+			if pos.distance_to(spot) < 180.0:
+				open = false
+		if not open:
+			continue
 		var tex: Texture2D = load(TREE_TEXTURES[(i * 7 + k * 3) % TREE_TEXTURES.size()])
 		var s := clampf(1.2 + 0.45 * sin(float(i) * 0.61 + float(k) * 2.1) + 0.25 * cos(float(i) * 2.17), 0.6, 1.9)
 		var h := tex.get_height() * 0.22 * s
@@ -398,14 +263,11 @@ func _build_world() -> void:
 		cshape.position = Vector3(pos.x, gh + 400, pos.y)
 		trees.add_child(cshape)
 
-	for entry in LOOKOUTS:
-		_build_lookout(entry[0], entry[1])
-
 func _make_tree_plane(tex: Texture2D, pos: Vector2, h: float, s: float, ang_deg: float, billboard: bool, gh: float) -> Sprite3D:
 	var tr := Sprite3D.new()
 	tr.texture = tex
 	tr.billboard = BaseMaterial3D.BILLBOARD_FIXED_Y if billboard else BaseMaterial3D.BILLBOARD_DISABLED
-	tr.shaded = not billboard
+	tr.shaded = true
 	tr.alpha_cut = SpriteBase3D.ALPHA_CUT_DISCARD
 	tr.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	tr.pixel_size = 0.22

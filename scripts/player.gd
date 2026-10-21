@@ -7,9 +7,9 @@ signal flashlight_toggled(on: bool)
 const WALK_SPEED: float = 84.0
 const SPRINT_SPEED: float = 168.0
 const JUMP_VELOCITY: float = 112.0
-const BOB_AMPLITUDE: float = 0.030
-const SWAY_AMPLITUDE: float = 0.014
-const TILT_AMPLITUDE: float = 0.045
+const BOB_AMPLITUDE: float = 0.0
+const SWAY_AMPLITUDE: float = 0.0
+const TILT_AMPLITUDE: float = 0.0
 const TILT_SMOOTHING: float = 10.0
 const STRAFE_SMOOTHING: float = 8.0
 const BOB_OMEGA_SMOOTHING: float = 18.0
@@ -87,6 +87,7 @@ func _ready() -> void:
 	physics_interpolation_mode = Node3D.PHYSICS_INTERPOLATION_MODE_ON
 	collision_layer = 2
 	collision_mask = 1
+	floor_snap_length = 40.0
 
 	var capsule := CapsuleShape3D.new()
 	capsule.radius = 5.6

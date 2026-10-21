@@ -10,6 +10,7 @@ var click: AudioStreamPlayer
 var meow: AudioStreamPlayer
 var playing_meme := false
 var version_label: Label
+var update_button: Button
 var update_http: HTTPRequest
 var update_page := ""
 
@@ -90,6 +91,30 @@ func _setup_version() -> void:
 	version_label.mouse_filter = Control.MOUSE_FILTER_STOP
 	add_child(version_label)
 	version_label.gui_input.connect(_on_version_input)
+	update_button = Button.new()
+	update_button.text = "UPDATE"
+	update_button.add_theme_font_size_override("font_size", 30)
+	update_button.add_theme_color_override("font_color", Color(0.95, 1.0, 0.95))
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = DARK_GREEN
+	sb.set_corner_radius_all(10)
+	var sb_hover := sb.duplicate() as StyleBoxFlat
+	sb_hover.bg_color = GREEN
+	update_button.add_theme_stylebox_override("normal", sb)
+	update_button.add_theme_stylebox_override("hover", sb_hover)
+	update_button.add_theme_stylebox_override("pressed", sb_hover)
+	update_button.add_theme_stylebox_override("focus", sb)
+	update_button.anchor_left = 1.0
+	update_button.anchor_top = 1.0
+	update_button.anchor_right = 1.0
+	update_button.anchor_bottom = 1.0
+	update_button.offset_left = -680.0
+	update_button.offset_top = -74.0
+	update_button.offset_right = -440.0
+	update_button.offset_bottom = -18.0
+	update_button.visible = false
+	update_button.pressed.connect(_on_update_pressed)
+	add_child(update_button)
 
 func _check_update() -> void:
 	update_http = HTTPRequest.new()
@@ -110,6 +135,13 @@ func _on_update_check(result: int, code: int, headers: PackedStringArray, body: 
 	update_page = "https://github.com/Matko802/shreksim/releases/tag/" + tag
 	version_label.text = "v" + tag.lstrip("v") + " - tap to update"
 	version_label.add_theme_color_override("font_color", GREEN)
+	update_button.visible = true
+
+func _on_update_pressed() -> void:
+	if update_page == "":
+		return
+	click.play()
+	OS.shell_open(update_page)
 
 func _tag_is_newer(tag: String) -> bool:
 	var cur := str(ProjectSettings.get_setting("application/config/version", "0.0.0")).lstrip("v").split(".")

@@ -11,10 +11,10 @@ config_version=5
 [application]
 
 config/name="Swamp Horror Simulator 3D"
-config/version="1.3.10"
+config/version="1.3.11"
 run/main_scene="res://scenes/menu.tscn"
 config/features=PackedStringArray("4.8", "GL Compatibility")
-config/icon="res://assets/images/items/onion.png"
+config/icon="res://assets/icons/onion_icon.png"
 
 [autoload]
 
