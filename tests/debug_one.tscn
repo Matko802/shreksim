@@ -1,6 +1,0 @@
-[gd_scene format=3 uid="uid://cg8omrgu4rveo"]
-
-[ext_resource type="Script" uid="uid://djdtlvocowrwb" path="res://tests/debug_one.gd" id="1_d"]
-
-[node name="DebugOne" type="Node" unique_id=1806058142]
-script = ExtResource("1_d")

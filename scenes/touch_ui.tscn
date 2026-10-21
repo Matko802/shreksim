@@ -1,7 +1,0 @@
-[gd_scene format=3 uid="uid://bslhkmxasbjgq"]
-
-[ext_resource type="Script" uid="uid://dxiyqi84k88xl" path="res://scripts/touch_ui.gd" id="1_touch"]
-
-[node name="TouchUI" type="CanvasLayer" unique_id=1379885765]
-layer = 6
-script = ExtResource("1_touch")

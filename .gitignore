@@ -1,9 +1,0 @@
-.godot/
-android/build/.gradle/
-android/build/build/
-android/build/app/build/
-build/
-*.tmp
-/tmp/
-/thumbs.db
-.DS_Store

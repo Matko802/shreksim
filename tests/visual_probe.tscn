@@ -1,6 +1,0 @@
-[gd_scene format=3 uid="uid://lt643bsg5sey"]
-
-[ext_resource type="Script" uid="uid://cbijts7q3hjwo" path="res://tests/visual_probe.gd" id="1"]
-
-[node name="VisualProbe" type="Node" unique_id=1861630906]
-script = ExtResource("1")
