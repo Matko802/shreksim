@@ -24,13 +24,6 @@ const TREE_TEXTURES := [
 
 const GROUND_BLOCKS := [
 	"res://assets/textures/godotcraft/grass_top.png",
-	"res://assets/textures/godotcraft/grass_top.png",
-	"res://assets/textures/godotcraft/grass_top.png",
-	"res://assets/textures/godotcraft/grass_top.png",
-	"res://assets/textures/godotcraft/grass_side.png",
-	"res://assets/textures/godotcraft/dirt.png",
-	"res://assets/textures/godotcraft/stone.png",
-	"res://assets/textures/godotcraft/leaves.png",
 ]
 
 const PHASES := [
