@@ -83,6 +83,7 @@ func _show_stats_panel() -> void:
 	click.play()
 	pages_label.text = "Total onions collected: %d" % GameState.total_pages
 	esc_label.text = "Total escapes: %d" % GameState.total_escapes
+	%BestLabel.text = "Endless high score: %d" % GameState.best_endless
 	stats_panel.visible = true
 
 func _start_eight() -> void:

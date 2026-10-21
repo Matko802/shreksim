@@ -106,8 +106,7 @@ func _ready() -> void:
 	_build_world()
 	_build_player()
 	_build_onions()
-	if not endless:
-		_build_enemy()
+	_build_enemy()
 	_build_ui()
 	_build_audio()
 	_apply_phase(0)
@@ -393,7 +392,7 @@ func _update_threat(delta: float) -> void:
 		return
 	static_time += delta
 	var threat_frames: Array[Texture2D] = [static_frames[0], static_frames[2], static_frames[3], static_frames[4]]
-	hud.show_static(threat_frames[int(static_time / 0.07) % threat_frames.size()], pow(threat, 1.6) * 0.5)
+	hud.show_static(threat_frames[int(static_time / 0.07) % threat_frames.size()], lerpf(0.3, 0.5, pow(threat, 1.6)))
 
 func _update_prompt() -> void:
 	var hit := _ray_onion()
@@ -470,6 +469,8 @@ func _collect(onion: Area3D) -> void:
 	onion_sound.play()
 	pages += 1
 	GameState.total_pages += 1
+	if endless and pages > GameState.best_endless:
+		GameState.best_endless = pages
 	GameState.save_stats()
 	hud.set_pages_text(_pages_text())
 	onions.erase(onion)
@@ -534,8 +535,6 @@ func _start_music_phase(ph: int) -> void:
 
 func _physics_process(delta: float) -> void:
 	if game_over or paused:
-		return
-	if endless:
 		return
 	_tick_enemy(delta)
 

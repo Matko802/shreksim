@@ -345,6 +345,12 @@ theme_override_font_sizes/font_size = 28
 text = "Total escapes: 0"
 horizontal_alignment = 1
 
+[node name="BestLabel" type="Label" parent="StatsPanel/Box" unique_name_in_owner=true]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Endless high score: 0"
+horizontal_alignment = 1
+
 [node name="BackCenter" type="CenterContainer" parent="StatsPanel/Box" unique_id=661238286]
 layout_mode = 2
 

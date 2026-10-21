@@ -131,9 +131,9 @@ func _ready() -> void:
 	add_child(g3)
 	await get_tree().process_frame
 	await get_tree().physics_frame
-	if g3.enemy != null:
+	if g3.enemy == null or g3.enemy.visible:
 		failures += 1
-		print("FAIL endless should have no enemy")
+		print("FAIL endless enemy should start hidden")
 	if g3.hud.timer_label.visible:
 		failures += 1
 		print("FAIL endless should have no timer")
@@ -149,6 +149,20 @@ func _ready() -> void:
 	if g3.hud.pages_label.text != "1":
 		failures += 1
 		print("FAIL endless label: ", g3.hud.pages_label.text)
+	for i in range(20):
+		await get_tree().physics_frame
+	if not g3.enemy_active:
+		failures += 1
+		print("FAIL endless enemy not active")
+	if not g3.enemy.visible:
+		failures += 1
+		print("FAIL endless enemy not spawned")
+	var prev_best := GameState.best_endless
+	g3._collect(g3.onions[0])
+	if GameState.best_endless != maxi(prev_best, 2):
+		failures += 1
+		print("FAIL endless best: ", GameState.best_endless)
+	GameState.best_endless = prev_best
 
 	GameState.game_type = "eight_pages"
 	if failures == 0:

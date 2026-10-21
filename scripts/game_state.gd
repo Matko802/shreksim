@@ -14,6 +14,7 @@ var game_type := "eight_pages"
 var skin := EnemySkin.OG_SHREK
 var total_pages := 0
 var total_escapes := 0
+var best_endless := 0
 
 func _ready() -> void:
 	load_stats()
@@ -23,11 +24,13 @@ func load_stats() -> void:
 	if cfg.load(SAVE_PATH) == OK:
 		total_pages = int(cfg.get_value("stats", "pages", 0))
 		total_escapes = int(cfg.get_value("stats", "escapes", 0))
+		best_endless = int(cfg.get_value("stats", "best_endless", 0))
 
 func save_stats() -> void:
 	var cfg := ConfigFile.new()
 	cfg.set_value("stats", "pages", total_pages)
 	cfg.set_value("stats", "escapes", total_escapes)
+	cfg.set_value("stats", "best_endless", best_endless)
 	cfg.save(SAVE_PATH)
 
 func skin_texture() -> Texture2D:
