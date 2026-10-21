@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://02tw7ta7aact"
+path="res://.godot/imported/Wet Footstep 7.wav-df25606dc6d63e1424c25b7330c89b4c.sample"
+
+[deps]
+
+source_file="res://assets/sounds/footsteps/Wet Footstep 7.wav"
+dest_files=["res://.godot/imported/Wet Footstep 7.wav-df25606dc6d63e1424c25b7330c89b4c.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

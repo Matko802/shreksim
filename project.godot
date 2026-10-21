@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Swamp Horror Simulator 3D"
-config/version="1.3.17"
+config/version="1.4.0"
 run/main_scene="res://scenes/menu.tscn"
 config/features=PackedStringArray("4.8", "GL Compatibility")
 config/icon="res://assets/icons/onion_icon.png"
@@ -27,6 +27,10 @@ window/size/viewport_height=864
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 window/handheld/orientation="sensor_landscape"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/terrain_3d/plugin.cfg")
 
 [input]
 
@@ -365,9 +369,13 @@ zoom={
 )]
 }
 
+[internationalization]
+
+locale/translations=PackedStringArray("res://assets/loc/translations.en.translation", "res://assets/loc/translations.sk.translation", "res://assets/loc/translations.cs.translation", "res://assets/loc/translations.pl.translation", "res://assets/loc/translations.hu.translation", "res://assets/loc/translations.de.translation", "res://assets/loc/translations.es.translation", "res://assets/loc/translations.fr.translation")
+
 [physics]
 
-3d/default_gravity=275.0
+3d/default_gravity=11.0
 
 [rendering]
 

@@ -17,6 +17,7 @@ var update_page := ""
 @onready var enemy_panel: PanelContainer = %EnemyPanel
 @onready var stats_panel: PanelContainer = %StatsPanel
 @onready var howto_panel: PanelContainer = %HowtoPanel
+@onready var lang_option: OptionButton = %LangOption
 @onready var pages_label: Label = %PagesLabel
 @onready var esc_label: Label = %EscLabel
 @onready var remake_label: Label = $Card/Remake
@@ -70,8 +71,18 @@ func _ready() -> void:
 		click.play()
 		howto_panel.visible = false
 	)
+	_setup_lang_option()
 	_setup_version()
 	_check_update()
+
+func _setup_lang_option() -> void:
+	for entry in SettingsBus.LANGUAGES:
+		lang_option.add_item(entry[1])
+	lang_option.selected = SettingsBus.language_index()
+	lang_option.item_selected.connect(func(idx: int) -> void:
+		click.play()
+		SettingsBus.set_language(SettingsBus.LANGUAGES[idx][0])
+	)
 
 func _setup_version() -> void:
 	var ver := str(ProjectSettings.get_setting("application/config/version", "1.3.8"))
@@ -92,7 +103,7 @@ func _setup_version() -> void:
 	add_child(version_label)
 	version_label.gui_input.connect(_on_version_input)
 	update_button = Button.new()
-	update_button.text = "UPDATE"
+	update_button.text = tr("UPDATE")
 	update_button.add_theme_font_size_override("font_size", 30)
 	update_button.add_theme_color_override("font_color", Color(0.95, 1.0, 0.95))
 	var sb := StyleBoxFlat.new()
@@ -133,7 +144,7 @@ func _on_update_check(result: int, code: int, headers: PackedStringArray, body: 
 	if tag == "" or not _tag_is_newer(tag):
 		return
 	update_page = "https://github.com/Matko802/shreksim/releases/tag/" + tag
-	version_label.text = "v" + tag.lstrip("v") + " - tap to update"
+	version_label.text = tr("v%s - tap to update") % tag.lstrip("v")
 	version_label.add_theme_color_override("font_color", GREEN)
 	update_button.visible = true
 
@@ -177,9 +188,9 @@ func _show_enemy_panel() -> void:
 
 func _show_stats_panel() -> void:
 	click.play()
-	pages_label.text = "Total onions collected: %d" % GameState.total_pages
-	esc_label.text = "Total escapes: %d" % GameState.total_escapes
-	%BestLabel.text = "Endless high score: %d" % GameState.best_endless
+	pages_label.text = tr("Total onions collected: %d") % GameState.total_pages
+	esc_label.text = tr("Total escapes: %d") % GameState.total_escapes
+	%BestLabel.text = tr("Endless high score: %d") % GameState.best_endless
 	stats_panel.visible = true
 
 func _start_eight() -> void:

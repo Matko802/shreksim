@@ -78,39 +78,6 @@ theme_override_styles/hover = SubResource("sb_btn_hover")
 theme_override_styles/focus = SubResource("sb_focus_empty")
 text = "RESUME"
 
-[node name="SensRow" type="HBoxContainer" parent="Center/Panel/Box" unique_id=1214725051]
-layout_mode = 2
-theme_override_constants/separation = 10
-
-[node name="SensLabel" type="Label" parent="Center/Panel/Box/SensRow" unique_id=185449142]
-layout_mode = 2
-theme_override_font_sizes/font_size = 18
-text = "Sensitivity"
-
-[node name="SensSlider" type="HSlider" parent="Center/Panel/Box/SensRow" unique_id=159760029]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(190, 28)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-min_value = 0.0006
-max_value = 0.006
-step = 0.0002
-value = 0.002
-
-[node name="FXCheck" type="CheckButton" parent="Center/Panel/Box" unique_id=1650068918]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_font_sizes/font_size = 18
-button_pressed = true
-text = "Camera effects"
-
-[node name="FSCheck" type="CheckButton" parent="Center/Panel/Box" unique_id=353489585]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_font_sizes/font_size = 18
-text = "Fullscreen"
-
 [node name="RestartBtn" type="Button" parent="Center/Panel/Box" unique_id=692515628]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(344, 46)
@@ -121,6 +88,17 @@ theme_override_styles/pressed = SubResource("sb_btn")
 theme_override_styles/hover = SubResource("sb_btn_hover")
 theme_override_styles/focus = SubResource("sb_focus_empty")
 text = "RESTART"
+
+[node name="SettingsBtn" type="Button" parent="Center/Panel/Box" unique_id=883212100]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(344, 46)
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("sb_btn")
+theme_override_styles/pressed = SubResource("sb_btn")
+theme_override_styles/hover = SubResource("sb_btn_hover")
+theme_override_styles/focus = SubResource("sb_focus_empty")
+text = "SETTINGS"
 
 [node name="MenuBtn" type="Button" parent="Center/Panel/Box" unique_id=1861696175]
 unique_name_in_owner = true
@@ -133,10 +111,109 @@ theme_override_styles/hover = SubResource("sb_btn_hover")
 theme_override_styles/focus = SubResource("sb_focus_empty")
 text = "MAIN MENU"
 
-[node name="Binds" type="Label" parent="Center/Panel/Box" unique_id=350235625]
+[node name="SettingsCenter" type="CenterContainer" parent="." unique_id=883212101]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SettingsPanel" type="PanelContainer" parent="SettingsCenter" unique_id=883212102]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 0.65)
-theme_override_font_sizes/font_size = 15
-text = "WASD move | SHIFT sprint | CTRL crouch | SPACE jump
-E / Click grab onion | F flashlight | RMB zoom"
+theme_override_styles/panel = SubResource("sb_panel")
+
+[node name="Box" type="VBoxContainer" parent="SettingsCenter/SettingsPanel" unique_id=883212103]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="SettingsCenter/SettingsPanel/Box" unique_id=883212104]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 1, 0.55, 1)
+theme_override_font_sizes/font_size = 34
+text = "SETTINGS"
 horizontal_alignment = 1
+
+[node name="FXCheck" type="CheckButton" parent="SettingsCenter/SettingsPanel/Box" unique_id=883212105]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+button_pressed = true
+text = "Camera effects"
+
+[node name="FSCheck" type="CheckButton" parent="SettingsCenter/SettingsPanel/Box" unique_id=883212106]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Fullscreen"
+
+[node name="SensRow" type="HBoxContainer" parent="SettingsCenter/SettingsPanel/Box" unique_id=883212107]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="SensLabel" type="Label" parent="SettingsCenter/SettingsPanel/Box/SensRow" unique_id=883212108]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Sensitivity"
+
+[node name="SensSlider" type="HSlider" parent="SettingsCenter/SettingsPanel/Box/SensRow" unique_id=883212109]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 28)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+min_value = 0.0006
+max_value = 0.006
+step = 0.0002
+value = 0.002
+
+[node name="SensValue" type="Label" parent="SettingsCenter/SettingsPanel/Box/SensRow" unique_id=883212110]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(44, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "2.4"
+horizontal_alignment = 2
+
+[node name="LangRow" type="HBoxContainer" parent="SettingsCenter/SettingsPanel/Box" unique_id=883212111]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LangLabel" type="Label" parent="SettingsCenter/SettingsPanel/Box/LangRow" unique_id=883212112]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Language"
+
+[node name="LangOption" type="OptionButton" parent="SettingsCenter/SettingsPanel/Box/LangRow" unique_id=883212113]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(190, 28)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 18
+
+[node name="ResetCenter" type="CenterContainer" parent="SettingsCenter/SettingsPanel/Box" unique_id=883212114]
+layout_mode = 2
+
+[node name="ResetBtn" type="Button" parent="SettingsCenter/SettingsPanel/Box/ResetCenter" unique_id=883212115]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 36)
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("sb_btn")
+theme_override_styles/pressed = SubResource("sb_btn")
+theme_override_styles/hover = SubResource("sb_btn_hover")
+theme_override_styles/focus = SubResource("sb_focus_empty")
+text = "RESET"
+
+[node name="BackSettings" type="Button" parent="SettingsCenter/SettingsPanel/Box" unique_id=883212116]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(344, 46)
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("sb_btn")
+theme_override_styles/pressed = SubResource("sb_btn")
+theme_override_styles/hover = SubResource("sb_btn_hover")
+theme_override_styles/focus = SubResource("sb_focus_empty")
+text = "GO BACK"

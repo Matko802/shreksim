@@ -2,19 +2,13 @@ extends CanvasLayer
 
 var ui_scale := 1.0
 var screen := Vector2.ZERO
-var joy_pointer := -1
-var joy_center := Vector2.ZERO
-var joy_radius := 88.0
 var look_pointer := -1
 var look_last := Vector2.ZERO
 var btn_pointers := {}
 var grab_button: Panel
-var joy_anchor := Vector2.ZERO
-var spawn_ring: Panel
+var joystick: VirtualJoystick
 var tap_release_queue: Array = []
 var sprint_on := false
-var joy_base: Panel
-var joy_knob: Panel
 var buttons := {}
 
 func _ready() -> void:
@@ -25,7 +19,6 @@ func _ready() -> void:
 	var dpi := float(DisplayServer.screen_get_dpi())
 	ui_scale = clampf(dpi / 220.0, 0.9, 1.6)
 	screen = get_viewport().get_visible_rect().size
-	joy_radius = 76.0 * ui_scale
 	_build_ui()
 
 func _exit_tree() -> void:
@@ -68,6 +61,14 @@ func _label_of(p: Panel, text: String, size: float) -> void:
 	lab.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	p.add_child(lab)
 
+func _joy_style(size: float, color: Color, border: float) -> StyleBoxFlat:
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = color
+	sb.set_corner_radius_all(int(size * 0.5))
+	sb.set_border_width_all(maxi(1, roundi(border)))
+	sb.border_color = Color(1, 1, 1, color.a)
+	return sb
+
 func _add_button(id: String, text: String, size: float, center: Vector2, color: Color) -> void:
 	var p := _circle_panel(size, color)
 	p.position = center - Vector2(size, size) * 0.5
@@ -86,35 +87,32 @@ func _build_ui() -> void:
 	var jump := 88.0 * ui_scale
 	var gap := 12.0 * ui_scale
 
-	_add_button("jump", "JUMP", jump, end - Vector2(m + jump * 0.5, m + jump * 0.5), Color(0.18, 0.5, 0.24, 0.42))
-	_add_button("sprint", "RUN", small, end - Vector2(m + small * 0.5, m + jump + gap + small * 0.5), Color(0.5, 0.38, 0.12, 0.42))
-	_add_button("crouch", "DUCK", small, end - Vector2(m + jump + gap + small * 0.5, m + small * 0.5), Color(0.22, 0.38, 0.48, 0.42))
-	_add_button("light", "LIGHT", small, end - Vector2(m + jump + gap + small * 0.5, m + small * 1.5 + gap), Color(0.62, 0.52, 0.16, 0.42))
-	_add_button("grab", "GRAB", small, end - Vector2(m + small * 0.7, safe.position.y + safe.size.y * 0.58), Color(0.55, 0.28, 0.18, 0.42))
+	_add_button("jump", tr("JUMP"), jump, end - Vector2(m + jump * 0.5, m + jump * 0.5), Color(0.18, 0.5, 0.24, 0.42))
+	_add_button("sprint", tr("RUN"), small, end - Vector2(m + small * 0.5, m + jump + gap + small * 0.5), Color(0.5, 0.38, 0.12, 0.42))
+	_add_button("crouch", tr("DUCK"), small, end - Vector2(m + jump + gap + small * 0.5, m + small * 0.5), Color(0.22, 0.38, 0.48, 0.42))
+	_add_button("light", tr("LIGHT"), small, end - Vector2(m + jump + gap + small * 0.5, m + small * 1.5 + gap), Color(0.62, 0.52, 0.16, 0.42))
+	_add_button("grab", tr("GRAB"), small, end - Vector2(m + small * 0.7, safe.position.y + safe.size.y * 0.58), Color(0.55, 0.28, 0.18, 0.42))
 	_add_button("pauseb", "I I", small * 0.82, Vector2(end.x - m - small * 0.5, safe.position.y + m + small * 0.45), Color(0.25, 0.25, 0.28, 0.45))
 
-	joy_base = _circle_panel(joy_radius * 2.1, Color(0, 0, 0, 0.0))
-	joy_base.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var ring := _circle_panel(joy_radius * 2.1, Color(1, 1, 1, 0.09))
-	ring.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	joy_base.add_child(ring)
-	var knob_size := joy_radius * 0.78
-	joy_knob = _circle_panel(knob_size, Color(1.0, 0.97, 0.88, 0.5))
-	joy_knob.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	joy_base.add_child(joy_knob)
-	joy_knob.position = Vector2(joy_radius * 2.1, joy_radius * 2.1) * 0.5 - Vector2(knob_size, knob_size) * 0.5
-	joy_base.visible = false
-	add_child(joy_base)
-
-	joy_anchor = Vector2(safe.position.x + m + joy_radius * 1.2, end.y - m - joy_radius * 1.2)
-	spawn_ring = _circle_panel(joy_radius * 2.1, Color(1, 1, 1, 0.09))
-	spawn_ring.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	spawn_ring.position = joy_anchor - Vector2(joy_radius * 2.1, joy_radius * 2.1) * 0.5
-	add_child(spawn_ring)
-	var spawn_dot := _circle_panel(knob_size, Color(1.0, 0.97, 0.88, 0.22))
-	spawn_dot.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	spawn_dot.position = Vector2(joy_radius * 2.1, joy_radius * 2.1) * 0.5 - Vector2(knob_size, knob_size) * 0.5
-	spawn_ring.add_child(spawn_dot)
+	var joy_size := 160.0 * ui_scale
+	var joy_center := Vector2(safe.position.x + m + 91.2 * ui_scale, end.y - m - 91.2 * ui_scale)
+	joystick = VirtualJoystick.new()
+	joystick.joystick_mode = VirtualJoystick.JOYSTICK_FIXED
+	joystick.visibility_mode = VirtualJoystick.VISIBILITY_ALWAYS
+	joystick.joystick_size = joy_size
+	joystick.tip_size = 60.0 * ui_scale
+	joystick.deadzone_ratio = 0.2
+	joystick.action_left = &"move_left"
+	joystick.action_right = &"move_right"
+	joystick.action_up = &"move_forward"
+	joystick.action_down = &"move_back"
+	joystick.position = joy_center - Vector2(joy_size, joy_size) * 0.5
+	joystick.size = Vector2(joy_size, joy_size)
+	joystick.add_theme_stylebox_override("normal_joystick", _joy_style(joy_size, Color(1, 1, 1, 0.09), 5.6 * ui_scale))
+	joystick.add_theme_stylebox_override("pressed_joystick", _joy_style(joy_size, Color(1, 1, 1, 0.14), 5.6 * ui_scale))
+	joystick.add_theme_stylebox_override("normal_tip", _joy_style(60.0 * ui_scale, Color(1.0, 0.97, 0.88, 0.5), 2.1 * ui_scale))
+	joystick.add_theme_stylebox_override("pressed_tip", _joy_style(60.0 * ui_scale, Color(1.0, 0.97, 0.88, 0.68), 2.1 * ui_scale))
+	add_child(joystick)
 
 	grab_button = buttons["grab"]
 	grab_button.visible = false
@@ -210,26 +208,13 @@ func _handle_press(idx: int, pos: Vector2) -> void:
 			"pauseb":
 				_fire_action("pause")
 		return
-	if joy_pointer == -1 and pos.x < screen.x * 0.45 and pos.y > screen.y * 0.32:
-		joy_pointer = idx
-		joy_center = joy_anchor
-		joy_base.position = joy_anchor - Vector2(joy_radius * 2.1, joy_radius * 2.1) * 0.5
-		joy_base.visible = true
-		joy_base.modulate = Color(1, 1, 1)
-		spawn_ring.visible = false
+	if joystick.get_global_rect().has_point(pos):
 		return
 	if look_pointer == -1 and pos.x > screen.x * 0.28:
 		look_pointer = idx
 		look_last = pos
 
 func _handle_release(idx: int) -> void:
-	if idx == joy_pointer:
-		if joy_pointer != -1:
-			joy_pointer = -1
-			joy_vector_reset()
-			joy_base.visible = false
-			spawn_ring.visible = true
-		return
 	if btn_pointers.has(idx):
 		var id: String = btn_pointers[idx]
 		btn_pointers.erase(idx)
@@ -242,9 +227,7 @@ func _handle_release(idx: int) -> void:
 		look_pointer = -1
 
 func _handle_drag(idx: int, pos: Vector2, _rel: Vector2) -> void:
-	if idx == joy_pointer:
-		joy_update(pos)
-	elif idx == look_pointer:
+	if idx == look_pointer:
 		var delta := pos - look_last
 		look_last = pos
 		_send_look(delta)
@@ -254,38 +237,10 @@ func _send_look(delta: Vector2) -> void:
 	if g != null and g.has_method("_touch_look"):
 		g._touch_look(delta)
 
-func joy_vector_reset() -> void:
-	Input.action_release("move_forward")
-	Input.action_release("move_back")
-	Input.action_release("move_left")
-	Input.action_release("move_right")
-
-func joy_update(pos: Vector2) -> void:
-	var offset := (pos - joy_center).limit_length(joy_radius)
-	var knob_size := joy_knob.size.x
-	joy_knob.position = Vector2(joy_radius * 2.1, joy_radius * 2.1) * 0.5 - Vector2(knob_size, knob_size) * 0.5 + offset
-	if offset.length() < joy_radius * 0.2:
-		joy_vector_reset()
-		return
-	var snapped_dir := Vector2.RIGHT.rotated(roundf(offset.angle() / (TAU / 8.0)) * (TAU / 8.0))
-	var up := -snapped_dir.y
-	var down := snapped_dir.y
-	var right := snapped_dir.x
-	var left := -snapped_dir.x
-	Input.action_press("move_forward", up)
-	Input.action_press("move_back", down)
-	Input.action_press("move_right", right)
-	Input.action_press("move_left", left)
-	if up < 0.05:
-		Input.action_release("move_forward")
-	if down < 0.05:
-		Input.action_release("move_back")
-	if right < 0.05:
-		Input.action_release("move_right")
-	if left < 0.05:
-		Input.action_release("move_left")
-
 func _process(_delta: float) -> void:
+	var over := _game_over()
+	if joystick != null and joystick.visible == over:
+		joystick.visible = not over
 	var i := 0
 	while i < tap_release_queue.size():
 		var item: Array = tap_release_queue[i]

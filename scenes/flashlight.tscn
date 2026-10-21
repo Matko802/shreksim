@@ -1,0 +1,170 @@
+[gd_scene format=3 uid="uid://qtrriyleikrp"]
+
+[ext_resource type="PackedScene" uid="uid://clhba2hwkiq43" path="res://assets/models/flashlight.glb" id="1_glb"]
+[ext_resource type="Texture2D" uid="uid://bkne1a8fg1fyr" path="res://assets/textures/flashlight_albedo.png" id="2_tex"]
+[ext_resource type="AudioStream" uid="uid://dbpmtwc5t58jt" path="res://assets/sounds/sfx_flashlight_toggle.ogg" id="3_snd"]
+[ext_resource type="Shader" uid="uid://d1trypb4yk3qu" path="res://scripts/viewmodel.gdshader" id="4_shader"]
+
+[sub_resource type="ShaderMaterial" id="sm_flash"]
+render_priority = 0
+shader = ExtResource("4_shader")
+shader_parameter/albedo_texture = ExtResource("2_tex")
+
+[sub_resource type="Animation" id="anim_reset"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.66864, -0.80864, -0.364)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.5235988, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="anim_draw"]
+length = 0.3
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-0.67536, -0.80864, -0.364), Vector3(-0.67536, -0.47264, -0.476)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-1.5707964, 0, 0), Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="anim_holster"]
+length = 0.3
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-0.67536, -0.47264, -0.476), Vector3(0.66864, -0.80864, -0.364)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-1.5707964, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="anim_lib"]
+_data = {
+&"RESET": SubResource("anim_reset"),
+&"model_draw": SubResource("anim_draw"),
+&"model_holster": SubResource("anim_holster")
+}
+
+[node name="Flashlight" type="Node3D" unique_id=356943519]
+transform = Transform3D(1, 0, 0, 0, 0.8660254, 0.5, 0, -0.5, 0.8660254, 0.66864, -0.80864, -0.364)
+visible = false
+
+[node name="Model" parent="." unique_id=756600204 instance=ExtResource("1_glb")]
+transform = Transform3D(0.56, 0, 0, 0, 0.56, 0, 0, 0, 0.56, 0, 0, 0)
+
+[node name="Cube" parent="Model" index="0" unique_id=1516650038]
+layers = 2
+material_override = SubResource("sm_flash")
+cast_shadow = 0
+
+[node name="FlashlightLight" type="SpotLight3D" parent="." unique_id=468171472]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.027999938, 0.06498742, 0.111397445)
+light_energy = 16.0
+light_indirect_energy = 16.0
+spot_range = 30.835058
+spot_angle = 44.872757
+spot_angle_attenuation = 2.0
+
+[node name="ModelAnimator" type="AnimationPlayer" parent="." unique_id=919027774]
+unique_name_in_owner = true
+libraries/ = SubResource("anim_lib")
+
+[node name="TogglePlayer" type="AudioStreamPlayer3D" parent="." unique_id=1463460621]
+unique_name_in_owner = true
+stream = ExtResource("3_snd")
+unit_size = 6.72
+max_distance = 28.0
+
+[editable path="Model"]

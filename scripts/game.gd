@@ -1,42 +1,40 @@
 extends Node3D
 
-const WORLD_HALF := 3200.0
-const TREE_COUNT := 204
-const FAR_TREE_COUNT := 200
-const TREE_RADIUS := 64.0
-const TREE_BILLBOARD_DIST := 750.0
-const TREE_RING_N := [30, 44, 58, 72]
-const TREE_RING_R := [900.0, 1350.0, 1800.0, 2250.0]
-const ONION_RADII := [560.0, 640.0, 700.0, 1060.0, 1150.0, 1560.0, 1630.0, 1950.0, 2100.0, 2450.0, 2600.0, 2900.0]
+const WORLD_HALF := 128.0
+const TREE_CROSS_DIST := 30.0
+const ONION_RADII := [22.4, 25.6, 28.0, 42.4, 46.0, 62.4, 65.2, 78.0, 84.0, 98.0, 104.0, 116.0]
 const TERRAIN_DATA := preload("res://assets/maps/terrain_data.tres")
+const NAV := preload("res://scripts/enemy_nav.gd")
 const TOTAL_PAGES := 8
 const START_TIME := 150.0
-const KILL_RADIUS := 70.0
-const CAMERA_HEIGHT := 44.0
-const ONION_RANGE := 360.0
-const STATIC_MAX_ALPHA := 0.4
+const KILL_RADIUS := 2.8
+const CAMERA_HEIGHT := 1.76
+const ONION_RANGE := 14.4
+const STATIC_MAX_ALPHA := 0.25
 
-const THREAT_RANGE := 950.0
-const ENEMY_FOLLOW_BASE := 60.0
-const ENEMY_FOLLOW_PER_PAGE := 12.0
-const ENEMY_SPEED_CAP := 160.0
-
-const TREE_TEXTURES := [
-	"res://assets/images/trees/tree1.png",
-	"res://assets/images/trees/tree2.png",
-	"res://assets/images/trees/tree5.png",
-]
+const THREAT_RANGE := 38.0
+const ENEMY_FOLLOW_BASE := 2.4
+const ENEMY_FOLLOW_PER_PAGE := 0.48
+const ENEMY_SPEED_CAP := 6.4
+const ENEMY_FOV_HALF := 0.85
+const ENEMY_VISION_DIST := 30.0
+const ENEMY_HEAR_RUN := 16.0
+const ENEMY_MEMORY := 2.5
+const ENEMY_SEARCH_TIME := 6.0
+const ENEMY_PATH_INTERVAL := 0.6
+const ENEMY_WHISKER_DIST := 3.2
+const WALL_SAFE := 6.0
 
 const PHASES := [
-	{"top": Color(0.3, 0.52, 0.85), "horizon": Color(0.8, 0.88, 0.86), "fog": 0.00016, "sun": 1.35, "sun_color": Color(1.0, 0.97, 0.9), "ambient_energy": 1.0, "grass": Color(0.5, 0.68, 0.4), "sky_affect": 0.12, "day": 1.0},
-	{"top": Color(0.42, 0.64, 0.95), "horizon": Color(0.88, 0.94, 0.94), "fog": 0.00012, "sun": 1.6, "sun_color": Color(1.0, 1.0, 0.98), "ambient_energy": 1.15, "grass": Color(0.55, 0.74, 0.44), "sky_affect": 0.1, "day": 1.0},
-	{"top": Color(0.36, 0.55, 0.8), "horizon": Color(0.85, 0.82, 0.7), "fog": 0.0002, "sun": 1.3, "sun_color": Color(1.0, 0.93, 0.82), "ambient_energy": 1.0, "grass": Color(0.5, 0.66, 0.4), "sky_affect": 0.16, "day": 0.85},
-	{"top": Color(0.3, 0.4, 0.62), "horizon": Color(0.9, 0.7, 0.48), "fog": 0.00025, "sun": 1.05, "sun_color": Color(1.0, 0.78, 0.55), "ambient_energy": 0.85, "grass": Color(0.46, 0.58, 0.34), "sky_affect": 0.2, "day": 0.6},
-	{"top": Color(0.22, 0.24, 0.42), "horizon": Color(0.75, 0.5, 0.35), "fog": 0.0006, "sun": 0.7, "sun_color": Color(1.0, 0.55, 0.35), "ambient_energy": 0.62, "grass": Color(0.38, 0.44, 0.26), "sky_affect": 0.24, "day": 0.4},
-	{"top": Color(0.1, 0.11, 0.26), "horizon": Color(0.35, 0.26, 0.3), "fog": 0.0012, "sun": 0.4, "sun_color": Color(0.7, 0.4, 0.45), "ambient_energy": 0.45, "grass": Color(0.26, 0.3, 0.2), "sky_affect": 0.28, "day": 0.2},
-	{"top": Color(0.045, 0.055, 0.15), "horizon": Color(0.12, 0.1, 0.14), "fog": 0.0022, "sun": 0.22, "sun_color": Color(0.4, 0.32, 0.55), "ambient_energy": 0.32, "grass": Color(0.16, 0.2, 0.13), "sky_affect": 0.32, "day": 0.05},
-	{"top": Color(0.012, 0.02, 0.05), "horizon": Color(0.035, 0.045, 0.06), "fog": 0.0035, "sun": 0.1, "sun_color": Color(0.3, 0.35, 0.55), "ambient_energy": 0.22, "grass": Color(0.11, 0.15, 0.1), "sky_affect": 0.36, "day": 0.0},
-	{"top": Color(0.004, 0.008, 0.02), "horizon": Color(0.012, 0.015, 0.02), "fog": 0.005, "sun": 0.03, "sun_color": Color(0.2, 0.25, 0.4), "ambient_energy": 0.14, "grass": Color(0.08, 0.12, 0.08), "sky_affect": 0.4, "day": 0.0},
+	{"top": Color(0.3, 0.52, 0.85), "horizon": Color(0.8, 0.88, 0.86), "fog": 0.004, "sun": 1.35, "sun_color": Color(1.0, 0.97, 0.9), "ambient_energy": 1.0, "grass": Color(0.5, 0.68, 0.4), "sky_affect": 0.12, "day": 1.0},
+	{"top": Color(0.42, 0.64, 0.95), "horizon": Color(0.88, 0.94, 0.94), "fog": 0.003, "sun": 1.6, "sun_color": Color(1.0, 1.0, 0.98), "ambient_energy": 1.15, "grass": Color(0.55, 0.74, 0.44), "sky_affect": 0.1, "day": 1.0},
+	{"top": Color(0.36, 0.55, 0.8), "horizon": Color(0.85, 0.82, 0.7), "fog": 0.005, "sun": 1.3, "sun_color": Color(1.0, 0.93, 0.82), "ambient_energy": 1.0, "grass": Color(0.5, 0.66, 0.4), "sky_affect": 0.16, "day": 0.85},
+	{"top": Color(0.3, 0.4, 0.62), "horizon": Color(0.9, 0.7, 0.48), "fog": 0.00625, "sun": 1.05, "sun_color": Color(1.0, 0.78, 0.55), "ambient_energy": 0.85, "grass": Color(0.46, 0.58, 0.34), "sky_affect": 0.2, "day": 0.6},
+	{"top": Color(0.22, 0.24, 0.42), "horizon": Color(0.75, 0.5, 0.35), "fog": 0.015, "sun": 0.7, "sun_color": Color(1.0, 0.55, 0.35), "ambient_energy": 0.62, "grass": Color(0.38, 0.44, 0.26), "sky_affect": 0.24, "day": 0.4},
+	{"top": Color(0.1, 0.11, 0.26), "horizon": Color(0.35, 0.26, 0.3), "fog": 0.03, "sun": 0.4, "sun_color": Color(0.7, 0.4, 0.45), "ambient_energy": 0.45, "grass": Color(0.26, 0.3, 0.2), "sky_affect": 0.28, "day": 0.2},
+	{"top": Color(0.045, 0.055, 0.15), "horizon": Color(0.12, 0.1, 0.14), "fog": 0.055, "sun": 0.22, "sun_color": Color(0.4, 0.32, 0.55), "ambient_energy": 0.32, "grass": Color(0.16, 0.2, 0.13), "sky_affect": 0.32, "day": 0.05},
+	{"top": Color(0.012, 0.02, 0.05), "horizon": Color(0.035, 0.045, 0.06), "fog": 0.0875, "sun": 0.1, "sun_color": Color(0.3, 0.35, 0.55), "ambient_energy": 0.22, "grass": Color(0.11, 0.15, 0.1), "sky_affect": 0.36, "day": 0.0},
+	{"top": Color(0.004, 0.008, 0.02), "horizon": Color(0.012, 0.015, 0.02), "fog": 0.125, "sun": 0.03, "sun_color": Color(0.2, 0.25, 0.4), "ambient_energy": 0.14, "grass": Color(0.08, 0.12, 0.08), "sky_affect": 0.4, "day": 0.0},
 ]
 
 const SKY_CUBE_SHADER: String = """
@@ -84,8 +82,7 @@ var env: Environment
 var sun: DirectionalLight3D
 var sky_mat: ShaderMaterial
 var _day_mix := 1.0
-var ground_mat: StandardMaterial3D
-var lookout_spots: PackedVector2Array = PackedVector2Array()
+var ground_mat: ShaderMaterial
 var tree_planes: Array = []
 var tree_swap_time := 0.0
 var onion_spot := -1
@@ -94,12 +91,26 @@ var enemy: Sprite3D
 var enemy_active := false
 var enemy_bob_t := 0.0
 var threat := 0.0
+var nav: EnemyNav
+var enemy_mode := "wander"
+var enemy_path := PackedVector2Array()
+var enemy_path_i := 0
+var enemy_path_time := 0.0
+var enemy_arrived := false
+var enemy_goal_ok := false
+var enemy_goal := Vector2.ZERO
+var enemy_pause := 0.0
+var enemy_yaw := 0.0
+var enemy_lose_time := 0.0
+var enemy_search_time := 0.0
+var last_seen := Vector2.ZERO
+var sees_cache := false
+var sees_timer := 0.0
 var _grab_shown := false
 var _prompt_timer := 0.0
 
 var onions: Array[Area3D] = []
 var onion_bob_t := 0.0
-var tree_positions: Array[Vector2] = []
 
 var hud: CanvasLayer
 var pause_menu: CanvasLayer
@@ -174,52 +185,6 @@ func _build_world() -> void:
 	env = Environment.new()
 	env.background_mode = Environment.BG_SKY
 	ground_mat = (get_node("Map/Terrain") as MeshInstance3D).material_override
-	lookout_spots = PackedVector2Array()
-	for c in get_node("Map").get_children():
-		if c is StaticBody3D and c.name.begins_with("Lookout"):
-			lookout_spots.append(Vector2(c.position.x, c.position.z))
-
-	for i in FAR_TREE_COUNT:
-		var far_ang := 2.399963229728653 * float(i)
-		var far_rad := 3400.0 + 1600.0 * fmod(float(i) * 0.137 + float(i % 5) * 0.043, 1.0)
-		var far_pos := Vector2(cos(far_ang), sin(far_ang)) * far_rad
-		var far_tex: Texture2D = load(TREE_TEXTURES[(i * 7 + 2) % TREE_TEXTURES.size()])
-		var far_s := 1.0 + 0.9 * absf(sin(float(i) * 0.83))
-		var far_h := far_tex.get_height() * 0.5 * far_s
-		var far_gh := _terrain_height(far_pos.x, far_pos.y)
-		var far_cross_a: Sprite3D = null
-		var far_cross_b: Sprite3D = null
-		for yaw in [45.0, -45.0]:
-			var far_tree := Sprite3D.new()
-			far_tree.texture = far_tex
-			far_tree.billboard = BaseMaterial3D.BILLBOARD_DISABLED
-			far_tree.shaded = true
-			far_tree.alpha_cut = SpriteBase3D.ALPHA_CUT_DISCARD
-			far_tree.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
-			far_tree.pixel_size = 0.5
-			far_tree.scale = Vector3(far_s, far_s, far_s)
-			far_tree.rotation.y = deg_to_rad(far_ang) + deg_to_rad(yaw)
-			far_tree.position = Vector3(far_pos.x, far_gh + far_h * 0.5 - 3.0, far_pos.y)
-			far_tree.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-			far_tree.visible = false
-			add_child(far_tree)
-			if yaw > 0.0:
-				far_cross_a = far_tree
-			else:
-				far_cross_b = far_tree
-		var far_flat := Sprite3D.new()
-		far_flat.texture = far_tex
-		far_flat.billboard = StandardMaterial3D.BILLBOARD_FIXED_Y
-		far_flat.shaded = true
-		far_flat.alpha_cut = SpriteBase3D.ALPHA_CUT_DISCARD
-		far_flat.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
-		far_flat.pixel_size = 0.5
-		far_flat.scale = Vector3(far_s, far_s, far_s)
-		far_flat.position = Vector3(far_pos.x, far_gh + far_h * 0.5 - 3.0, far_pos.y)
-		far_flat.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-		add_child(far_flat)
-		tree_planes.append([far_cross_a, far_cross_b, far_flat])
-
 	var sky_shader := Shader.new()
 	sky_shader.code = SKY_CUBE_SHADER
 	var sky_mat_ref := ShaderMaterial.new()
@@ -243,70 +208,25 @@ func _build_world() -> void:
 	sun = DirectionalLight3D.new()
 	sun.rotation_degrees = Vector3(-36, 32, 0)
 	sun.shadow_enabled = false
-	sun.directional_shadow_max_distance = 1000.0
+	sun.directional_shadow_max_distance = 40.0
 	add_child(sun)
 
-	var trees := StaticBody3D.new()
-	trees.collision_layer = 1
-	add_child(trees)
-	tree_positions.clear()
-
-	for i in TREE_COUNT:
-		var k := 0
-		var local := i
-		while local >= TREE_RING_N[k]:
-			local -= TREE_RING_N[k]
-			k += 1
-		var n: int = TREE_RING_N[k]
-		var ang := TAU * (float(local) / float(n)) + float(k) * 1.1
-		var pos: Vector2 = Vector2(cos(ang), sin(ang)) * TREE_RING_R[k]
-		tree_positions.append(pos)
-		var open := true
-		for spot in lookout_spots:
-			if pos.distance_to(spot) < 800.0:
-				open = false
-		if not open:
-			continue
-		var tex: Texture2D = load(TREE_TEXTURES[(i * 7 + k * 3) % TREE_TEXTURES.size()])
-		var s := clampf(1.2 + 0.45 * sin(float(i) * 0.61 + float(k) * 2.1) + 0.25 * cos(float(i) * 2.17), 0.6, 1.9)
-		var h := tex.get_height() * 0.22 * s
-		var gh := _terrain_height(pos.x, pos.y)
-		var near_a := _make_tree_plane(tex, pos, h, s, 45.0, false, gh)
-		var near_b := _make_tree_plane(tex, pos, h, s, -45.0, false, gh)
-		var flat := _make_tree_plane(tex, pos, h, s, 0.0, true, gh)
-		tree_planes.append([near_a, near_b, flat])
-		var cshape := CollisionShape3D.new()
-		var cyl := CylinderShape3D.new()
-		cyl.radius = TREE_RADIUS * s * 0.55
-		cyl.height = 800.0
-		cshape.shape = cyl
-		cshape.position = Vector3(pos.x, gh + 400, pos.y)
-		trees.add_child(cshape)
-
-func _make_tree_plane(tex: Texture2D, pos: Vector2, h: float, s: float, ang_deg: float, billboard: bool, gh: float) -> Sprite3D:
-	var tr := Sprite3D.new()
-	tr.texture = tex
-	tr.billboard = BaseMaterial3D.BILLBOARD_FIXED_Y if billboard else BaseMaterial3D.BILLBOARD_DISABLED
-	tr.shaded = true
-	tr.alpha_cut = SpriteBase3D.ALPHA_CUT_DISCARD
-	tr.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
-	tr.pixel_size = 0.22
-	tr.scale = Vector3(s, s, s)
-	tr.position = Vector3(pos.x, gh + h * 0.46, pos.y)
-	tr.rotation.y = deg_to_rad(ang_deg)
-	tr.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-	tr.visible = not billboard
-	add_child(tr)
-	return tr
+	var trees := get_node("Map/Trees")
+	for c in trees.get_children():
+		var a := c.get_node_or_null("CrossA") as Sprite3D
+		var b := c.get_node_or_null("CrossB") as Sprite3D
+		var flat := c.get_node_or_null("Flat") as Sprite3D
+		if a != null and b != null and flat != null:
+			tree_planes.append([a, b, flat])
 
 func _update_tree_billboards() -> void:
 	var p := player.global_position
 	for pair in tree_planes:
 		var d := Vector2(pair[0].global_position.x - p.x, pair[0].global_position.z - p.z).length()
-		var near := d <= TREE_BILLBOARD_DIST
-		pair[0].visible = near
-		pair[1].visible = near
-		pair[2].visible = not near
+		var cross_near := d <= TREE_CROSS_DIST
+		pair[0].visible = cross_near
+		pair[1].visible = cross_near
+		pair[2].visible = not cross_near
 
 func _authored_spot(j: int) -> Vector2:
 	var ang := 2.399963229728653 * float(j)
@@ -329,18 +249,18 @@ func _spawn_onion() -> Area3D:
 	sprite.texture = load("res://assets/images/items/onion.png")
 	sprite.billboard = StandardMaterial3D.BILLBOARD_FIXED_Y
 	sprite.shaded = false
-	sprite.pixel_size = 0.31
+	sprite.pixel_size = 0.0124
 	sprite.alpha_cut = SpriteBase3D.ALPHA_CUT_DISCARD
 	sprite.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	sprite.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-	sprite.position = Vector3(0, 64, 0)
+	sprite.position = Vector3(0, 2.56, 0)
 	area.add_child(sprite)
 
 	var shape := CollisionShape3D.new()
 	var sphere := SphereShape3D.new()
-	sphere.radius = 34.0
+	sphere.radius = 1.36
 	shape.shape = sphere
-	shape.position = Vector3(0, 64, 0)
+	shape.position = Vector3(0, 2.56, 0)
 	area.add_child(shape)
 
 	var pos := _next_onion_spot()
@@ -357,10 +277,10 @@ func _build_enemy() -> void:
 	enemy.texture = tex
 	enemy.billboard = StandardMaterial3D.BILLBOARD_FIXED_Y
 	enemy.shaded = false
-	enemy.pixel_size = 250.0 / float(tex.get_height())
+	enemy.pixel_size = 10.0 / float(tex.get_height())
 	enemy.alpha_cut = SpriteBase3D.ALPHA_CUT_DISCARD
 	enemy.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
-	enemy.position = Vector3(0, 125, 0)
+	enemy.position = Vector3(0, 5, 0)
 	enemy.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	enemy.visible = false
 	add_child(enemy)
@@ -370,16 +290,14 @@ func _build_audio() -> void:
 	onion_sound.stream = load("res://assets/sounds/sfx_onion.ogg")
 	add_child(onion_sound)
 
-	player.set_footstep_streams(load("res://assets/sounds/sfx_footstep1.ogg"))
-
 	for path in ["", "res://assets/sounds/music_pages_1_2.ogg", "res://assets/sounds/music_pages_3_4.ogg", "res://assets/sounds/music_pages_5_6.ogg", "res://assets/sounds/music_pages_7_8.ogg"]:
 		music_streams.append(load(path) if path != "" else null)
 
 func _objective_text() -> void:
 	if endless:
-		hud.show_objective("ENDLESS SWAMP - grab all the onions you want")
+		hud.show_objective(tr("ENDLESS SWAMP - grab all the onions you want"))
 	else:
-		hud.show_objective("Collect 8 onions before the 150 seconds run out")
+		hud.show_objective(tr("Collect 8 onions before the 150 seconds run out"))
 
 func _pages_text() -> String:
 	if endless:
@@ -398,7 +316,7 @@ func _process(delta: float) -> void:
 	onion_bob_t += delta
 	for o in onions:
 		if is_instance_valid(o):
-			o.position.y = float(o.get_meta("base_y")) + sin(onion_bob_t * 2.0 + o.position.x * 0.01) * 3.0
+			o.position.y = float(o.get_meta("base_y")) + sin(onion_bob_t * 2.0 + o.position.x * 0.01) * 0.12
 			o.rotation.y += delta * 0.9
 	_update_threat(delta)
 	tree_swap_time -= delta
@@ -432,7 +350,7 @@ func _update_threat(delta: float) -> void:
 
 func _update_prompt() -> void:
 	var grab_now := _ray_onion() != null and (endless or pages < TOTAL_PAGES)
-	hud.set_prompt("[E]  Grab onion" if grab_now else "")
+	hud.set_prompt(tr("[E]  Grab onion") if grab_now else "")
 	_set_touch_grab(grab_now)
 
 func _set_touch_grab(v: bool) -> void:
@@ -562,7 +480,7 @@ func _lerp_phase(weight: float) -> void:
 	sky_mat.set_shader_parameter("day_mix", _day_mix)
 	sun.light_energy = lerpf(sun.light_energy, sun_t, weight)
 	sun.light_color = sun.light_color.lerp(sun_c, weight)
-	ground_mat.albedo_color = ground_mat.albedo_color.lerp(grass_c, weight)
+	set_ground_tint(_tint().lerp(grass_c, weight))
 	var settled := true
 	settled = settled and _color_close(env.fog_light_color, fog_color_t, 0.004)
 	settled = settled and absf(env.fog_density - fog_t) < 0.000002
@@ -571,7 +489,7 @@ func _lerp_phase(weight: float) -> void:
 	settled = settled and absf(_day_mix - day_t) < 0.002
 	settled = settled and absf(sun.light_energy - sun_t) < 0.001
 	settled = settled and _color_close(sun.light_color, sun_c, 0.004)
-	settled = settled and _color_close(ground_mat.albedo_color, grass_c, 0.004)
+	settled = settled and _color_close(_tint(), grass_c, 0.004)
 	if settled:
 		env.fog_light_color = fog_color_t
 		env.fog_density = fog_t
@@ -581,8 +499,14 @@ func _lerp_phase(weight: float) -> void:
 		sky_mat.set_shader_parameter("day_mix", _day_mix)
 		sun.light_energy = sun_t
 		sun.light_color = sun_c
-		ground_mat.albedo_color = grass_c
+		set_ground_tint(grass_c)
 		_phase_converged = true
+
+func _tint() -> Color:
+	return ground_mat.get_shader_parameter("tint") as Color
+
+func set_ground_tint(c: Color) -> void:
+	ground_mat.set_shader_parameter("tint", c)
 
 func _start_music_phase(ph: int) -> void:
 	if allstar != null and allstar.playing:
@@ -610,30 +534,189 @@ func _tick_enemy(delta: float) -> void:
 	if not enemy_active and pages >= 1:
 		enemy_active = true
 		_spawn_enemy_behind()
+		if nav == null:
+			_build_nav()
 	if not enemy_active:
 		return
 	enemy_bob_t += delta
+	sees_timer -= delta
+	if sees_timer <= 0.0:
+		sees_timer = 0.1
+		sees_cache = _enemy_sees_player()
+	if sees_cache:
+		enemy_lose_time = 0.0
+		last_seen = Vector2(player.global_position.x, player.global_position.z)
+		enemy_mode = "hunt"
+		enemy_arrived = false
+	else:
+		enemy_lose_time += delta
+		if enemy_mode == "hunt" and enemy_lose_time > ENEMY_MEMORY:
+			enemy_mode = "search"
+			enemy_search_time = 0.0
+			enemy_pause = 0.0
+			enemy_path = PackedVector2Array()
+			enemy_path_i = 0
+	var to_p := player.global_position - enemy.global_position
+	to_p.y = 0.0
+	if to_p.length() < KILL_RADIUS:
+		_die()
+		return
+	var base := minf(ENEMY_FOLLOW_BASE + ENEMY_FOLLOW_PER_PAGE * pages, ENEMY_SPEED_CAP)
+	if enemy_mode == "hunt":
+		_enemy_advance(delta, last_seen, base)
+	elif enemy_mode == "search":
+		enemy_search_time += delta
+		if enemy_search_time > ENEMY_SEARCH_TIME:
+			enemy_mode = "wander"
+			enemy_goal_ok = false
+			enemy_path = PackedVector2Array()
+		else:
+			var pos2 := Vector2(enemy.global_position.x, enemy.global_position.z)
+			if pos2.distance_to(last_seen) < 2.5:
+				enemy_pause += delta
+				enemy_yaw += delta * 0.5
+				if enemy_pause >= 2.0:
+					enemy_mode = "wander"
+					enemy_goal_ok = false
+			else:
+				_enemy_advance(delta, last_seen, base * 0.8)
+	else:
+		var pos := Vector2(enemy.global_position.x, enemy.global_position.z)
+		if enemy_pause > 0.0:
+			enemy_pause -= delta
+			enemy_yaw += delta * 0.5
+		else:
+			if not enemy_goal_ok:
+				enemy_goal = _pick_wander_target()
+				enemy_goal_ok = true
+				enemy_arrived = false
+				enemy_path = PackedVector2Array()
+				enemy_path_time = 0.0
+			_enemy_advance(delta, enemy_goal, base * 0.5)
+			if enemy_arrived:
+				enemy_goal_ok = false
+				enemy_pause = randf_range(1.2, 2.6)
+	enemy.global_position.y = _terrain_height(enemy.global_position.x, enemy.global_position.z) + 5.0 + sin(enemy_bob_t * 2.2) * 0.24
+
+func _enemy_sees_player() -> bool:
 	var to_p := player.global_position - enemy.global_position
 	to_p.y = 0.0
 	var dist := to_p.length()
-	if dist < KILL_RADIUS:
-		_die()
+	if dist < 0.001:
+		return true
+	var fwd := Vector2(cos(enemy_yaw), sin(enemy_yaw))
+	var pdir := Vector2(to_p.x, to_p.z) / dist
+	if dist <= ENEMY_VISION_DIST and (dist <= 3.0 or absf(fwd.angle_to(pdir)) <= ENEMY_FOV_HALF):
+		var p2 := Vector2(player.global_position.x, player.global_position.z)
+		if nav != null and nav.has_los(Vector2(enemy.global_position.x, enemy.global_position.z), p2):
+			return true
+	return player.is_sprinting() and dist <= ENEMY_HEAR_RUN
+
+func _enemy_advance(delta: float, target: Vector2, speed: float) -> void:
+	enemy_path_time -= delta
+	if enemy_path_time <= 0.0 or enemy_path.is_empty():
+		enemy_path_time = ENEMY_PATH_INTERVAL
+		enemy_path = nav.find_path(Vector2(enemy.global_position.x, enemy.global_position.z), target)
+		enemy_path_i = 0
+		enemy_arrived = enemy_path.is_empty()
+	var pos := Vector2(enemy.global_position.x, enemy.global_position.z)
+	var steer := target
+	if enemy_path_i < enemy_path.size():
+		steer = enemy_path[enemy_path_i]
+		while steer.distance_to(pos) < 1.6:
+			enemy_path_i += 1
+			if enemy_path_i >= enemy_path.size():
+				enemy_arrived = true
+				break
+			steer = enemy_path[enemy_path_i]
+	if enemy_arrived and enemy_mode != "hunt":
 		return
-	var dir := to_p / maxf(dist, 0.001)
-	var speed: float = ENEMY_FOLLOW_BASE + ENEMY_FOLLOW_PER_PAGE * pages
-	speed = minf(speed, ENEMY_SPEED_CAP)
-	enemy.global_position += Vector3(dir.x, 0.0, dir.z) * speed * delta
-	enemy.position.y = _terrain_height(enemy.position.x, enemy.position.z) + 125.0 + sin(enemy_bob_t * 2.2) * 6.0
+	var dir := steer - pos
+	var d := dir.length()
+	if d > 0.001:
+		dir = dir / d
+		var tgt_dir := target - pos
+		if sees_cache and nav.has_los(pos, target):
+			dir = tgt_dir / maxf(tgt_dir.length(), 0.001)
+		dir = _whisker_dir(dir)
+		var next_pos := enemy.global_position
+		next_pos.x += dir.x * speed * delta
+		next_pos.z += dir.y * speed * delta
+		enemy.global_position = next_pos
+		enemy_yaw = lerp_angle(enemy_yaw, dir.angle(), clampf(6.0 * delta, 0.0, 1.0))
+
+func _whisker_dir(dir: Vector2) -> Vector2:
+	var space := get_world_3d().direct_space_state
+	var y := _terrain_height(enemy.global_position.x, enemy.global_position.z) + 4.5
+	var origin := Vector3(enemy.global_position.x, y, enemy.global_position.z)
+	var to := origin + Vector3(dir.x, 0.0, dir.y) * ENEMY_WHISKER_DIST
+	var mid := PhysicsRayQueryParameters3D.create(origin, to, 1)
+	if space.intersect_ray(mid).is_empty():
+		return dir
+	var best := dir
+	var best_free := false
+	for a in [-1.0, 1.0]:
+		var alt := dir.rotated(1.05 * a)
+		var q := PhysicsRayQueryParameters3D.create(origin, origin + Vector3(alt.x, 0.0, alt.y) * ENEMY_WHISKER_DIST * 1.4, 1)
+		var h := space.intersect_ray(q)
+		if h.is_empty():
+			return alt
+	return best
+
+func _pick_wander_target() -> Vector2:
+	var target := Vector2.ZERO
+	var attempts := 0
+	while attempts < 24:
+		attempts += 1
+		var pc := Vector2(player.global_position.x, player.global_position.z)
+		if randf() < 0.4:
+			var ang := randf() * TAU
+			target = pc + Vector2(cos(ang), sin(ang)) * randf_range(26.0, 52.0)
+		else:
+			target = Vector2(randf_range(-WORLD_HALF + 10.0, WORLD_HALF - 10.0), randf_range(-WORLD_HALF + 10.0, WORLD_HALF - 10.0))
+		target.x = clampf(target.x, -WORLD_HALF + WALL_SAFE, WORLD_HALF - WALL_SAFE)
+		target.y = clampf(target.y, -WORLD_HALF + WALL_SAFE, WORLD_HALF - WALL_SAFE)
+		if nav.is_free_point(target):
+			return target
+	return target
+
+func _build_nav() -> void:
+	nav = NAV.new()
+	var xs := PackedFloat32Array()
+	var zs := PackedFloat32Array()
+	var rs := PackedFloat32Array()
+	for t in get_node("Map/Trees").get_children():
+		if not (t is StaticBody3D):
+			continue
+		var col := t.get_node("Collision") as CollisionShape3D
+		var cyl := col.shape as CylinderShape3D
+		var gp: Vector3 = t.global_position
+		xs.append(gp.x)
+		zs.append(gp.z)
+		rs.append(cyl.radius)
+	nav.build(xs, zs, rs)
 
 func _spawn_enemy_behind() -> void:
 	var fwd := -player.camera.global_basis.z
 	var behind := Vector2(-fwd.x, -fwd.z).normalized().rotated(randf_range(-1.0, 1.0))
-	var d := randf_range(480.0, 640.0)
+	var d := randf_range(19.2, 25.6)
 	var p := Vector2(player.global_position.x, player.global_position.z) + behind * d
-	p.x = clampf(p.x, -WORLD_HALF + 140, WORLD_HALF - 140)
-	p.y = clampf(p.y, -WORLD_HALF + 140, WORLD_HALF - 140)
-	enemy.global_position = Vector3(p.x, _terrain_height(p.x, p.y) + 125.0, p.y)
+	p.x = clampf(p.x, -WORLD_HALF + WALL_SAFE, WORLD_HALF - WALL_SAFE)
+	p.y = clampf(p.y, -WORLD_HALF + WALL_SAFE, WORLD_HALF - WALL_SAFE)
+	enemy.global_position = Vector3(p.x, _terrain_height(p.x, p.y) + 5.0, p.y)
 	enemy.visible = true
+	enemy_yaw = Vector2(player.global_position.x - p.x, player.global_position.z - p.y).angle()
+	enemy_mode = "wander"
+	enemy_goal_ok = false
+	enemy_arrived = false
+	enemy_path = PackedVector2Array()
+	enemy_path_i = 0
+	enemy_path_time = 0.0
+	enemy_lose_time = 0.0
+	enemy_pause = 0.0
+	last_seen = Vector2(player.global_position.x, player.global_position.z)
+	sees_cache = false
+	sees_timer = 0.0
 
 func _win() -> void:
 	won = true
@@ -679,8 +762,8 @@ func _result_text() -> String:
 	if not endless:
 		return ""
 	if pages > int(get_meta("best_start", GameState.best_endless)):
-		return "You grabbed %d onions - NEW HIGH SCORE!" % pages
-	return "You grabbed %d onions - high score %d" % [pages, GameState.best_endless]
+		return tr("You grabbed %d onions - NEW HIGH SCORE!") % pages
+	return tr("You grabbed %d onions - high score %d") % [pages, GameState.best_endless]
 
 func _static_tick(delta: float) -> void:
 	static_time += delta

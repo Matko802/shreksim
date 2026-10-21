@@ -331,7 +331,7 @@ theme_override_font_sizes/font_size = 28
 text = "Total escapes: 0"
 horizontal_alignment = 1
 
-[node name="BestLabel" type="Label" parent="StatsPanel/Box" unique_name_in_owner=true]
+[node name="BestLabel" type="Label" parent="StatsPanel/Box" unique_id=293979565]
 layout_mode = 2
 theme_override_font_sizes/font_size = 28
 text = "Endless high score: 0"
@@ -379,7 +379,7 @@ unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Collect every onion scattered in the swamp.
-In EIGHT PAGES mode you have 90 seconds.
+In EIGHT PAGES mode you have 150 seconds.
 Grab an onion by looking at it and pressing [E] or clicking it.
 
 [WASD] move      [SHIFT] sprint
@@ -407,3 +407,18 @@ theme_override_styles/pressed = SubResource("sb_btn_press")
 theme_override_styles/hover = SubResource("sb_btn_hover")
 theme_override_styles/focus = SubResource("sb_focus_empty")
 text = "GO BACK"
+
+[node name="LangOption" type="OptionButton" parent="." unique_id=883112001]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 18.0
+offset_top = -74.0
+offset_right = 226.0
+offset_bottom = -18.0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.21960784, 0.53333336, 0.7647059, 1)
+theme_override_colors/font_hover_color = Color(0, 0.8, 0.27, 1)
+theme_override_font_sizes/font_size = 26

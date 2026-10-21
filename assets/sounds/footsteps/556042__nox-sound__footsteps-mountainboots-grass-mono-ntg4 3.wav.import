@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://qu1vqx78i7pb"
+path="res://.godot/imported/556042__nox-sound__footsteps-mountainboots-grass-mono-ntg4 3.wav-cebed139173b6e9a3053c4acc4f113f8.sample"
+
+[deps]
+
+source_file="res://assets/sounds/footsteps/556042__nox-sound__footsteps-mountainboots-grass-mono-ntg4 3.wav"
+dest_files=["res://.godot/imported/556042__nox-sound__footsteps-mountainboots-grass-mono-ntg4 3.wav-cebed139173b6e9a3053c4acc4f113f8.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

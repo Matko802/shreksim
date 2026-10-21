@@ -11,7 +11,7 @@ func _ready() -> void:
 	await get_tree().process_frame
 	game.player.set_process_unhandled_input(false)
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	game.enemy.global_position = Vector3(6000, 125, 6000)
+	game.enemy.global_position = Vector3(240, 5, 240)
 	print("DEEP start")
 
 func _process(_delta: float) -> void:

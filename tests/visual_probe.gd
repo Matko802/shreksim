@@ -29,7 +29,7 @@ func _ready() -> void:
 	print("PROBE phase4")
 	game._apply_phase(4)
 	await get_tree().create_timer(0.7).timeout
-	game.enemy.global_position = Vector3(5000, 125, 5000)
+	game.enemy.global_position = Vector3(200, 5, 200)
 	await get_tree().create_timer(0.3).timeout
 	print("PROBE toggle off")
 	game.player.toggle_flashlight()

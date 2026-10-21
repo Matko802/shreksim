@@ -51,7 +51,7 @@ func _ready() -> void:
 	while waited < 0.5:
 		await get_tree().physics_frame
 		waited += 1.0 / 60.0
-		if Vector2(game.player.velocity.x, game.player.velocity.z).length() > 10.0:
+		if Vector2(game.player.velocity.x, game.player.velocity.z).length() > 0.4:
 			break
 	var hs: float = Vector2(game.player.velocity.x, game.player.velocity.z).length()
 	Input.action_release("move_forward")
@@ -59,19 +59,19 @@ func _ready() -> void:
 		failures += 1
 		print("FAIL walk speed: ", hs)
 
-	game.enemy.global_position = game.player.global_position + Vector3(0, 0, 600)
+	game.enemy.global_position = game.player.global_position + Vector3(0, 0, 24.0)
 	for i in range(60):
 		await get_tree().physics_frame
 	var to_e: Vector3 = game.enemy.global_position - game.player.global_position
 	to_e.y = 0.0
 	var chased: float = to_e.length()
-	if chased >= 570.0:
+	if chased >= 22.8:
 		failures += 1
 		print("FAIL enemy did not chase: ", chased)
 	if not game.hud.static_overlay.visible:
 		failures += 1
 		print("FAIL static overlay missing at threat")
-	game.enemy.global_position = game.player.global_position + Vector3(0, 0, 1200)
+	game.enemy.global_position = game.player.global_position + Vector3(0, 0, 48.0)
 	for i in range(50):
 		await get_tree().physics_frame
 	await get_tree().process_frame

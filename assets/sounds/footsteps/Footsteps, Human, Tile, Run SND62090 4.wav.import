@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://3drwv41iq5xv"
+path="res://.godot/imported/Footsteps, Human, Tile, Run SND62090 4.wav-2ee8bb4e4bbe232bd686b8c2b55cac2a.sample"
+
+[deps]
+
+source_file="res://assets/sounds/footsteps/Footsteps, Human, Tile, Run SND62090 4.wav"
+dest_files=["res://.godot/imported/Footsteps, Human, Tile, Run SND62090 4.wav-2ee8bb4e4bbe232bd686b8c2b55cac2a.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

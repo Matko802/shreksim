@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dcohvuyjcyr3y"
+path="res://.godot/imported/Water, Splash, Rock, Throw In Lake SND35327 1.wav-4d318a0a2cbd95a0150f173bb411b374.sample"
+
+[deps]
+
+source_file="res://assets/sounds/footsteps/Water, Splash, Rock, Throw In Lake SND35327 1.wav"
+dest_files=["res://.godot/imported/Water, Splash, Rock, Throw In Lake SND35327 1.wav-4d318a0a2cbd95a0150f173bb411b374.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -4,29 +4,34 @@ extends CharacterBody3D
 signal interact_pressed
 signal flashlight_toggled(on: bool)
 
-const WALK_SPEED: float = 84.0
-const SPRINT_SPEED: float = 168.0
-const JUMP_VELOCITY: float = 112.0
+const WALK_SPEED: float = 3.36
+const SPRINT_SPEED: float = 6.72
+const JUMP_VELOCITY: float = 4.48
 const BOB_AMPLITUDE: float = 0.030
-const SWAY_AMPLITUDE: float = 0.0
+const SWAY_AMPLITUDE: float = 0.014
 const TILT_AMPLITUDE: float = 0.045
 const TILT_SMOOTHING: float = 10.0
 const STRAFE_SMOOTHING: float = 8.0
 const BOB_OMEGA_SMOOTHING: float = 18.0
 const BOB_HZ: float = 1.8
-const BOB_DEADZONE: float = 8.4
+const BOB_DEADZONE: float = 0.3
 
-const STANDING_HEAD_Y: float = 42.0
-const CROUCHING_HEAD_Y: float = 22.4
+const STANDING_HEAD_Y: float = 1.68
+const CROUCHING_HEAD_Y: float = 0.896
 const HEAD_FOLLOW_SMOOTHING: float = 12.0
 
-const STANDING_CAPSULE_HEIGHT: float = 48.3
-const STANDING_CAPSULE_CENTER_Y: float = 24.15
-const CROUCHING_CAPSULE_HEIGHT: float = 30.8
-const CROUCHING_CAPSULE_CENTER_Y: float = 16.8
+const STANDING_CAPSULE_HEIGHT: float = 1.932
+const STANDING_CAPSULE_CENTER_Y: float = 0.966
+const CROUCHING_CAPSULE_HEIGHT: float = 1.232
+const CROUCHING_CAPSULE_CENTER_Y: float = 0.672
 const CROUCH_TRANSITION_SMOOTHING: float = 10.0
-const UNCROUCH_CEILING_CLEARANCE: float = 1.4
-const CROUCH_WALK_SPEED: float = 44.8
+const UNCROUCH_CEILING_CLEARANCE: float = 0.056
+const CROUCH_WALK_SPEED: float = 1.792
+const STEP_INTERVAL_MIN: float = 0.32
+const STEP_INTERVAL_MAX: float = 0.55
+const FOOTSTEP_SURFACES: Resource = preload("res://assets/footsteps/footstep_surfaces.tres")
+const FLASHLIGHT_LAG_FACTOR: float = 0.4
+const FLASHLIGHT_ROTATION_SMOOTHING: float = 12.0
 
 const ZOOM_FOV_MIN: float = 20.0
 const ZOOM_FOV_MAX: float = 70.0
@@ -34,18 +39,7 @@ const ZOOM_SMOOTHING: float = 10.0
 const ZOOM_SCROLL_STEP: float = 5.0
 const ZOOM_MIN_STEPS: float = 2.0
 
-const VM_MODEL_SCALE: float = 14.0
-const VM_LIGHT_ENERGY: float = 5600.0
-const VM_POSE_RESET: Vector3 = Vector3(16.716, -20.216, -9.1)
-const VM_POSE_DRAW_START: Vector3 = Vector3(-16.884, -20.216, -9.1)
-const VM_POSE_ON: Vector3 = Vector3(-16.884, -11.816, -11.9)
-const VM_RO_LIMIT: Vector3 = Vector3(-1.5707964, 0, 0)
-const VM_ROT_RESET: Vector3 = Vector3(-0.5235988, 0, 0)
-const VM_LIGHT_OFFSET: Vector3 = Vector3(16.8, 11.2, 11.2)
-const JUMP_CLEARANCE: float = 8.4
-
-const VIEWMODEL_SHADER: Shader = preload("res://scripts/viewmodel.gdshader")
-const FLASHLIGHT_ALBEDO: Texture2D = preload("res://assets/textures/flashlight_albedo.png")
+const JUMP_CLEARANCE: float = 0.336
 
 var head_rest_pos: Vector3 = Vector3(0.0, STANDING_HEAD_Y, 0.0)
 
@@ -72,7 +66,9 @@ var _zoom_fov: float = ZOOM_FOV_MAX
 var _zoom_target: float = ZOOM_FOV_MAX
 var _last_zoom: float = ZOOM_FOV_MAX - ZOOM_SCROLL_STEP * ZOOM_MIN_STEPS
 
-var footstep_loop_stream: AudioStream
+var footstep_surfaces: Resource = FOOTSTEP_SURFACES
+var _footstep_timer: float = 0.0
+var _step_side: bool = false
 var head: Node3D
 var camera: Camera3D
 var flashlight_container: Node3D
@@ -87,10 +83,10 @@ func _ready() -> void:
 	physics_interpolation_mode = Node3D.PHYSICS_INTERPOLATION_MODE_ON
 	collision_layer = 2
 	collision_mask = 1
-	floor_snap_length = 40.0
+	floor_snap_length = 1.6
 
 	var capsule := CapsuleShape3D.new()
-	capsule.radius = 5.6
+	capsule.radius = 0.224
 	capsule.height = STANDING_CAPSULE_HEIGHT
 	_collider = CollisionShape3D.new()
 	_collider.shape = capsule
@@ -104,128 +100,25 @@ func _ready() -> void:
 
 	camera = Camera3D.new()
 	camera.fov = ZOOM_FOV_MAX
-	camera.near = 0.3
-	camera.far = 12000.0
+	camera.near = 0.05
+	camera.far = 480.0
 	camera.cull_mask = 3
 	head.add_child(camera)
 
 	footstep_player = AudioStreamPlayer3D.new()
-	footstep_player.unit_size = 168.0
-	footstep_player.max_distance = 700.0
+	footstep_player.attenuation_model = AudioStreamPlayer3D.ATTENUATION_INVERSE_SQUARE_DISTANCE
+	footstep_player.unit_size = 4.0
+	footstep_player.max_distance = 30.0
 	footstep_player.max_polyphony = 2
+	footstep_player.doppler_tracking = AudioStreamPlayer3D.DOPPLER_TRACKING_PHYSICS_STEP
 	add_child(footstep_player)
 
-	flashlight_toggle_player = AudioStreamPlayer3D.new()
-	flashlight_toggle_player.stream = load("res://assets/sounds/sfx_flashlight_toggle.ogg")
-	flashlight_toggle_player.unit_size = 168.0
-	flashlight_toggle_player.max_distance = 700.0
-	add_child(flashlight_toggle_player)
-
-	_build_flashlight_viewmodel()
-	flashlight_model_animator.play(&"model_draw")
-
-	if footstep_loop_stream != null:
-		footstep_player.stream = footstep_loop_stream
-
-func _build_flashlight_viewmodel() -> void:
-	flashlight_container = Node3D.new()
-	flashlight_container.transform = Transform3D(Basis.IDENTITY, VM_POSE_RESET)
-	flashlight_container.rotation = VM_ROT_RESET
+	flashlight_container = (load("res://scenes/flashlight.tscn") as PackedScene).instantiate() as Node3D
 	camera.add_child(flashlight_container)
-
-	var model: Node3D = (load("res://assets/models/flashlight.glb") as PackedScene).instantiate()
-	model.scale = Vector3(VM_MODEL_SCALE, VM_MODEL_SCALE, VM_MODEL_SCALE)
-	flashlight_container.add_child(model)
-	var mat := ShaderMaterial.new()
-	mat.shader = VIEWMODEL_SHADER
-	mat.set_shader_parameter("albedo_texture", FLASHLIGHT_ALBEDO)
-	for mesh in model.find_children("*", "MeshInstance3D", true, false):
-		var mi := mesh as MeshInstance3D
-		mi.material_override = mat
-		mi.layers = 2
-		mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-
-	flashlight_light = SpotLight3D.new()
-	flashlight_light.transform = Transform3D(Basis.IDENTITY, VM_LIGHT_OFFSET)
-	flashlight_light.light_energy = VM_LIGHT_ENERGY
-	flashlight_light.shadow_enabled = false
-	flashlight_light.spot_range = 420.0
-	flashlight_light.spot_angle = 25.0
-	flashlight_light.spot_angle_attenuation = 2.0
-	flashlight_container.add_child(flashlight_light)
-
-	var lib := AnimationLibrary.new()
-	lib.add_animation(&"RESET", _viewmodel_reset_anim())
-	lib.add_animation(&"model_draw", _viewmodel_draw_anim())
-	lib.add_animation(&"model_holster", _viewmodel_holster_anim())
-	flashlight_model_animator = AnimationPlayer.new()
-	flashlight_model_animator.libraries = {"": lib}
-	flashlight_model_animator.root_node = NodePath("..")
-	flashlight_container.add_child(flashlight_model_animator)
-
-func _viewmodel_reset_anim() -> Animation:
-	var a := Animation.new()
-	a.length = 0.001
-	a.add_track(Animation.TYPE_VALUE)
-	var t_pos := a.get_track_count() - 1
-	a.track_set_path(t_pos, ".:position")
-	a.track_set_interpolation_type(t_pos, Animation.INTERPOLATION_LINEAR)
-	a.track_insert_key(t_pos, 0.0, VM_POSE_RESET)
-	a.add_track(Animation.TYPE_VALUE)
-	var t_rot := a.get_track_count() - 1
-	a.track_set_path(t_rot, ".:rotation")
-	a.track_set_interpolation_type(t_rot, Animation.INTERPOLATION_LINEAR)
-	a.track_insert_key(t_rot, 0.0, VM_ROT_RESET)
-	a.add_track(Animation.TYPE_VALUE)
-	var t_vis := a.get_track_count() - 1
-	a.track_set_path(t_vis, ".:visible")
-	a.track_insert_key(t_vis, 0.0, false)
-	return a
-
-func _viewmodel_draw_anim() -> Animation:
-	var a := Animation.new()
-	a.length = 0.3
-	a.step = 0.01
-	a.add_track(Animation.TYPE_VALUE)
-	var t_pos := a.get_track_count() - 1
-	a.track_set_path(t_pos, ".:position")
-	a.track_set_interpolation_type(t_pos, Animation.INTERPOLATION_LINEAR)
-	a.track_insert_key(t_pos, 0.0, VM_POSE_DRAW_START)
-	a.track_insert_key(t_pos, 0.3, VM_POSE_ON)
-	a.add_track(Animation.TYPE_VALUE)
-	var t_vis := a.get_track_count() - 1
-	a.track_set_path(t_vis, ".:visible")
-	a.track_insert_key(t_vis, 0.0, true)
-	a.add_track(Animation.TYPE_VALUE)
-	var t_rot := a.get_track_count() - 1
-	a.track_set_path(t_rot, ".:rotation")
-	a.track_set_interpolation_type(t_rot, Animation.INTERPOLATION_LINEAR)
-	a.track_insert_key(t_rot, 0.0, VM_RO_LIMIT)
-	a.track_insert_key(t_rot, 0.3, Vector3.ZERO)
-	return a
-
-func _viewmodel_holster_anim() -> Animation:
-	var a := Animation.new()
-	a.length = 0.3
-	a.step = 0.01
-	a.add_track(Animation.TYPE_VALUE)
-	var t_pos := a.get_track_count() - 1
-	a.track_set_path(t_pos, ".:position")
-	a.track_set_interpolation_type(t_pos, Animation.INTERPOLATION_LINEAR)
-	a.track_insert_key(t_pos, 0.0, VM_POSE_ON)
-	a.track_insert_key(t_pos, 0.3, VM_POSE_RESET)
-	a.add_track(Animation.TYPE_VALUE)
-	var t_vis := a.get_track_count() - 1
-	a.track_set_path(t_vis, ".:visible")
-	a.track_insert_key(t_vis, 0.0, true)
-	a.track_insert_key(t_vis, 0.3, false)
-	a.add_track(Animation.TYPE_VALUE)
-	var t_rot := a.get_track_count() - 1
-	a.track_set_path(t_rot, ".:rotation")
-	a.track_set_interpolation_type(t_rot, Animation.INTERPOLATION_LINEAR)
-	a.track_insert_key(t_rot, 0.0, Vector3.ZERO)
-	a.track_insert_key(t_rot, 0.3, VM_RO_LIMIT)
-	return a
+	flashlight_light = flashlight_container.get_node("%FlashlightLight") as SpotLight3D
+	flashlight_model_animator = flashlight_container.get_node("%ModelAnimator") as AnimationPlayer
+	flashlight_toggle_player = flashlight_container.get_node("%TogglePlayer") as AudioStreamPlayer3D
+	flashlight_model_animator.play(&"model_draw")
 
 func _process(delta: float) -> void:
 	if _zoom_fov != _zoom_target:
@@ -235,17 +128,6 @@ func _process(delta: float) -> void:
 			_zoom_fov = _zoom_target
 	if camera.fov != _zoom_fov:
 		camera.fov = _zoom_fov
-
-func set_footstep_streams(loop: AudioStream) -> void:
-	footstep_loop_stream = loop
-	if loop != null:
-		var wav := loop as AudioStreamWAV
-		if wav != null:
-			wav.loop_mode = AudioStreamWAV.LOOP_FORWARD
-			wav.loop_begin = 0
-			wav.loop_end = int(wav.get_length() * wav.mix_rate)
-	if footstep_player != null and footstep_loop_stream != null:
-		footstep_player.stream = footstep_loop_stream
 
 func toggle_flashlight() -> void:
 	_flashlight_on = not _flashlight_on
@@ -301,6 +183,11 @@ func _physics_process(delta: float) -> void:
 	if absf(pending_yaw) > 0.00001:
 		rotate_y(pending_yaw)
 		_last_applied_yaw = _look_yaw_target
+		if SettingsBus.camera_effects_enabled:
+			flashlight_container.rotate_y(-pending_yaw * FLASHLIGHT_LAG_FACTOR)
+	var pending_pitch := _look_pitch - _look_pitch_applied
+	if absf(pending_pitch) > 0.00001 and SettingsBus.camera_effects_enabled:
+		flashlight_container.rotate_x(-pending_pitch * FLASHLIGHT_LAG_FACTOR)
 	_look_yaw_applied = _look_yaw_target
 	_look_pitch_applied = _look_pitch
 
@@ -342,6 +229,13 @@ func _physics_process(delta: float) -> void:
 	_update_camera_tilt(delta)
 	_update_head_position(delta)
 	_apply_head_transform()
+	_update_flashlight_rotation(delta)
+
+func _update_flashlight_rotation(delta: float) -> void:
+	var k: float = 1.0 - exp(-FLASHLIGHT_ROTATION_SMOOTHING * delta)
+	flashlight_container.quaternion = flashlight_container.quaternion.slerp(Quaternion.IDENTITY, k)
+	if flashlight_container.quaternion.is_equal_approx(Quaternion.IDENTITY):
+		flashlight_container.quaternion = Quaternion.IDENTITY
 
 func _is_sprinting() -> bool:
 	if _is_crouching:
@@ -349,7 +243,7 @@ func _is_sprinting() -> bool:
 	return Input.is_action_pressed("sprint")
 
 func is_sprinting() -> bool:
-	return _is_sprinting() and Vector2(velocity.x, velocity.z).length() > 5.0
+	return _is_sprinting() and Vector2(velocity.x, velocity.z).length() > 0.2
 
 func is_crouching() -> bool:
 	return _is_crouching
@@ -409,7 +303,7 @@ func _apply_head_transform() -> void:
 	var target_rotation := Vector3(_look_pitch_applied + bob, sway, roll_amount)
 	if head.rotation != target_rotation:
 		head.rotation = target_rotation
-	var target_position := _head_pos + Vector3(0.0, _land_bounce * fx, 0.0)
+	var target_position := _head_pos + Vector3(0.0, _land_bounce, 0.0)
 	if head.position != target_position:
 		head.position = target_position
 
@@ -418,9 +312,9 @@ func _update_head_position(delta: float) -> void:
 	var k: float = 1.0 - exp(-HEAD_FOLLOW_SMOOTHING * delta)
 	_head_pos = _head_pos.lerp(target_pos, k)
 	_land_bounce = lerpf(_land_bounce, 0.0, clampf(14.0 * delta, 0.0, 1.0))
-	if absf(_land_bounce) < 0.05:
+	if absf(_land_bounce) < 0.002:
 		_land_bounce = 0.0
-	if _head_pos.distance_to(head_rest_pos) < 0.1:
+	if _head_pos.distance_to(head_rest_pos) < 0.004:
 		_head_pos = head_rest_pos
 
 func _update_crouch_transition(delta: float) -> void:
@@ -435,22 +329,51 @@ func _update_crouch_transition(delta: float) -> void:
 	_collider.shape.height = lerpf(STANDING_CAPSULE_HEIGHT, CROUCHING_CAPSULE_HEIGHT, _crouch_blend)
 	_collider.position.y = lerpf(STANDING_CAPSULE_CENTER_Y, CROUCHING_CAPSULE_CENTER_Y, _crouch_blend)
 
-func _update_footsteps(_delta: float) -> void:
+func _update_footsteps(delta: float) -> void:
 	var horizontal_speed: float = Vector2(velocity.x, velocity.z).length()
-	var on_floor := is_on_floor()
+	var on_floor: bool = is_on_floor()
+
+	if _was_on_floor and not on_floor and velocity.y > 0.0:
+		if footstep_surfaces != null:
+			var jump_stream: AudioStream = footstep_surfaces.get_random_sound(&"Default")
+			if jump_stream != null:
+				footstep_player.stream = jump_stream
+				footstep_player.pitch_scale = randf_range(0.95, 1.35)
+				footstep_player.volume_linear = randf_range(0.3, 0.6)
+				footstep_player.play()
 
 	if not _was_on_floor and on_floor:
-		_land_bounce = -1.2
+		_footstep_timer = 0.0
+		_land_bounce = -0.045
+		if footstep_surfaces != null:
+			var land_stream: AudioStream = footstep_surfaces.get_random_sound(&"Default")
+			if land_stream != null:
+				footstep_player.stream = land_stream
+				footstep_player.pitch_scale = randf_range(0.55, 0.9)
+				footstep_player.volume_linear = randf_range(0.8, 1.4)
+				footstep_player.play()
+
 	_was_on_floor = on_floor
 
-	var walking := on_floor and horizontal_speed > 2.0
-	if not walking:
-		if footstep_player.playing:
-			footstep_player.stop()
+	if not on_floor or horizontal_speed < 0.1:
 		return
-	var cadence: float = clampf((horizontal_speed - WALK_SPEED) / (SPRINT_SPEED - WALK_SPEED), 0.0, 1.0)
-	footstep_player.pitch_scale = 2.0 + cadence * 0.3
-	if not footstep_player.playing and footstep_loop_stream != null:
-		footstep_player.stream = footstep_loop_stream
-		footstep_player.volume_db = 0.0
-		footstep_player.play()
+
+	var speed_ratio: float = clamp(horizontal_speed / SPRINT_SPEED, 0.0, 1.0)
+	var interval: float = lerp(STEP_INTERVAL_MAX, STEP_INTERVAL_MIN, speed_ratio)
+
+	_footstep_timer += delta
+	if _footstep_timer < interval:
+		return
+
+	_footstep_timer = 0.0
+	footstep_player.volume_linear = randf_range(0.8, 1.2)
+	if footstep_surfaces != null:
+		var side := StringName(&"DefaultL") if _step_side else StringName(&"DefaultR")
+		_step_side = not _step_side
+		var step_stream: AudioStream = footstep_surfaces.get_random_sound(side)
+		if step_stream == null:
+			step_stream = footstep_surfaces.get_random_sound(&"Default")
+		if step_stream != null:
+			footstep_player.stream = step_stream
+			footstep_player.pitch_scale = randf_range(0.85, 1.15)
+			footstep_player.play()

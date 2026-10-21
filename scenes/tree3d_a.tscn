@@ -1,0 +1,45 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="bark"]
+albedo_color = Color(0.27, 0.21, 0.15, 1)
+roughness = 0.95
+
+[sub_resource type="StandardMaterial3D" id="leaf"]
+albedo_color = Color(0.16, 0.38, 0.2, 1)
+roughness = 0.85
+
+[sub_resource type="CylinderMesh" id="trunk_mesh"]
+material = SubResource("bark")
+top_radius = 0.32
+bottom_radius = 0.48
+height = 6.6
+radial_segments = 9
+rings = 1
+
+[sub_resource type="SphereMesh" id="canopy_lower"]
+material = SubResource("leaf")
+radius = 3.5
+height = 7.0
+radial_segments = 14
+rings = 8
+
+[sub_resource type="SphereMesh" id="canopy_upper"]
+material = SubResource("leaf")
+radius = 2.6
+height = 5.2
+radial_segments = 12
+rings = 7
+
+[node name="TreeMesh3D" type="Node3D"]
+
+[node name="Trunk" type="MeshInstance3D" parent="."]
+position = Vector3(0, 3.3, 0)
+mesh = SubResource("trunk_mesh")
+
+[node name="CanopyLower" type="MeshInstance3D" parent="."]
+position = Vector3(0, 7.6, 0)
+mesh = SubResource("canopy_lower")
+
+[node name="CanopyUpper" type="MeshInstance3D" parent="."]
+position = Vector3(0, 9.9, 0)
+mesh = SubResource("canopy_upper")

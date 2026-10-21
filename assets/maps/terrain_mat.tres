@@ -1,10 +1,12 @@
-[gd_resource type="StandardMaterial3D" load_steps=2 format=3]
+[gd_resource type="ShaderMaterial" format=3 uid="uid://cp7a0u3k0ph83"]
 
-[ext_resource type="Texture2D" path="res://assets/textures/terrain_grass.png" id="1_grass"]
+[ext_resource type="Shader" path="res://assets/maps/terrain_grass.gdshader" id="1_shader"]
+[ext_resource type="Texture2D" path="res://assets/textures/terrain_grass.png" id="2_grass"]
 
 [resource]
-cull_mode = 2
-albedo_color = Color(0.5, 0.68, 0.4, 1)
-albedo_texture = ExtResource("1_grass")
-uv1_scale = Vector3(90, 90, 90)
-texture_filter = 2
+render_priority = 0
+shader = ExtResource("1_shader")
+shader_parameter/tint = Color(0.5, 0.68, 0.4, 1)
+shader_parameter/cell_size = 0.72
+shader_parameter/variation = 0.12
+shader_parameter/grass = ExtResource("2_grass")
