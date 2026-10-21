@@ -49,6 +49,9 @@ func _circle_panel(size: float, color: Color) -> Panel:
 	var sb := StyleBoxFlat.new()
 	sb.bg_color = color
 	sb.set_corner_radius_all(int(size * 0.5))
+	sb.set_border_width_all(maxi(1, roundi(size * 0.035)))
+	var border := color.lightened(0.4)
+	sb.border_color = Color(border.r, border.g, border.b, color.a)
 	p.add_theme_stylebox_override("panel", sb)
 	return p
 
@@ -213,6 +216,7 @@ func _handle_press(idx: int, pos: Vector2) -> void:
 		joy_base.position = joy_anchor - Vector2(joy_radius * 2.1, joy_radius * 2.1) * 0.5
 		joy_base.visible = true
 		joy_base.modulate = Color(1, 1, 1)
+		spawn_ring.visible = false
 		return
 	if look_pointer == -1 and pos.x > screen.x * 0.28:
 		look_pointer = idx
@@ -224,6 +228,7 @@ func _handle_release(idx: int) -> void:
 			joy_pointer = -1
 			joy_vector_reset()
 			joy_base.visible = false
+			spawn_ring.visible = true
 		return
 	if btn_pointers.has(idx):
 		var id: String = btn_pointers[idx]

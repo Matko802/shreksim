@@ -60,8 +60,11 @@ func hide_static() -> void:
 	if static_overlay.visible:
 		static_overlay.visible = false
 
-func show_result(tex: Texture2D, show_click: bool) -> void:
+func show_result(tex: Texture2D, show_click: bool, text: String = "") -> void:
 	static_overlay.texture = tex
 	static_overlay.modulate = Color(1, 1, 1, 1)
-	static_overlay.visible = true
+	if not static_overlay.visible:
+		static_overlay.visible = true
+	if text != "":
+		result_label.text = text
 	result_label.visible = show_click

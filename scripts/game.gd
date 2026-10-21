@@ -1,7 +1,8 @@
 extends Node3D
 
 const WORLD_HALF := 2000.0
-const TREE_COUNT := 40
+const TREE_COUNT := 96
+const FAR_TREE_COUNT := 140
 const TREE_RADIUS := 64.0
 const TOTAL_PAGES := 8
 const START_TIME := 90.0
@@ -19,6 +20,17 @@ const TREE_TEXTURES := [
 	"res://assets/images/trees/tree1.png",
 	"res://assets/images/trees/tree2.png",
 	"res://assets/images/trees/tree5.png",
+]
+
+const GROUND_BLOCKS := [
+	"res://assets/textures/godotcraft/grass_top.png",
+	"res://assets/textures/godotcraft/grass_top.png",
+	"res://assets/textures/godotcraft/grass_top.png",
+	"res://assets/textures/godotcraft/grass_top.png",
+	"res://assets/textures/godotcraft/grass_side.png",
+	"res://assets/textures/godotcraft/dirt.png",
+	"res://assets/textures/godotcraft/stone.png",
+	"res://assets/textures/godotcraft/leaves.png",
 ]
 
 const PHASES := [
@@ -108,6 +120,7 @@ var allstar: AudioStreamPlayer
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	endless = GameState.game_type == "endless"
+	set_meta("best_start", GameState.best_endless)
 	_build_world()
 	_build_player()
 	_build_onions()
@@ -146,38 +159,34 @@ func _build_player() -> void:
 func _build_world() -> void:
 	env = Environment.new()
 	env.background_mode = Environment.BG_SKY
-	var ground_noise := FastNoiseLite.new()
-	ground_noise.seed = 7
-	ground_noise.frequency = 0.02
-	ground_noise.fractal_octaves = 3
-	ground_noise.noise_type = FastNoiseLite.TYPE_SIMPLEX_SMOOTH
-	var half := 128
-	var base := Image.create(half, half, false, Image.FORMAT_RGB8)
-	for y in half:
-		for x in half:
-			var v := ground_noise.get_noise_2d(x * 1.0, y * 1.0)
-			var t := clampf(0.5 + v * 0.5, 0.0, 1.0)
-			var lum := lerpf(0.8, 1.15, t)
-			var b := lum * lerpf(0.9, 1.04, t)
-			base.set_pixel(x, y, Color(lum * 0.97, lum, b))
-	var img := Image.create(half * 2, half * 2, false, Image.FORMAT_RGB8)
-	var quad := Rect2i(0, 0, half, half)
-	var flip_x := base.duplicate() as Image
-	flip_x.flip_x()
-	var flip_y := base.duplicate() as Image
-	flip_y.flip_y()
-	var flip_xy := base.duplicate() as Image
-	flip_xy.flip_x()
-	flip_xy.flip_y()
-	img.blit_rect(base, quad, Vector2i(0, 0))
-	img.blit_rect(flip_x, quad, Vector2i(half, 0))
-	img.blit_rect(flip_y, quad, Vector2i(0, half))
-	img.blit_rect(flip_xy, quad, Vector2i(half, half))
+	var img := Image.create(512, 512, false, Image.FORMAT_RGBA8)
+	var block := 16
+	var grid := img.get_width() / block
+	var variants: Array[Image] = []
+	for tex_path in GROUND_BLOCKS:
+		var crop := (load(tex_path) as Texture2D).get_image()
+		crop.convert(Image.FORMAT_RGBA8)
+		variants.append(crop)
+		var fx := crop.duplicate() as Image
+		fx.flip_x()
+		variants.append(fx)
+		var fy := crop.duplicate() as Image
+		fy.flip_y()
+		variants.append(fy)
+		var fxy := crop.duplicate() as Image
+		fxy.flip_x()
+		fxy.flip_y()
+		variants.append(fxy)
+	var full := Rect2i(0, 0, block, block)
+	for gy in grid:
+		for gx in grid:
+			img.blit_rect(variants[randi() % variants.size()], full, Vector2i(gx * block, gy * block))
 	img.generate_mipmaps()
 	var nt := ImageTexture.create_from_image(img)
 	ground_mat = StandardMaterial3D.new()
 	ground_mat.roughness = 1.0
 	ground_mat.albedo_texture = nt
+	ground_mat.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST_WITH_MIPMAPS
 	ground_mat.uv1_scale = Vector3(90, 90, 90)
 	ground_mat.albedo_color = PHASES[0]["grass"]
 	var ground_mesh := PlaneMesh.new()
@@ -212,6 +221,23 @@ func _build_world() -> void:
 		ws.position = wp[0]
 		walls.add_child(ws)
 	add_child(walls)
+
+	for i in FAR_TREE_COUNT:
+		var far_pos := _far_tree_pos()
+		var far_tex: Texture2D = load(TREE_TEXTURES[randi() % TREE_TEXTURES.size()])
+		var far_s := randf_range(0.7, 2.0)
+		var far_h := far_tex.get_height() * 0.5 * far_s
+		var far_tree := Sprite3D.new()
+		far_tree.texture = far_tex
+		far_tree.billboard = StandardMaterial3D.BILLBOARD_FIXED_Y
+		far_tree.shaded = false
+		far_tree.alpha_cut = SpriteBase3D.ALPHA_CUT_DISCARD
+		far_tree.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+		far_tree.pixel_size = 0.5
+		far_tree.scale = Vector3(far_s, far_s, far_s)
+		far_tree.position = Vector3(far_pos.x, far_h * 0.5, far_pos.y)
+		far_tree.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		add_child(far_tree)
 
 	var sky_shader := Shader.new()
 	sky_shader.code = SKY_CUBE_SHADER
@@ -250,7 +276,7 @@ func _build_world() -> void:
 		var use_tex := randi() % TREE_TEXTURES.size()
 		var tex_path: String = TREE_TEXTURES[use_tex]
 		var tex: Texture2D = load(tex_path)
-		var s := randf_range(0.75, 1.35)
+		var s := randf_range(0.6, 1.9)
 		var h := tex.get_height() * 0.22 * s
 		for ang in [45.0, -45.0]:
 			var tr := Sprite3D.new()
@@ -273,6 +299,11 @@ func _build_world() -> void:
 		cshape.position = Vector3(pos.x, 400, pos.y)
 		trees.add_child(cshape)
 
+func _far_tree_pos() -> Vector2:
+	var ang := randf() * TAU
+	var rad := randf_range(2150.0, 3400.0)
+	return Vector2(cos(ang), sin(ang)) * rad
+
 func _tree_pos() -> Vector2:
 	for attempt in 40:
 		var ang := randf() * TAU
@@ -280,7 +311,7 @@ func _tree_pos() -> Vector2:
 		var p := Vector2(cos(ang), sin(ang)) * rad
 		var ok := true
 		for tp in tree_positions:
-			if tp.distance_to(p) < 260.0:
+			if tp.distance_to(p) < 170.0:
 				ok = false
 				break
 		if ok:
@@ -646,7 +677,12 @@ func _end_sequence(result_path: String, with_static: bool) -> void:
 	hud.hide_static()
 	if music != null:
 		music.stop()
+	var result_text := _result_text()
+	if endless:
+		GameState.best_endless = maxi(GameState.best_endless, pages)
+		GameState.save_stats()
 	set_meta("result_path", result_path)
+	set_meta("result_text", result_text)
 	if with_static:
 		static_playing = true
 		static_time = 0.0
@@ -658,7 +694,14 @@ func _end_sequence(result_path: String, with_static: bool) -> void:
 		hud.show_static(static_frames[1], 1.0)
 		hud.result_label.visible = false
 	else:
-		hud.show_result(load(result_path), true)
+		hud.show_result(load(result_path), true, result_text)
+
+func _result_text() -> String:
+	if not endless:
+		return ""
+	if pages > int(get_meta("best_start", GameState.best_endless)):
+		return "You grabbed %d onions - NEW HIGH SCORE!" % pages
+	return "You grabbed %d onions - high score %d" % [pages, GameState.best_endless]
 
 func _static_tick(delta: float) -> void:
 	static_time += delta
@@ -671,7 +714,7 @@ func _static_tick(delta: float) -> void:
 		static_playing = false
 		if static_sound != null and static_sound.playing:
 			static_sound.stop()
-		hud.show_result(load(get_meta("result_path")), true)
+		hud.show_result(load(get_meta("result_path")), true, get_meta("result_text"))
 
 func _toggle_pause() -> void:
 	if game_over:
