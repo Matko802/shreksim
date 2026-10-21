@@ -68,6 +68,9 @@ jobs:
           java-version: "21"
 
       - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android SDK packages
         run: |
           yes | sdkmanager --licenses >/dev/null
           sdkmanager --install "platform-tools" "platforms;android-$ANDROID_COMPILE_SDK" "build-tools;$ANDROID_BUILD_TOOLS" "cmdline-tools;latest"
