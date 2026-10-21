@@ -9,6 +9,8 @@ var look_pointer := -1
 var look_last := Vector2.ZERO
 var btn_pointers := {}
 var grab_button: Panel
+var joy_anchor := Vector2.ZERO
+var spawn_ring: Panel
 var tap_release_queue: Array = []
 var sprint_on := false
 var joy_base: Panel
@@ -100,6 +102,16 @@ func _build_ui() -> void:
 	joy_knob.position = Vector2(joy_radius * 2.1, joy_radius * 2.1) * 0.5 - Vector2(knob_size, knob_size) * 0.5
 	joy_base.visible = false
 	add_child(joy_base)
+
+	joy_anchor = Vector2(safe.position.x + m + joy_radius * 1.2, end.y - m - joy_radius * 1.2)
+	spawn_ring = _circle_panel(joy_radius * 2.1, Color(1, 1, 1, 0.09))
+	spawn_ring.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	spawn_ring.position = joy_anchor - Vector2(joy_radius * 2.1, joy_radius * 2.1) * 0.5
+	add_child(spawn_ring)
+	var spawn_dot := _circle_panel(knob_size, Color(1.0, 0.97, 0.88, 0.22))
+	spawn_dot.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	spawn_dot.position = Vector2(joy_radius * 2.1, joy_radius * 2.1) * 0.5 - Vector2(knob_size, knob_size) * 0.5
+	spawn_ring.add_child(spawn_dot)
 
 	grab_button = buttons["grab"]
 	grab_button.visible = false
@@ -197,8 +209,8 @@ func _handle_press(idx: int, pos: Vector2) -> void:
 		return
 	if joy_pointer == -1 and pos.x < screen.x * 0.45 and pos.y > screen.y * 0.32:
 		joy_pointer = idx
-		joy_center = pos
-		joy_base.position = pos - Vector2(joy_radius * 2.1, joy_radius * 2.1) * 0.5
+		joy_center = joy_anchor
+		joy_base.position = joy_anchor - Vector2(joy_radius * 2.1, joy_radius * 2.1) * 0.5
 		joy_base.visible = true
 		joy_base.modulate = Color(1, 1, 1)
 		return
@@ -244,11 +256,7 @@ func joy_vector_reset() -> void:
 	Input.action_release("move_right")
 
 func joy_update(pos: Vector2) -> void:
-	var offset := pos - joy_center
-	if offset.length() > joy_radius:
-		joy_center = pos - offset.normalized() * joy_radius
-		offset = pos - joy_center
-		joy_base.position = joy_center - Vector2(joy_radius * 2.1, joy_radius * 2.1) * 0.5
+	var offset := (pos - joy_center).limit_length(joy_radius)
 	var knob_size := joy_knob.size.x
 	joy_knob.position = Vector2(joy_radius * 2.1, joy_radius * 2.1) * 0.5 - Vector2(knob_size, knob_size) * 0.5 + offset
 	if offset.length() < joy_radius * 0.2:
