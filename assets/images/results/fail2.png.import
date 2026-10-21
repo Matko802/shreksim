@@ -3,16 +3,17 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://304iuorkdlj3"
+path.s3tc="res://.godot/imported/fail2.png-33e54c76edde5f1c8b8a8547dc33cd15.s3tc.ctex"
 path.etc2="res://.godot/imported/fail2.png-33e54c76edde5f1c8b8a8547dc33cd15.etc2.ctex"
 metadata={
-"imported_formats": ["etc2_astc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/images/results/fail2.png"
-dest_files=["res://.godot/imported/fail2.png-33e54c76edde5f1c8b8a8547dc33cd15.etc2.ctex"]
+dest_files=["res://.godot/imported/fail2.png-33e54c76edde5f1c8b8a8547dc33cd15.s3tc.ctex", "res://.godot/imported/fail2.png-33e54c76edde5f1c8b8a8547dc33cd15.etc2.ctex"]
 
 [params]
 

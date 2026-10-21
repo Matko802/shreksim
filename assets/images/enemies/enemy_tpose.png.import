@@ -3,16 +3,17 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cv476erly3vdg"
+path.s3tc="res://.godot/imported/enemy_tpose.png-813dc9a9181c5ffec216981dfa795dc0.s3tc.ctex"
 path.etc2="res://.godot/imported/enemy_tpose.png-813dc9a9181c5ffec216981dfa795dc0.etc2.ctex"
 metadata={
-"imported_formats": ["etc2_astc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/images/enemies/enemy_tpose.png"
-dest_files=["res://.godot/imported/enemy_tpose.png-813dc9a9181c5ffec216981dfa795dc0.etc2.ctex"]
+dest_files=["res://.godot/imported/enemy_tpose.png-813dc9a9181c5ffec216981dfa795dc0.s3tc.ctex", "res://.godot/imported/enemy_tpose.png-813dc9a9181c5ffec216981dfa795dc0.etc2.ctex"]
 
 [params]
 
