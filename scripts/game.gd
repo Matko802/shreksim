@@ -9,6 +9,7 @@ const TREE_RING_N := [30, 44, 58, 72]
 const TREE_RING_R := [900.0, 1350.0, 1800.0, 2250.0]
 const ONION_RADII := [560.0, 640.0, 700.0, 1060.0, 1150.0, 1560.0, 1630.0, 1950.0, 2100.0, 2450.0, 2600.0, 2900.0]
 const LOOKOUTS := [[Vector2(1060, 140), 187.0], [Vector2(-1140, 1080), 317.0], [Vector2(1620, -1130), 145.0], [Vector2(60, -1090), 93.0]]
+const LOOKOUT_SCENE := preload("res://assets/models/watchtower.glb")
 const TOTAL_PAGES := 8
 const START_TIME := 150.0
 const KILL_RADIUS := 70.0
@@ -162,9 +163,9 @@ func _terrain_height(x: float, z: float) -> float:
 	var edge := clampf((float(WORLD_HALF) - dist) / 900.0, 0.0, 1.0)
 	var spawn := clampf((dist - 240.0) / 400.0, 0.0, 1.0)
 	var moat := clampf((dist - float(WORLD_HALF) + 500.0) / 500.0, 0.0, 1.0)
-	var tops := sin(x * 0.0012 + 1.7) * cos(z * 0.0009 - 2.3) * 30.0
-	var mids := sin((x + z) * 0.0022 - 0.8) * 13.0
-	var bumps := sin(x * 0.0051) * cos(z * 0.0054) * 3.5
+	var tops := sin(x * 0.0012 + 1.7) * cos(z * 0.0009 - 2.3) * 70.0
+	var mids := sin((x + z) * 0.0022 - 0.8) * 28.0
+	var bumps := sin(x * 0.0051) * cos(z * 0.0054) * 6.0
 	return (tops + mids + bumps) * edge * spawn - 55.0 * moat
 
 func _terrain_normal(x: float, z: float) -> Vector3:
@@ -173,20 +174,13 @@ func _terrain_normal(x: float, z: float) -> Vector3:
 	var dhz := (_terrain_height(x, z + e) - _terrain_height(x, z - e)) / (2.0 * e)
 	return Vector3(-dhx, 1.0, -dhz).normalized()
 
-func _make_box(body: StaticBody3D, pos: Vector3, size: Vector3, mat: StandardMaterial3D) -> void:
-	var mesh_inst := MeshInstance3D.new()
-	var box_bad_mesh := BoxMesh.new()
-	box_bad_mesh.size = size
-	mesh_inst.mesh = box_bad_mesh
-	mesh_inst.material_override = mat
-	body.add_child(mesh_inst)
+func _make_shape(body: StaticBody3D, pos: Vector3, size: Vector3) -> void:
 	var cs := CollisionShape3D.new()
 	var bs := BoxShape3D.new()
 	bs.size = size
 	cs.shape = bs
 	cs.position = pos
 	body.add_child(cs)
-	mesh_inst.position = pos
 
 func _build_lookout(base: Vector2, facing: float) -> void:
 	var gh := _terrain_height(base.x, base.y)
@@ -195,27 +189,18 @@ func _build_lookout(base: Vector2, facing: float) -> void:
 	body.position = Vector3(base.x, 0.0, base.y)
 	body.rotation.y = deg_to_rad(facing)
 	add_child(body)
-	var wood := StandardMaterial3D.new()
-	wood.albedo_color = Color(0.44, 0.29, 0.17)
-	wood.roughness = 0.9
-	for lx in [-10.0, 10.0]:
-		for lz in [-10.0, 10.0]:
-			_make_box(body, Vector3(lx, gh + 12.0, lz), Vector3(2.4, 30.0, 2.4), wood)
-	_make_box(body, Vector3(0, gh + 25.2, 0), Vector3(30, 2.4, 30), wood)
-	_make_box(body, Vector3(0, gh + 28.6, -14.4), Vector3(30, 3.2, 1.2), wood)
-	_make_box(body, Vector3(0, gh + 28.6, 14.4), Vector3(30, 3.2, 1.2), wood)
-	_make_box(body, Vector3(-14.4, gh + 28.6, 0), Vector3(1.2, 3.2, 30), wood)
-	_make_box(body, Vector3(14.4, gh + 28.6, 0), Vector3(1.2, 3.2, 30), wood)
+	_make_shape(body, Vector3(0, gh + 24.4, 1.5), Vector3(31.2, 4.0, 34.2))
+	_make_shape(body, Vector3(14.9, gh + 28.6, 1.5), Vector3(1.2, 3.2, 34.2))
+	_make_shape(body, Vector3(-14.9, gh + 28.6, 1.5), Vector3(1.2, 3.2, 34.2))
+	_make_shape(body, Vector3(0, gh + 28.6, -15.0), Vector3(31.2, 3.2, 1.2))
+	var tower: Node3D = LOOKOUT_SCENE.instantiate()
+	tower.position = Vector3(0, gh, 0)
+	tower.scale = Vector3(0.66, 0.66, 0.66)
+	body.add_child(tower)
 	var ramp := Node3D.new()
 	ramp.position = Vector3(0, gh + 12.2, 35.0)
 	ramp.rotation.x = deg_to_rad(35.0)
 	body.add_child(ramp)
-	var ramp_mesh := MeshInstance3D.new()
-	var ramp_mesh_box := BoxMesh.new()
-	ramp_mesh_box.size = Vector3(3.4, 2.4, 50.0)
-	ramp_mesh.mesh = ramp_mesh_box
-	ramp_mesh.material_override = wood
-	ramp.add_child(ramp_mesh)
 	var ramp_cs := CollisionShape3D.new()
 	var ramp_bs := BoxShape3D.new()
 	ramp_bs.size = Vector3(3.4, 2.4, 50.0)
@@ -251,6 +236,7 @@ func _build_world() -> void:
 	var nt := ImageTexture.create_from_image(img)
 	ground_mat = StandardMaterial3D.new()
 	ground_mat.roughness = 1.0
+	ground_mat.cull_mode = BaseMaterial3D.CULL_DISABLED
 	ground_mat.albedo_texture = nt
 	ground_mat.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST_WITH_MIPMAPS
 	ground_mat.uv1_scale = Vector3(90, 90, 90)
@@ -308,6 +294,7 @@ func _build_world() -> void:
 	ground_body.collision_layer = 1
 	var gb_shape := CollisionShape3D.new()
 	var terrain_shape := terrain_mesh.create_trimesh_shape()
+	terrain_shape.backface_collision = true
 	gb_shape.shape = terrain_shape
 	ground_body.add_child(gb_shape)
 	add_child(ground_body)
