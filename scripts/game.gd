@@ -4,6 +4,8 @@ const WORLD_HALF := 2000.0
 const TREE_COUNT := 96
 const FAR_TREE_COUNT := 140
 const TREE_RADIUS := 64.0
+const TREE_BILLBOARD_DIST := 420.0
+const MAP_SEED := 77075
 const TOTAL_PAGES := 8
 const START_TIME := 90.0
 const KILL_RADIUS := 70.0
@@ -84,6 +86,9 @@ var sun: DirectionalLight3D
 var sky_mat: ShaderMaterial
 var _day_mix := 1.0
 var ground_mat: StandardMaterial3D
+var map_rng := RandomNumberGenerator.new()
+var tree_planes: Array = []
+var tree_swap_time := 0.0
 
 var enemy: Sprite3D
 var enemy_active := false
@@ -150,6 +155,7 @@ func _build_player() -> void:
 	add_child(player)
 
 func _build_world() -> void:
+	map_rng.seed = MAP_SEED
 	env = Environment.new()
 	env.background_mode = Environment.BG_SKY
 	var img := Image.create(512, 512, false, Image.FORMAT_RGBA8)
@@ -173,7 +179,7 @@ func _build_world() -> void:
 	var full := Rect2i(0, 0, block, block)
 	for gy in grid:
 		for gx in grid:
-			img.blit_rect(variants[randi() % variants.size()], full, Vector2i(gx * block, gy * block))
+			img.blit_rect(variants[map_rng.randi() % variants.size()], full, Vector2i(gx * block, gy * block))
 	img.generate_mipmaps()
 	var nt := ImageTexture.create_from_image(img)
 	ground_mat = StandardMaterial3D.new()
@@ -217,8 +223,8 @@ func _build_world() -> void:
 
 	for i in FAR_TREE_COUNT:
 		var far_pos := _far_tree_pos()
-		var far_tex: Texture2D = load(TREE_TEXTURES[randi() % TREE_TEXTURES.size()])
-		var far_s := randf_range(0.7, 2.0)
+		var far_tex: Texture2D = load(TREE_TEXTURES[map_rng.randi() % TREE_TEXTURES.size()])
+		var far_s := map_rng.randf_range(0.7, 2.0)
 		var far_h := far_tex.get_height() * 0.5 * far_s
 		var far_tree := Sprite3D.new()
 		far_tree.texture = far_tex
@@ -266,11 +272,12 @@ func _build_world() -> void:
 	for i in TREE_COUNT:
 		var pos := _tree_pos()
 		tree_positions.append(pos)
-		var use_tex := randi() % TREE_TEXTURES.size()
+		var use_tex := map_rng.randi() % TREE_TEXTURES.size()
 		var tex_path: String = TREE_TEXTURES[use_tex]
 		var tex: Texture2D = load(tex_path)
-		var s := randf_range(0.6, 1.9)
+		var s := map_rng.randf_range(0.6, 1.9)
 		var h := tex.get_height() * 0.22 * s
+		var pair: Array = []
 		for ang in [45.0, -45.0]:
 			var tr := Sprite3D.new()
 			tr.texture = tex
@@ -284,6 +291,8 @@ func _build_world() -> void:
 			tr.rotation.y = deg_to_rad(ang)
 			tr.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 			add_child(tr)
+			pair.append(tr)
+		tree_planes.append(pair)
 		var cshape := CollisionShape3D.new()
 		var cyl := CylinderShape3D.new()
 		cyl.radius = TREE_RADIUS * s * 0.55
@@ -293,14 +302,14 @@ func _build_world() -> void:
 		trees.add_child(cshape)
 
 func _far_tree_pos() -> Vector2:
-	var ang := randf() * TAU
-	var rad := randf_range(2150.0, 3400.0)
+	var ang := map_rng.randf() * TAU
+	var rad := map_rng.randf_range(2150.0, 3400.0)
 	return Vector2(cos(ang), sin(ang)) * rad
 
 func _tree_pos() -> Vector2:
 	for attempt in 40:
-		var ang := randf() * TAU
-		var rad := sqrt(lerpf(460.0 * 460.0, 1150.0 * 1150.0, randf()))
+		var ang := map_rng.randf() * TAU
+		var rad := sqrt(lerpf(460.0 * 460.0, 1150.0 * 1150.0, map_rng.randf()))
 		var p := Vector2(cos(ang), sin(ang)) * rad
 		var ok := true
 		for tp in tree_positions:
@@ -310,6 +319,20 @@ func _tree_pos() -> Vector2:
 		if ok:
 			return p
 	return Vector2(460, 0)
+
+func _update_tree_billboards() -> void:
+	var p := player.global_position
+	for pair in tree_planes:
+		var a: Sprite3D = pair[0]
+		var b: Sprite3D = pair[1]
+		var d := Vector2(a.global_position.x - p.x, a.global_position.z - p.z).length()
+		if d > TREE_BILLBOARD_DIST:
+			if a.billboard != BaseMaterial3D.BILLBOARD_FIXED_Y:
+				a.billboard = BaseMaterial3D.BILLBOARD_FIXED_Y
+				b.visible = false
+		elif a.billboard != BaseMaterial3D.BILLBOARD_DISABLED:
+			a.billboard = BaseMaterial3D.BILLBOARD_DISABLED
+			b.visible = true
 
 func _build_onions() -> void:
 	var count := TOTAL_PAGES if not endless else 5
@@ -347,8 +370,8 @@ func _spawn_onion() -> Area3D:
 
 func _onion_pos() -> Vector2:
 	for attempt in 40:
-		var ang := randf() * TAU
-		var rad := sqrt(lerpf(520.0 * 520.0, 1150.0 * 1150.0, randf()))
+		var ang := map_rng.randf() * TAU
+		var rad := sqrt(lerpf(520.0 * 520.0, 1150.0 * 1150.0, map_rng.randf()))
 		var p := Vector2(cos(ang), sin(ang)) * rad
 		if p.length() <= 520.0:
 			continue
@@ -419,6 +442,10 @@ func _process(delta: float) -> void:
 			o.position.y = sin(onion_bob_t * 2.0 + o.position.x * 0.01) * 3.0
 			o.rotation.y += delta * 0.9
 	_update_threat(delta)
+	tree_swap_time -= delta
+	if tree_swap_time <= 0.0:
+		tree_swap_time = 0.25
+		_update_tree_billboards()
 	_prompt_timer -= delta
 	if _prompt_timer <= 0.0:
 		_prompt_timer = PROMPT_INTERVAL
