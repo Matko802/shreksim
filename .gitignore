@@ -7,3 +7,4 @@ build/
 /tmp/
 /thumbs.db
 .DS_Store
+web_dist/
