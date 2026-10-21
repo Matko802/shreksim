@@ -405,7 +405,7 @@ Grab an onion by looking at it and pressing [E] or clicking it.
 The ogre comes after the first onion and FOLLOWS you.
 He gets faster with every onion.
 The static on your screen grows as he closes in.
-Looking at him slows him down. Do not let him touch you."
+He chases at full speed whether you see him or not. Do not let him touch you."
 horizontal_alignment = 1
 
 [node name="BackCenter" type="CenterContainer" parent="HowtoPanel/Box" unique_id=1223993937]

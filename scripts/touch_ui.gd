@@ -8,6 +8,7 @@ var joy_radius := 88.0
 var look_pointer := -1
 var look_last := Vector2.ZERO
 var btn_pointers := {}
+var grab_button: Panel
 var tap_release_queue: Array = []
 var sprint_on := false
 var joy_base: Panel
@@ -100,6 +101,13 @@ func _build_ui() -> void:
 	joy_base.visible = false
 	add_child(joy_base)
 
+	grab_button = buttons["grab"]
+	grab_button.visible = false
+
+func set_grab_visible(v: bool) -> void:
+	if grab_button != null and grab_button.visible != v:
+		grab_button.visible = v
+
 func _game_paused() -> bool:
 	var g := get_parent()
 	if g == null:
@@ -158,11 +166,13 @@ func _fire_action(action: String) -> void:
 
 func _handle_press(idx: int, pos: Vector2) -> void:
 	for id in buttons.keys():
-		var rect: Rect2 = buttons[id].get_meta("rect")
+		var p: Panel = buttons[id]
+		if not p.visible:
+			continue
+		var rect: Rect2 = p.get_meta("rect")
 		if not rect.has_point(pos):
 			continue
 		btn_pointers[idx] = id
-		var p: Panel = buttons[id]
 		p.modulate = Color(1.25, 1.25, 1.25)
 		match id:
 			"jump":
@@ -227,9 +237,6 @@ func _send_look(delta: Vector2) -> void:
 	if g != null and g.has_method("_touch_look"):
 		g._touch_look(delta)
 
-func _joy_axis(v: float) -> float:
-	return clampf(v, -1.0, 1.0)
-
 func joy_vector_reset() -> void:
 	Input.action_release("move_forward")
 	Input.action_release("move_back")
@@ -244,10 +251,14 @@ func joy_update(pos: Vector2) -> void:
 		joy_base.position = joy_center - Vector2(joy_radius * 2.1, joy_radius * 2.1) * 0.5
 	var knob_size := joy_knob.size.x
 	joy_knob.position = Vector2(joy_radius * 2.1, joy_radius * 2.1) * 0.5 - Vector2(knob_size, knob_size) * 0.5 + offset
-	var up := _joy_axis(-offset.y / joy_radius)
-	var down := _joy_axis(offset.y / joy_radius)
-	var right := _joy_axis(offset.x / joy_radius)
-	var left := _joy_axis(-offset.x / joy_radius)
+	if offset.length() < joy_radius * 0.2:
+		joy_vector_reset()
+		return
+	var snapped_dir := Vector2.RIGHT.rotated(roundf(offset.angle() / (TAU / 8.0)) * (TAU / 8.0))
+	var up := -snapped_dir.y
+	var down := snapped_dir.y
+	var right := snapped_dir.x
+	var left := -snapped_dir.x
 	Input.action_press("move_forward", up)
 	Input.action_press("move_back", down)
 	Input.action_press("move_right", right)

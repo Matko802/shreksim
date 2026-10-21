@@ -9,6 +9,9 @@ extends CanvasLayer
 @onready var result_label: Label = %ResultLabel
 
 var _objective_tween: Tween
+var _last_prompt := " "
+var _last_time := -1
+var _last_low := false
 
 func _ready() -> void:
 	for c in find_children("*", "Control", true, false):
@@ -22,10 +25,17 @@ func set_timer_visible(v: bool) -> void:
 	timer_label.visible = v
 
 func set_time(t: int, low: bool) -> void:
+	if t == _last_time and low == _last_low:
+		return
+	_last_time = t
+	_last_low = low
 	timer_label.text = str(t)
 	timer_label.add_theme_color_override("font_color", Color(1, 0.3, 0.25) if low else Color.WHITE)
 
 func set_prompt(t: String) -> void:
+	if t == _last_prompt:
+		return
+	_last_prompt = t
 	prompt_label.text = t
 
 func set_crosshair(v: bool) -> void:
@@ -40,12 +50,15 @@ func show_objective(t: String) -> void:
 	_objective_tween.tween_property(objective_label, "modulate:a", 0.0, 1.2).set_delay(3.0)
 
 func show_static(tex: Texture2D, alpha: float) -> void:
-	static_overlay.texture = tex
+	if static_overlay.texture != tex:
+		static_overlay.texture = tex
+	if not static_overlay.visible:
+		static_overlay.visible = true
 	static_overlay.modulate = Color(1, 1, 1, alpha)
-	static_overlay.visible = true
 
 func hide_static() -> void:
-	static_overlay.visible = false
+	if static_overlay.visible:
+		static_overlay.visible = false
 
 func show_result(tex: Texture2D, show_click: bool) -> void:
 	static_overlay.texture = tex

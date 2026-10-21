@@ -34,11 +34,6 @@ const ZOOM_SMOOTHING: float = 10.0
 const ZOOM_SCROLL_STEP: float = 5.0
 const ZOOM_MIN_STEPS: float = 2.0
 
-const FLASHLIGHT_LAG_FACTOR: float = 0.22
-const FLASHLIGHT_LAG_MAX: float = deg_to_rad(10.0)
-const FLASHLIGHT_LAG_RESPONSE: float = 8.0
-const FLASHLIGHT_LAG_RETURN: float = 7.0
-const FLASHLIGHT_LAG_HOLD: float = 0.05
 const VM_MODEL_SCALE: float = 14.0
 const VM_LIGHT_ENERGY: float = 5600.0
 const VM_POSE_RESET: Vector3 = Vector3(16.716, -20.216, -9.1)
@@ -55,11 +50,6 @@ const FLASHLIGHT_ALBEDO: Texture2D = preload("res://assets/textures/flashlight_a
 var head_rest_pos: Vector3 = Vector3(0.0, STANDING_HEAD_Y, 0.0)
 
 var _flashlight_on: bool = true
-var _lag_yaw: float = 0.0
-var _lag_pitch: float = 0.0
-var _lag_yaw_target: float = 0.0
-var _lag_pitch_target: float = 0.0
-var _lag_stall: float = 0.0
 var _look_yaw_target: float = 0.0
 var _look_pitch: float = 0.0
 var _look_yaw_applied: float = 0.0
@@ -226,6 +216,7 @@ func _viewmodel_holster_anim() -> Animation:
 	a.add_track(Animation.TYPE_VALUE)
 	var t_vis := a.get_track_count() - 1
 	a.track_set_path(t_vis, ".:visible")
+	a.track_insert_key(t_vis, 0.0, true)
 	a.track_insert_key(t_vis, 0.3, false)
 	a.add_track(Animation.TYPE_VALUE)
 	var t_rot := a.get_track_count() - 1
@@ -236,11 +227,13 @@ func _viewmodel_holster_anim() -> Animation:
 	return a
 
 func _process(delta: float) -> void:
-	var k: float = 1.0 - exp(-ZOOM_SMOOTHING * delta)
-	_zoom_fov = lerpf(_zoom_fov, _zoom_target, k)
-	if absf(_zoom_fov - _zoom_target) < 0.1:
-		_zoom_fov = _zoom_target
-	camera.fov = _zoom_fov
+	if _zoom_fov != _zoom_target:
+		var k: float = 1.0 - exp(-ZOOM_SMOOTHING * delta)
+		_zoom_fov = lerpf(_zoom_fov, _zoom_target, k)
+		if absf(_zoom_fov - _zoom_target) < 0.1:
+			_zoom_fov = _zoom_target
+	if camera.fov != _zoom_fov:
+		camera.fov = _zoom_fov
 
 func set_footstep_streams(loop: AudioStream) -> void:
 	footstep_loop_stream = loop
@@ -256,9 +249,6 @@ func set_footstep_streams(loop: AudioStream) -> void:
 func toggle_flashlight() -> void:
 	_flashlight_on = not _flashlight_on
 	flashlight_light.visible = _flashlight_on
-	flashlight_model_animator.play(&"model_draw" if _flashlight_on else &"model_holster")
-	flashlight_toggle_player.play()
-	flashlight_toggled.emit(_flashlight_on)
 	flashlight_model_animator.play(&"model_draw" if _flashlight_on else &"model_holster")
 	flashlight_toggle_player.play()
 	flashlight_toggled.emit(_flashlight_on)
@@ -306,18 +296,10 @@ func _unhandled_input(event: InputEvent) -> void:
 			_last_zoom = _zoom_target
 
 func _physics_process(delta: float) -> void:
-	var pending_yaw: float = _look_yaw_target - _last_applied_yaw
+	var pending_yaw := _look_yaw_target - _last_applied_yaw
 	if absf(pending_yaw) > 0.00001:
 		rotate_y(pending_yaw)
 		_last_applied_yaw = _look_yaw_target
-		if SettingsBus.camera_effects_enabled and _flashlight_on:
-			_lag_yaw_target = clampf(_lag_yaw_target - pending_yaw * FLASHLIGHT_LAG_FACTOR, -FLASHLIGHT_LAG_MAX, FLASHLIGHT_LAG_MAX)
-			_lag_stall = 0.0
-	var pending_pitch: float = _look_pitch - _look_pitch_applied
-	if absf(pending_pitch) > 0.00001:
-		if SettingsBus.camera_effects_enabled and _flashlight_on:
-			_lag_pitch_target = clampf(_lag_pitch_target - pending_pitch * FLASHLIGHT_LAG_FACTOR, -FLASHLIGHT_LAG_MAX, FLASHLIGHT_LAG_MAX)
-			_lag_stall = 0.0
 	_look_yaw_applied = _look_yaw_target
 	_look_pitch_applied = _look_pitch
 
@@ -359,26 +341,6 @@ func _physics_process(delta: float) -> void:
 	_update_camera_tilt(delta)
 	_update_head_position(delta)
 	_apply_head_transform()
-	_update_flashlight_rotation(delta)
-
-func _update_flashlight_rotation(delta: float) -> void:
-	if not _flashlight_on or not SettingsBus.camera_effects_enabled:
-		flashlight_container.quaternion = Quaternion.IDENTITY
-		_lag_yaw = 0.0
-		_lag_pitch = 0.0
-		_lag_yaw_target = 0.0
-		_lag_pitch_target = 0.0
-		_lag_stall = FLASHLIGHT_LAG_HOLD
-		return
-	_lag_stall += delta
-	if _lag_stall > FLASHLIGHT_LAG_HOLD:
-		var kd: float = 1.0 - exp(-FLASHLIGHT_LAG_RETURN * delta)
-		_lag_yaw_target = lerpf(_lag_yaw_target, 0.0, kd)
-		_lag_pitch_target = lerpf(_lag_pitch_target, 0.0, kd)
-	var kr: float = 1.0 - exp(-FLASHLIGHT_LAG_RESPONSE * delta)
-	_lag_yaw = lerpf(_lag_yaw, _lag_yaw_target, kr)
-	_lag_pitch = lerpf(_lag_pitch, _lag_pitch_target, kr)
-	flashlight_container.rotation = Vector3(_lag_pitch, _lag_yaw, 0.0)
 
 func _is_sprinting() -> bool:
 	if _is_crouching:
@@ -443,8 +405,12 @@ func _apply_head_transform() -> void:
 	var bob: float = bob_shape * BOB_AMPLITUDE * _move_factor * _bob_factor * fx
 	var sway: float = sin(phase * 2.0) * SWAY_AMPLITUDE * _move_factor * _bob_factor * fx
 	var roll_amount: float = -_strafe_tilt * TILT_AMPLITUDE * _move_factor * fx
-	head.rotation = Vector3(_look_pitch_applied + bob, sway, roll_amount)
-	head.position = _head_pos + Vector3(0.0, _land_bounce * fx, 0.0)
+	var target_rotation := Vector3(_look_pitch_applied + bob, sway, roll_amount)
+	if head.rotation != target_rotation:
+		head.rotation = target_rotation
+	var target_position := _head_pos + Vector3(0.0, _land_bounce * fx, 0.0)
+	if head.position != target_position:
+		head.position = target_position
 
 func _update_head_position(delta: float) -> void:
 	var target_pos: Vector3 = head_rest_pos
@@ -458,6 +424,8 @@ func _update_head_position(delta: float) -> void:
 
 func _update_crouch_transition(delta: float) -> void:
 	var target := 1.0 if _is_crouching else 0.0
+	if _crouch_blend == target:
+		return
 	var k: float = 1.0 - exp(-CROUCH_TRANSITION_SMOOTHING * delta)
 	_crouch_blend = lerpf(_crouch_blend, target, k)
 	if absf(target - _crouch_blend) < 0.0005:

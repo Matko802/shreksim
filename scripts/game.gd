@@ -14,9 +14,6 @@ const THREAT_RANGE := 950.0
 const ENEMY_FOLLOW_BASE := 60.0
 const ENEMY_FOLLOW_PER_PAGE := 12.0
 const ENEMY_SPEED_CAP := 160.0
-const OBSERVED_FACTOR := 0.35
-const OBSERVE_DOT := 0.62
-const OBSERVE_RANGE := 1100.0
 
 const TREE_TEXTURES := [
 	"res://assets/images/trees/tree1.png",
@@ -63,12 +60,14 @@ void sky() {
 """
 
 const PHASE_SMOOTHING := 1.6
+const PROMPT_INTERVAL := 0.1
 
 var endless := false
 var game_over := false
 var phase := 0
 var _phase_target: Dictionary = {}
 var _phase_started := false
+var _phase_converged := false
 var won := false
 var paused := false
 var pages := 0
@@ -85,6 +84,8 @@ var enemy: Sprite3D
 var enemy_active := false
 var enemy_bob_t := 0.0
 var threat := 0.0
+var _grab_shown := false
+var _prompt_timer := 0.0
 
 var onions: Array[Area3D] = []
 var onion_bob_t := 0.0
@@ -92,11 +93,14 @@ var tree_positions: Array[Vector2] = []
 
 var hud: CanvasLayer
 var pause_menu: CanvasLayer
+var _touch: Node
 var static_frames: Array[Texture2D] = []
+var threat_frames: Array[Texture2D] = []
 var static_time := 0.0
 var static_playing := false
 
 var music: AudioStreamPlayer
+var music_streams: Array[AudioStream] = []
 var static_sound: AudioStreamPlayer
 var onion_sound: AudioStreamPlayer
 var allstar: AudioStreamPlayer
@@ -123,12 +127,15 @@ func _build_ui() -> void:
 	add_child(hud)
 	pause_menu = (load("res://scenes/pause_menu.tscn") as PackedScene).instantiate()
 	add_child(pause_menu)
-	add_child((load("res://scenes/touch_ui.tscn") as PackedScene).instantiate())
+	var touch := (load("res://scenes/touch_ui.tscn") as PackedScene).instantiate()
+	add_child(touch)
+	_touch = touch
 	pause_menu.resume_requested.connect(_toggle_pause)
 	pause_menu.restart_requested.connect(_restart)
 	pause_menu.menu_requested.connect(_to_menu)
 	for i in 5:
 		static_frames.append(load("res://assets/images/static/static%d.png" % i))
+	threat_frames.assign([static_frames[0], static_frames[2], static_frames[3], static_frames[4]])
 
 func _build_player() -> void:
 	player = SwampPlayer.new()
@@ -154,11 +161,19 @@ func _build_world() -> void:
 			var b := lum * lerpf(0.9, 1.04, t)
 			base.set_pixel(x, y, Color(lum * 0.97, lum, b))
 	var img := Image.create(half * 2, half * 2, false, Image.FORMAT_RGB8)
-	for y2 in half * 2:
-		for x2 in half * 2:
-			var sx := x2 if x2 < half else half * 2 - 1 - x2
-			var sy := y2 if y2 < half else half * 2 - 1 - y2
-			img.set_pixel(x2, y2, base.get_pixel(sx, sy))
+	var quad := Rect2i(0, 0, half, half)
+	var flip_x := base.duplicate() as Image
+	flip_x.flip_x()
+	var flip_y := base.duplicate() as Image
+	flip_y.flip_y()
+	var flip_xy := base.duplicate() as Image
+	flip_xy.flip_x()
+	flip_xy.flip_y()
+	img.blit_rect(base, quad, Vector2i(0, 0))
+	img.blit_rect(flip_x, quad, Vector2i(half, 0))
+	img.blit_rect(flip_y, quad, Vector2i(0, half))
+	img.blit_rect(flip_xy, quad, Vector2i(half, half))
+	img.generate_mipmaps()
 	var nt := ImageTexture.create_from_image(img)
 	ground_mat = StandardMaterial3D.new()
 	ground_mat.roughness = 1.0
@@ -243,6 +258,7 @@ func _build_world() -> void:
 			tr.billboard = BaseMaterial3D.BILLBOARD_DISABLED
 			tr.shaded = true
 			tr.alpha_cut = SpriteBase3D.ALPHA_CUT_DISCARD
+			tr.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 			tr.pixel_size = 0.22
 			tr.scale = Vector3(s, s, s)
 			tr.position = Vector3(pos.x, h * 0.46, pos.y)
@@ -286,6 +302,7 @@ func _spawn_onion() -> Area3D:
 	sprite.shaded = false
 	sprite.pixel_size = 0.31
 	sprite.alpha_cut = SpriteBase3D.ALPHA_CUT_DISCARD
+	sprite.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	sprite.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	sprite.position = Vector3(0, 64, 0)
 	area.add_child(sprite)
@@ -336,6 +353,7 @@ func _build_enemy() -> void:
 	enemy.shaded = false
 	enemy.pixel_size = 250.0 / float(tex.get_height())
 	enemy.alpha_cut = SpriteBase3D.ALPHA_CUT_DISCARD
+	enemy.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	enemy.position = Vector3(0, 125, 0)
 	enemy.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	enemy.visible = false
@@ -347,6 +365,9 @@ func _build_audio() -> void:
 	add_child(onion_sound)
 
 	player.set_footstep_streams(load("res://assets/sounds/sfx_footstep1.ogg"))
+
+	for path in ["", "res://assets/sounds/music_pages_1_2.ogg", "res://assets/sounds/music_pages_3_4.ogg", "res://assets/sounds/music_pages_5_6.ogg", "res://assets/sounds/music_pages_7_8.ogg"]:
+		music_streams.append(load(path) if path != "" else null)
 
 func _objective_text() -> void:
 	if endless:
@@ -374,7 +395,10 @@ func _process(delta: float) -> void:
 			o.position.y = sin(onion_bob_t * 2.0 + o.position.x * 0.01) * 3.0
 			o.rotation.y += delta * 0.9
 	_update_threat(delta)
-	_update_prompt()
+	_prompt_timer -= delta
+	if _prompt_timer <= 0.0:
+		_prompt_timer = PROMPT_INTERVAL
+		_update_prompt()
 	if not endless:
 		_time_tick(delta)
 	_lerp_phase(clampf(1.0 - exp(-PHASE_SMOOTHING * delta), 0.0, 1.0))
@@ -394,18 +418,21 @@ func _update_threat(delta: float) -> void:
 		hud.hide_static()
 		return
 	static_time += delta
-	var threat_frames: Array[Texture2D] = [static_frames[0], static_frames[2], static_frames[3], static_frames[4]]
 	hud.show_static(threat_frames[int(static_time / 0.07) % threat_frames.size()], alpha)
 
 func _update_prompt() -> void:
-	var hit := _ray_onion()
-	if hit == null:
-		hud.set_prompt("")
+	var grab_now := _ray_onion() != null and (endless or pages < TOTAL_PAGES)
+	hud.set_prompt("[E]  Grab onion" if grab_now else "")
+	_set_touch_grab(grab_now)
+
+func _set_touch_grab(v: bool) -> void:
+	if _touch != null and not is_instance_valid(_touch):
+		_touch = null
+	if _grab_shown == v:
 		return
-	if not endless and pages >= TOTAL_PAGES:
-		hud.set_prompt("")
-		return
-	hud.set_prompt("[E]  Grab onion")
+	_grab_shown = v
+	if _touch != null:
+		_touch.set_grab_visible(v)
 
 func _ray_onion() -> Area3D:
 	var center := _vsize() * 0.5
@@ -492,6 +519,7 @@ func _collect(onion: Area3D) -> void:
 func _apply_phase(ph: int) -> void:
 	phase = ph
 	_phase_target = PHASES[ph]
+	_phase_converged = false
 	if not _phase_started:
 		_phase_started = true
 		_lerp_phase(1.0)
@@ -499,30 +527,58 @@ func _apply_phase(ph: int) -> void:
 		if is_instance_valid(o):
 			(o.get_child(0) as Sprite3D).shaded = ph < 4
 
+func _color_close(a: Color, b: Color, eps: float) -> bool:
+	return absf(a.r - b.r) < eps and absf(a.g - b.g) < eps and absf(a.b - b.b) < eps and absf(a.a - b.a) < eps
+
 func _lerp_phase(weight: float) -> void:
+	if _phase_converged:
+		return
 	var t: Dictionary = _phase_target
-	env.fog_light_color = env.fog_light_color.lerp(t["horizon"] * 0.55 + t["top"] * 0.45, weight)
-	env.fog_density = lerpf(env.fog_density, t["fog"], weight)
-	env.fog_sky_affect = lerpf(env.fog_sky_affect, t["sky_affect"], weight)
-	env.ambient_light_energy = lerpf(env.ambient_light_energy, t["ambient_energy"], weight)
-	_day_mix = lerpf(_day_mix, t["day"], weight)
+	var top_c: Color = t["top"]
+	var horizon_c: Color = t["horizon"]
+	var fog_color_t: Color = horizon_c * 0.55 + top_c * 0.45
+	var fog_t := float(t["fog"])
+	var affect_t := float(t["sky_affect"])
+	var amb_t := float(t["ambient_energy"])
+	var day_t := float(t["day"])
+	var sun_t := float(t["sun"])
+	var sun_c: Color = t["sun_color"]
+	var grass_c: Color = t["grass"]
+	env.fog_light_color = env.fog_light_color.lerp(fog_color_t, weight)
+	env.fog_density = lerpf(env.fog_density, fog_t, weight)
+	env.fog_sky_affect = lerpf(env.fog_sky_affect, affect_t, weight)
+	env.ambient_light_energy = lerpf(env.ambient_light_energy, amb_t, weight)
+	_day_mix = lerpf(_day_mix, day_t, weight)
 	sky_mat.set_shader_parameter("day_mix", _day_mix)
-	sun.light_energy = lerpf(sun.light_energy, t["sun"], weight)
-	sun.light_color = sun.light_color.lerp(t["sun_color"], weight)
-	ground_mat.albedo_color = ground_mat.albedo_color.lerp(t["grass"], weight)
+	sun.light_energy = lerpf(sun.light_energy, sun_t, weight)
+	sun.light_color = sun.light_color.lerp(sun_c, weight)
+	ground_mat.albedo_color = ground_mat.albedo_color.lerp(grass_c, weight)
+	var settled := true
+	settled = settled and _color_close(env.fog_light_color, fog_color_t, 0.004)
+	settled = settled and absf(env.fog_density - fog_t) < 0.000002
+	settled = settled and absf(env.fog_sky_affect - affect_t) < 0.0004
+	settled = settled and absf(env.ambient_light_energy - amb_t) < 0.001
+	settled = settled and absf(_day_mix - day_t) < 0.002
+	settled = settled and absf(sun.light_energy - sun_t) < 0.001
+	settled = settled and _color_close(sun.light_color, sun_c, 0.004)
+	settled = settled and _color_close(ground_mat.albedo_color, grass_c, 0.004)
+	if settled:
+		env.fog_light_color = fog_color_t
+		env.fog_density = fog_t
+		env.fog_sky_affect = affect_t
+		env.ambient_light_energy = amb_t
+		_day_mix = day_t
+		sky_mat.set_shader_parameter("day_mix", _day_mix)
+		sun.light_energy = sun_t
+		sun.light_color = sun_c
+		ground_mat.albedo_color = grass_c
+		_phase_converged = true
 
 func _start_music_phase(ph: int) -> void:
 	if allstar != null and allstar.playing:
 		return
-	var tracks := [
-		"",
-		"res://assets/sounds/music_pages_1_2.ogg",
-		"res://assets/sounds/music_pages_3_4.ogg",
-		"res://assets/sounds/music_pages_5_6.ogg",
-		"res://assets/sounds/music_pages_7_8.ogg",
-	]
-	var path: String = tracks[ph]
-	if path == "":
+	var stream: AudioStream = music_streams[ph] if ph >= 0 and ph < music_streams.size() else null
+	if stream == null:
 		if music != null and music.playing:
 			music.stop()
 		return
@@ -530,7 +586,6 @@ func _start_music_phase(ph: int) -> void:
 		music = AudioStreamPlayer.new()
 		music.finished.connect(func() -> void: music.play())
 		add_child(music)
-	var stream: AudioStream = load(path)
 	if music.stream == stream and music.playing:
 		return
 	music.stream = stream
@@ -557,21 +612,8 @@ func _tick_enemy(delta: float) -> void:
 	var dir := to_p / maxf(dist, 0.001)
 	var speed: float = ENEMY_FOLLOW_BASE + ENEMY_FOLLOW_PER_PAGE * pages
 	speed = minf(speed, ENEMY_SPEED_CAP)
-	if _player_observing():
-		speed *= OBSERVED_FACTOR
 	enemy.global_position += Vector3(dir.x, 0.0, dir.z) * speed * delta
 	enemy.position.y = 125.0 + sin(enemy_bob_t * 2.2) * 6.0
-
-func _player_observing() -> bool:
-	var fwd := -player.camera.global_basis.z
-	fwd.y = 0.0
-	fwd = fwd.normalized()
-	var to := enemy.global_position - player.global_position
-	to.y = 0.0
-	var dist := to.length()
-	if dist <= 0.001 or dist > OBSERVE_RANGE:
-		return false
-	return fwd.dot(to / dist) > OBSERVE_DOT
 
 func _spawn_enemy_behind() -> void:
 	var fwd := -player.camera.global_basis.z
@@ -600,6 +642,7 @@ func _end_sequence(result_path: String, with_static: bool) -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	hud.set_crosshair(false)
 	hud.set_prompt("")
+	_set_touch_grab(false)
 	hud.hide_static()
 	if music != null:
 		music.stop()
