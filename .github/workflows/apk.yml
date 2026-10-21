@@ -68,12 +68,26 @@ jobs:
           java-version: "21"
 
       - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+        run: |
+          ANDROID_ROOT=/usr/local/lib/android/sdk
+          sudo mkdir -p "$ANDROID_ROOT/cmdline-tools"
+          sudo chown -R "$(id -u):$(id -g)" "$ANDROID_ROOT"
+          LATEST=$(curl -fsSL https://dl.google.com/android/repository/repository2-3.xml \
+            | grep -oE "commandlinetools-linux-[0-9]+_latest\.zip" \
+            | sed 's/commandlinetools-linux-//;s/_latest\.zip//' \
+            | sort -n | tail -1)
+          echo "Latest Android cmdline-tools: $LATEST"
+          curl -fsSL "https://dl.google.com/android/repository/commandlinetools-linux-${LATEST}_latest.zip" -o /tmp/clt.zip
+          unzip -q /tmp/clt.zip -d "$ANDROID_ROOT/clt.tmp"
+          mv "$ANDROID_ROOT/clt.tmp/cmdline-tools" "$ANDROID_ROOT/cmdline-tools/latest"
+          rm -rf "$ANDROID_ROOT/clt.tmp" /tmp/clt.zip
+          echo "ANDROID_HOME=$ANDROID_ROOT" >> "$GITHUB_ENV"
+          echo "PATH=$ANDROID_ROOT/cmdline-tools/latest/bin:$ANDROID_ROOT/platform-tools:$PATH" >> "$GITHUB_ENV"
 
       - name: Install Android SDK packages
         run: |
           yes | sdkmanager --licenses >/dev/null
-          sdkmanager --install "platform-tools" "platforms;android-$ANDROID_COMPILE_SDK" "build-tools;$ANDROID_BUILD_TOOLS" "cmdline-tools;latest"
+          sdkmanager --install "platform-tools" "platforms;android-$ANDROID_COMPILE_SDK" "build-tools;$ANDROID_BUILD_TOOLS"
 
       - name: Cache Godot editor + export templates
         id: godot_cache
