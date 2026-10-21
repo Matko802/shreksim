@@ -8,6 +8,7 @@ const START_TIME := 90.0
 const KILL_RADIUS := 70.0
 const CAMERA_HEIGHT := 44.0
 const ONION_RANGE := 360.0
+const STATIC_MAX_ALPHA := 0.4
 
 const THREAT_RANGE := 950.0
 const ENEMY_FOLLOW_BASE := 60.0
@@ -381,18 +382,20 @@ func _process(delta: float) -> void:
 func _update_threat(delta: float) -> void:
 	if not enemy_active or enemy == null or not enemy.visible:
 		hud.hide_static()
+		threat = 0.0
 		return
 	var to := enemy.global_position - player.global_position
 	to.y = 0.0
 	var dist := to.length()
 	var t := clampf(1.0 - dist / THREAT_RANGE, 0.0, 1.0)
 	threat = lerpf(threat, t, clampf(delta * 5.0, 0.0, 1.0))
-	if threat <= 0.015:
+	var alpha := threat * STATIC_MAX_ALPHA
+	if alpha <= 0.005:
 		hud.hide_static()
 		return
 	static_time += delta
 	var threat_frames: Array[Texture2D] = [static_frames[0], static_frames[2], static_frames[3], static_frames[4]]
-	hud.show_static(threat_frames[int(static_time / 0.07) % threat_frames.size()], lerpf(0.3, 0.5, pow(threat, 1.6)))
+	hud.show_static(threat_frames[int(static_time / 0.07) % threat_frames.size()], alpha)
 
 func _update_prompt() -> void:
 	var hit := _ray_onion()
