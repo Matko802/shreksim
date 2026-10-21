@@ -1,7 +1,7 @@
 extends SceneTree
 
 const WORLD_HALF := 3200.0
-const TOWER_SCALE := 64.0
+const TOWER_SCALE := 120.0
 const GRASS_BLOCKS := [
 	"res://assets/textures/godotcraft/grass_top.png",
 ]
@@ -143,6 +143,7 @@ func save_map_scene() -> void:
 	text += "[sub_resource type=\"BoxShape3D\" id=\"wall_ns\"]\nsize = Vector3(%s, 400, 6)\n\n" % (WORLD_HALF * 2.4)
 	text += "[sub_resource type=\"BoxShape3D\" id=\"wall_ew\"]\nsize = Vector3(6, 400, %s)\n\n" % (WORLD_HALF * 2.4)
 	text += "[sub_resource type=\"BoxShape3D\" id=\"floor_safety\"]\nsize = Vector3(9600, 2, 9600)\n\n"
+	text += "[sub_resource type=\"BoxShape3D\" id=\"shaft_box\"]\nsize = Vector3(%s, %s, %s)\n\n" % [23.5 * TOWER_SCALE, 40.0 * TOWER_SCALE, 30 * TOWER_SCALE]
 	text += "[sub_resource type=\"BoxShape3D\" id=\"deck_box\"]\nsize = Vector3(%s, %s, %s)\n\n" % [23.5 * TOWER_SCALE, 3.0 * TOWER_SCALE, 30 * TOWER_SCALE]
 	text += "[sub_resource type=\"BoxShape3D\" id=\"rail_side\"]\nsize = Vector3(%s, %s, %s)\n\n" % [0.9 * TOWER_SCALE, 2.4 * TOWER_SCALE, 30 * TOWER_SCALE]
 	text += "[sub_resource type=\"BoxShape3D\" id=\"rail_back\"]\nsize = Vector3(%s, %s, %s)\n\n" % [23.5 * TOWER_SCALE, 2.4 * TOWER_SCALE, 0.9 * TOWER_SCALE]
@@ -186,6 +187,9 @@ func save_map_scene() -> void:
 		text += "transform = %s\n\n" % tf_string(yaw, Vector3(base.x, 0.0, base.y))
 		text += "[node name=\"Tower\" parent=\"Lookout%d\" instance=ExtResource(\"%s\")]\n" % [li, ids.tower]
 		text += "transform = %s\n\n" % tf_string(Basis.from_scale(Vector3(TOWER_SCALE, TOWER_SCALE, TOWER_SCALE)), Vector3(0, gh, 0))
+		text += "[node name=\"Shaft\" type=\"CollisionShape3D\" parent=\"Lookout%d\"]\n" % li
+		text += "shape = SubResource(\"shaft_box\")\n"
+		text += "position = Vector3(0, %s, %s)\n\n" % [gh + 20.0 * TOWER_SCALE, 5.0 * TOWER_SCALE]
 		text += "[node name=\"Deck\" type=\"CollisionShape3D\" parent=\"Lookout%d\"]\n" % li
 		text += "shape = SubResource(\"deck_box\")\n"
 		text += "position = Vector3(0, %s, %s)\n\n" % [gh + 38.5 * TOWER_SCALE, 5.0 * TOWER_SCALE]
