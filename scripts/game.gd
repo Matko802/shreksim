@@ -4,8 +4,10 @@ const WORLD_HALF := 2000.0
 const TREE_COUNT := 96
 const FAR_TREE_COUNT := 140
 const TREE_RADIUS := 64.0
-const TREE_BILLBOARD_DIST := 420.0
-const MAP_SEED := 77075
+const TREE_BILLBOARD_DIST := 750.0
+const TREE_RING_N := [21, 32, 43]
+const TREE_RING_R := [600.0, 880.0, 1120.0]
+const ONION_RADII := [820.0, 900.0, 940.0, 1400.0, 1500.0, 1700.0, 820.0, 900.0, 940.0]
 const TOTAL_PAGES := 8
 const START_TIME := 90.0
 const KILL_RADIUS := 70.0
@@ -86,9 +88,9 @@ var sun: DirectionalLight3D
 var sky_mat: ShaderMaterial
 var _day_mix := 1.0
 var ground_mat: StandardMaterial3D
-var map_rng := RandomNumberGenerator.new()
 var tree_planes: Array = []
 var tree_swap_time := 0.0
+var onion_spot := -1
 
 var enemy: Sprite3D
 var enemy_active := false
@@ -155,7 +157,6 @@ func _build_player() -> void:
 	add_child(player)
 
 func _build_world() -> void:
-	map_rng.seed = MAP_SEED
 	env = Environment.new()
 	env.background_mode = Environment.BG_SKY
 	var img := Image.create(512, 512, false, Image.FORMAT_RGBA8)
@@ -179,7 +180,7 @@ func _build_world() -> void:
 	var full := Rect2i(0, 0, block, block)
 	for gy in grid:
 		for gx in grid:
-			img.blit_rect(variants[map_rng.randi() % variants.size()], full, Vector2i(gx * block, gy * block))
+			img.blit_rect(variants[((gx * 7 + gy * 13 + gx * gy * 5) + 3) % variants.size()], full, Vector2i(gx * block, gy * block))
 	img.generate_mipmaps()
 	var nt := ImageTexture.create_from_image(img)
 	ground_mat = StandardMaterial3D.new()
@@ -222,9 +223,11 @@ func _build_world() -> void:
 	add_child(walls)
 
 	for i in FAR_TREE_COUNT:
-		var far_pos := _far_tree_pos()
-		var far_tex: Texture2D = load(TREE_TEXTURES[map_rng.randi() % TREE_TEXTURES.size()])
-		var far_s := map_rng.randf_range(0.7, 2.0)
+		var far_ang := 2.399963229728653 * float(i)
+		var far_rad := 2150.0 + 1250.0 * fmod(float(i) * 0.137 + float(i % 5) * 0.043, 1.0)
+		var far_pos := Vector2(cos(far_ang), sin(far_ang)) * far_rad
+		var far_tex: Texture2D = load(TREE_TEXTURES[(i * 7 + 2) % TREE_TEXTURES.size()])
+		var far_s := 1.0 + 0.9 * absf(sin(float(i) * 0.83))
 		var far_h := far_tex.get_height() * 0.5 * far_s
 		var far_tree := Sprite3D.new()
 		far_tree.texture = far_tex
@@ -270,29 +273,22 @@ func _build_world() -> void:
 	tree_positions.clear()
 
 	for i in TREE_COUNT:
-		var pos := _tree_pos()
+		var k := 0
+		var local := i
+		while local >= TREE_RING_N[k]:
+			local -= TREE_RING_N[k]
+			k += 1
+		var n: int = TREE_RING_N[k]
+		var ang := TAU * (float(local) / float(n)) + float(k) * 1.1
+		var pos: Vector2 = Vector2(cos(ang), sin(ang)) * TREE_RING_R[k]
 		tree_positions.append(pos)
-		var use_tex := map_rng.randi() % TREE_TEXTURES.size()
-		var tex_path: String = TREE_TEXTURES[use_tex]
-		var tex: Texture2D = load(tex_path)
-		var s := map_rng.randf_range(0.6, 1.9)
+		var tex: Texture2D = load(TREE_TEXTURES[(i * 7 + k * 3) % TREE_TEXTURES.size()])
+		var s := clampf(1.2 + 0.45 * sin(float(i) * 0.61 + float(k) * 2.1) + 0.25 * cos(float(i) * 2.17), 0.6, 1.9)
 		var h := tex.get_height() * 0.22 * s
-		var pair: Array = []
-		for ang in [45.0, -45.0]:
-			var tr := Sprite3D.new()
-			tr.texture = tex
-			tr.billboard = BaseMaterial3D.BILLBOARD_DISABLED
-			tr.shaded = true
-			tr.alpha_cut = SpriteBase3D.ALPHA_CUT_DISCARD
-			tr.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
-			tr.pixel_size = 0.22
-			tr.scale = Vector3(s, s, s)
-			tr.position = Vector3(pos.x, h * 0.46, pos.y)
-			tr.rotation.y = deg_to_rad(ang)
-			tr.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-			add_child(tr)
-			pair.append(tr)
-		tree_planes.append(pair)
+		var near_a := _make_tree_plane(tex, pos, h, s, 45.0, false)
+		var near_b := _make_tree_plane(tex, pos, h, s, -45.0, false)
+		var flat := _make_tree_plane(tex, pos, h, s, 0.0, true)
+		tree_planes.append([near_a, near_b, flat])
 		var cshape := CollisionShape3D.new()
 		var cyl := CylinderShape3D.new()
 		cyl.radius = TREE_RADIUS * s * 0.55
@@ -301,38 +297,38 @@ func _build_world() -> void:
 		cshape.position = Vector3(pos.x, 400, pos.y)
 		trees.add_child(cshape)
 
-func _far_tree_pos() -> Vector2:
-	var ang := map_rng.randf() * TAU
-	var rad := map_rng.randf_range(2150.0, 3400.0)
-	return Vector2(cos(ang), sin(ang)) * rad
-
-func _tree_pos() -> Vector2:
-	for attempt in 40:
-		var ang := map_rng.randf() * TAU
-		var rad := sqrt(lerpf(460.0 * 460.0, 1150.0 * 1150.0, map_rng.randf()))
-		var p := Vector2(cos(ang), sin(ang)) * rad
-		var ok := true
-		for tp in tree_positions:
-			if tp.distance_to(p) < 170.0:
-				ok = false
-				break
-		if ok:
-			return p
-	return Vector2(460, 0)
+func _make_tree_plane(tex: Texture2D, pos: Vector2, h: float, s: float, ang_deg: float, billboard: bool) -> Sprite3D:
+	var tr := Sprite3D.new()
+	tr.texture = tex
+	tr.billboard = BaseMaterial3D.BILLBOARD_FIXED_Y if billboard else BaseMaterial3D.BILLBOARD_DISABLED
+	tr.shaded = not billboard
+	tr.alpha_cut = SpriteBase3D.ALPHA_CUT_DISCARD
+	tr.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	tr.pixel_size = 0.22
+	tr.scale = Vector3(s, s, s)
+	tr.position = Vector3(pos.x, h * 0.46, pos.y)
+	tr.rotation.y = deg_to_rad(ang_deg)
+	tr.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	tr.visible = not billboard
+	add_child(tr)
+	return tr
 
 func _update_tree_billboards() -> void:
 	var p := player.global_position
 	for pair in tree_planes:
-		var a: Sprite3D = pair[0]
-		var b: Sprite3D = pair[1]
-		var d := Vector2(a.global_position.x - p.x, a.global_position.z - p.z).length()
-		if d > TREE_BILLBOARD_DIST:
-			if a.billboard != BaseMaterial3D.BILLBOARD_FIXED_Y:
-				a.billboard = BaseMaterial3D.BILLBOARD_FIXED_Y
-				b.visible = false
-		elif a.billboard != BaseMaterial3D.BILLBOARD_DISABLED:
-			a.billboard = BaseMaterial3D.BILLBOARD_DISABLED
-			b.visible = true
+		var d := Vector2(pair[0].global_position.x - p.x, pair[0].global_position.z - p.z).length()
+		var near := d <= TREE_BILLBOARD_DIST
+		pair[0].visible = near
+		pair[1].visible = near
+		pair[2].visible = not near
+
+func _authored_spot(j: int) -> Vector2:
+	var ang := 2.399963229728653 * float(j)
+	return Vector2(cos(ang), sin(ang)) * ONION_RADII[j % ONION_RADII.size()]
+
+func _next_onion_spot() -> Vector2:
+	onion_spot += 1
+	return _authored_spot(onion_spot)
 
 func _build_onions() -> void:
 	var count := TOTAL_PAGES if not endless else 5
@@ -361,36 +357,12 @@ func _spawn_onion() -> Area3D:
 	shape.position = Vector3(0, 64, 0)
 	area.add_child(shape)
 
-	var pos := _onion_pos()
+	var pos := _next_onion_spot()
 	area.position = Vector3(pos.x, 0, pos.y)
 	area.set_meta("onion", true)
 	area.set_meta("base_y", 0.0)
 	add_child(area)
 	return area
-
-func _onion_pos() -> Vector2:
-	for attempt in 40:
-		var ang := map_rng.randf() * TAU
-		var rad := sqrt(lerpf(520.0 * 520.0, 1150.0 * 1150.0, map_rng.randf()))
-		var p := Vector2(cos(ang), sin(ang)) * rad
-		if p.length() <= 520.0:
-			continue
-		var ok := true
-		for tp in tree_positions:
-			if tp.distance_to(p) < TREE_RADIUS + 70.0:
-				ok = false
-				break
-		if not ok:
-			continue
-		for o in onions:
-			if not is_instance_valid(o):
-				continue
-			if Vector2(o.position.x, o.position.z).distance_to(p) < 350.0:
-				ok = false
-				break
-		if ok:
-			return p
-	return Vector2(WORLD_HALF * 0.6, 0)
 
 func _build_enemy() -> void:
 	enemy = Sprite3D.new()

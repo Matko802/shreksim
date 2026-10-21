@@ -2,12 +2,16 @@ extends Control
 
 const GREEN := Color(0.0, 0.8, 0.27)
 const DARK_GREEN := Color(0.0, 0.4, 0.13)
+const RELEASE_API := "https://api.github.com/repos/Matko802/shreksim/releases/latest"
 
 var music: AudioStreamPlayer
 var meme: AudioStreamPlayer
 var click: AudioStreamPlayer
 var meow: AudioStreamPlayer
 var playing_meme := false
+var version_label: Label
+var update_http: HTTPRequest
+var update_page := ""
 
 @onready var enemy_panel: PanelContainer = %EnemyPanel
 @onready var stats_panel: PanelContainer = %StatsPanel
@@ -65,6 +69,66 @@ func _ready() -> void:
 		click.play()
 		howto_panel.visible = false
 	)
+	_setup_version()
+	_check_update()
+
+func _setup_version() -> void:
+	var ver := str(ProjectSettings.get_setting("application/config/version", "1.3.8"))
+	version_label = Label.new()
+	version_label.text = "v" + ver
+	version_label.add_theme_font_size_override("font_size", 36)
+	version_label.add_theme_color_override("font_color", DARK_GREEN)
+	version_label.anchor_left = 1.0
+	version_label.anchor_top = 1.0
+	version_label.anchor_right = 1.0
+	version_label.anchor_bottom = 1.0
+	version_label.offset_left = -420.0
+	version_label.offset_top = -74.0
+	version_label.offset_right = -18.0
+	version_label.offset_bottom = -18.0
+	version_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	version_label.mouse_filter = Control.MOUSE_FILTER_STOP
+	add_child(version_label)
+	version_label.gui_input.connect(_on_version_input)
+
+func _check_update() -> void:
+	update_http = HTTPRequest.new()
+	update_http.timeout = 6.0
+	add_child(update_http)
+	update_http.request_completed.connect(_on_update_check)
+	update_http.request(RELEASE_API, ["Accept: application/vnd.github+json"])
+
+func _on_update_check(result: int, code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
+	if result != HTTPRequest.RESULT_SUCCESS or code < 200 or code >= 300 or body.is_empty():
+		return
+	var data: Variant = JSON.parse_string(body.get_string_from_utf8())
+	if not (data is Dictionary):
+		return
+	var tag := str(data.get("tag_name", ""))
+	if tag == "" or not _tag_is_newer(tag):
+		return
+	update_page = "https://github.com/Matko802/shreksim/releases/tag/" + tag
+	version_label.text = "v" + tag.lstrip("v") + " - tap to update"
+	version_label.add_theme_color_override("font_color", GREEN)
+
+func _tag_is_newer(tag: String) -> bool:
+	var cur := str(ProjectSettings.get_setting("application/config/version", "0.0.0")).lstrip("v").split(".")
+	var nxt := tag.lstrip("v").split(".")
+	for i in 3:
+		var a := int(cur[i]) if i < cur.size() else 0
+		var b := int(nxt[i]) if i < nxt.size() else 0
+		if b > a:
+			return true
+		if b < a:
+			return false
+	return false
+
+func _on_version_input(event: InputEvent) -> void:
+	if update_page == "":
+		return
+	if (event is InputEventMouseButton and event.pressed) or (event is InputEventScreenTouch and event.pressed):
+		click.play()
+		OS.shell_open(update_page)
 
 func _pick_skin(skin: GameState.EnemySkin) -> void:
 	GameState.skin = skin
