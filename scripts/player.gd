@@ -125,7 +125,7 @@ func _ready() -> void:
 	add_child(footstep_player)
 
 	flashlight_toggle_player = AudioStreamPlayer3D.new()
-	flashlight_toggle_player.stream = load("res://assets/sounds/sfx_flashlight_toggle.wav")
+	flashlight_toggle_player.stream = load("res://assets/sounds/sfx_flashlight_toggle.ogg")
 	flashlight_toggle_player.unit_size = 168.0
 	flashlight_toggle_player.max_distance = 700.0
 	add_child(flashlight_toggle_player)

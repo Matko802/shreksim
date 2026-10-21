@@ -26,21 +26,21 @@ func _process(delta: float) -> void:
 
 func _ready() -> void:
 	music = AudioStreamPlayer.new()
-	music.stream = load("res://assets/sounds/music_title.wav")
+	music.stream = load("res://assets/sounds/music_title.ogg")
 	music.finished.connect(func() -> void: music.play())
 	add_child(music)
 	music.play()
 
 	meme = AudioStreamPlayer.new()
-	meme.stream = load("res://assets/sounds/music_allstar.wav")
+	meme.stream = load("res://assets/sounds/music_allstar.ogg")
 	add_child(meme)
 
 	click = AudioStreamPlayer.new()
-	click.stream = load("res://assets/sounds/sfx_pop.wav")
+	click.stream = load("res://assets/sounds/sfx_pop.ogg")
 	add_child(click)
 
 	meow = AudioStreamPlayer.new()
-	meow.stream = load("res://assets/sounds/sfx_meow.wav")
+	meow.stream = load("res://assets/sounds/sfx_meow.ogg")
 	add_child(meow)
 
 	%BtnEight.pressed.connect(_start_eight)

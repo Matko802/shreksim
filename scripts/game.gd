@@ -343,10 +343,10 @@ func _build_enemy() -> void:
 
 func _build_audio() -> void:
 	onion_sound = AudioStreamPlayer.new()
-	onion_sound.stream = load("res://assets/sounds/sfx_onion.wav")
+	onion_sound.stream = load("res://assets/sounds/sfx_onion.ogg")
 	add_child(onion_sound)
 
-	player.set_footstep_streams(load("res://assets/sounds/sfx_footstep1.wav"))
+	player.set_footstep_streams(load("res://assets/sounds/sfx_footstep1.ogg"))
 
 func _objective_text() -> void:
 	if endless:
@@ -452,7 +452,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		if event.keycode == KEY_7:
 			if allstar == null:
 				allstar = AudioStreamPlayer.new()
-				allstar.stream = load("res://assets/sounds/music_allstar.wav")
+				allstar.stream = load("res://assets/sounds/music_allstar.ogg")
 				add_child(allstar)
 			allstar.stop()
 			allstar.play()
@@ -512,10 +512,10 @@ func _start_music_phase(ph: int) -> void:
 		return
 	var tracks := [
 		"",
-		"res://assets/sounds/music_pages_1_2.wav",
-		"res://assets/sounds/music_pages_3_4.wav",
-		"res://assets/sounds/music_pages_5_6.wav",
-		"res://assets/sounds/music_pages_7_8.wav",
+		"res://assets/sounds/music_pages_1_2.ogg",
+		"res://assets/sounds/music_pages_3_4.ogg",
+		"res://assets/sounds/music_pages_5_6.ogg",
+		"res://assets/sounds/music_pages_7_8.ogg",
 	]
 	var path: String = tracks[ph]
 	if path == "":
@@ -607,7 +607,7 @@ func _end_sequence(result_path: String, with_static: bool) -> void:
 		static_time = 0.0
 		if static_sound == null:
 			static_sound = AudioStreamPlayer.new()
-			static_sound.stream = load("res://assets/sounds/sfx_static.wav")
+			static_sound.stream = load("res://assets/sounds/sfx_static.ogg")
 			add_child(static_sound)
 		static_sound.play()
 		hud.show_static(static_frames[1], 1.0)
