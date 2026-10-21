@@ -103,15 +103,13 @@ func save_terrain_collision() -> void:
 	print("BAKE shape err %d" % err)
 
 func save_material() -> void:
-	var mat := StandardMaterial3D.new()
-	mat.roughness = 1.0
-	mat.cull_mode = BaseMaterial3D.CULL_DISABLED
-	mat.albedo_texture = load("res://assets/textures/terrain_grass.png")
-	mat.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST_WITH_MIPMAPS
-	mat.uv1_scale = Vector3(90, 90, 90)
-	mat.albedo_color = Color(0.5, 0.68, 0.4)
-	var err := ResourceSaver.save(mat, "res://assets/maps/terrain_mat.tres")
-	print("BAKE mat err %d" % err)
+	var text := "[gd_resource type=\"StandardMaterial3D\" load_steps=2 format=3]\n\n"
+	text += "[ext_resource type=\"Texture2D\" path=\"res://assets/textures/terrain_grass.png\" id=\"1_grass\"]\n\n"
+	text += "[resource]\ncull_mode = 2\nalbedo_color = Color(0.5, 0.68, 0.4, 1)\nalbedo_texture = ExtResource(\"1_grass\")\nuv1_scale = Vector3(90, 90, 90)\ntexture_filter = 2\n"
+	var f := FileAccess.open("res://assets/maps/terrain_mat.tres", FileAccess.WRITE)
+	f.store_string(text)
+	f.close()
+	print("BAKE mat written")
 
 func tf_string(b: Basis, origin: Vector3) -> String:
 	return "Transform3D(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)" % [b[0][0], b[0][1], b[0][2], b[1][0], b[1][1], b[1][2], b[2][0], b[2][1], b[2][2], origin.x, origin.y, origin.z]
