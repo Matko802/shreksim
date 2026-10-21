@@ -163,7 +163,9 @@ jobs:
           GODOT_ANDROID_KEYSTORE_RELEASE_PATH: ${{ env.KEYSTORE_PATH }}
           GODOT_ANDROID_KEYSTORE_RELEASE_USER: ${{ env.KEYSTORE_ALIAS }}
           GODOT_ANDROID_KEYSTORE_RELEASE_PASSWORD: ${{ env.KEYSTORE_PASSWORD }}
-        run: ./godot-editor --headless --install-android-build-template --export-release "Android" build/ShrekSim.apk
+        run: |
+          mkdir -p build
+          ./godot-editor --headless --install-android-build-template --export-release "Android" build/ShrekSim.apk
 
       - name: Verify APK signature
         run: |
