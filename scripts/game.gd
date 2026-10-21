@@ -263,7 +263,7 @@ func _build_world() -> void:
 		tree_positions.append(pos)
 		var open := true
 		for spot in lookout_spots:
-			if pos.distance_to(spot) < 600.0:
+			if pos.distance_to(spot) < 900.0:
 				open = false
 		if not open:
 			continue
