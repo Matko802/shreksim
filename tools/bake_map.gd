@@ -1,7 +1,7 @@
 extends SceneTree
 
 const WORLD_HALF := 3200.0
-const TOWER_SCALE := 4.0
+const TOWER_SCALE := 24.0
 const GRASS_BLOCKS := [
 	"res://assets/textures/godotcraft/grass_top.png",
 ]
