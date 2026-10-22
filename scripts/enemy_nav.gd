@@ -195,7 +195,8 @@ func find_path(from_w: Vector2, to_w: Vector2) -> PackedVector2Array:
 	return _smooth(raw, from_w)
 
 func _cell_world(i: int) -> Vector2:
-	return Vector2((float(i % GRID_SIZE) + 0.5) * CELL - WORLD_HALF, (float(i / GRID_SIZE) + 0.5) * CELL - WORLD_HALF)
+	var row := int(float(i) / float(GRID_SIZE))
+	return Vector2((float(i % GRID_SIZE) + 0.5) * CELL - WORLD_HALF, (float(row) + 0.5) * CELL - WORLD_HALF)
 
 func _walk_line_clear(a: Vector2, b: Vector2) -> bool:
 	var dist := a.distance_to(b)

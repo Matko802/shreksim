@@ -4,7 +4,6 @@ class_name DebugMenu
 const UPDATE_INTERVAL: float = 0.25
 const FPS_HISTORY_SIZE: int = 1000
 
-@onready var panel: PanelContainer = $Panel
 @onready var label: RichTextLabel = $Panel/MarginContainer/Label
 
 var _static_lines: String = ""
@@ -16,21 +15,20 @@ var _frames_recorded: int = 0
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	_frame_times.resize(FPS_HISTORY_SIZE)
-	panel.visible = false
 	set_process(false)
 	_static_lines = _build_static_lines()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
-		var was_hidden: bool = not panel.visible
+		var was_hidden: bool = not visible
 		if InputMap.has_action("toggle_debug"):
 			if event.is_action_pressed("toggle_debug"):
-				panel.visible = not panel.visible
+				visible = not visible
 		elif event.keycode == KEY_F3:
-			panel.visible = not panel.visible
-		if panel.visible and was_hidden:
+			visible = not visible
+		if visible and was_hidden:
 			set_process(true)
-		elif not panel.visible and not was_hidden:
+		elif not visible and not was_hidden:
 			set_process(false)
 
 func _low_percent(count: int) -> float:

@@ -751,6 +751,7 @@ func _stalk_reappear() -> void:
 		p.x = clampf(p.x, -WORLD_HALF + WALL_SAFE, WORLD_HALF - WALL_SAFE)
 		p.y = clampf(p.y, -WORLD_HALF + WALL_SAFE, WORLD_HALF - WALL_SAFE)
 	enemy.global_position = Vector3(p.x, _terrain_height(p.x, p.y) + 5.0, p.y)
+	enemy.reset_physics_interpolation()
 	enemy_yaw = (pc - p).angle()
 	enemy_arrived = false
 	enemy_lose_time = 0.0
@@ -784,6 +785,7 @@ func _spawn_enemy_behind() -> void:
 	p.x = clampf(p.x, -WORLD_HALF + WALL_SAFE, WORLD_HALF - WALL_SAFE)
 	p.y = clampf(p.y, -WORLD_HALF + WALL_SAFE, WORLD_HALF - WALL_SAFE)
 	enemy.global_position = Vector3(p.x, _terrain_height(p.x, p.y) + 5.0, p.y)
+	enemy.reset_physics_interpolation()
 	enemy.visible = false
 	enemy_yaw = Vector2(player.global_position.x - p.x, player.global_position.z - p.y).angle()
 	_set_enemy_mode("wander")

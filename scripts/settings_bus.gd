@@ -52,6 +52,9 @@ func save_settings() -> void:
 	_config.set_value("locale", "language", language)
 	_config.save(SAVE_PATH)
 
+func taa_supported() -> bool:
+	return ProjectSettings.get_setting("rendering/renderer/rendering_method", "mobile") == "forward_plus" or ProjectSettings.get_setting("rendering/renderer/rendering_method.mobile", "mobile") == "forward_plus"
+
 func _apply_display() -> void:
 	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED if vsync_enabled else DisplayServer.VSYNC_DISABLED)
 	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN if fullscreen_enabled else DisplayServer.WINDOW_MODE_WINDOWED)
@@ -115,12 +118,16 @@ func set_fps_limit(limit: int) -> void:
 	setting_changed.emit(&"fps_limit", fps_limit)
 
 func set_anti_aliasing_mode(mode: int) -> void:
+	if mode == AntiAliasingMode.TAA and not taa_supported():
+		mode = AntiAliasingMode.FXAA
 	anti_aliasing_mode = clampi(mode, 0, AntiAliasingMode.TAA)
 	_apply_anti_aliasing(anti_aliasing_mode)
 	save_settings()
 	setting_changed.emit(&"anti_aliasing_mode", anti_aliasing_mode)
 
 func _apply_anti_aliasing(mode: int) -> void:
+	if mode == AntiAliasingMode.TAA and not taa_supported():
+		mode = AntiAliasingMode.FXAA
 	var root := get_tree().root
 	match mode:
 		AntiAliasingMode.OFF:

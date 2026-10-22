@@ -19,15 +19,19 @@ signal menu_requested
 @onready var fps_slider: HSlider = %FPSLimitSlider
 @onready var fps_label: Label = %FPSLimitLabel
 
-const AA_NAMES := ["Off", "FXAA", "MSAA 2x", "MSAA 4x", "MSAA 8x", "TAA"]
+const AA_LABELS := ["Off", "FXAA", "MSAA 2x", "MSAA 4x", "MSAA 8x", "TAA"]
+var _aa_modes: Array[int] = []
 
 func _ready() -> void:
 	visible = false
 	settings_center.visible = false
 	for entry in SettingsBus.LANGUAGES:
 		lang_option.add_item(entry[1])
-	for aa_name in AA_NAMES:
-		aa_option.add_item(aa_name)
+	_aa_modes = [0, 1, 2, 3, 4]
+	if SettingsBus.taa_supported():
+		_aa_modes.append(5)
+	for mode in _aa_modes:
+		aa_option.add_item(AA_LABELS[mode])
 	slider.value_changed.connect(_on_sensitivity_changed)
 	fx_check.toggled.connect(_on_fx_toggled)
 	fs_check.toggled.connect(_on_fs_toggled)
@@ -52,7 +56,7 @@ func _on_external_setting(setting_name: StringName, _value: Variant) -> void:
 		&"vsync_enabled":
 			vsync_check.set_pressed_no_signal(SettingsBus.vsync_enabled)
 		&"anti_aliasing_mode":
-			aa_option.selected = SettingsBus.anti_aliasing_mode
+			aa_option.selected = clampi(_aa_modes.find(SettingsBus.anti_aliasing_mode), 0, _aa_modes.size() - 1)
 		&"fps_limit":
 			fps_slider.set_value_no_signal(360.0 if SettingsBus.fps_limit <= 0 or SettingsBus.fps_limit >= 360 else float(SettingsBus.fps_limit))
 			_update_fps_label(SettingsBus.fps_limit)
@@ -88,7 +92,8 @@ func _on_vsync_toggled(on: bool) -> void:
 	SettingsBus.set_vsync_enabled(on)
 
 func _on_aa_selected(idx: int) -> void:
-	SettingsBus.set_anti_aliasing_mode(idx)
+	if idx >= 0 and idx < _aa_modes.size():
+		SettingsBus.set_anti_aliasing_mode(_aa_modes[idx])
 
 func _on_fps_changed(value: float) -> void:
 	var limit := int(round(value))
@@ -110,7 +115,7 @@ func _sync_controls() -> void:
 	fx_check.set_pressed_no_signal(SettingsBus.camera_effects_enabled)
 	fs_check.set_pressed_no_signal(SettingsBus.fullscreen_enabled)
 	vsync_check.set_pressed_no_signal(SettingsBus.vsync_enabled)
-	aa_option.selected = SettingsBus.anti_aliasing_mode
+	aa_option.selected = clampi(_aa_modes.find(SettingsBus.anti_aliasing_mode), 0, _aa_modes.size() - 1)
 	fps_slider.set_value_no_signal(360.0 if SettingsBus.fps_limit <= 0 or SettingsBus.fps_limit >= 360 else float(SettingsBus.fps_limit))
 	_update_fps_label(SettingsBus.fps_limit)
 	lang_option.selected = SettingsBus.language_index()

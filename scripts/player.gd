@@ -81,6 +81,8 @@ var _collider: CollisionShape3D
 var _collider_shape: Shape3D
 
 func _ready() -> void:
+	physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_ON
+	reset_physics_interpolation()
 	physics_interpolation_mode = Node3D.PHYSICS_INTERPOLATION_MODE_ON
 	collision_layer = 2
 	collision_mask = 1
@@ -123,6 +125,23 @@ func _ready() -> void:
 	flashlight_model_animator.play(&"model_draw")
 
 func _process(delta: float) -> void:
+	var pending_yaw := _look_yaw_target - _last_applied_yaw
+	if absf(pending_yaw) > 0.00001:
+		rotate_y(pending_yaw)
+		_last_applied_yaw = _look_yaw_target
+		if SettingsBus.camera_effects_enabled:
+			flashlight_light.rotate_y(-pending_yaw * FLASHLIGHT_LAG_FACTOR)
+			flashlight_model.rotate_y(-pending_yaw * FLASHLIGHT_LAG_FACTOR)
+	var pending_pitch := _look_pitch - _look_pitch_applied
+	if absf(pending_pitch) > 0.00001 and SettingsBus.camera_effects_enabled:
+		flashlight_light.rotate_x(-pending_pitch * FLASHLIGHT_LAG_FACTOR)
+		flashlight_model.rotate_x(-pending_pitch * FLASHLIGHT_LAG_FACTOR)
+	_look_yaw_applied = _look_yaw_target
+	_look_pitch_applied = _look_pitch
+	_update_camera_tilt(delta)
+	_update_head_position(delta)
+	_apply_head_transform()
+	_update_flashlight_rotation(delta)
 	if _zoom_fov != _zoom_target:
 		var k: float = 1.0 - exp(-ZOOM_SMOOTHING * delta)
 		_zoom_fov = lerpf(_zoom_fov, _zoom_target, k)
@@ -181,20 +200,6 @@ func _unhandled_input(event: InputEvent) -> void:
 			_last_zoom = _zoom_target
 
 func _physics_process(delta: float) -> void:
-	var pending_yaw := _look_yaw_target - _last_applied_yaw
-	if absf(pending_yaw) > 0.00001:
-		rotate_y(pending_yaw)
-		_last_applied_yaw = _look_yaw_target
-		if SettingsBus.camera_effects_enabled:
-			flashlight_light.rotate_y(-pending_yaw * FLASHLIGHT_LAG_FACTOR)
-			flashlight_model.rotate_y(-pending_yaw * FLASHLIGHT_LAG_FACTOR)
-	var pending_pitch := _look_pitch - _look_pitch_applied
-	if absf(pending_pitch) > 0.00001 and SettingsBus.camera_effects_enabled:
-		flashlight_light.rotate_x(-pending_pitch * FLASHLIGHT_LAG_FACTOR)
-		flashlight_model.rotate_x(-pending_pitch * FLASHLIGHT_LAG_FACTOR)
-	_look_yaw_applied = _look_yaw_target
-	_look_pitch_applied = _look_pitch
-
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 
@@ -229,11 +234,6 @@ func _physics_process(delta: float) -> void:
 
 	_update_crouch_transition(delta)
 	_update_footsteps(delta)
-
-	_update_camera_tilt(delta)
-	_update_head_position(delta)
-	_apply_head_transform()
-	_update_flashlight_rotation(delta)
 
 func _update_flashlight_rotation(delta: float) -> void:
 	var k: float = 1.0 - exp(-FLASHLIGHT_ROTATION_SMOOTHING * delta)

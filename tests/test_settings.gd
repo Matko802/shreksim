@@ -8,6 +8,10 @@ func _ready() -> void:
 		print("FAIL: no SettingsBus")
 		get_tree().quit(1)
 		return
+	var cfg := DirAccess.open("user://")
+	if cfg != null and cfg.file_exists("settings.cfg"):
+		cfg.remove("settings.cfg")
+	bus.load_settings()
 	await get_tree().process_frame
 	var root_vp: Viewport = get_tree().root
 	if bus.anti_aliasing_mode != 2:

@@ -8,6 +8,7 @@ bg_color = Color(0, 0, 0, 0)
 
 [node name="DebugMenu" type="CanvasLayer"]
 layer = 20
+visible = false
 script = ExtResource("1_debug")
 
 [node name="Panel" type="PanelContainer" parent="."]

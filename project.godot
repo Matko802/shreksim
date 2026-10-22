@@ -13,10 +13,10 @@ config_version=5
 config/name="Swamp Horror Simulator 3D"
 config/version="1.4.0"
 run/main_scene="res://scenes/welcome_screen.tscn"
-config/features=PackedStringArray("4.8", "GL Compatibility")
-config/icon="res://assets/icons/onion_icon.png"
+config/features=PackedStringArray("4.7", "GL Compatibility")
 boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/show_image=false
+config/icon="res://assets/icons/onion_icon.png"
 
 [autoload]
 
@@ -370,7 +370,6 @@ zoom={
 "script": null
 )]
 }
-
 toggle_debug={
 "deadzone": 0.5,
 "events": [Object(InputEventKey,
@@ -399,11 +398,10 @@ locale/translations=PackedStringArray("res://assets/loc/translations.en.translat
 
 [physics]
 
+common/physics_interpolation=true
 3d/default_gravity=11.0
 
 [rendering]
 
-renderer/rendering_method="gl_compatibility"
-renderer/rendering_method.mobile="gl_compatibility"
 textures/vram_compression/import_etc2_astc=true
 anti_aliasing/quality/msaa_3d=1
