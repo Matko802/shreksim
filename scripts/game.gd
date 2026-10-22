@@ -145,7 +145,6 @@ func _ready() -> void:
 	_build_ui()
 	_build_audio()
 	_apply_phase(0)
-	_start_music_phase(0)
 	hud.set_timer_visible(not endless)
 	hud.set_pages_text(_pages_text())
 	_objective_text()
@@ -310,7 +309,7 @@ func _build_enemy() -> void:
 	enemy.visible = false
 	add_child(enemy)
 	enemy_chase_audio = AudioStreamPlayer3D.new()
-	var st := load("res://assets/sounds/music_allstar.ogg") as AudioStreamOggVorbis
+	var st := load("res://assets/sounds/sfx_static.ogg") as AudioStreamOggVorbis
 	st.loop = true
 	enemy_chase_audio.stream = st
 	enemy_chase_audio.max_distance = ENEMY_CHASE_RADIUS
@@ -469,11 +468,8 @@ func _collect(onion: Area3D) -> void:
 	if endless:
 		onions.append(_spawn_onion())
 		_apply_phase(mini(pages, 8))
-		_start_music_phase(mini((pages + 1) / 2, 4))
 		return
-	var pp := mini((pages + 1) / 2, 4)
 	_apply_phase(pages)
-	_start_music_phase(pp)
 	if pages >= TOTAL_PAGES:
 		_win()
 
@@ -644,9 +640,6 @@ func _tick_enemy(delta: float) -> void:
 			enemy_chase_audio.play()
 		elif not chasing and enemy_chase_audio.playing:
 			enemy_chase_audio.stop()
-			_start_music_phase(music_phase)
-		if chasing and music != null and music.playing:
-			music.stop()
 	enemy.visible = chasing
 	enemy.global_position.y = _terrain_height(enemy.global_position.x, enemy.global_position.z) + 5.0 + sin(enemy_bob_t * 2.2) * 0.24
 

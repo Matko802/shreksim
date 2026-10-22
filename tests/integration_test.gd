@@ -38,9 +38,9 @@ func _ready() -> void:
 	var track: String = ""
 	if game.music != null and game.music.stream != null:
 		track = game.music.stream.resource_path
-	if track != "res://assets/sounds/music_pages_1_2.ogg":
+	if game.music != null and game.music.playing:
 		failures += 1
-		print("FAIL phase music track: ", track)
+		print("FAIL music should never play: ", track)
 	if not game.player.is_flashlight_on():
 		failures += 1
 		print("FAIL flashlight should start on")
