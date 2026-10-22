@@ -17,7 +17,8 @@ func _ready() -> void:
 	t.index = 3
 	t.pressed = true
 	t.position = Vector2(100, 40)
-	Input.parse_input_event(t)	await get_tree().process_frame
+	Input.parse_input_event(t)
+	await get_tree().process_frame
 	await get_tree().process_frame
 	print("up strength=", Input.get_action_strength("move_forward"))
 	var t2 := InputEventScreenDrag.new()
