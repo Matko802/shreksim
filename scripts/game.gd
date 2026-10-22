@@ -87,7 +87,7 @@ var env: Environment
 var sun: DirectionalLight3D
 var sky_mat: ShaderMaterial
 var _day_mix := 1.0
-var ground_mat: ShaderMaterial
+var ground_mat: Resource
 var tree_planes: Array = []
 var tree_sight_time := 0.0
 var onion_spot := -1
@@ -191,7 +191,9 @@ func _terrain_height(x: float, z: float) -> float:
 func _build_world() -> void:
 	env = Environment.new()
 	env.background_mode = Environment.BG_SKY
-	ground_mat = (get_node("Map/Terrain") as MeshInstance3D).material_override
+	var terrain_node := get_node("Map/Terrain") as Terrain3D
+	terrain_node.collision_mode = 0
+	ground_mat = terrain_node.material
 	var sky_shader := Shader.new()
 	sky_shader.code = SKY_CUBE_SHADER
 	var sky_mat_ref := ShaderMaterial.new()
@@ -222,9 +224,8 @@ func _build_world() -> void:
 	for c in trees.get_children():
 		var a := c.get_node_or_null("CrossA") as Sprite3D
 		var b := c.get_node_or_null("CrossB") as Sprite3D
-		var flat := c.get_node_or_null("Flat") as Sprite3D
-		if a != null and b != null and flat != null:
-			tree_planes.append([a, b, flat])
+		if a != null and b != null:
+			tree_planes.append([a, b])
 
 func _update_tree_sight() -> void:
 	var px := player.global_position.x
@@ -489,7 +490,6 @@ func _apply_phase(ph: int) -> void:
 	for tr in tree_planes:
 		(tr[0] as Sprite3D).modulate = tint_v
 		(tr[1] as Sprite3D).modulate = tint_v
-		(tr[2] as Sprite3D).modulate = tint_v
 
 func _color_close(a: Color, b: Color, eps: float) -> bool:
 	return absf(a.r - b.r) < eps and absf(a.g - b.g) < eps and absf(a.b - b.b) < eps and absf(a.a - b.a) < eps
@@ -539,10 +539,15 @@ func _lerp_phase(weight: float) -> void:
 		_phase_converged = true
 
 func _tint() -> Color:
-	return ground_mat.get_shader_parameter("tint") as Color
+	var sm := ground_mat as ShaderMaterial
+	if sm == null:
+		return Color(0.5, 0.68, 0.4, 1.0)
+	return sm.get_shader_parameter("tint") as Color
 
 func set_ground_tint(c: Color) -> void:
-	ground_mat.set_shader_parameter("tint", c)
+	var sm := ground_mat as ShaderMaterial
+	if sm != null:
+		sm.set_shader_parameter("tint", c)
 
 func _start_music_phase(ph: int) -> void:
 	music_phase = ph

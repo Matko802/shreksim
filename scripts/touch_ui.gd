@@ -1,7 +1,6 @@
 extends CanvasLayer
 
 var ui_scale := 1.0
-var screen := Vector2.ZERO
 var look_pointer := -1
 var look_last := Vector2.ZERO
 var btn_pointers := {}
@@ -10,6 +9,7 @@ var joystick: VirtualJoystick
 var tap_release_queue: Array = []
 var sprint_on := false
 var buttons := {}
+var screen := Vector2.ZERO
 
 func _ready() -> void:
 	if not DisplayServer.is_touchscreen_available():
@@ -18,23 +18,28 @@ func _ready() -> void:
 	Input.emulate_mouse_from_touch = false
 	var dpi := float(DisplayServer.screen_get_dpi())
 	ui_scale = clampf(dpi / 220.0, 0.9, 1.6)
-	screen = get_viewport().get_visible_rect().size
 	_build_ui()
 
 func _exit_tree() -> void:
 	if DisplayServer.is_touchscreen_available():
 		Input.emulate_mouse_from_touch = true
 
-func _safe_rect() -> Rect2:
+func _safe_insets() -> Vector4:
 	var disp := Vector2(DisplayServer.screen_get_size())
-	if disp.x <= 1.0 or disp.y <= 1.0:
-		return Rect2(Vector2.ZERO, screen)
-	var raw := DisplayServer.get_display_safe_area()
-	var k := screen / disp
-	var pos := Vector2(raw.position) * k
-	var size := Vector2(raw.size) * k
-	size = Vector2(minf(size.x, screen.x - pos.x), minf(size.y, screen.y - pos.y))
-	return Rect2(pos, size)
+	var l := 0.0
+	var t := 0.0
+	var r := 0.0
+	var b := 0.0
+	if disp.x > 1.0 and disp.y > 1.0:
+		var raw := DisplayServer.get_display_safe_area()
+		var vis := get_viewport().get_visible_rect().size
+		var kx := vis.x / disp.x
+		var ky := vis.y / disp.y
+		l = maxf(0.0, float(raw.position.x) * kx)
+		t = maxf(0.0, float(raw.position.y) * ky)
+		r = maxf(0.0, float(disp.x - raw.position.x - raw.size.x) * kx)
+		b = maxf(0.0, float(disp.y - raw.position.y - raw.size.y) * ky)
+	return Vector4(l, t, r, b)
 
 func _circle_panel(size: float, color: Color) -> Panel:
 	var p := Panel.new()
@@ -69,33 +74,44 @@ func _joy_style(size: float, color: Color, border: float) -> StyleBoxFlat:
 	sb.border_color = Color(1, 1, 1, color.a)
 	return sb
 
-func _add_button(id: String, text: String, size: float, center: Vector2, color: Color) -> void:
+func _place(p: Control, ax: float, ay: float, off_left: float, off_top: float, w: float, h: float) -> void:
+	p.anchor_left = ax
+	p.anchor_right = ax
+	p.anchor_top = ay
+	p.anchor_bottom = ay
+	p.offset_left = off_left
+	p.offset_top = off_top
+	p.offset_right = off_left + w
+	p.offset_bottom = off_top + h
+	p.pivot_offset = Vector2(w, h) * 0.5
+
+func _add_button(id: String, text: String, size: float, color: Color) -> void:
 	var p := _circle_panel(size, color)
-	p.position = center - Vector2(size, size) * 0.5
 	p.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_label_of(p, text, size)
 	p.set_meta("base", color)
 	add_child(p)
 	buttons[id] = p
-	p.set_meta("rect", Rect2(p.position, p.size))
 
 func _build_ui() -> void:
-	var safe := _safe_rect()
+	var insets := _safe_insets()
 	var m := 20.0 * ui_scale
-	var end := safe.position + safe.size
 	var small := 58.0 * ui_scale
 	var jump := 88.0 * ui_scale
 	var gap := 12.0 * ui_scale
-
-	_add_button("jump", tr("JUMP"), jump, end - Vector2(m + jump * 0.5, m + jump * 0.5), Color(0.18, 0.5, 0.24, 0.42))
-	_add_button("sprint", tr("RUN"), small, end - Vector2(m + small * 0.5, m + jump + gap + small * 0.5), Color(0.5, 0.38, 0.12, 0.42))
-	_add_button("crouch", tr("DUCK"), small, end - Vector2(m + jump + gap + small * 0.5, m + small * 0.5), Color(0.22, 0.38, 0.48, 0.42))
-	_add_button("light", tr("LIGHT"), small, end - Vector2(m + jump + gap + small * 0.5, m + small * 1.5 + gap), Color(0.62, 0.52, 0.16, 0.42))
-	_add_button("grab", tr("GRAB"), small, end - Vector2(m + small * 0.7, safe.position.y + safe.size.y * 0.58), Color(0.55, 0.28, 0.18, 0.42))
-	_add_button("pauseb", "I I", small * 0.82, Vector2(end.x - m - small * 0.5, safe.position.y + m + small * 0.45), Color(0.25, 0.25, 0.28, 0.45))
-
+	_add_button("jump", tr("JUMP"), jump, Color(0.18, 0.5, 0.24, 0.42))
+	_add_button("sprint", tr("RUN"), small, Color(0.5, 0.38, 0.12, 0.42))
+	_add_button("crouch", tr("DUCK"), small, Color(0.22, 0.38, 0.48, 0.42))
+	_add_button("light", tr("LIGHT"), small, Color(0.62, 0.52, 0.16, 0.42))
+	_add_button("grab", tr("GRAB"), small, Color(0.55, 0.28, 0.18, 0.42))
+	_add_button("pauseb", "I I", small * 0.82, Color(0.25, 0.25, 0.28, 0.45))
+	_place(buttons["jump"], 1.0, 1.0, -(m + insets[2] + jump), -(m + insets[3] + jump), jump, jump)
+	_place(buttons["sprint"], 1.0, 1.0, -(m + insets[2] + small), -(m + insets[3] + jump + gap + small), small, small)
+	_place(buttons["crouch"], 1.0, 1.0, -(m + insets[2] + jump + gap + small), -(m + insets[3] + small), small, small)
+	_place(buttons["light"], 1.0, 1.0, -(m + insets[2] + jump + gap + small), -(m + insets[3] + small * 1.5 + gap), small, small)
+	_place(buttons["grab"], 1.0, 0.58, -(m + insets[2] + small * 1.2), -small * 0.5, small, small)
+	_place(buttons["pauseb"], 1.0, 0.0, -(m + insets[2] + small * 0.82), m + insets[1], small * 0.82, small * 0.82)
 	var joy_size := 160.0 * ui_scale
-	var joy_center := Vector2(safe.position.x + m + 91.2 * ui_scale, end.y - m - 91.2 * ui_scale)
 	joystick = VirtualJoystick.new()
 	joystick.joystick_mode = VirtualJoystick.JOYSTICK_FIXED
 	joystick.visibility_mode = VirtualJoystick.VISIBILITY_ALWAYS
@@ -106,14 +122,12 @@ func _build_ui() -> void:
 	joystick.action_right = &"move_right"
 	joystick.action_up = &"move_forward"
 	joystick.action_down = &"move_back"
-	joystick.position = joy_center - Vector2(joy_size, joy_size) * 0.5
-	joystick.size = Vector2(joy_size, joy_size)
+	_place(joystick, 0.0, 1.0, m + insets[0], -(m + insets[3] + joy_size), joy_size, joy_size)
 	joystick.add_theme_stylebox_override("normal_joystick", _joy_style(joy_size, Color(1, 1, 1, 0.09), 5.6 * ui_scale))
 	joystick.add_theme_stylebox_override("pressed_joystick", _joy_style(joy_size, Color(1, 1, 1, 0.14), 5.6 * ui_scale))
 	joystick.add_theme_stylebox_override("normal_tip", _joy_style(60.0 * ui_scale, Color(1.0, 0.97, 0.88, 0.5), 2.1 * ui_scale))
 	joystick.add_theme_stylebox_override("pressed_tip", _joy_style(60.0 * ui_scale, Color(1.0, 0.97, 0.88, 0.68), 2.1 * ui_scale))
 	add_child(joystick)
-
 	grab_button = buttons["grab"]
 	grab_button.visible = false
 
@@ -159,6 +173,7 @@ func _input(event: InputEvent) -> void:
 
 func _send_click() -> void:
 	var e := InputEventMouseButton.new()
+	screen = get_viewport().get_visible_rect().size
 	e.button_index = MOUSE_BUTTON_LEFT
 	e.pressed = true
 	e.position = screen * 0.5
@@ -182,8 +197,7 @@ func _handle_press(idx: int, pos: Vector2) -> void:
 		var p: Panel = buttons[id]
 		if not p.visible:
 			continue
-		var rect: Rect2 = p.get_meta("rect")
-		if not rect.has_point(pos):
+		if not p.get_global_rect().has_point(pos):
 			continue
 		btn_pointers[idx] = id
 		p.modulate = Color(1.25, 1.25, 1.25)
@@ -210,6 +224,7 @@ func _handle_press(idx: int, pos: Vector2) -> void:
 		return
 	if joystick.get_global_rect().has_point(pos):
 		return
+	screen = get_viewport().get_visible_rect().size
 	if look_pointer == -1 and pos.x > screen.x * 0.28:
 		look_pointer = idx
 		look_last = pos

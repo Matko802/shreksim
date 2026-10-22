@@ -71,21 +71,17 @@ func _probe_trees() -> int:
 			f += 1
 		var a := t.get_node_or_null("CrossA") as Sprite3D
 		var b := t.get_node_or_null("CrossB") as Sprite3D
-		var flat := t.get_node_or_null("Flat") as Sprite3D
-		if a == null or b == null or flat == null:
+		var flat := t.get_node_or_null("Flat")
+		if flat != null:
+			print("FAIL: old flat billboard on ", t.name)
+			f += 1
+		if a == null or b == null:
 			print("FAIL: missing sprites on ", t.name)
 			f += 1
 			continue
-		if a.visible or b.visible:
-			print("FAIL: crossed visible in editor on ", t.name)
+		if a.visibility_range_end != 0.0 or b.visibility_range_end != 0.0:
+			print("FAIL: limited range on ", t.name)
 			f += 1
-		else:
-			hidden_pair += 1
-		if not flat.visible:
-			print("FAIL: flat hidden in editor on ", t.name)
-			f += 1
-		else:
-			visible_flat += 1
 		if t is StaticBody3D:
 			var col := t.get_node_or_null("Collision") as CollisionShape3D
 			if col == null or col.shape == null:

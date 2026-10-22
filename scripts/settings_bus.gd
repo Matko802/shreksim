@@ -28,6 +28,9 @@ var _config := ConfigFile.new()
 
 func _ready() -> void:
 	load_settings()
+	if OS.has_feature("android") or OS.has_feature("ios"):
+		fullscreen_enabled = true
+		_apply_display()
 	_apply_anti_aliasing.call_deferred(anti_aliasing_mode)
 
 func load_settings() -> void:
@@ -53,7 +56,7 @@ func save_settings() -> void:
 	_config.save(SAVE_PATH)
 
 func taa_supported() -> bool:
-	return ProjectSettings.get_setting("rendering/renderer/rendering_method", "mobile") == "forward_plus" or ProjectSettings.get_setting("rendering/renderer/rendering_method.mobile", "mobile") == "forward_plus"
+	return RenderingServer.get_current_rendering_method() == "forward_plus" or ProjectSettings.get_setting("rendering/renderer/rendering_method", "mobile") == "forward_plus" or ProjectSettings.get_setting("rendering/renderer/rendering_method.mobile", "mobile") == "forward_plus"
 
 func _apply_display() -> void:
 	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED if vsync_enabled else DisplayServer.VSYNC_DISABLED)
@@ -126,9 +129,11 @@ func set_anti_aliasing_mode(mode: int) -> void:
 	setting_changed.emit(&"anti_aliasing_mode", anti_aliasing_mode)
 
 func _apply_anti_aliasing(mode: int) -> void:
-	if mode == AntiAliasingMode.TAA and not taa_supported():
+	var method := String(RenderingServer.get_current_rendering_method())
+	if mode == AntiAliasingMode.TAA and method != "forward_plus":
 		mode = AntiAliasingMode.FXAA
 	var root := get_tree().root
+	var msaa_value := Viewport.MSAA_DISABLED
 	match mode:
 		AntiAliasingMode.OFF:
 			root.msaa_3d = Viewport.MSAA_DISABLED
@@ -139,21 +144,19 @@ func _apply_anti_aliasing(mode: int) -> void:
 			root.use_taa = false
 			root.screen_space_aa = Viewport.SCREEN_SPACE_AA_FXAA
 		AntiAliasingMode.MSAA_2X:
-			root.msaa_3d = Viewport.MSAA_2X
-			root.use_taa = false
-			root.screen_space_aa = Viewport.SCREEN_SPACE_AA_DISABLED
+			msaa_value = Viewport.MSAA_2X
 		AntiAliasingMode.MSAA_4X:
-			root.msaa_3d = Viewport.MSAA_4X
-			root.use_taa = false
-			root.screen_space_aa = Viewport.SCREEN_SPACE_AA_DISABLED
+			msaa_value = Viewport.MSAA_4X
 		AntiAliasingMode.MSAA_8X:
-			root.msaa_3d = Viewport.MSAA_8X
-			root.use_taa = false
-			root.screen_space_aa = Viewport.SCREEN_SPACE_AA_DISABLED
+			msaa_value = Viewport.MSAA_8X
 		AntiAliasingMode.TAA:
 			root.msaa_3d = Viewport.MSAA_DISABLED
 			root.use_taa = true
 			root.screen_space_aa = Viewport.SCREEN_SPACE_AA_DISABLED
+	if msaa_value != Viewport.MSAA_DISABLED:
+		root.msaa_3d = msaa_value
+		root.use_taa = false
+		root.screen_space_aa = Viewport.SCREEN_SPACE_AA_FXAA if method != "forward_plus" else Viewport.SCREEN_SPACE_AA_DISABLED
 
 func reset_settings() -> void:
 	camera_effects_enabled = true
@@ -163,6 +166,8 @@ func reset_settings() -> void:
 	fps_limit = 0
 	anti_aliasing_mode = AntiAliasingMode.MSAA_2X
 	language = ""
+	if OS.has_feature("android") or OS.has_feature("ios"):
+		fullscreen_enabled = true
 	_apply_anti_aliasing(anti_aliasing_mode)
 	_apply_display()
 	_apply_language()

@@ -1,0 +1,90 @@
+[gd_resource type="Terrain3DAssets" format=3 uid="uid://bd2jgow842djq"]
+
+[ext_resource type="Texture2D" path="res://assets/textures/godotcraft/grass_top.png" id="1_rblq4"]
+[ext_resource type="Texture2D" path="res://assets/textures/extracted_slot1.png" id="2_0fp0s"]
+[ext_resource type="Texture2D" path="res://assets/textures/godotcraft/dirt.png" id="3_5xbqw"]
+[ext_resource type="Texture2D" path="res://assets/textures/godotcraft/stone.png" id="4_7umhq"]
+[ext_resource type="Texture2D" path="res://assets/textures/godotcraft/Sand.png" id="5_dg4jk"]
+[ext_resource type="Texture2D" path="res://assets/textures/godotcraft/oak_wood_top.png" id="6_41lus"]
+[ext_resource type="Texture2D" path="res://assets/textures/godotcraft/oak_wood_side.png" id="7_e8qo6"]
+[ext_resource type="Texture2D" path="res://assets/textures/godotcraft/bedrock.png" id="8_hsj3y"]
+[ext_resource type="Texture2D" path="res://assets/textures/godotcraft/obsidian.png" id="9_ce0em"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nji0o"]
+transparency = 4
+cull_mode = 2
+vertex_color_use_as_albedo = true
+backlight_enabled = true
+backlight = Color(0.5, 0.5, 0.5, 1)
+distance_fade_mode = 1
+distance_fade_min_distance = 128.0
+distance_fade_max_distance = 96.0
+metadata/terrain3d_generated_material = true
+
+[sub_resource type="Terrain3DMeshAsset" id="Terrain3DMeshAsset_8g0ka"]
+generated_type = 1
+height_offset = 0.5
+density = 10.0
+material_override = SubResource("StandardMaterial3D_nji0o")
+last_lod = 0
+last_shadow_lod = 0
+lod0_range = 128.0
+
+[sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_wyu8r"]
+name = "Grass Top"
+albedo_color = Color(0.646029, 0.646029, 0.646029, 1)
+albedo_texture = ExtResource("1_rblq4")
+roughness = -1.0
+uv_scale = 6.0
+
+[sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_1eokw"]
+name = "extracted_slot1"
+id = 1
+albedo_texture = ExtResource("2_0fp0s")
+
+[sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_r0jpf"]
+name = "Dirt"
+id = 2
+albedo_color = Color(0.69965345, 0.69965345, 0.69965345, 1)
+albedo_texture = ExtResource("3_5xbqw")
+uv_scale = 6.0
+
+[sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_5yswc"]
+name = "Stone"
+id = 3
+albedo_texture = ExtResource("4_7umhq")
+uv_scale = 1.0
+
+[sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_5myj5"]
+name = "Sand"
+id = 4
+albedo_texture = ExtResource("5_dg4jk")
+uv_scale = 1.0
+
+[sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_ffg4s"]
+name = "Wood Top"
+id = 5
+albedo_texture = ExtResource("6_41lus")
+uv_scale = 1.0
+
+[sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_3hksr"]
+name = "Wood Side"
+id = 6
+albedo_texture = ExtResource("7_e8qo6")
+uv_scale = 1.0
+
+[sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_q6qj3"]
+name = "Bedrock"
+id = 7
+albedo_texture = ExtResource("8_hsj3y")
+uv_scale = 1.0
+
+[sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_brryv"]
+name = "Obsidian"
+id = 8
+albedo_texture = ExtResource("9_ce0em")
+uv_scale = 1.0
+
+[resource]
+mesh_list = Array[Terrain3DMeshAsset]([SubResource("Terrain3DMeshAsset_8g0ka")])
+texture_list = Array[Terrain3DTextureAsset]([SubResource("Terrain3DTextureAsset_wyu8r"), SubResource("Terrain3DTextureAsset_1eokw"), SubResource("Terrain3DTextureAsset_r0jpf"), SubResource("Terrain3DTextureAsset_5yswc"), SubResource("Terrain3DTextureAsset_5myj5"), SubResource("Terrain3DTextureAsset_ffg4s"), SubResource("Terrain3DTextureAsset_3hksr"), SubResource("Terrain3DTextureAsset_q6qj3"), SubResource("Terrain3DTextureAsset_brryv")])

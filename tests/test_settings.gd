@@ -12,6 +12,7 @@ func _ready() -> void:
 	if cfg != null and cfg.file_exists("settings.cfg"):
 		cfg.remove("settings.cfg")
 	bus.load_settings()
+	bus.reset_settings()
 	await get_tree().process_frame
 	var root_vp: Viewport = get_tree().root
 	if bus.anti_aliasing_mode != 2:

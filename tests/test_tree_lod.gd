@@ -10,26 +10,30 @@ func _ready() -> void:
 		await get_tree().physics_frame
 	var tree: Node3D = game.get_node("Map/Trees/Tree003")
 	var cross: Node3D = tree.get_node("CrossA")
-	var flat: Node3D = tree.get_node("Flat")
-	fails += _num(cross, "end", 34.0)
-	fails += _num(cross, "end_margin", 4.0)
-	fails += _num(flat, "begin", 27.0)
-	fails += _num(flat, "begin_margin", 4.0)
-	fails += _num(flat, "end", 110.0)
-	fails += _num(flat, "end_margin", 20.0)
-	if not flat.visible:
-		print("FAIL flat not visible by default")
+	var flat: Node3D = tree.get_node_or_null("Flat")
+	if flat != null:
+		print("FAIL flat sprite still present")
 		fails += 1
+	fails += _num(cross, "end", 0.0)
+	fails += _num(cross, "end_margin", 4.0)
 	if not cross.visible:
 		print("FAIL cross not visible by default")
 		fails += 1
-	if cross.shaded or flat.shaded:
+	if cross.shaded:
 		print("FAIL tree sprites shaded")
 		fails += 1
 	var tor: Node3D = game.get_node("Map/Trees/Tree010")
 	var c2: Node3D = tor.get_node("CrossB")
-	if c2.visibility_range_end != 34.0:
+	if c2.visibility_range_end != 0.0:
 		print("FAIL CrossB range")
+		fails += 1
+	var far: Node3D = game.get_node("Map/Trees/FarTree001")
+	var far_a: Node3D = far.get_node("CrossA")
+	if far_a.get_node_or_null("Flat") != null:
+		print("FAIL far flat still present")
+		fails += 1
+	if far_a.visibility_range_end != 0.0:
+		print("FAIL far cross range")
 		fails += 1
 	var na: Vector3 = cross.global_basis.z
 	var tp: Vector3 = tree.global_position
