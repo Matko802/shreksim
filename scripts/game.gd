@@ -23,6 +23,7 @@ const ENEMY_SEARCH_TIME := 6.0
 const ENEMY_PATH_INTERVAL := 0.6
 const ENEMY_WHISKER_DIST := 3.2
 const WALL_SAFE := 6.0
+const TREE_EDGE_DOT := 0.18
 
 const PHASES := [
 	{"top": Color(0.3, 0.52, 0.85), "horizon": Color(0.8, 0.88, 0.86), "fog": 0.004, "sun": 1.35, "sun_color": Color(1.0, 0.97, 0.9), "ambient_energy": 1.0, "grass": Color(0.5, 0.68, 0.4), "sky_affect": 0.12, "day": 1.0},
@@ -83,6 +84,7 @@ var sky_mat: ShaderMaterial
 var _day_mix := 1.0
 var ground_mat: ShaderMaterial
 var tree_planes: Array = []
+var tree_sight_time := 0.0
 var onion_spot := -1
 
 var enemy: Sprite3D
@@ -217,6 +219,32 @@ func _build_world() -> void:
 		if a != null and b != null and flat != null:
 			tree_planes.append([a, b, flat])
 
+func _update_tree_sight() -> void:
+	var px := player.global_position.x
+	var pz := player.global_position.z
+	for pair in tree_planes:
+		var a := pair[0] as Sprite3D
+		var b := pair[1] as Sprite3D
+		var tpos: Vector3 = a.global_position
+		var vx := tpos.x - px
+		var vz := tpos.z - pz
+		var vlen := sqrt(vx * vx + vz * vz)
+		if vlen < 0.001:
+			continue
+		vx /= vlen
+		vz /= vlen
+		var na := a.global_basis.z
+		var dota := absf(na.x * vx + na.z * vz)
+		var nb := b.global_basis.z
+		var dotb := absf(nb.x * vx + nb.z * vz)
+		var a_on := dota >= TREE_EDGE_DOT
+		var b_on := dotb >= TREE_EDGE_DOT
+		if not a_on and not b_on:
+			a_on = dota >= dotb
+			b_on = not a_on
+		a.visible = a_on
+		b.visible = b_on
+
 func _authored_spot(j: int) -> Vector2:
 	var ang := 2.399963229728653 * float(j)
 	return Vector2(cos(ang), sin(ang)) * ONION_RADII[j % ONION_RADII.size()]
@@ -308,6 +336,10 @@ func _process(delta: float) -> void:
 			o.position.y = float(o.get_meta("base_y")) + sin(onion_bob_t * 2.0 + o.position.x * 0.01) * 0.12
 			o.rotation.y += delta * 0.9
 	_update_threat(delta)
+	tree_sight_time -= delta
+	if tree_sight_time <= 0.0:
+		tree_sight_time = 0.12
+		_update_tree_sight()
 	_prompt_timer -= delta
 	if _prompt_timer <= 0.0:
 		_prompt_timer = PROMPT_INTERVAL
