@@ -309,9 +309,6 @@ func _build_enemy() -> void:
 	enemy.visible = false
 	add_child(enemy)
 	enemy_chase_audio = AudioStreamPlayer3D.new()
-	var st := load("res://assets/sounds/sfx_static.ogg") as AudioStreamOggVorbis
-	st.loop = true
-	enemy_chase_audio.stream = st
 	enemy_chase_audio.max_distance = ENEMY_CHASE_RADIUS
 	enemy_chase_audio.unit_size = 16.0
 	enemy_chase_audio.bus = &"Master"
@@ -324,6 +321,9 @@ func _build_audio() -> void:
 
 	for path in ["", "res://assets/sounds/music_pages_1_2.ogg", "res://assets/sounds/music_pages_3_4.ogg", "res://assets/sounds/music_pages_5_6.ogg", "res://assets/sounds/music_pages_7_8.ogg"]:
 		music_streams.append(load(path) if path != "" else null)
+	for s in music_streams:
+		if s is AudioStreamOggVorbis:
+			(s as AudioStreamOggVorbis).loop = true
 
 func _objective_text() -> void:
 	if endless:
@@ -636,9 +636,14 @@ func _tick_enemy(delta: float) -> void:
 				enemy_pause = randf_range(1.2, 2.6)
 	var chasing := enemy_mode == "hunt"
 	if enemy_chase_audio != null:
-		if chasing and not enemy_chase_audio.playing:
-			enemy_chase_audio.play()
-		elif not chasing and enemy_chase_audio.playing:
+		if chasing:
+			var track: AudioStream = music_streams[mini((pages + 1) / 2, 4)]
+			if track != null and enemy_chase_audio.stream != track:
+				enemy_chase_audio.stream = track
+				enemy_chase_audio.play()
+			elif track != null and not enemy_chase_audio.playing:
+				enemy_chase_audio.play()
+		elif enemy_chase_audio.playing:
 			enemy_chase_audio.stop()
 	enemy.visible = chasing
 	enemy.global_position.y = _terrain_height(enemy.global_position.x, enemy.global_position.z) + 5.0 + sin(enemy_bob_t * 2.2) * 0.24
