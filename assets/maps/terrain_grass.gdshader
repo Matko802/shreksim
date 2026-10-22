@@ -2,7 +2,7 @@ shader_type spatial;
 
 uniform sampler2D grass : source_color, filter_linear_mipmap, repeat_enable;
 uniform vec4 tint : source_color = vec4(0.5, 0.68, 0.4, 1.0);
-uniform float cell_size = 0.72;
+uniform float cell_size = 1.5;
 uniform float variation = 0.08;
 
 varying vec3 world_pos;
