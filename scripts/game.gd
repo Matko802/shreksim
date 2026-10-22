@@ -1,8 +1,6 @@
 extends Node3D
 
 const WORLD_HALF := 128.0
-const ONION_RADII := [22.4, 25.6, 28.0, 42.4, 46.0, 62.4, 65.2, 78.0, 84.0, 98.0, 104.0, 116.0]
-const TERRAIN_DATA := preload("res://assets/maps/terrain_data.tres")
 const NAV := preload("res://scripts/enemy_nav.gd")
 const TOTAL_PAGES := 8
 const START_TIME := 150.0
@@ -88,6 +86,7 @@ var sun: DirectionalLight3D
 var sky_mat: ShaderMaterial
 var _day_mix := 1.0
 var ground_mat: Resource
+var _terrain: Terrain3D
 var tree_planes: Array = []
 var tree_sight_time := 0.0
 var onion_spot := -1
@@ -173,26 +172,17 @@ func _build_player() -> void:
 	add_child(player)
 
 func _terrain_height(x: float, z: float) -> float:
-	var n: int = TERRAIN_DATA.grid_size
-	var half: float = TERRAIN_DATA.grid_half
-	var fx := clampf((x + half) / (half * 2.0), 0.0, 1.0) * float(n - 1)
-	var fz := clampf((z + half) / (half * 2.0), 0.0, 1.0) * float(n - 1)
-	var ix := clampi(int(fx), 0, n - 2)
-	var iz := clampi(int(fz), 0, n - 2)
-	var diff_x := fx - float(ix)
-	var diff_z := fz - float(iz)
-	var hs: PackedFloat32Array = TERRAIN_DATA.heights
-	var h00 := hs[iz * n + ix]
-	var h10 := hs[iz * n + ix + 1]
-	var h01 := hs[(iz + 1) * n + ix]
-	var h11 := hs[(iz + 1) * n + ix + 1]
-	return lerp(lerp(h00, h10, diff_x), lerp(h01, h11, diff_x), diff_z)
+	var p := Vector3(clampf(x, -255.0, 255.0), 0.0, clampf(z, -255.0, 255.0))
+	var h := _terrain.data.get_height(p)
+	if is_nan(h):
+		return 0.0
+	return h
 
 func _build_world() -> void:
 	env = Environment.new()
 	env.background_mode = Environment.BG_SKY
 	var terrain_node := get_node("Map/Terrain") as Terrain3D
-	terrain_node.collision_mode = 0
+	_terrain = terrain_node
 	ground_mat = terrain_node.material
 	var sky_shader := Shader.new()
 	sky_shader.code = SKY_CUBE_SHADER
@@ -253,48 +243,42 @@ func _update_tree_sight() -> void:
 		a.visible = a_on
 		b.visible = b_on
 
-func _authored_spot(j: int) -> Vector2:
-	var ang := 2.399963229728653 * float(j)
-	return Vector2(cos(ang), sin(ang)) * ONION_RADII[j % ONION_RADII.size()]
-
-func _next_onion_spot() -> Vector2:
-	onion_spot += 1
-	return _authored_spot(onion_spot)
+func _next_onion() -> Area3D:
+	var spots := get_node("Map/OnionSpots").get_children()
+	for i in spots.size():
+		onion_spot = (onion_spot + 1) % spots.size()
+		var spot := spots[onion_spot] as Area3D
+		if spot == null or spot.visible or spot.has_meta("onion"):
+			continue
+		return spot
+	return null
 
 func _build_onions() -> void:
+	for c in get_node("Map/OnionSpots").get_children():
+		if c is Area3D:
+			_onion_deactivate(c)
 	var count := TOTAL_PAGES if not endless else 5
 	for i in count:
-		onions.append(_spawn_onion())
+		var spot := _next_onion()
+		if spot == null:
+			break
+		_onion_activate(spot)
 
-func _spawn_onion() -> Area3D:
-	var area := Area3D.new()
+func _onion_activate(area: Area3D) -> void:
 	area.collision_layer = 2
-
-	var sprite := Sprite3D.new()
-	sprite.texture = load("res://assets/images/items/onion.png")
-	sprite.billboard = StandardMaterial3D.BILLBOARD_FIXED_Y
-	sprite.shaded = false
-	sprite.pixel_size = 0.0124
-	sprite.alpha_cut = SpriteBase3D.ALPHA_CUT_DISCARD
-	sprite.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
-	sprite.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-	sprite.position = Vector3(0, 2.56, 0)
-	area.add_child(sprite)
-
-	var shape := CollisionShape3D.new()
-	var sphere := SphereShape3D.new()
-	sphere.radius = 1.36
-	shape.shape = sphere
-	shape.position = Vector3(0, 2.56, 0)
-	area.add_child(shape)
-
-	var pos := _next_onion_spot()
-	var gh := _terrain_height(pos.x, pos.y)
-	area.position = Vector3(pos.x, gh, pos.y)
+	area.visible = true
 	area.set_meta("onion", true)
-	area.set_meta("base_y", gh)
-	add_child(area)
-	return area
+	area.set_meta("base_y", area.position.y)
+	onions.append(area)
+
+func _onion_deactivate(area: Area3D) -> void:
+	var base_y := float(area.get_meta("base_y")) if area.has_meta("base_y") else area.position.y
+	area.collision_layer = 0
+	area.visible = false
+	area.rotation = Vector3.ZERO
+	area.position.y = base_y
+	area.remove_meta("onion")
+	area.remove_meta("base_y")
 
 func _build_enemy() -> void:
 	enemy = Sprite3D.new()
@@ -465,9 +449,11 @@ func _collect(onion: Area3D) -> void:
 	GameState.save_stats()
 	hud.set_pages_text(_pages_text())
 	onions.erase(onion)
-	onion.queue_free()
+	_onion_deactivate(onion)
 	if endless:
-		onions.append(_spawn_onion())
+		var spot := _next_onion()
+		if spot != null:
+			_onion_activate(spot)
 		_apply_phase(mini(pages, 8))
 		return
 	_apply_phase(pages)
@@ -487,9 +473,9 @@ func _apply_phase(ph: int) -> void:
 	for o in onions:
 		if is_instance_valid(o):
 			(o.get_child(0) as Sprite3D).modulate = tint_v
-	for tr in tree_planes:
-		(tr[0] as Sprite3D).modulate = tint_v
-		(tr[1] as Sprite3D).modulate = tint_v
+	for pair in tree_planes:
+		(pair[0] as Sprite3D).modulate = tint_v
+		(pair[1] as Sprite3D).modulate = tint_v
 
 func _color_close(a: Color, b: Color, eps: float) -> bool:
 	return absf(a.r - b.r) < eps and absf(a.g - b.g) < eps and absf(a.b - b.b) < eps and absf(a.a - b.a) < eps
@@ -706,7 +692,6 @@ func _whisker_dir(dir: Vector2) -> Vector2:
 	if space.intersect_ray(mid).is_empty():
 		return dir
 	var best := dir
-	var best_free := false
 	for a in [-1.0, 1.0]:
 		var alt := dir.rotated(1.05 * a)
 		var q := PhysicsRayQueryParameters3D.create(origin, origin + Vector3(alt.x, 0.0, alt.y) * ENEMY_WHISKER_DIST * 1.4, 1)

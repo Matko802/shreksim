@@ -61,7 +61,7 @@ def path_samples():
 def onion_spots():
     return [
         (math.cos(GOLDEN * j) * ONION_RADII[j % len(ONION_RADII)], math.sin(GOLDEN * j) * ONION_RADII[j % len(ONION_RADII)])
-        for j in range(16)
+        for j in range(40)
     ]
 
 
@@ -176,19 +176,26 @@ def main():
                 continue
             para = "\n".join(keep)
         if head.startswith("[node name=\"Terrain\" type=\"MeshInstance3D\" parent=\".\""):
+            onion_block = ""
+            for k, sp in enumerate(onion_spots()):
+                ox, oz = sp
+                oh = terrain_height(hs, ox, oz)
+                onion_block += (
+                    "\n\n[node name=\"Onion%03d\" type=\"Node3D\" parent=\"OnionSpots\" unique_id=%d]\n"
+                    "transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, %s, %s, %s)"
+                    % (k + 1, 1632094417 + 7 * (k + 1), fmt(ox), fmt(oh), fmt(oz))
+                )
             para = (
                 "[node name=\"Terrain\" type=\"Terrain3D\" parent=\".\" unique_id=721461624]\n"
                 "region_size = 256\n"
                 "vertex_spacing = 2.1333333333333333\n"
-                "collision_mode = 0\n"
+                "collision_mode = 3\n"
                 "material = ExtResource(\"t3d_material\")\n"
                 "assets = ExtResource(\"t3d_assets\")\n"
                 "data_directory = \"res://assets/maps/terrain3d/\"\n"
                 "\n"
-                "[node name=\"TerrainBody\" type=\"StaticBody3D\" parent=\".\" unique_id=1648521325]\n"
-                "\n"
-                "[node name=\"TerrainShape\" type=\"CollisionShape3D\" parent=\"TerrainBody\" unique_id=875313176]\n"
-                "shape = ExtResource(\"tc_shape\")"
+                "[node name=\"OnionSpots\" type=\"Node3D\" parent=\".\" unique_id=1704439101]"
+                + onion_block
             )
             stats["swapped"] += 1
             out.append(para)
@@ -217,7 +224,6 @@ def main():
     exts = (
         '[ext_resource type="Terrain3DMaterial" path="res://assets/maps/terrain3d_material.tres" id="t3d_material"]\n'
         '[ext_resource type="Terrain3DAssets" path="res://assets/maps/terrain3d_assets.tres" id="t3d_assets"]\n'
-        '[ext_resource type="Shape3D" path="res://assets/maps/terrain_collision.res" id="tc_shape"]\n'
     )
     idx = text.rfind("[ext_resource")
     line_end = text.find("\n", idx)

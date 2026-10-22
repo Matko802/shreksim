@@ -53,8 +53,8 @@ func _process(delta: float) -> void:
 	_accum = 0.0
 	var fps := Engine.get_frames_per_second()
 	var latency_ms: float = delta * 1000.0
-	var low_1: float = _low_percent(_frames_recorded / 100)
-	var low_01: float = _low_percent(_frames_recorded / 1000)
+	var low_1: float = _low_percent(int(_frames_recorded / 100.0))
+	var low_01: float = _low_percent(int(_frames_recorded / 1000.0))
 	var lines: PackedStringArray = PackedStringArray()
 	lines.append(" FPS: %d | Latency: %.1f ms | 1%% Low: %.1f | 0.1%% Low: %.1f" % [fps, latency_ms, low_1, low_01])
 	lines.append(_static_lines)

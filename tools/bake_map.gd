@@ -103,13 +103,6 @@ func save_terrain_mesh() -> void:
 	var err := ResourceSaver.save(mesh, "res://assets/maps/terrain_mesh.res")
 	print("BAKE mesh tris %d err %d" % [idx.size() / 6, err])
 
-func save_terrain_collision() -> void:
-	var mesh := load("res://assets/maps/terrain_mesh.res") as ArrayMesh
-	var shape := mesh.create_trimesh_shape()
-	shape.backface_collision = true
-	var err := ResourceSaver.save(shape, "res://assets/maps/terrain_collision.res")
-	print("BAKE shape err %d" % err)
-
 func save_material() -> void:
 	var text := "[gd_resource type=\"StandardMaterial3D\" load_steps=2 format=3]\n\n"
 	text += "[ext_resource type=\"Texture2D\" path=\"res://assets/textures/terrain_grass.png\" id=\"1_grass\"]\n\n"
@@ -121,10 +114,9 @@ func save_material() -> void:
 
 func save_map_scene() -> void:
 	var text := ""
-	text += "[gd_scene load_steps=7 format=3 uid=\"uid://bswampmap0001\"]\n\n"
+	text += "[gd_scene load_steps=6 format=3 uid=\"uid://bswampmap0001\"]\n\n"
 	text += "[ext_resource type=\"Mesh\" path=\"res://assets/maps/terrain_mesh.res\" id=\"1_mesh\"]\n"
-	text += "[ext_resource type=\"Material\" path=\"res://assets/maps/terrain_mat.tres\" id=\"2_material\"]\n"
-	text += "[ext_resource type=\"Shape3D\" path=\"res://assets/maps/terrain_collision.res\" id=\"3_shape\"]\n\n"
+	text += "[ext_resource type=\"Material\" path=\"res://assets/maps/terrain_mat.tres\" id=\"2_material\"]\n\n"
 	text += "[sub_resource type=\"BoxShape3D\" id=\"wall_ns\"]\nsize = Vector3(%s, 16, 0.24)\n\n" % (WORLD_HALF * 2.4)
 	text += "[sub_resource type=\"BoxShape3D\" id=\"wall_ew\"]\nsize = Vector3(0.24, 16, %s)\n\n" % (WORLD_HALF * 2.4)
 	text += "[sub_resource type=\"BoxShape3D\" id=\"floor_safety\"]\nsize = Vector3(384, 0.08, 384)\n\n"
@@ -133,10 +125,6 @@ func save_map_scene() -> void:
 	text += "mesh = ExtResource(\"1_mesh\")\n"
 	text += "material_override = ExtResource(\"2_material\")\n"
 	text += "cast_shadow = 0\n\n"
-	text += "[node name=\"Boundary\" type=\"StaticBody3D\" parent=\"Terrain\"]\n"
-	text += "collision_layer = 1\n\n"
-	text += "[node name=\"TerrainShape\" type=\"CollisionShape3D\" parent=\"Terrain/Boundary\"]\n"
-	text += "shape = ExtResource(\"3_shape\")\n\n"
 	text += "[node name=\"SafetyFloor\" type=\"StaticBody3D\" parent=\".\"]\n"
 	text += "collision_layer = 1\n\n"
 	text += "[node name=\"Shape\" type=\"CollisionShape3D\" parent=\"SafetyFloor\"]\n"
@@ -166,7 +154,6 @@ func _init() -> void:
 	make_ground_texture()
 	save_terrain_data()
 	save_terrain_mesh()
-	save_terrain_collision()
 	save_material()
 	save_map_scene()
 	quit()

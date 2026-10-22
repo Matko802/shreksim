@@ -134,7 +134,7 @@ func _check_update() -> void:
 	update_http.request_completed.connect(_on_update_check)
 	update_http.request(RELEASE_API, ["Accept: application/vnd.github+json"])
 
-func _on_update_check(result: int, code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
+func _on_update_check(result: int, code: int, _headers: PackedStringArray, body: PackedByteArray) -> void:
 	if result != HTTPRequest.RESULT_SUCCESS or code < 200 or code >= 300 or body.is_empty():
 		return
 	var data: Variant = JSON.parse_string(body.get_string_from_utf8())
