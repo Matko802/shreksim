@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://bswampmap0001"]
 
 [ext_resource type="Terrain3DAssets" uid="uid://bd2jgow842djq" path="res://assets/maps/terrain3d_assets.tres" id="t3d_assets"]
+[ext_resource type="Shape3D" path="res://assets/maps/terrain_collision.res" id="tc_shape"]
 [ext_resource type="Terrain3DMaterial" uid="uid://cue7saks5hld6" path="res://assets/maps/terrain3d_material.tres" id="t3d_material"]
-[ext_resource type="Shape3D" uid="uid://dklg2846cnc6p" path="res://assets/maps/terrain_collision.res" id="tc_shape"]
 [ext_resource type="Texture2D" uid="uid://d15ggd1f5xmeh" path="res://assets/images/trees/tree1.png" id="tree_tex1"]
 [ext_resource type="Texture2D" uid="uid://d15amitl7fv07" path="res://assets/images/trees/tree2.png" id="tree_tex2"]
 [ext_resource type="Texture2D" uid="uid://c54innkakft3y" path="res://assets/images/trees/tree5.png" id="tree_tex5"]
@@ -838,17 +838,12 @@ radius = 0.4784
 data_directory = "res://assets/maps/terrain3d/"
 material = ExtResource("t3d_material")
 assets = ExtResource("t3d_assets")
-show_grid = true
-vertex_spacing = 2.1333334
 displacement_sharpness = 0.5
-show_region_grid = true
-show_contours = true
-top_level = true
 metadata/_edit_lock_ = true
 
-[node name="TerrainBody" type="StaticBody3D" parent="." unique_id=158192183]
+[node name="TerrainBody" type="StaticBody3D" parent="." unique_id=1648521325]
 
-[node name="TerrainShape" type="CollisionShape3D" parent="TerrainBody" unique_id=753100598]
+[node name="TerrainShape" type="CollisionShape3D" parent="TerrainBody" unique_id=875313176]
 shape = ExtResource("tc_shape")
 
 [node name="SafetyFloor" type="StaticBody3D" parent="." unique_id=1630953558]

@@ -178,11 +178,17 @@ def main():
         if head.startswith("[node name=\"Terrain\" type=\"MeshInstance3D\" parent=\".\""):
             para = (
                 "[node name=\"Terrain\" type=\"Terrain3D\" parent=\".\" unique_id=721461624]\n"
+                "region_size = 256\n"
+                "vertex_spacing = 2.1333333333333333\n"
+                "collision_mode = 0\n"
                 "material = ExtResource(\"t3d_material\")\n"
                 "assets = ExtResource(\"t3d_assets\")\n"
                 "data_directory = \"res://assets/maps/terrain3d/\"\n"
-                "vertex_spacing = 2.1333333333333333\n"
-                "region_size = 128"
+                "\n"
+                "[node name=\"TerrainBody\" type=\"StaticBody3D\" parent=\".\" unique_id=1648521325]\n"
+                "\n"
+                "[node name=\"TerrainShape\" type=\"CollisionShape3D\" parent=\"TerrainBody\" unique_id=875313176]\n"
+                "shape = ExtResource(\"tc_shape\")"
             )
             stats["swapped"] += 1
             out.append(para)
@@ -211,6 +217,7 @@ def main():
     exts = (
         '[ext_resource type="Terrain3DMaterial" path="res://assets/maps/terrain3d_material.tres" id="t3d_material"]\n'
         '[ext_resource type="Terrain3DAssets" path="res://assets/maps/terrain3d_assets.tres" id="t3d_assets"]\n'
+        '[ext_resource type="Shape3D" path="res://assets/maps/terrain_collision.res" id="tc_shape"]\n'
     )
     idx = text.rfind("[ext_resource")
     line_end = text.find("\n", idx)
