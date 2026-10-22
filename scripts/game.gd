@@ -1,7 +1,6 @@
 extends Node3D
 
 const WORLD_HALF := 128.0
-const TREE_CROSS_DIST := 30.0
 const ONION_RADII := [22.4, 25.6, 28.0, 42.4, 46.0, 62.4, 65.2, 78.0, 84.0, 98.0, 104.0, 116.0]
 const TERRAIN_DATA := preload("res://assets/maps/terrain_data.tres")
 const NAV := preload("res://scripts/enemy_nav.gd")
@@ -84,7 +83,6 @@ var sky_mat: ShaderMaterial
 var _day_mix := 1.0
 var ground_mat: ShaderMaterial
 var tree_planes: Array = []
-var tree_swap_time := 0.0
 var onion_spot := -1
 
 var enemy: Sprite3D
@@ -219,15 +217,6 @@ func _build_world() -> void:
 		if a != null and b != null and flat != null:
 			tree_planes.append([a, b, flat])
 
-func _update_tree_billboards() -> void:
-	var p := player.global_position
-	for pair in tree_planes:
-		var d := Vector2(pair[0].global_position.x - p.x, pair[0].global_position.z - p.z).length()
-		var cross_near := d <= TREE_CROSS_DIST
-		pair[0].visible = cross_near
-		pair[1].visible = cross_near
-		pair[2].visible = not cross_near
-
 func _authored_spot(j: int) -> Vector2:
 	var ang := 2.399963229728653 * float(j)
 	return Vector2(cos(ang), sin(ang)) * ONION_RADII[j % ONION_RADII.size()]
@@ -319,10 +308,6 @@ func _process(delta: float) -> void:
 			o.position.y = float(o.get_meta("base_y")) + sin(onion_bob_t * 2.0 + o.position.x * 0.01) * 0.12
 			o.rotation.y += delta * 0.9
 	_update_threat(delta)
-	tree_swap_time -= delta
-	if tree_swap_time <= 0.0:
-		tree_swap_time = 0.25
-		_update_tree_billboards()
 	_prompt_timer -= delta
 	if _prompt_timer <= 0.0:
 		_prompt_timer = PROMPT_INTERVAL
@@ -451,9 +436,16 @@ func _apply_phase(ph: int) -> void:
 	if not _phase_started:
 		_phase_started = true
 		_lerp_phase(1.0)
+	var day_v := float(PHASES[ph]["day"])
+	var lit := clampf(0.55 + 0.45 * day_v, 0.55, 1.0)
+	var tint_v := Color(lit, lit, lit)
 	for o in onions:
 		if is_instance_valid(o):
-			(o.get_child(0) as Sprite3D).shaded = ph < 4
+			(o.get_child(0) as Sprite3D).modulate = tint_v
+	for tr in tree_planes:
+		(tr[0] as Sprite3D).modulate = tint_v
+		(tr[1] as Sprite3D).modulate = tint_v
+		(tr[2] as Sprite3D).modulate = tint_v
 
 func _color_close(a: Color, b: Color, eps: float) -> bool:
 	return absf(a.r - b.r) < eps and absf(a.g - b.g) < eps and absf(a.b - b.b) < eps and absf(a.a - b.a) < eps
@@ -635,9 +627,6 @@ func _enemy_advance(delta: float, target: Vector2, speed: float) -> void:
 	var d := dir.length()
 	if d > 0.001:
 		dir = dir / d
-		var tgt_dir := target - pos
-		if sees_cache and nav.has_los(pos, target):
-			dir = tgt_dir / maxf(tgt_dir.length(), 0.001)
 		dir = _whisker_dir(dir)
 		var next_pos := enemy.global_position
 		next_pos.x += dir.x * speed * delta
