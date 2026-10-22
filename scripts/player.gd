@@ -184,10 +184,10 @@ func _physics_process(delta: float) -> void:
 		rotate_y(pending_yaw)
 		_last_applied_yaw = _look_yaw_target
 		if SettingsBus.camera_effects_enabled:
-			flashlight_container.rotate_y(-pending_yaw * FLASHLIGHT_LAG_FACTOR)
+			flashlight_light.rotate_y(-pending_yaw * FLASHLIGHT_LAG_FACTOR)
 	var pending_pitch := _look_pitch - _look_pitch_applied
 	if absf(pending_pitch) > 0.00001 and SettingsBus.camera_effects_enabled:
-		flashlight_container.rotate_x(-pending_pitch * FLASHLIGHT_LAG_FACTOR)
+		flashlight_light.rotate_x(-pending_pitch * FLASHLIGHT_LAG_FACTOR)
 	_look_yaw_applied = _look_yaw_target
 	_look_pitch_applied = _look_pitch
 
@@ -233,9 +233,9 @@ func _physics_process(delta: float) -> void:
 
 func _update_flashlight_rotation(delta: float) -> void:
 	var k: float = 1.0 - exp(-FLASHLIGHT_ROTATION_SMOOTHING * delta)
-	flashlight_container.quaternion = flashlight_container.quaternion.slerp(Quaternion.IDENTITY, k)
-	if flashlight_container.quaternion.is_equal_approx(Quaternion.IDENTITY):
-		flashlight_container.quaternion = Quaternion.IDENTITY
+	flashlight_light.quaternion = flashlight_light.quaternion.slerp(Quaternion.IDENTITY, k)
+	if flashlight_light.quaternion.is_equal_approx(Quaternion.IDENTITY):
+		flashlight_light.quaternion = Quaternion.IDENTITY
 
 func _is_sprinting() -> bool:
 	if _is_crouching:

@@ -101,11 +101,11 @@ _data = {
 }
 
 [node name="Flashlight" type="Node3D" unique_id=356943519]
-transform = Transform3D(1, 0, 0, 0, 0.8660254, 0.5, 0, -0.5, 0.8660254, -0.6753601, -0.80864, -0.364)
+transform = Transform3D(1, 0, 0, 0, 0.8660254, 0.5, 0, -0.5, 0.8660254, 0, 0, 0)
 visible = false
 
 [node name="Model" parent="." unique_id=756600204 instance=ExtResource("1_glb")]
-transform = Transform3D(0.56, 0, 0, 0, 0.56, 0, 0, 0, 0.56, 0.3772688, 1.1490486, 0.32359624)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 0.6, 0.19999999)
 
 [node name="Cube" parent="Model" index="0" unique_id=1516650038]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
@@ -115,7 +115,7 @@ cast_shadow = 0
 
 [node name="FlashlightLight" type="SpotLight3D" parent="." unique_id=468171472]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.027999938, -0.035012573, -0.8886027)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 0.6, -0.10000002)
 light_energy = 16.0
 light_indirect_energy = 16.0
 spot_range = 30.835058
