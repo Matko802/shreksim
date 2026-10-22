@@ -7,6 +7,11 @@ const NAV := preload("res://scripts/enemy_nav.gd")
 const TOTAL_PAGES := 8
 const START_TIME := 150.0
 const KILL_RADIUS := 2.8
+const ENEMY_CHASE_RADIUS := 200.0
+const ENEMY_REAPPEAR_MIN := 8.0
+const ENEMY_REAPPEAR_MAX := 14.0
+const ENEMY_STALK_DIST_MIN := 17.0
+const ENEMY_STALK_DIST_MAX := 25.0
 const CAMERA_HEIGHT := 1.76
 const ONION_RANGE := 14.4
 const STATIC_MAX_ALPHA := 0.25
@@ -100,6 +105,9 @@ var enemy_arrived := false
 var enemy_goal_ok := false
 var enemy_goal := Vector2.ZERO
 var enemy_pause := 0.0
+var enemy_reappear_time := 0.0
+var enemy_chase_audio: AudioStreamPlayer3D
+var music_phase := 0
 var enemy_yaw := 0.0
 var enemy_lose_time := 0.0
 var enemy_search_time := 0.0
@@ -301,6 +309,14 @@ func _build_enemy() -> void:
 	enemy.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	enemy.visible = false
 	add_child(enemy)
+	enemy_chase_audio = AudioStreamPlayer3D.new()
+	var st := load("res://assets/sounds/music_allstar.ogg") as AudioStreamOggVorbis
+	st.loop = true
+	enemy_chase_audio.stream = st
+	enemy_chase_audio.max_distance = ENEMY_CHASE_RADIUS
+	enemy_chase_audio.unit_size = 16.0
+	enemy_chase_audio.bus = &"Master"
+	enemy.add_child(enemy_chase_audio)
 
 func _build_audio() -> void:
 	onion_sound = AudioStreamPlayer.new()
@@ -533,6 +549,7 @@ func set_ground_tint(c: Color) -> void:
 	ground_mat.set_shader_parameter("tint", c)
 
 func _start_music_phase(ph: int) -> void:
+	music_phase = ph
 	if allstar != null and allstar.playing:
 		return
 	var stream: AudioStream = music_streams[ph] if ph >= 0 and ph < music_streams.size() else null
@@ -582,7 +599,7 @@ func _tick_enemy(delta: float) -> void:
 			enemy_path_i = 0
 	var to_p := player.global_position - enemy.global_position
 	to_p.y = 0.0
-	if to_p.length() < KILL_RADIUS:
+	if enemy_mode == "hunt" and to_p.length() < KILL_RADIUS:
 		_die()
 		return
 	var base := minf(ENEMY_FOLLOW_BASE + ENEMY_FOLLOW_PER_PAGE * pages, ENEMY_SPEED_CAP)
@@ -591,20 +608,21 @@ func _tick_enemy(delta: float) -> void:
 	elif enemy_mode == "search":
 		enemy_search_time += delta
 		if enemy_search_time > ENEMY_SEARCH_TIME:
-			enemy_mode = "wander"
-			enemy_goal_ok = false
-			enemy_path = PackedVector2Array()
+			_set_enemy_mode("wander")
 		else:
 			var pos2 := Vector2(enemy.global_position.x, enemy.global_position.z)
 			if pos2.distance_to(last_seen) < 2.5:
 				enemy_pause += delta
 				enemy_yaw += delta * 0.5
 				if enemy_pause >= 2.0:
-					enemy_mode = "wander"
-					enemy_goal_ok = false
+					_set_enemy_mode("wander")
 			else:
 				_enemy_advance(delta, last_seen, base * 0.8)
 	else:
+		enemy_reappear_time -= delta
+		if enemy_reappear_time <= 0.0:
+			_stalk_reappear()
+			return
 		var pos := Vector2(enemy.global_position.x, enemy.global_position.z)
 		if enemy_pause > 0.0:
 			enemy_pause -= delta
@@ -620,6 +638,16 @@ func _tick_enemy(delta: float) -> void:
 			if enemy_arrived:
 				enemy_goal_ok = false
 				enemy_pause = randf_range(1.2, 2.6)
+	var chasing := enemy_mode == "hunt"
+	if enemy_chase_audio != null:
+		if chasing and not enemy_chase_audio.playing:
+			enemy_chase_audio.play()
+		elif not chasing and enemy_chase_audio.playing:
+			enemy_chase_audio.stop()
+			_start_music_phase(music_phase)
+		if chasing and music != null and music.playing:
+			music.stop()
+	enemy.visible = chasing
 	enemy.global_position.y = _terrain_height(enemy.global_position.x, enemy.global_position.z) + 5.0 + sin(enemy_bob_t * 2.2) * 0.24
 
 func _enemy_sees_player() -> bool:
@@ -701,6 +729,39 @@ func _pick_wander_target() -> Vector2:
 			return target
 	return target
 
+func _set_enemy_mode(m: String) -> void:
+	enemy_mode = m
+	if m == "wander":
+		enemy_reappear_time = randf_range(ENEMY_REAPPEAR_MIN, ENEMY_REAPPEAR_MAX)
+		enemy_goal_ok = false
+		enemy_path = PackedVector2Array()
+		enemy_path_i = 0
+		enemy_path_time = 0.0
+
+func _stalk_reappear() -> void:
+	var fwd := -player.camera.global_basis.z
+	var pc := Vector2(player.global_position.x, player.global_position.z)
+	var dir := Vector2(-fwd.x, -fwd.z).normalized().rotated(randf_range(-1.2, 1.2))
+	var p := pc + dir * randf_range(ENEMY_STALK_DIST_MIN, ENEMY_STALK_DIST_MAX)
+	p.x = clampf(p.x, -WORLD_HALF + WALL_SAFE, WORLD_HALF - WALL_SAFE)
+	p.y = clampf(p.y, -WORLD_HALF + WALL_SAFE, WORLD_HALF - WALL_SAFE)
+	var tries := 8
+	while tries > 0 and nav != null and not nav.is_free_point(p):
+		tries -= 1
+		dir = Vector2(-fwd.x, -fwd.z).normalized().rotated(randf_range(-1.2, 1.2))
+		p = pc + dir * randf_range(ENEMY_STALK_DIST_MIN, ENEMY_STALK_DIST_MAX)
+		p.x = clampf(p.x, -WORLD_HALF + WALL_SAFE, WORLD_HALF - WALL_SAFE)
+		p.y = clampf(p.y, -WORLD_HALF + WALL_SAFE, WORLD_HALF - WALL_SAFE)
+	enemy.global_position = Vector3(p.x, _terrain_height(p.x, p.y) + 5.0, p.y)
+	enemy_yaw = (pc - p).angle()
+	enemy_arrived = false
+	enemy_lose_time = 0.0
+	enemy_pause = 0.0
+	sees_timer = 0.0
+	sees_cache = false
+	last_seen = pc
+	enemy_mode = "hunt"
+
 func _build_nav() -> void:
 	nav = NAV.new()
 	var xs := PackedFloat32Array()
@@ -725,14 +786,10 @@ func _spawn_enemy_behind() -> void:
 	p.x = clampf(p.x, -WORLD_HALF + WALL_SAFE, WORLD_HALF - WALL_SAFE)
 	p.y = clampf(p.y, -WORLD_HALF + WALL_SAFE, WORLD_HALF - WALL_SAFE)
 	enemy.global_position = Vector3(p.x, _terrain_height(p.x, p.y) + 5.0, p.y)
-	enemy.visible = true
+	enemy.visible = false
 	enemy_yaw = Vector2(player.global_position.x - p.x, player.global_position.z - p.y).angle()
-	enemy_mode = "wander"
-	enemy_goal_ok = false
+	_set_enemy_mode("wander")
 	enemy_arrived = false
-	enemy_path = PackedVector2Array()
-	enemy_path_i = 0
-	enemy_path_time = 0.0
 	enemy_lose_time = 0.0
 	enemy_pause = 0.0
 	last_seen = Vector2(player.global_position.x, player.global_position.z)
@@ -760,6 +817,8 @@ func _end_sequence(result_path: String, with_static: bool) -> void:
 	hud.hide_static()
 	if music != null:
 		music.stop()
+	if enemy_chase_audio != null:
+		enemy_chase_audio.stop()
 	var result_text := _result_text()
 	if endless:
 		GameState.best_endless = maxi(GameState.best_endless, pages)

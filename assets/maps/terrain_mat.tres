@@ -7,6 +7,6 @@
 render_priority = 0
 shader = ExtResource("1_shader")
 shader_parameter/grass = ExtResource("2_grass")
-shader_parameter/tint = Color(0.4030759, 0.55814135, 0.31234086, 1)
-shader_parameter/cell_size = 10.0
-shader_parameter/variation = 0.2
+shader_parameter/tint = Color(0.5, 0.68, 0.4, 1)
+shader_parameter/cell_size = 1.5
+shader_parameter/variation = 0.08

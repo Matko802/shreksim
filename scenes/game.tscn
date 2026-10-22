@@ -1,10 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://c0yin4wvia2f7"]
+[gd_scene load_steps=4 format=3 uid="uid://c0yin4wvia2f7"]
 
 [ext_resource type="Script" uid="uid://c57ppturh2r38" path="res://scripts/game.gd" id="1_game"]
 
 [ext_resource type="PackedScene" uid="uid://bswampmap0001" path="res://scenes/map.tscn" id="2_map"]
 
+[ext_resource type="PackedScene" uid="uid://dbgwmenu8f30" path="res://scenes/debug_menu.tscn" id="3_debug"]
+
 [node name="Game" type="Node3D" unique_id=1795083100]
 script = ExtResource("1_game")
 
 [node name="Map" parent="." instance=ExtResource("2_map")]
+
+[node name="DebugMenu" parent="." instance=ExtResource("3_debug")]

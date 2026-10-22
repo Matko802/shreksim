@@ -193,6 +193,58 @@ size_flags_horizontal = 3
 size_flags_vertical = 4
 theme_override_font_sizes/font_size = 18
 
+[node name="VSyncCheck" type="CheckButton" parent="SettingsCenter/SettingsPanel/Box" unique_id=883212120]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+button_pressed = true
+text = "VSync"
+
+[node name="AARow" type="HBoxContainer" parent="SettingsCenter/SettingsPanel/Box" unique_id=883212121]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="AALabel" type="Label" parent="SettingsCenter/SettingsPanel/Box/AARow" unique_id=883212122]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Anti-aliasing"
+
+[node name="AAOption" type="OptionButton" parent="SettingsCenter/SettingsPanel/Box/AARow" unique_id=883212123]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(190, 28)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 18
+
+[node name="FPSRow" type="HBoxContainer" parent="SettingsCenter/SettingsPanel/Box" unique_id=883212124]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="FPSLimitLabel" type="Label" parent="SettingsCenter/SettingsPanel/Box/FPSRow" unique_id=883212125]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(44, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Off"
+horizontal_alignment = 2
+
+[node name="FPSLimitText" type="Label" parent="SettingsCenter/SettingsPanel/Box/FPSRow" unique_id=883212126]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "FPS limit"
+
+[node name="FPSLimitSlider" type="HSlider" parent="SettingsCenter/SettingsPanel/Box/FPSRow" unique_id=883212127]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 28)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+min_value = 30.0
+max_value = 360.0
+step = 5.0
+value = 360.0
+
 [node name="ResetCenter" type="CenterContainer" parent="SettingsCenter/SettingsPanel/Box" unique_id=883212114]
 layout_mode = 2
 
