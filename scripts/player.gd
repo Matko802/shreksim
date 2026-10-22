@@ -73,6 +73,7 @@ var head: Node3D
 var camera: Camera3D
 var flashlight_container: Node3D
 var flashlight_light: SpotLight3D
+var flashlight_model: Node3D
 var flashlight_model_animator: AnimationPlayer
 var flashlight_toggle_player: AudioStreamPlayer3D
 var footstep_player: AudioStreamPlayer3D
@@ -116,6 +117,7 @@ func _ready() -> void:
 	flashlight_container = (load("res://scenes/flashlight.tscn") as PackedScene).instantiate() as Node3D
 	camera.add_child(flashlight_container)
 	flashlight_light = flashlight_container.get_node("%FlashlightLight") as SpotLight3D
+	flashlight_model = flashlight_container.get_node("Model") as Node3D
 	flashlight_model_animator = flashlight_container.get_node("%ModelAnimator") as AnimationPlayer
 	flashlight_toggle_player = flashlight_container.get_node("%TogglePlayer") as AudioStreamPlayer3D
 	flashlight_model_animator.play(&"model_draw")
@@ -185,9 +187,11 @@ func _physics_process(delta: float) -> void:
 		_last_applied_yaw = _look_yaw_target
 		if SettingsBus.camera_effects_enabled:
 			flashlight_light.rotate_y(-pending_yaw * FLASHLIGHT_LAG_FACTOR)
+			flashlight_model.rotate_y(-pending_yaw * FLASHLIGHT_LAG_FACTOR)
 	var pending_pitch := _look_pitch - _look_pitch_applied
 	if absf(pending_pitch) > 0.00001 and SettingsBus.camera_effects_enabled:
 		flashlight_light.rotate_x(-pending_pitch * FLASHLIGHT_LAG_FACTOR)
+		flashlight_model.rotate_x(-pending_pitch * FLASHLIGHT_LAG_FACTOR)
 	_look_yaw_applied = _look_yaw_target
 	_look_pitch_applied = _look_pitch
 
@@ -236,6 +240,9 @@ func _update_flashlight_rotation(delta: float) -> void:
 	flashlight_light.quaternion = flashlight_light.quaternion.slerp(Quaternion.IDENTITY, k)
 	if flashlight_light.quaternion.is_equal_approx(Quaternion.IDENTITY):
 		flashlight_light.quaternion = Quaternion.IDENTITY
+	flashlight_model.quaternion = flashlight_model.quaternion.slerp(Quaternion.IDENTITY, k)
+	if flashlight_model.quaternion.is_equal_approx(Quaternion.IDENTITY):
+		flashlight_model.quaternion = Quaternion.IDENTITY
 
 func _is_sprinting() -> bool:
 	if _is_crouching:
