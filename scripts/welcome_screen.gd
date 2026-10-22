@@ -1,6 +1,7 @@
 extends Control
 
-@onready var logo: TextureRect = $Logo
+@onready var logo: TextureRect = $Center/Box/Logo
+@onready var audio_player: AudioStreamPlayer = $AudioStreamPlayer
 
 const WELCOME_FPS := 60
 
@@ -19,6 +20,7 @@ func _ready() -> void:
 	tween.tween_property(logo, "modulate:a", 0.0, 0.8)
 	tween.chain()
 	tween.tween_callback(_transition_to_menu)
+	audio_player.play()
 
 func _input(event: InputEvent) -> void:
 	if event.is_pressed():
