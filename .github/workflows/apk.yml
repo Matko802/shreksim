@@ -189,4 +189,4 @@ jobs:
             "ShrekSim-${{ github.ref_name }}-arm64.apk" \
             "ShrekSim.apk.sha256" \
             --title "${{ github.ref_name }}" \
-            --notes "Android APK build ${{ github.ref_name }} (arm64). Faraway trees are now baked into batched GPU billboards instead of hundreds of individual sprites, and the soft far tree fade band is gone, so moving and turning the camera stays smooth instead of stuttering. If you installed an older signed build, uninstall it before installing this one."
+            --notes "Android APK build ${{ github.ref_name }} (arm64). The ground shader is much cheaper on the phone now: flat geometric normals, no hidden specular re-lighting pass, distant ground samples smaller mipmaps past 64 m, and the 3D view renders at 85% res with FXAA smoothing instead of full res. Ground-heavy camera angles should hold 60 fps much better. If you installed an older signed build, uninstall it before installing this one."

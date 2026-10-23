@@ -32,6 +32,10 @@ func _ready() -> void:
 	var mobile := OS.has_feature("android") or OS.has_feature("ios")
 	if mobile:
 		fullscreen_enabled = true
+		var vp := get_viewport()
+		if vp != null:
+			vp.scaling_3d_mode = Viewport.SCALING_3D_MODE_BILINEAR
+			vp.scaling_3d_scale = 0.85
 		_apply_display()
 	_apply_anti_aliasing.call_deferred(anti_aliasing_mode)
 
