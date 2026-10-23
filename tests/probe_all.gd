@@ -79,8 +79,8 @@ func _probe_trees() -> int:
 			print("FAIL: missing sprites on ", t.name)
 			f += 1
 			continue
-		if a.visibility_range_end != 0.0 or b.visibility_range_end != 0.0:
-			print("FAIL: limited range on ", t.name)
+		if a.visibility_range_end != 150.0 or b.visibility_range_end != 150.0:
+			print("FAIL: missing far cull range on ", t.name)
 			f += 1
 		if t is StaticBody3D:
 			var col := t.get_node_or_null("Collision") as CollisionShape3D

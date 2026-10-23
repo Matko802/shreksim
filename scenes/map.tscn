@@ -1531,17 +1531,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.845, 0)
 shape = SubResource("tree_cyl1")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree001" unique_id=2009932087]
+visibility_range_end = 150.0
 transform = Transform3D(1.0253048, 0, 1.0253048, 0, 1.45, 0, -1.0253048, 0, 1.0253048, 0, 4.226112, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree001" unique_id=1838237722]
+visibility_range_end = 150.0
 transform = Transform3D(1.0253048, 0, -1.0253048, 0, 1.45, 0, 1.0253048, 0, 1.0253048, 0, 4.226112, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -1554,17 +1556,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.0324, 0)
 shape = SubResource("tree_cyl2")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree002" unique_id=756872692]
+visibility_range_end = 150.0
 transform = Transform3D(0.93111396, 0, 0.93111396, 0, 1.316794, 0, -0.93111396, 0, 0.93111396, 0, 3.8378754, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree002" unique_id=346312811]
+visibility_range_end = 150.0
 transform = Transform3D(0.93111396, 0, -0.93111396, 0, 1.316794, 0, 0.93111396, 0, 0.93111396, 0, 3.8378754, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -1577,17 +1581,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.343, 0)
 shape = SubResource("tree_cyl3")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree003" unique_id=1750712488]
+visibility_range_end = 150.0
 transform = Transform3D(1.083029, 0, 1.083029, 0, 1.5316343, 0, -1.083029, 0, 1.083029, 0, 4.46404, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree003" unique_id=14779589]
+visibility_range_end = 150.0
 transform = Transform3D(1.083029, 0, -1.083029, 0, 1.5316343, 0, 1.083029, 0, 1.083029, 0, 4.46404, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -1600,17 +1606,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.4592, 0)
 shape = SubResource("tree_cyl4")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree004" unique_id=383118363]
+visibility_range_end = 150.0
 transform = Transform3D(1.3283455, 0, 1.3283455, 0, 1.8785644, 0, -1.3283455, 0, 1.3283455, 0, 5.4751887, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree004" unique_id=1604784104]
+visibility_range_end = 150.0
 transform = Transform3D(1.3283455, 0, -1.3283455, 0, 1.8785644, 0, 1.3283455, 0, 1.3283455, 0, 5.4751887, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -1623,17 +1631,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.9705, 0)
 shape = SubResource("tree_cyl5")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree005" unique_id=140960487]
+visibility_range_end = 150.0
 transform = Transform3D(0.92393124, 0, 0.92393124, 0, 1.3066361, 0, -0.92393124, 0, 0.92393124, 0, 3.8082695, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree005" unique_id=2070698316]
+visibility_range_end = 150.0
 transform = Transform3D(0.92393124, 0, -0.92393124, 0, 1.3066361, 0, 0.92393124, 0, 0.92393124, 0, 3.8082695, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -1646,17 +1656,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.3499, 0)
 shape = SubResource("tree_cyl6")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree006" unique_id=608682470]
+visibility_range_end = 150.0
 transform = Transform3D(0.8519887, 0, 0.8519887, 0, 1.204894, 0, -0.8519887, 0, 0.8519887, 0, 3.5117357, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree006" unique_id=117939278]
+visibility_range_end = 150.0
 transform = Transform3D(0.8519887, 0, -0.8519887, 0, 1.204894, 0, 0.8519887, 0, 0.8519887, 0, 3.5117357, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -1669,17 +1681,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.3306, 0)
 shape = SubResource("tree_cyl7")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree007" unique_id=756849386]
+visibility_range_end = 150.0
 transform = Transform3D(0.84975976, 0, 0.84975976, 0, 1.2017418, 0, -0.84975976, 0, 0.84975976, 0, 3.5025487, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree007" unique_id=1263146975]
+visibility_range_end = 150.0
 transform = Transform3D(0.84975976, 0, -0.84975976, 0, 1.2017418, 0, 0.84975976, 0, 0.84975976, 0, 3.5025487, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -1692,17 +1706,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.66, 0)
 shape = SubResource("tree_cyl8")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree008" unique_id=1019596191]
+visibility_range_end = 150.0
 transform = Transform3D(0.42426407, 0, 0.42426407, 0, 0.6, 0, -0.42426407, 0, 0.42426407, 0, 1.748736, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree008" unique_id=748397686]
+visibility_range_end = 150.0
 transform = Transform3D(0.42426407, 0, -0.42426407, 0, 0.6, 0, 0.42426407, 0, 0.42426407, 0, 1.748736, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -1715,17 +1731,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.7372, 0)
 shape = SubResource("tree_cyl9")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree009" unique_id=1218503689]
+visibility_range_end = 150.0
 transform = Transform3D(0.54913485, 0, 0.54913485, 0, 0.776594, 0, -0.54913485, 0, 0.54913485, 0, 2.2634299, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree009" unique_id=810226714]
+visibility_range_end = 150.0
 transform = Transform3D(0.54913485, 0, -0.54913485, 0, 0.776594, 0, 0.54913485, 0, 0.54913485, 0, 2.2634299, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -1738,17 +1756,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.5493, 0)
 shape = SubResource("tree_cyl10")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree010" unique_id=815063342]
+visibility_range_end = 150.0
 transform = Transform3D(0.75919026, 0, 0.75919026, 0, 1.0736572, 0, -0.75919026, 0, 0.75919026, 0, 3.1292381, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree010" unique_id=1156678899]
+visibility_range_end = 150.0
 transform = Transform3D(0.75919026, 0, -0.75919026, 0, 1.0736572, 0, 0.75919026, 0, 0.75919026, 0, 3.1292381, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -1761,17 +1781,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.3591, 0)
 shape = SubResource("tree_cyl11")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree011" unique_id=596012702]
+visibility_range_end = 150.0
 transform = Transform3D(0.6212273, 0, 0.6212273, 0, 0.87854815, 0, -0.6212273, 0, 0.6212273, 0, 2.5605814, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree011" unique_id=100107717]
+visibility_range_end = 150.0
 transform = Transform3D(0.6212273, 0, -0.6212273, 0, 0.87854815, 0, 0.6212273, 0, 0.6212273, 0, 2.5605814, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -1784,17 +1806,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.9187, 0)
 shape = SubResource("tree_cyl12")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree012" unique_id=1677984282]
+visibility_range_end = 150.0
 transform = Transform3D(1.0338533, 0, 1.0338533, 0, 1.4620894, 0, -1.0338533, 0, 1.0338533, 0, 4.2613473, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree012" unique_id=201083331]
+visibility_range_end = 150.0
 transform = Transform3D(1.0338533, 0, -1.0338533, 0, 1.4620894, 0, 1.0338533, 0, 1.0338533, 0, 4.2613473, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -1807,17 +1831,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.6221, 0)
 shape = SubResource("tree_cyl13")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree013" unique_id=1205297937]
+visibility_range_end = 150.0
 transform = Transform3D(1.2313071, 0, 1.2313071, 0, 1.7413312, 0, -1.2313071, 0, 1.2313071, 0, 5.0752144, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree013" unique_id=661709198]
+visibility_range_end = 150.0
 transform = Transform3D(1.2313071, 0, -1.2313071, 0, 1.7413312, 0, 1.2313071, 0, 1.2313071, 0, 5.0752144, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -1830,17 +1856,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.5352, 0)
 shape = SubResource("tree_cyl14")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree014" unique_id=2078141662]
+visibility_range_end = 150.0
 transform = Transform3D(0.9893962, 0, 0.9893962, 0, 1.3992176, 0, -0.9893962, 0, 0.9893962, 0, 4.0781035, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree014" unique_id=489542464]
+visibility_range_end = 150.0
 transform = Transform3D(0.9893962, 0, -0.9893962, 0, 1.3992176, 0, 0.9893962, 0, 0.9893962, 0, 4.0781035, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -1853,17 +1881,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.2213, 0)
 shape = SubResource("tree_cyl15")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree015" unique_id=1497689685]
+visibility_range_end = 150.0
 transform = Transform3D(1.1848499, 0, 1.1848499, 0, 1.6756307, 0, -1.1848499, 0, 1.1848499, 0, 4.883726, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree015" unique_id=1836002486]
+visibility_range_end = 150.0
 transform = Transform3D(1.1848499, 0, -1.1848499, 0, 1.6756307, 0, 1.1848499, 0, 1.1848499, 0, 4.883726, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -1876,17 +1906,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.7098, 0)
 shape = SubResource("tree_cyl16")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree016" unique_id=30875912]
+visibility_range_end = 150.0
 transform = Transform3D(1.0096375, 0, 1.0096375, 0, 1.427843, 0, -1.0096375, 0, 1.0096375, 0, 4.1615343, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree016" unique_id=1968180736]
+visibility_range_end = 150.0
 transform = Transform3D(1.0096375, 0, -1.0096375, 0, 1.427843, 0, 1.0096375, 0, 1.0096375, 0, 4.1615343, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -1899,17 +1931,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.912, 0)
 shape = SubResource("tree_cyl17")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree017" unique_id=1342599705]
+visibility_range_end = 150.0
 transform = Transform3D(0.5693993, 0, 0.5693993, 0, 0.80525225, 0, -0.5693993, 0, 0.5693993, 0, 2.346956, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree017" unique_id=837862595]
+visibility_range_end = 150.0
 transform = Transform3D(0.5693993, 0, -0.5693993, 0, 0.80525225, 0, 0.5693993, 0, 0.5693993, 0, 2.346956, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -1922,17 +1956,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.1473, 0)
 shape = SubResource("tree_cyl18")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree018" unique_id=810439838]
+visibility_range_end = 150.0
 transform = Transform3D(0.71258914, 0, 0.71258914, 0, 1.0077533, 0, -0.71258914, 0, 0.71258914, 0, 2.9371572, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree018" unique_id=1898560535]
+visibility_range_end = 150.0
 transform = Transform3D(0.71258914, 0, -0.71258914, 0, 1.0077533, 0, 0.71258914, 0, 0.71258914, 0, 2.9371572, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -1945,17 +1981,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.8931, 0)
 shape = SubResource("tree_cyl19")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree019" unique_id=785663787]
+visibility_range_end = 150.0
 transform = Transform3D(0.56720364, 0, 0.56720364, 0, 0.8021471, 0, -0.56720364, 0, 0.56720364, 0, 2.337906, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree019" unique_id=1697870039]
+visibility_range_end = 150.0
 transform = Transform3D(0.56720364, 0, -0.56720364, 0, 0.8021471, 0, 0.56720364, 0, 0.56720364, 0, 2.337906, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -1968,17 +2006,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.66, 0)
 shape = SubResource("tree_cyl20")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree020" unique_id=2031642255]
+visibility_range_end = 150.0
 transform = Transform3D(0.42426407, 0, 0.42426407, 0, 0.6, 0, -0.42426407, 0, 0.42426407, 0, 1.748736, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree020" unique_id=564298942]
+visibility_range_end = 150.0
 transform = Transform3D(0.42426407, 0, -0.42426407, 0, 0.6, 0, 0.42426407, 0, 0.42426407, 0, 1.748736, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -1991,17 +2031,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.6103, 0)
 shape = SubResource("tree_cyl21")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree021" unique_id=554058908]
+visibility_range_end = 150.0
 transform = Transform3D(0.88218445, 0, 0.88218445, 0, 1.2475972, 0, -0.88218445, 0, 0.88218445, 0, 3.6361969, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree021" unique_id=128638295]
+visibility_range_end = 150.0
 transform = Transform3D(0.88218445, 0, -0.88218445, 0, 1.2475972, 0, 0.88218445, 0, 0.88218445, 0, 3.6361969, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -2014,17 +2056,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.9564, 0)
 shape = SubResource("tree_cyl22")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree022" unique_id=318914404]
+visibility_range_end = 150.0
 transform = Transform3D(0.92229736, 0, 0.92229736, 0, 1.3043255, 0, -0.92229736, 0, 0.92229736, 0, 3.801535, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree022" unique_id=1806508829]
+visibility_range_end = 150.0
 transform = Transform3D(0.92229736, 0, -0.92229736, 0, 1.3043255, 0, 0.92229736, 0, 0.92229736, 0, 3.801535, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -2037,17 +2081,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.1442, 0)
 shape = SubResource("tree_cyl23")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree023" unique_id=2132322787]
+visibility_range_end = 150.0
 transform = Transform3D(0.94407153, 0, 0.94407153, 0, 1.3351188, 0, -0.94407153, 0, 0.94407153, 0, 3.8912838, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree023" unique_id=790006145]
+visibility_range_end = 150.0
 transform = Transform3D(0.94407153, 0, -0.94407153, 0, 1.3351188, 0, 0.94407153, 0, 0.94407153, 0, 3.8912838, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -2060,17 +2106,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.4789, 0)
 shape = SubResource("tree_cyl24")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree024" unique_id=1215788224]
+visibility_range_end = 150.0
 transform = Transform3D(1.330625, 0, 1.330625, 0, 1.881788, 0, -1.330625, 0, 1.330625, 0, 5.4845843, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree024" unique_id=1022641106]
+visibility_range_end = 150.0
 transform = Transform3D(1.330625, 0, -1.330625, 0, 1.881788, 0, 1.330625, 0, 1.330625, 0, 5.4845843, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -2083,17 +2131,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.3572, 0)
 shape = SubResource("tree_cyl25")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree025" unique_id=1979450943]
+visibility_range_end = 150.0
 transform = Transform3D(1.0846809, 0, 1.0846809, 0, 1.5339705, 0, -1.0846809, 0, 1.0846809, 0, 4.470849, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree025" unique_id=1105879676]
+visibility_range_end = 150.0
 transform = Transform3D(1.0846809, 0, -1.0846809, 0, 1.5339705, 0, 1.0846809, 0, 1.0846809, 0, 4.470849, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -2106,17 +2156,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.5191, 0)
 shape = SubResource("tree_cyl26")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree026" unique_id=1472700160]
+visibility_range_end = 150.0
 transform = Transform3D(0.87160414, 0, 0.87160414, 0, 1.2326344, 0, -0.87160414, 0, 0.87160414, 0, 3.5925872, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree026" unique_id=1381485389]
+visibility_range_end = 150.0
 transform = Transform3D(0.87160414, 0, -0.87160414, 0, 1.2326344, 0, 0.87160414, 0, 0.87160414, 0, 3.5925872, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -2129,17 +2181,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.4167, 0)
 shape = SubResource("tree_cyl27")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree027" unique_id=346705749]
+visibility_range_end = 150.0
 transform = Transform3D(0.9756519, 0, 0.9756519, 0, 1.3797802, 0, -0.9756519, 0, 0.9756519, 0, 4.021452, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree027" unique_id=594908929]
+visibility_range_end = 150.0
 transform = Transform3D(0.9756519, 0, -0.9756519, 0, 1.3797802, 0, 0.9756519, 0, 0.9756519, 0, 4.021452, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -2152,17 +2206,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.7335, 0)
 shape = SubResource("tree_cyl28")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree028" unique_id=1674153608]
+visibility_range_end = 150.0
 transform = Transform3D(0.54870117, 0, 0.54870117, 0, 0.77598065, 0, -0.54870117, 0, 0.54870117, 0, 2.2616422, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree028" unique_id=177822480]
+visibility_range_end = 150.0
 transform = Transform3D(0.54870117, 0, -0.54870117, 0, 0.77598065, 0, 0.54870117, 0, 0.54870117, 0, 2.2616422, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -2175,17 +2231,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.8965, 0)
 shape = SubResource("tree_cyl29")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree029" unique_id=512758494]
+visibility_range_end = 150.0
 transform = Transform3D(0.4516795, 0, 0.4516795, 0, 0.6387713, 0, -0.4516795, 0, 0.4516795, 0, 1.8617374, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree029" unique_id=1786058787]
+visibility_range_end = 150.0
 transform = Transform3D(0.4516795, 0, -0.4516795, 0, 0.6387713, 0, 0.4516795, 0, 0.4516795, 0, 1.8617374, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -2198,17 +2256,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.3215, 0)
 shape = SubResource("tree_cyl30")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree030" unique_id=188566822]
+visibility_range_end = 150.0
 transform = Transform3D(0.7327856, 0, 0.7327856, 0, 1.0363153, 0, -0.7327856, 0, 0.7327856, 0, 3.0204031, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree030" unique_id=126552615]
+visibility_range_end = 150.0
 transform = Transform3D(0.7327856, 0, -0.7327856, 0, 1.0363153, 0, 0.7327856, 0, 0.7327856, 0, 3.0204031, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -2221,17 +2281,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.0851, 0)
 shape = SubResource("tree_cyl31")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree031" unique_id=1799145720]
+visibility_range_end = 150.0
 transform = Transform3D(1.0531362, 0, 1.0531362, 0, 1.4893595, 0, -1.0531362, 0, 1.0531362, 0, 4.340828, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree031" unique_id=898231507]
+visibility_range_end = 150.0
 transform = Transform3D(1.0531362, 0, -1.0531362, 0, 1.4893595, 0, 1.0531362, 0, 1.0531362, 0, 4.340828, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -2244,17 +2306,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.1885, 0)
 shape = SubResource("tree_cyl32")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree032" unique_id=190031397]
+visibility_range_end = 150.0
 transform = Transform3D(1.06512, 0, 1.06512, 0, 1.5063071, 0, -1.06512, 0, 1.06512, 0, 4.3902225, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree032" unique_id=1003499715]
+visibility_range_end = 150.0
 transform = Transform3D(1.06512, 0, -1.06512, 0, 1.5063071, 0, 1.06512, 0, 1.06512, 0, 4.3902225, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -2267,17 +2331,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.7608, 0)
 shape = SubResource("tree_cyl33")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree033" unique_id=1025978354]
+visibility_range_end = 150.0
 transform = Transform3D(1.1314589, 0, 1.1314589, 0, 1.6001245, 0, -1.1314589, 0, 1.1314589, 0, 4.6636586, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree033" unique_id=499573509]
+visibility_range_end = 150.0
 transform = Transform3D(1.1314589, 0, -1.1314589, 0, 1.6001245, 0, 1.1314589, 0, 1.1314589, 0, 4.6636586, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -2290,17 +2356,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.4534, 0)
 shape = SubResource("tree_cyl34")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree034" unique_id=637626630]
+visibility_range_end = 150.0
 transform = Transform3D(0.632158, 0, 0.632158, 0, 0.8940064, 0, -0.632158, 0, 0.632158, 0, 2.6056354, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree034" unique_id=897372188]
+visibility_range_end = 150.0
 transform = Transform3D(0.632158, 0, -0.632158, 0, 0.8940064, 0, 0.632158, 0, 0.632158, 0, 2.6056354, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -2313,17 +2381,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.1875, 0)
 shape = SubResource("tree_cyl35")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree035" unique_id=1694393704]
+visibility_range_end = 150.0
 transform = Transform3D(0.60133266, 0, 0.60133266, 0, 0.8504128, 0, -0.60133266, 0, 0.60133266, 0, 2.478579, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree035" unique_id=1797918983]
+visibility_range_end = 150.0
 transform = Transform3D(0.60133266, 0, -0.60133266, 0, 0.8504128, 0, 0.60133266, 0, 0.60133266, 0, 2.478579, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -2336,17 +2406,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.8909, 0)
 shape = SubResource("tree_cyl36")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree036" unique_id=1271749904]
+visibility_range_end = 150.0
 transform = Transform3D(0.68286383, 0, 0.68286383, 0, 0.96571535, 0, -0.68286383, 0, 0.68286383, 0, 2.8146353, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree036" unique_id=307839956]
+visibility_range_end = 150.0
 transform = Transform3D(0.68286383, 0, -0.68286383, 0, 0.96571535, 0, 0.68286383, 0, 0.68286383, 0, 2.8146353, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -2359,17 +2431,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.66, 0)
 shape = SubResource("tree_cyl37")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree037" unique_id=1980691808]
+visibility_range_end = 150.0
 transform = Transform3D(0.42426407, 0, 0.42426407, 0, 0.6, 0, -0.42426407, 0, 0.42426407, 0, 1.748736, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree037" unique_id=1893603653]
+visibility_range_end = 150.0
 transform = Transform3D(0.42426407, 0, -0.42426407, 0, 0.6, 0, 0.42426407, 0, 0.42426407, 0, 1.748736, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -2382,17 +2456,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.3667, 0)
 shape = SubResource("tree_cyl38")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree038" unique_id=396292303]
+visibility_range_end = 150.0
 transform = Transform3D(0.73802537, 0, 0.73802537, 0, 1.0437255, 0, -0.73802537, 0, 0.73802537, 0, 3.0420005, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree038" unique_id=1796719560]
+visibility_range_end = 150.0
 transform = Transform3D(0.73802537, 0, -0.73802537, 0, 1.0437255, 0, 0.73802537, 0, 0.73802537, 0, 3.0420005, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -2405,17 +2481,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.8084, 0)
 shape = SubResource("tree_cyl39")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree039" unique_id=887147897]
+visibility_range_end = 150.0
 transform = Transform3D(1.0210644, 0, 1.0210644, 0, 1.4440031, 0, -1.0210644, 0, 1.0210644, 0, 4.208634, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree039" unique_id=861420045]
+visibility_range_end = 150.0
 transform = Transform3D(1.0210644, 0, -1.0210644, 0, 1.4440031, 0, 1.0210644, 0, 1.0210644, 0, 4.208634, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -2428,17 +2506,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.7089, 0)
 shape = SubResource("tree_cyl40")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree040" unique_id=411183758]
+visibility_range_end = 150.0
 transform = Transform3D(0.89361405, 0, 0.89361405, 0, 1.2637612, 0, -0.89361405, 0, 0.89361405, 0, 3.6833076, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree040" unique_id=307077945]
+visibility_range_end = 150.0
 transform = Transform3D(0.89361405, 0, -0.89361405, 0, 1.2637612, 0, 0.89361405, 0, 0.89361405, 0, 3.6833076, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -2451,17 +2531,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.6109, 0)
 shape = SubResource("tree_cyl41")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree041" unique_id=1376606083]
+visibility_range_end = 150.0
 transform = Transform3D(1.2300063, 0, 1.2300063, 0, 1.7394917, 0, -1.2300063, 0, 1.2300063, 0, 5.0698533, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree041" unique_id=902807880]
+visibility_range_end = 150.0
 transform = Transform3D(1.2300063, 0, -1.2300063, 0, 1.7394917, 0, 1.2300063, 0, 1.2300063, 0, 5.0698533, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -2474,17 +2556,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.6584, 0)
 shape = SubResource("tree_cyl42")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree042" unique_id=190126188]
+visibility_range_end = 150.0
 transform = Transform3D(1.2355083, 0, 1.2355083, 0, 1.7472727, 0, -1.2355083, 0, 1.2355083, 0, 5.092531, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree042" unique_id=387081046]
+visibility_range_end = 150.0
 transform = Transform3D(1.2355083, 0, -1.2355083, 0, 1.7472727, 0, 1.2355083, 0, 1.2355083, 0, 5.092531, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -2497,17 +2581,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.2408, 0)
 shape = SubResource("tree_cyl43")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree043" unique_id=530043778]
+visibility_range_end = 150.0
 transform = Transform3D(0.8393446, 0, 0.8393446, 0, 1.1870126, 0, -0.8393446, 0, 0.8393446, 0, 3.4596193, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree043" unique_id=150340735]
+visibility_range_end = 150.0
 transform = Transform3D(0.8393446, 0, -0.8393446, 0, 1.1870126, 0, 0.8393446, 0, 0.8393446, 0, 3.4596193, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -2520,17 +2606,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.0694, 0)
 shape = SubResource("tree_cyl44")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree044" unique_id=1677325892]
+visibility_range_end = 150.0
 transform = Transform3D(0.9354019, 0, 0.9354019, 0, 1.3228581, 0, -0.9354019, 0, 0.9354019, 0, 3.8555493, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree044" unique_id=17798447]
+visibility_range_end = 150.0
 transform = Transform3D(0.9354019, 0, -0.9354019, 0, 1.3228581, 0, 0.9354019, 0, 0.9354019, 0, 3.8555493, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -2543,17 +2631,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.1313, 0)
 shape = SubResource("tree_cyl45")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree045" unique_id=868115279]
+visibility_range_end = 150.0
 transform = Transform3D(0.7107297, 0, 0.7107297, 0, 1.0051236, 0, -0.7107297, 0, 0.7107297, 0, 2.9294932, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree045" unique_id=765862176]
+visibility_range_end = 150.0
 transform = Transform3D(0.7107297, 0, -0.7107297, 0, 1.0051236, 0, 0.7107297, 0, 0.7107297, 0, 2.9294932, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -2566,17 +2656,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.66, 0)
 shape = SubResource("tree_cyl46")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree046" unique_id=1717468874]
+visibility_range_end = 150.0
 transform = Transform3D(0.42426407, 0, 0.42426407, 0, 0.6, 0, -0.42426407, 0, 0.42426407, 0, 1.748736, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree046" unique_id=1766135975]
+visibility_range_end = 150.0
 transform = Transform3D(0.42426407, 0, -0.42426407, 0, 0.6, 0, 0.42426407, 0, 0.42426407, 0, 1.748736, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -2589,17 +2681,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.8655, 0)
 shape = SubResource("tree_cyl47")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree047" unique_id=26670932]
+visibility_range_end = 150.0
 transform = Transform3D(0.6799232, 0, 0.6799232, 0, 0.9615566, 0, -0.6799232, 0, 0.6799232, 0, 2.8025146, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree047" unique_id=1481708584]
+visibility_range_end = 150.0
 transform = Transform3D(0.6799232, 0, -0.6799232, 0, 0.9615566, 0, 0.6799232, 0, 0.6799232, 0, 2.8025146, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -2612,17 +2706,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.8378, 0)
 shape = SubResource("tree_cyl48")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree048" unique_id=943047158]
+visibility_range_end = 150.0
 transform = Transform3D(0.67670816, 0, 0.67670816, 0, 0.95700985, 0, -0.67670816, 0, 0.67670816, 0, 2.7892625, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree048" unique_id=1430121703]
+visibility_range_end = 150.0
 transform = Transform3D(0.67670816, 0, -0.67670816, 0, 0.95700985, 0, 0.67670816, 0, 0.67670816, 0, 2.7892625, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -2635,17 +2731,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.874, 0)
 shape = SubResource("tree_cyl49")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree049" unique_id=1396806599]
+visibility_range_end = 150.0
 transform = Transform3D(0.6809107, 0, 0.6809107, 0, 0.96295315, 0, -0.6809107, 0, 0.6809107, 0, 2.8065846, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree049" unique_id=1827111047]
+visibility_range_end = 150.0
 transform = Transform3D(0.6809107, 0, -0.6809107, 0, 0.96295315, 0, 0.6809107, 0, 0.6809107, 0, 2.8065846, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -2658,17 +2756,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.1604, 0)
 shape = SubResource("tree_cyl50")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree050" unique_id=417357870]
+visibility_range_end = 150.0
 transform = Transform3D(1.1777877, 0, 1.1777877, 0, 1.6656433, 0, -1.1777877, 0, 1.1777877, 0, 4.8546176, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree050" unique_id=134068089]
+visibility_range_end = 150.0
 transform = Transform3D(1.1777877, 0, -1.1777877, 0, 1.6656433, 0, 1.1777877, 0, 1.1777877, 0, 4.8546176, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -2681,17 +2781,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.6872, 0)
 shape = SubResource("tree_cyl51")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree051" unique_id=1836622591]
+visibility_range_end = 150.0
 transform = Transform3D(1.1229333, 0, 1.1229333, 0, 1.5880675, 0, -1.1229333, 0, 1.1229333, 0, 4.628518, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree051" unique_id=1373117171]
+visibility_range_end = 150.0
 transform = Transform3D(1.1229333, 0, -1.1229333, 0, 1.5880675, 0, 1.1229333, 0, 1.1229333, 0, 4.628518, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -2704,17 +2806,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.8446, 0)
 shape = SubResource("tree_cyl52")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree052" unique_id=1400332386]
+visibility_range_end = 150.0
 transform = Transform3D(1.0252585, 0, 1.0252585, 0, 1.4499346, 0, -1.0252585, 0, 1.0252585, 0, 4.2259216, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree052" unique_id=1260792865]
+visibility_range_end = 150.0
 transform = Transform3D(1.0252585, 0, -1.0252585, 0, 1.4499346, 0, 1.0252585, 0, 1.0252585, 0, 4.2259216, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -2727,17 +2831,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.6407, 0)
 shape = SubResource("tree_cyl53")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree053" unique_id=1318688956]
+visibility_range_end = 150.0
 transform = Transform3D(1.2334573, 0, 1.2334573, 0, 1.7443721, 0, -1.2334573, 0, 1.2334573, 0, 5.0840774, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree053" unique_id=1623776662]
+visibility_range_end = 150.0
 transform = Transform3D(1.2334573, 0, -1.2334573, 0, 1.7443721, 0, 1.2334573, 0, 1.2334573, 0, 5.0840774, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -2750,17 +2856,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.1578, 0)
 shape = SubResource("tree_cyl54")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree054" unique_id=1684482891]
+visibility_range_end = 150.0
 transform = Transform3D(0.8297306, 0, 0.8297306, 0, 1.1734163, 0, -0.8297306, 0, 0.8297306, 0, 3.4199922, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree054" unique_id=711548447]
+visibility_range_end = 150.0
 transform = Transform3D(0.8297306, 0, -0.8297306, 0, 1.1734163, 0, 0.8297306, 0, 0.8297306, 0, 3.4199922, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -2773,17 +2881,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.1483, 0)
 shape = SubResource("tree_cyl55")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree055" unique_id=1839093696]
+visibility_range_end = 150.0
 transform = Transform3D(0.59678346, 0, 0.59678346, 0, 0.84397924, 0, -0.59678346, 0, 0.59678346, 0, 2.4598281, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree055" unique_id=88772502]
+visibility_range_end = 150.0
 transform = Transform3D(0.59678346, 0, -0.59678346, 0, 0.84397924, 0, 0.59678346, 0, 0.59678346, 0, 2.4598281, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -2796,17 +2906,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.4074, 0)
 shape = SubResource("tree_cyl56")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree056" unique_id=1905549773]
+visibility_range_end = 150.0
 transform = Transform3D(0.7427353, 0, 0.7427353, 0, 1.0503864, 0, -0.7427353, 0, 0.7427353, 0, 3.0614142, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree056" unique_id=1435939195]
+visibility_range_end = 150.0
 transform = Transform3D(0.7427353, 0, -0.7427353, 0, 1.0503864, 0, 0.7427353, 0, 0.7427353, 0, 3.0614142, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -2819,17 +2931,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.7775, 0)
 shape = SubResource("tree_cyl57")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree057" unique_id=310103026]
+visibility_range_end = 150.0
 transform = Transform3D(0.43788674, 0, 0.43788674, 0, 0.6192654, 0, -0.43788674, 0, 0.43788674, 0, 1.8048861, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree057" unique_id=37059703]
+visibility_range_end = 150.0
 transform = Transform3D(0.43788674, 0, -0.43788674, 0, 0.6192654, 0, 0.43788674, 0, 0.43788674, 0, 1.8048861, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -2842,17 +2956,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.6981, 0)
 shape = SubResource("tree_cyl58")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree058" unique_id=2123530145]
+visibility_range_end = 150.0
 transform = Transform3D(0.544597, 0, 0.544597, 0, 0.77017653, 0, -0.544597, 0, 0.544597, 0, 2.2447257, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree058" unique_id=672482128]
+visibility_range_end = 150.0
 transform = Transform3D(0.544597, 0, -0.544597, 0, 0.77017653, 0, 0.544597, 0, 0.544597, 0, 2.2447257, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -2865,17 +2981,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.2191, 0)
 shape = SubResource("tree_cyl59")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree059" unique_id=1484253123]
+visibility_range_end = 150.0
 transform = Transform3D(0.9527456, 0, 0.9527456, 0, 1.3473858, 0, -0.9527456, 0, 0.9527456, 0, 3.9270368, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree059" unique_id=577128716]
+visibility_range_end = 150.0
 transform = Transform3D(0.9527456, 0, -0.9527456, 0, 1.3473858, 0, 0.9527456, 0, 0.9527456, 0, 3.9270368, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -2888,17 +3006,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.2767, 0)
 shape = SubResource("tree_cyl60")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree060" unique_id=623652003]
+visibility_range_end = 150.0
 transform = Transform3D(0.84350866, 0, 0.84350866, 0, 1.1929014, 0, -0.84350866, 0, 0.84350866, 0, 3.4767828, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree060" unique_id=1117060426]
+visibility_range_end = 150.0
 transform = Transform3D(0.84350866, 0, -0.84350866, 0, 1.1929014, 0, 0.84350866, 0, 0.84350866, 0, 3.4767828, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -2911,17 +3031,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.364, 0)
 shape = SubResource("tree_cyl61")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree061" unique_id=23898081]
+visibility_range_end = 150.0
 transform = Transform3D(1.0854663, 0, 1.0854663, 0, 1.5350811, 0, -1.0854663, 0, 1.0854663, 0, 4.4740863, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree061" unique_id=256220044]
+visibility_range_end = 150.0
 transform = Transform3D(1.0854663, 0, -1.0854663, 0, 1.5350811, 0, 1.0854663, 0, 1.0854663, 0, 4.4740863, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -2934,17 +3056,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.4533, 0)
 shape = SubResource("tree_cyl62")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree062" unique_id=962763236]
+visibility_range_end = 150.0
 transform = Transform3D(1.3276585, 0, 1.3276585, 0, 1.8775927, 0, -1.3276585, 0, 1.3276585, 0, 5.4723563, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree062" unique_id=8399278]
+visibility_range_end = 150.0
 transform = Transform3D(1.3276585, 0, -1.3276585, 0, 1.8775927, 0, 1.3276585, 0, 1.3276585, 0, 5.4723563, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -2957,17 +3081,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.2038, 0)
 shape = SubResource("tree_cyl63")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree063" unique_id=743509474]
+visibility_range_end = 150.0
 transform = Transform3D(0.9509764, 0, 0.9509764, 0, 1.3448837, 0, -0.9509764, 0, 0.9509764, 0, 3.9197443, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree063" unique_id=51670805]
+visibility_range_end = 150.0
 transform = Transform3D(0.9509764, 0, -0.9509764, 0, 1.3448837, 0, 0.9509764, 0, 0.9509764, 0, 3.9197443, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -2980,17 +3106,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.2365, 0)
 shape = SubResource("tree_cyl64")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree064" unique_id=487452188]
+visibility_range_end = 150.0
 transform = Transform3D(0.95477283, 0, 0.95477283, 0, 1.3502527, 0, -0.95477283, 0, 0.95477283, 0, 3.9353926, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree064" unique_id=1653220280]
+visibility_range_end = 150.0
 transform = Transform3D(0.95477283, 0, -0.95477283, 0, 1.3502527, 0, 0.95477283, 0, 0.95477283, 0, 3.9353926, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -3003,17 +3131,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.7247, 0)
 shape = SubResource("tree_cyl65")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree065" unique_id=1161680880]
+visibility_range_end = 150.0
 transform = Transform3D(0.8954456, 0, 0.8954456, 0, 1.2663513, 0, -0.8954456, 0, 0.8954456, 0, 3.690857, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree065" unique_id=1180231688]
+visibility_range_end = 150.0
 transform = Transform3D(0.8954456, 0, -0.8954456, 0, 1.2663513, 0, 0.8954456, 0, 0.8954456, 0, 3.690857, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -3026,17 +3156,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.7072, 0)
 shape = SubResource("tree_cyl66")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree066" unique_id=1395508913]
+visibility_range_end = 150.0
 transform = Transform3D(0.4297376, 0, 0.4297376, 0, 0.60774076, 0, -0.4297376, 0, 0.4297376, 0, 1.7712969, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree066" unique_id=1101529018]
+visibility_range_end = 150.0
 transform = Transform3D(0.4297376, 0, -0.4297376, 0, 0.60774076, 0, 0.4297376, 0, 0.4297376, 0, 1.7712969, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -3049,17 +3181,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.9965, 0)
 shape = SubResource("tree_cyl67")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree067" unique_id=1475342812]
+visibility_range_end = 150.0
 transform = Transform3D(0.57918614, 0, 0.57918614, 0, 0.8190929, 0, -0.57918614, 0, 0.57918614, 0, 2.3872955, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree067" unique_id=445422778]
+visibility_range_end = 150.0
 transform = Transform3D(0.57918614, 0, -0.57918614, 0, 0.8190929, 0, 0.57918614, 0, 0.57918614, 0, 2.3872955, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -3072,17 +3206,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.9676, 0)
 shape = SubResource("tree_cyl68")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree068" unique_id=1756845013]
+visibility_range_end = 150.0
 transform = Transform3D(0.69175714, 0, 0.69175714, 0, 0.97829235, 0, -0.69175714, 0, 0.69175714, 0, 2.851292, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree068" unique_id=1220042189]
+visibility_range_end = 150.0
 transform = Transform3D(0.69175714, 0, -0.69175714, 0, 0.97829235, 0, 0.69175714, 0, 0.69175714, 0, 2.851292, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -3095,17 +3231,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.7271, 0)
 shape = SubResource("tree_cyl69")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree069" unique_id=2105101537]
+visibility_range_end = 150.0
 transform = Transform3D(0.54796106, 0, 0.54796106, 0, 0.77493393, 0, -0.54796106, 0, 0.54796106, 0, 2.2585914, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree069" unique_id=1737503524]
+visibility_range_end = 150.0
 transform = Transform3D(0.54796106, 0, -0.54796106, 0, 0.77493393, 0, 0.54796106, 0, 0.54796106, 0, 2.2585914, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -3118,17 +3256,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.623, 0)
 shape = SubResource("tree_cyl70")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree070" unique_id=1937955316]
+visibility_range_end = 150.0
 transform = Transform3D(0.9995697, 0, 0.9995697, 0, 1.4136051, 0, -0.9995697, 0, 0.9995697, 0, 4.120037, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree070" unique_id=1708057163]
+visibility_range_end = 150.0
 transform = Transform3D(0.9995697, 0, -0.9995697, 0, 1.4136051, 0, 0.9995697, 0, 0.9995697, 0, 4.120037, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -3141,17 +3281,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.0096, 0)
 shape = SubResource("tree_cyl71")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree071" unique_id=2059714939]
+visibility_range_end = 150.0
 transform = Transform3D(1.1603031, 0, 1.1603031, 0, 1.6409163, 0, -1.1603031, 0, 1.1603031, 0, 4.782549, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree071" unique_id=1175481304]
+visibility_range_end = 150.0
 transform = Transform3D(1.1603031, 0, -1.1603031, 0, 1.6409163, 0, 1.1603031, 0, 1.1603031, 0, 4.782549, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -3164,17 +3306,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.5252, 0)
 shape = SubResource("tree_cyl72")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree072" unique_id=456103839]
+visibility_range_end = 150.0
 transform = Transform3D(0.9882343, 0, 0.9882343, 0, 1.3975743, 0, -0.9882343, 0, 0.9882343, 0, 4.073314, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree072" unique_id=15661192]
+visibility_range_end = 150.0
 transform = Transform3D(0.9882343, 0, -0.9882343, 0, 1.3975743, 0, 0.9882343, 0, 0.9882343, 0, 4.073314, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -3187,17 +3331,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.7895, 0)
 shape = SubResource("tree_cyl73")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree073" unique_id=1906460246]
+visibility_range_end = 150.0
 transform = Transform3D(1.2507081, 0, 1.2507081, 0, 1.7687683, 0, -1.2507081, 0, 1.2507081, 0, 5.1551814, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree073" unique_id=1889718322]
+visibility_range_end = 150.0
 transform = Transform3D(1.2507081, 0, -1.2507081, 0, 1.7687683, 0, 1.2507081, 0, 1.2507081, 0, 5.1551814, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -3210,17 +3356,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.9844, 0)
 shape = SubResource("tree_cyl74")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree074" unique_id=1064230974]
+visibility_range_end = 150.0
 transform = Transform3D(1.0414653, 0, 1.0414653, 0, 1.4728544, 0, -1.0414653, 0, 1.0414653, 0, 4.292722, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree074" unique_id=1436799553]
+visibility_range_end = 150.0
 transform = Transform3D(1.0414653, 0, -1.0414653, 0, 1.4728544, 0, 1.0414653, 0, 1.0414653, 0, 4.292722, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -3233,17 +3381,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.6991, 0)
 shape = SubResource("tree_cyl75")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree075" unique_id=1459801432]
+visibility_range_end = 150.0
 transform = Transform3D(0.42879528, 0, 0.42879528, 0, 0.6064081, 0, -0.42879528, 0, 0.42879528, 0, 1.7674128, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree075" unique_id=2127111984]
+visibility_range_end = 150.0
 transform = Transform3D(0.42879528, 0, -0.42879528, 0, 0.6064081, 0, 0.42879528, 0, 0.42879528, 0, 1.7674128, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -3256,17 +3406,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.7158, 0)
 shape = SubResource("tree_cyl76")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree076" unique_id=928158785]
+visibility_range_end = 150.0
 transform = Transform3D(0.89440787, 0, 0.89440787, 0, 1.2648838, 0, -0.89440787, 0, 0.89440787, 0, 3.6865797, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree076" unique_id=30590175]
+visibility_range_end = 150.0
 transform = Transform3D(0.89440787, 0, -0.89440787, 0, 1.2648838, 0, 0.89440787, 0, 0.89440787, 0, 3.6865797, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -3279,17 +3431,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.1376, 0)
 shape = SubResource("tree_cyl77")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree077" unique_id=976810343]
+visibility_range_end = 150.0
 transform = Transform3D(0.9433007, 0, 0.9433007, 0, 1.3340287, 0, -0.9433007, 0, 0.9433007, 0, 3.8881066, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree077" unique_id=33188519]
+visibility_range_end = 150.0
 transform = Transform3D(0.9433007, 0, -0.9433007, 0, 1.3340287, 0, 0.9433007, 0, 0.9433007, 0, 3.8881066, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -3302,17 +3456,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.207, 0)
 shape = SubResource("tree_cyl78")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree078" unique_id=103968838]
+visibility_range_end = 150.0
 transform = Transform3D(0.95134896, 0, 0.95134896, 0, 1.3454106, 0, -0.95134896, 0, 0.95134896, 0, 3.9212797, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree078" unique_id=1114554475]
+visibility_range_end = 150.0
 transform = Transform3D(0.95134896, 0, -0.95134896, 0, 1.3454106, 0, 0.95134896, 0, 0.95134896, 0, 3.9212797, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -3325,17 +3481,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.4734, 0)
 shape = SubResource("tree_cyl79")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree079" unique_id=2087090808]
+visibility_range_end = 150.0
 transform = Transform3D(1.329992, 0, 1.329992, 0, 1.8808929, 0, -1.329992, 0, 1.329992, 0, 5.481975, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree079" unique_id=470250318]
+visibility_range_end = 150.0
 transform = Transform3D(1.329992, 0, -1.329992, 0, 1.8808929, 0, 1.329992, 0, 1.329992, 0, 5.481975, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -3348,17 +3506,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.3322, 0)
 shape = SubResource("tree_cyl80")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree080" unique_id=1933617665]
+visibility_range_end = 150.0
 transform = Transform3D(1.081775, 0, 1.081775, 0, 1.5298609, 0, -1.081775, 0, 1.081775, 0, 4.4588714, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree080" unique_id=1652088950]
+visibility_range_end = 150.0
 transform = Transform3D(1.081775, 0, -1.081775, 0, 1.5298609, 0, 1.081775, 0, 1.081775, 0, 4.4588714, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -3371,17 +3531,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.358, 0)
 shape = SubResource("tree_cyl81")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree081" unique_id=554726543]
+visibility_range_end = 150.0
 transform = Transform3D(0.8529317, 0, 0.8529317, 0, 1.2062275, 0, -0.8529317, 0, 0.8529317, 0, 3.5156224, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree081" unique_id=652419756]
+visibility_range_end = 150.0
 transform = Transform3D(0.8529317, 0, -0.8529317, 0, 1.2062275, 0, 0.8529317, 0, 0.8529317, 0, 3.5156224, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -3394,17 +3556,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.2725, 0)
 shape = SubResource("tree_cyl82")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree082" unique_id=290251360]
+visibility_range_end = 150.0
 transform = Transform3D(0.9589416, 0, 0.9589416, 0, 1.3561482, 0, -0.9589416, 0, 0.9589416, 0, 3.9525754, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree082" unique_id=2042945371]
+visibility_range_end = 150.0
 transform = Transform3D(0.9589416, 0, -0.9589416, 0, 1.3561482, 0, 0.9589416, 0, 0.9589416, 0, 3.9525754, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -3417,17 +3581,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.6767, 0)
 shape = SubResource("tree_cyl83")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree083" unique_id=65144544]
+visibility_range_end = 150.0
 transform = Transform3D(0.54212207, 0, 0.54212207, 0, 0.76667637, 0, -0.54212207, 0, 0.54212207, 0, 2.2345243, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree083" unique_id=422379559]
+visibility_range_end = 150.0
 transform = Transform3D(0.54212207, 0, -0.54212207, 0, 0.76667637, 0, 0.54212207, 0, 0.54212207, 0, 2.2345243, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -3440,17 +3606,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.8319, 0)
 shape = SubResource("tree_cyl84")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree084" unique_id=27444230]
+visibility_range_end = 150.0
 transform = Transform3D(0.44419557, 0, 0.44419557, 0, 0.6281874, 0, -0.44419557, 0, 0.44419557, 0, 1.8308899, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree084" unique_id=753304472]
+visibility_range_end = 150.0
 transform = Transform3D(0.44419557, 0, -0.44419557, 0, 0.6281874, 0, 0.44419557, 0, 0.44419557, 0, 1.8308899, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -3463,17 +3631,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.3844, 0)
 shape = SubResource("tree_cyl85")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree085" unique_id=7937555]
+visibility_range_end = 150.0
 transform = Transform3D(0.74007994, 0, 0.74007994, 0, 1.0466311, 0, -0.74007994, 0, 0.74007994, 0, 3.0504692, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree085" unique_id=1141838786]
+visibility_range_end = 150.0
 transform = Transform3D(0.74007994, 0, -0.74007994, 0, 1.0466311, 0, 0.74007994, 0, 0.74007994, 0, 3.0504692, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -3486,17 +3656,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.064, 0)
 shape = SubResource("tree_cyl86")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree086" unique_id=1878763045]
+visibility_range_end = 150.0
 transform = Transform3D(0.587012, 0, 0.587012, 0, 0.8301603, 0, -0.587012, 0, 0.587012, 0, 2.419552, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree086" unique_id=723788400]
+visibility_range_end = 150.0
 transform = Transform3D(0.587012, 0, -0.587012, 0, 0.8301603, 0, 0.587012, 0, 0.587012, 0, 2.419552, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -3509,17 +3681,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.1674, 0)
 shape = SubResource("tree_cyl87")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree087" unique_id=27361084]
+visibility_range_end = 150.0
 transform = Transform3D(0.8308358, 0, 0.8308358, 0, 1.1749793, 0, -0.8308358, 0, 0.8308358, 0, 3.4245477, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree087" unique_id=2085382285]
+visibility_range_end = 150.0
 transform = Transform3D(0.8308358, 0, -0.8308358, 0, 1.1749793, 0, 0.8308358, 0, 0.8308358, 0, 3.4245477, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -3532,17 +3706,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.5921, 0)
 shape = SubResource("tree_cyl88")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree088" unique_id=985455204]
+visibility_range_end = 150.0
 transform = Transform3D(1.2278305, 0, 1.2278305, 0, 1.7364147, 0, -1.2278305, 0, 1.2278305, 0, 5.060885, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree088" unique_id=1778722171]
+visibility_range_end = 150.0
 transform = Transform3D(1.2278305, 0, -1.2278305, 0, 1.7364147, 0, 1.2278305, 0, 1.2278305, 0, 5.060885, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -3555,17 +3731,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.7981, 0)
 shape = SubResource("tree_cyl89")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree089" unique_id=1179573589]
+visibility_range_end = 150.0
 transform = Transform3D(1.0198737, 0, 1.0198737, 0, 1.4423193, 0, -1.0198737, 0, 1.0198737, 0, 4.203726, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree089" unique_id=2125894613]
+visibility_range_end = 150.0
 transform = Transform3D(1.0198737, 0, -1.0198737, 0, 1.4423193, 0, 1.0198737, 0, 1.0198737, 0, 4.203726, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -3578,17 +3756,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.76, 0)
 shape = SubResource("tree_cyl90")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree090" unique_id=1764354251]
+visibility_range_end = 150.0
 transform = Transform3D(1.1313657, 0, 1.1313657, 0, 1.5999928, 0, -1.1313657, 0, 1.1313657, 0, 4.663275, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree090" unique_id=1752343338]
+visibility_range_end = 150.0
 transform = Transform3D(1.1313657, 0, -1.1313657, 0, 1.5999928, 0, 1.1313657, 0, 1.1313657, 0, 4.663275, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -3601,17 +3781,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.1703, 0)
 shape = SubResource("tree_cyl91")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree091" unique_id=1783800832]
+visibility_range_end = 150.0
 transform = Transform3D(1.1789298, 0, 1.1789298, 0, 1.6672585, 0, -1.1789298, 0, 1.1789298, 0, 4.859325, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree091" unique_id=161445767]
+visibility_range_end = 150.0
 transform = Transform3D(1.1789298, 0, -1.1789298, 0, 1.6672585, 0, 1.1789298, 0, 1.1789298, 0, 4.859325, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -3624,17 +3806,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.8929, 0)
 shape = SubResource("tree_cyl92")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree092" unique_id=135480408]
+visibility_range_end = 150.0
 transform = Transform3D(0.6830953, 0, 0.6830953, 0, 0.96604264, 0, -0.6830953, 0, 0.6830953, 0, 2.8155894, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree092" unique_id=100512342]
+visibility_range_end = 150.0
 transform = Transform3D(0.6830953, 0, -0.6830953, 0, 0.96604264, 0, 0.6830953, 0, 0.6830953, 0, 2.8155894, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -3647,17 +3831,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.9296, 0)
 shape = SubResource("tree_cyl93")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree093" unique_id=182638759]
+visibility_range_end = 150.0
 transform = Transform3D(0.68734944, 0, 0.68734944, 0, 0.9720589, 0, -0.68734944, 0, 0.68734944, 0, 2.833124, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree093" unique_id=1210950842]
+visibility_range_end = 150.0
 transform = Transform3D(0.68734944, 0, -0.68734944, 0, 0.9720589, 0, 0.68734944, 0, 0.68734944, 0, 2.833124, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -3670,17 +3856,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.8419, 0)
 shape = SubResource("tree_cyl94")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree094" unique_id=1985068141]
+visibility_range_end = 150.0
 transform = Transform3D(0.67718625, 0, 0.67718625, 0, 0.957686, 0, -0.67718625, 0, 0.67718625, 0, 2.7912333, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree094" unique_id=264987002]
+visibility_range_end = 150.0
 transform = Transform3D(0.67718625, 0, -0.67718625, 0, 0.957686, 0, 0.67718625, 0, 0.67718625, 0, 2.7912333, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -3693,17 +3881,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.66, 0)
 shape = SubResource("tree_cyl95")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree095" unique_id=1790846979]
+visibility_range_end = 150.0
 transform = Transform3D(0.42426407, 0, 0.42426407, 0, 0.6, 0, -0.42426407, 0, 0.42426407, 0, 1.748736, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree095" unique_id=2084079601]
+visibility_range_end = 150.0
 transform = Transform3D(0.42426407, 0, -0.42426407, 0, 0.6, 0, 0.42426407, 0, 0.42426407, 0, 1.748736, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -3716,17 +3906,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.1495, 0)
 shape = SubResource("tree_cyl96")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree096" unique_id=2083009743]
+visibility_range_end = 150.0
 transform = Transform3D(0.7128498, 0, 0.7128498, 0, 1.0081218, 0, -0.7128498, 0, 0.7128498, 0, 2.9382315, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree096" unique_id=465696458]
+visibility_range_end = 150.0
 transform = Transform3D(0.7128498, 0, -0.7128498, 0, 1.0081218, 0, 0.7128498, 0, 0.7128498, 0, 2.9382315, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -3739,17 +3931,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.9789, 0)
 shape = SubResource("tree_cyl97")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree097" unique_id=844427357]
+visibility_range_end = 150.0
 transform = Transform3D(0.92490256, 0, 0.92490256, 0, 1.3080097, 0, -0.92490256, 0, 0.92490256, 0, 3.812273, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree097" unique_id=1921976400]
+visibility_range_end = 150.0
 transform = Transform3D(0.92490256, 0, -0.92490256, 0, 1.3080097, 0, 0.92490256, 0, 0.92490256, 0, 3.812273, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -3762,17 +3956,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.2019, 0)
 shape = SubResource("tree_cyl98")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree098" unique_id=1287640249]
+visibility_range_end = 150.0
 transform = Transform3D(0.8348434, 0, 0.8348434, 0, 1.1806469, 0, -0.8348434, 0, 0.8348434, 0, 3.4410663, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree098" unique_id=922022000]
+visibility_range_end = 150.0
 transform = Transform3D(0.8348434, 0, -0.8348434, 0, 1.1806469, 0, 0.8348434, 0, 0.8348434, 0, 3.4410663, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -3785,17 +3981,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.6877, 0)
 shape = SubResource("tree_cyl99")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree099" unique_id=1422554193]
+visibility_range_end = 150.0
 transform = Transform3D(1.2389059, 0, 1.2389059, 0, 1.7520776, 0, -1.2389059, 0, 1.2389059, 0, 5.1065354, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree099" unique_id=412421809]
+visibility_range_end = 150.0
 transform = Transform3D(1.2389059, 0, -1.2389059, 0, 1.7520776, 0, 1.2389059, 0, 1.2389059, 0.0053110123, 5.111937, -0.006632328)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -3808,17 +4006,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.5671, 0)
 shape = SubResource("tree_cyl100")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree100" unique_id=1944471336]
+visibility_range_end = 150.0
 transform = Transform3D(1.2249343, 0, 1.2249343, 0, 1.7323188, 0, -1.2249343, 0, 1.2249343, 0, 5.0489473, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree100" unique_id=798330429]
+visibility_range_end = 150.0
 transform = Transform3D(1.2249343, 0, -1.2249343, 0, 1.7323188, 0, 1.2249343, 0, 1.2249343, 0, 5.0489473, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -3831,17 +4031,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.7529, 0)
 shape = SubResource("tree_cyl101")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree101" unique_id=911428324]
+visibility_range_end = 150.0
 transform = Transform3D(0.8987056, 0, 0.8987056, 0, 1.2709616, 0, -0.8987056, 0, 0.8987056, 0, 3.704294, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree101" unique_id=436523386]
+visibility_range_end = 150.0
 transform = Transform3D(0.8987056, 0, -0.8987056, 0, 1.2709616, 0, 0.8987056, 0, 0.8987056, 0, 3.704294, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -3854,17 +4056,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.8913, 0)
 shape = SubResource("tree_cyl102")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree102" unique_id=1598037172]
+visibility_range_end = 150.0
 transform = Transform3D(1.0306717, 0, 1.0306717, 0, 1.45759, 0, -1.0306717, 0, 1.0306717, 0, 4.2482333, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree102" unique_id=1103131128]
+visibility_range_end = 150.0
 transform = Transform3D(1.0306717, 0, -1.0306717, 0, 1.45759, 0, 1.0306717, 0, 1.0306717, 0, 4.2482333, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -3877,17 +4081,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.3508, 0)
 shape = SubResource("tree_cyl103")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree103" unique_id=1698011556]
+visibility_range_end = 150.0
 transform = Transform3D(0.7361784, 0, 0.7361784, 0, 1.0411135, 0, -0.7361784, 0, 0.7361784, 0, 3.0343878, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree103" unique_id=512807356]
+visibility_range_end = 150.0
 transform = Transform3D(0.7361784, 0, -0.7361784, 0, 1.0411135, 0, 0.7361784, 0, 0.7361784, 0, 3.0343878, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -3900,17 +4106,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.66, 0)
 shape = SubResource("tree_cyl104")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree104" unique_id=178003325]
+visibility_range_end = 150.0
 transform = Transform3D(0.42426407, 0, 0.42426407, 0, 0.6, 0, -0.42426407, 0, 0.42426407, 0, 1.748736, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree104" unique_id=1253745850]
+visibility_range_end = 150.0
 transform = Transform3D(0.42426407, 0, -0.42426407, 0, 0.6, 0, 0.42426407, 0, 0.42426407, 0, 1.748736, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -3923,17 +4131,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.915, 0)
 shape = SubResource("tree_cyl105")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree105" unique_id=1208735484]
+visibility_range_end = 150.0
 transform = Transform3D(0.68566394, 0, 0.68566394, 0, 0.96967524, 0, -0.68566394, 0, 0.68566394, 0, 2.8261766, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree105" unique_id=1650007193]
+visibility_range_end = 150.0
 transform = Transform3D(0.68566394, 0, -0.68566394, 0, 0.96967524, 0, 0.68566394, 0, 0.68566394, 0, 2.8261766, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -3946,17 +4156,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.102, 0)
 shape = SubResource("tree_cyl106")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree106" unique_id=962140775]
+visibility_range_end = 150.0
 transform = Transform3D(0.5914156, 0, 0.5914156, 0, 0.83638793, 0, -0.5914156, 0, 0.5914156, 0, 2.437703, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree106" unique_id=460034971]
+visibility_range_end = 150.0
 transform = Transform3D(0.5914156, 0, -0.5914156, 0, 0.83638793, 0, 0.5914156, 0, 0.5914156, 0, 2.437703, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -3969,17 +4181,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.4453, 0)
 shape = SubResource("tree_cyl107")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree107" unique_id=155990856]
+visibility_range_end = 150.0
 transform = Transform3D(0.6312118, 0, 0.6312118, 0, 0.89266837, 0, -0.6312118, 0, 0.6312118, 0, 2.6017356, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree107" unique_id=423181892]
+visibility_range_end = 150.0
 transform = Transform3D(0.6312118, 0, -0.6312118, 0, 0.89266837, 0, 0.6312118, 0, 0.6312118, 0, 2.6017356, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -3992,17 +4206,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.7363, 0)
 shape = SubResource("tree_cyl108")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree108" unique_id=336310527]
+visibility_range_end = 150.0
 transform = Transform3D(1.1286224, 0, 1.1286224, 0, 1.5961131, 0, -1.1286224, 0, 1.1286224, 0, 4.6519675, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree108" unique_id=230550629]
+visibility_range_end = 150.0
 transform = Transform3D(1.1286224, 0, -1.1286224, 0, 1.5961131, 0, 1.1286224, 0, 1.1286224, 0, 4.6519675, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -4015,17 +4231,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.1093, 0)
 shape = SubResource("tree_cyl109")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree109" unique_id=64241376]
+visibility_range_end = 150.0
 transform = Transform3D(1.0559415, 0, 1.0559415, 0, 1.4933268, 0, -1.0559415, 0, 1.0559415, 0, 4.352391, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree109" unique_id=1283307528]
+visibility_range_end = 150.0
 transform = Transform3D(1.0559415, 0, -1.0559415, 0, 1.4933268, 0, 1.0559415, 0, 1.0559415, 0, 4.352391, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -4038,17 +4256,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.1297, 0)
 shape = SubResource("tree_cyl110")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree110" unique_id=2064114014]
+visibility_range_end = 150.0
 transform = Transform3D(1.0583044, 0, 1.0583044, 0, 1.4966685, 0, -1.0583044, 0, 1.0583044, 0, 4.36213, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree110" unique_id=418622098]
+visibility_range_end = 150.0
 transform = Transform3D(1.0583044, 0, -1.0583044, 0, 1.4966685, 0, 1.0583044, 0, 1.0583044, 0, 4.36213, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -4061,17 +4281,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.0855, 0)
 shape = SubResource("tree_cyl111")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree111" unique_id=1867233070]
+visibility_range_end = 150.0
 transform = Transform3D(1.2850244, 0, 1.2850244, 0, 1.817299, 0, -1.2850244, 0, 1.2850244, 0, 5.296627, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree111" unique_id=1960570548]
+visibility_range_end = 150.0
 transform = Transform3D(1.2850244, 0, -1.2850244, 0, 1.817299, 0, 1.2850244, 0, 1.2850244, 0, 5.296627, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -4084,17 +4306,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.4709, 0)
 shape = SubResource("tree_cyl112")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree112" unique_id=291704159]
+visibility_range_end = 150.0
 transform = Transform3D(0.86602145, 0, 0.86602145, 0, 1.2247393, 0, -0.86602145, 0, 0.86602145, 0, 3.5695763, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree112" unique_id=1324962033]
+visibility_range_end = 150.0
 transform = Transform3D(0.86602145, 0, -0.86602145, 0, 1.2247393, 0, 0.86602145, 0, 0.86602145, 0, 3.5695763, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -4107,17 +4331,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.9649, 0)
 shape = SubResource("tree_cyl113")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree113" unique_id=2092982824]
+visibility_range_end = 150.0
 transform = Transform3D(0.69144624, 0, 0.69144624, 0, 0.97785264, 0, -0.69144624, 0, 0.69144624, 0, 2.8500102, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree113" unique_id=1218273283]
+visibility_range_end = 150.0
 transform = Transform3D(0.69144624, 0, -0.69144624, 0, 0.97785264, 0, 0.69144624, 0, 0.69144624, 0, 2.8500102, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -4130,17 +4356,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.7201, 0)
 shape = SubResource("tree_cyl114")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree114" unique_id=619204085]
+visibility_range_end = 150.0
 transform = Transform3D(0.7789836, 0, 0.7789836, 0, 1.1016492, 0, -0.7789836, 0, 0.7789836, 0, 3.2108226, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree114" unique_id=1317404790]
+visibility_range_end = 150.0
 transform = Transform3D(0.7789836, 0, -0.7789836, 0, 1.1016492, 0, 0.7789836, 0, 0.7789836, 0, 3.2108226, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -4153,17 +4381,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.66, 0)
 shape = SubResource("tree_cyl115")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree115" unique_id=1398473593]
+visibility_range_end = 150.0
 transform = Transform3D(0.42426407, 0, 0.42426407, 0, 0.6, 0, -0.42426407, 0, 0.42426407, 0, 1.748736, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree115" unique_id=2107542021]
+visibility_range_end = 150.0
 transform = Transform3D(0.42426407, 0, -0.42426407, 0, 0.6, 0, 0.42426407, 0, 0.42426407, 0, 1.748736, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -4176,17 +4406,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.6285, 0)
 shape = SubResource("tree_cyl116")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree116" unique_id=1454982486]
+visibility_range_end = 150.0
 transform = Transform3D(0.53653187, 0, 0.53653187, 0, 0.75877064, 0, -0.53653187, 0, 0.53653187, 0, 2.2114825, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree116" unique_id=2074968239]
+visibility_range_end = 150.0
 transform = Transform3D(0.53653187, 0, -0.53653187, 0, 0.75877064, 0, 0.53653187, 0, 0.53653187, 0, 2.2114825, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -4199,17 +4431,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.5642, 0)
 shape = SubResource("tree_cyl117")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree117" unique_id=738973103]
+visibility_range_end = 150.0
 transform = Transform3D(0.8768345, 0, 0.8768345, 0, 1.2400312, 0, -0.8768345, 0, 0.8768345, 0, 3.6141455, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree117" unique_id=583542487]
+visibility_range_end = 150.0
 transform = Transform3D(0.8768345, 0, -0.8768345, 0, 1.2400312, 0, 0.8768345, 0, 0.8768345, 0, 3.6141455, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -4222,17 +4456,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.5128, 0)
 shape = SubResource("tree_cyl118")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree118" unique_id=642489823]
+visibility_range_end = 150.0
 transform = Transform3D(0.7549552, 0, 0.7549552, 0, 1.0676678, 0, -0.7549552, 0, 0.7549552, 0, 3.111782, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree118" unique_id=1457747290]
+visibility_range_end = 150.0
 transform = Transform3D(0.7549552, 0, -0.7549552, 0, 1.0676678, 0, 0.7549552, 0, 0.7549552, 0, 3.111782, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -4245,17 +4481,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.2848, 0)
 shape = SubResource("tree_cyl119")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree119" unique_id=1470234993]
+visibility_range_end = 150.0
 transform = Transform3D(1.0762821, 0, 1.0762821, 0, 1.5220928, 0, -1.0762821, 0, 1.0762821, 0, 4.436231, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree119" unique_id=98558231]
+visibility_range_end = 150.0
 transform = Transform3D(1.0762821, 0, -1.0762821, 0, 1.5220928, 0, 1.0762821, 0, 1.0762821, 0, 4.436231, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -4268,17 +4506,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.2628, 0)
 shape = SubResource("tree_cyl120")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree120" unique_id=744377021]
+visibility_range_end = 150.0
 transform = Transform3D(1.305577, 0, 1.305577, 0, 1.8463647, 0, -1.305577, 0, 1.305577, 0, 5.381341, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree120" unique_id=1967941488]
+visibility_range_end = 150.0
 transform = Transform3D(1.305577, 0, -1.305577, 0, 1.8463647, 0, 1.305577, 0, 1.305577, 0, 5.381341, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -4291,17 +4531,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.3826, 0)
 shape = SubResource("tree_cyl121")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree121" unique_id=1883792121]
+visibility_range_end = 150.0
 transform = Transform3D(0.97170305, 0, 0.97170305, 0, 1.3741957, 0, -0.97170305, 0, 0.97170305, 0, 4.0051756, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree121" unique_id=899722088]
+visibility_range_end = 150.0
 transform = Transform3D(0.97170305, 0, -0.97170305, 0, 1.3741957, 0, 0.97170305, 0, 0.97170305, 0, 4.0051756, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -4314,17 +4556,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.0801, 0)
 shape = SubResource("tree_cyl122")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree122" unique_id=1820308623]
+visibility_range_end = 150.0
 transform = Transform3D(1.0525609, 0, 1.0525609, 0, 1.488546, 0, -1.0525609, 0, 1.0525609, 0, 4.3384566, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree122" unique_id=1770473640]
+visibility_range_end = 150.0
 transform = Transform3D(1.0525609, 0, -1.0525609, 0, 1.488546, 0, 1.0525609, 0, 1.0525609, 0, 4.3384566, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -4337,17 +4581,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.1109, 0)
 shape = SubResource("tree_cyl123")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree123" unique_id=1535339244]
+visibility_range_end = 150.0
 transform = Transform3D(0.94021237, 0, 0.94021237, 0, 1.3296611, 0, -0.94021237, 0, 0.94021237, 0, 3.8753772, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree123" unique_id=2006944115]
+visibility_range_end = 150.0
 transform = Transform3D(0.94021237, 0, -0.94021237, 0, 1.3296611, 0, 0.94021237, 0, 0.94021237, 0, 3.8753772, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -4360,17 +4606,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.0593, 0)
 shape = SubResource("tree_cyl124")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree124" unique_id=1424472026]
+visibility_range_end = 150.0
 transform = Transform3D(0.47054902, 0, 0.47054902, 0, 0.66545683, 0, -0.47054902, 0, 0.47054902, 0, 1.9395139, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree124" unique_id=1505395014]
+visibility_range_end = 150.0
 transform = Transform3D(0.47054902, 0, -0.47054902, 0, 0.66545683, 0, 0.47054902, 0, 0.47054902, 0, 1.9395139, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -4383,17 +4631,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.3707, 0)
 shape = SubResource("tree_cyl125")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree125" unique_id=2143881843]
+visibility_range_end = 150.0
 transform = Transform3D(0.62257266, 0, 0.62257266, 0, 0.8804507, 0, -0.62257266, 0, 0.62257266, 0, 2.5661263, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree125" unique_id=536781006]
+visibility_range_end = 150.0
 transform = Transform3D(0.62257266, 0, -0.62257266, 0, 0.8804507, 0, 0.62257266, 0, 0.62257266, 0, 2.5661263, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -4406,17 +4656,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.4597, 0)
 shape = SubResource("tree_cyl126")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree126" unique_id=1967879559]
+visibility_range_end = 150.0
 transform = Transform3D(0.63288474, 0, 0.63288474, 0, 0.8950342, 0, -0.63288474, 0, 0.63288474, 0, 2.608631, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree126" unique_id=647836751]
+visibility_range_end = 150.0
 transform = Transform3D(0.63288474, 0, -0.63288474, 0, 0.8950342, 0, 0.63288474, 0, 0.63288474, 0, 2.608631, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -4429,17 +4681,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.2048, 0)
 shape = SubResource("tree_cyl127")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree127" unique_id=1999622423]
+visibility_range_end = 150.0
 transform = Transform3D(0.48741117, 0, 0.48741117, 0, 0.6893035, 0, -0.48741117, 0, 0.48741117, 0, 2.0090165, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree127" unique_id=1689922599]
+visibility_range_end = 150.0
 transform = Transform3D(0.48741117, 0, -0.48741117, 0, 0.6893035, 0, 0.48741117, 0, 0.48741117, 0, 2.0090165, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -4452,17 +4706,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.2719, 0)
 shape = SubResource("tree_cyl128")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree128" unique_id=550609738]
+visibility_range_end = 150.0
 transform = Transform3D(0.95886743, 0, 0.95886743, 0, 1.3560433, 0, -0.95886743, 0, 0.95886743, 0, 3.9522698, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree128" unique_id=588858491]
+visibility_range_end = 150.0
 transform = Transform3D(0.95886743, 0, -0.95886743, 0, 1.3560433, 0, 0.95886743, 0, 0.95886743, 0, 3.9522698, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -4475,17 +4731,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.2749, 0)
 shape = SubResource("tree_cyl129")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree129" unique_id=1184064909]
+visibility_range_end = 150.0
 transform = Transform3D(1.0751398, 0, 1.0751398, 0, 1.5204773, 0, -1.0751398, 0, 1.0751398, 0, 4.4315224, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree129" unique_id=92467684]
+visibility_range_end = 150.0
 transform = Transform3D(1.0751398, 0, -1.0751398, 0, 1.5204773, 0, 1.0751398, 0, 1.0751398, 0, 4.4315224, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -4498,17 +4756,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.4433, 0)
 shape = SubResource("tree_cyl130")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree130" unique_id=1314138420]
+visibility_range_end = 150.0
 transform = Transform3D(0.9787427, 0, 0.9787427, 0, 1.3841512, 0, -0.9787427, 0, 0.9787427, 0, 4.034192, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree130" unique_id=76953693]
+visibility_range_end = 150.0
 transform = Transform3D(0.9787427, 0, -0.9787427, 0, 1.3841512, 0, 0.9787427, 0, 0.9787427, 0, 4.034192, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -4521,17 +4781,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.2013, 0)
 shape = SubResource("tree_cyl131")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree131" unique_id=1242902891]
+visibility_range_end = 150.0
 transform = Transform3D(1.2984456, 0, 1.2984456, 0, 1.8362794, 0, -1.2984456, 0, 1.2984456, 0, 5.3519464, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree131" unique_id=906923400]
+visibility_range_end = 150.0
 transform = Transform3D(1.2984456, 0, -1.2984456, 0, 1.8362794, 0, 1.2984456, 0, 1.2984456, 0, 5.3519464, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -4544,17 +4806,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.1828, 0)
 shape = SubResource("tree_cyl132")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree132" unique_id=374003156]
+visibility_range_end = 150.0
 transform = Transform3D(1.0644633, 0, 1.0644633, 0, 1.5053785, 0, -1.0644633, 0, 1.0644633, 0, 4.3875155, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree132" unique_id=1471689868]
+visibility_range_end = 150.0
 transform = Transform3D(1.0644633, 0, -1.0644633, 0, 1.5053785, 0, 1.0644633, 0, 1.0644633, 0, 4.3875155, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -4567,17 +4831,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.66, 0)
 shape = SubResource("tree_cyl133")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree133" unique_id=1049682230]
+visibility_range_end = 150.0
 transform = Transform3D(0.42426407, 0, 0.42426407, 0, 0.6, 0, -0.42426407, 0, 0.42426407, 0, 1.748736, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree133" unique_id=1280875699]
+visibility_range_end = 150.0
 transform = Transform3D(0.42426407, 0, -0.42426407, 0, 0.6, 0, 0.42426407, 0, 0.42426407, 0, 1.748736, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -4590,17 +4856,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.3161, 0)
 shape = SubResource("tree_cyl134")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree134" unique_id=2055702381]
+visibility_range_end = 150.0
 transform = Transform3D(0.8480712, 0, 0.8480712, 0, 1.1993538, 0, -0.8480712, 0, 0.8480712, 0, 3.4955885, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree134" unique_id=1908245768]
+visibility_range_end = 150.0
 transform = Transform3D(0.8480712, 0, -0.8480712, 0, 1.1993538, 0, 0.8480712, 0, 0.8480712, 0, 3.4955885, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -4613,17 +4881,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.2498, 0)
 shape = SubResource("tree_cyl135")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree135" unique_id=2029526567]
+visibility_range_end = 150.0
 transform = Transform3D(0.84038514, 0, 0.84038514, 0, 1.1884841, 0, -0.84038514, 0, 0.84038514, 0, 3.4639082, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree135" unique_id=1040362556]
+visibility_range_end = 150.0
 transform = Transform3D(0.84038514, 0, -0.84038514, 0, 1.1884841, 0, 0.84038514, 0, 0.84038514, 0, 3.4639082, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -4636,17 +4906,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.9754, 0)
 shape = SubResource("tree_cyl136")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree136" unique_id=2137796446]
+visibility_range_end = 150.0
 transform = Transform3D(0.92450476, 0, 0.92450476, 0, 1.3074472, 0, -0.92450476, 0, 0.92450476, 0, 3.8106334, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree136" unique_id=190054264]
+visibility_range_end = 150.0
 transform = Transform3D(0.92450476, 0, -0.92450476, 0, 1.3074472, 0, 0.92450476, 0, 0.92450476, 0, 3.8106334, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -4659,17 +4931,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.4592, 0)
 shape = SubResource("tree_cyl137")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree137" unique_id=553659746]
+visibility_range_end = 150.0
 transform = Transform3D(1.3283414, 0, 1.3283414, 0, 1.8785584, 0, -1.3283414, 0, 1.3283414, 0, 5.475171, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree137" unique_id=551835837]
+visibility_range_end = 150.0
 transform = Transform3D(1.3283414, 0, -1.3283414, 0, 1.8785584, 0, 1.3283414, 0, 1.3283414, 0, 5.475171, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -4682,17 +4956,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.3056, 0)
 shape = SubResource("tree_cyl138")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree138" unique_id=927579308]
+visibility_range_end = 150.0
 transform = Transform3D(1.0786957, 0, 1.0786957, 0, 1.525506, 0, -1.0786957, 0, 1.0786957, 0, 4.446179, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree138" unique_id=1687684226]
+visibility_range_end = 150.0
 transform = Transform3D(1.0786957, 0, -1.0786957, 0, 1.525506, 0, 1.0786957, 0, 1.0786957, 0, 4.446179, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -4705,17 +4981,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.116, 0)
 shape = SubResource("tree_cyl139")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree139" unique_id=1594644657]
+visibility_range_end = 150.0
 transform = Transform3D(0.9407957, 0, 0.9407957, 0, 1.330486, 0, -0.9407957, 0, 0.9407957, 0, 3.8777814, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree139" unique_id=706244310]
+visibility_range_end = 150.0
 transform = Transform3D(0.9407957, 0, -0.9407957, 0, 1.330486, 0, 0.9407957, 0, 0.9407957, 0, 3.8777814, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -4728,17 +5006,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.8884, 0)
 shape = SubResource("tree_cyl140")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree140" unique_id=536979944]
+visibility_range_end = 150.0
 transform = Transform3D(1.0303335, 0, 1.0303335, 0, 1.4571117, 0, -1.0303335, 0, 1.0303335, 0, 4.2468395, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree140" unique_id=1768482211]
+visibility_range_end = 150.0
 transform = Transform3D(1.0303335, 0, -1.0303335, 0, 1.4571117, 0, 1.0303335, 0, 1.0303335, 0, 4.2468395, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -4751,17 +5031,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.8779, 0)
 shape = SubResource("tree_cyl141")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree141" unique_id=1879022410]
+visibility_range_end = 150.0
 transform = Transform3D(0.5654421, 0, 0.5654421, 0, 0.79965585, 0, -0.5654421, 0, 0.5654421, 0, 2.330645, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree141" unique_id=1145913194]
+visibility_range_end = 150.0
 transform = Transform3D(0.5654421, 0, -0.5654421, 0, 0.79965585, 0, 0.5654421, 0, 0.5654421, 0, 2.330645, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -4774,17 +5056,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.256, 0)
 shape = SubResource("tree_cyl142")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree142" unique_id=1694472079]
+visibility_range_end = 150.0
 transform = Transform3D(0.49335152, 0, 0.49335152, 0, 0.69770443, 0, -0.49335152, 0, 0.49335152, 0, 2.0335014, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree142" unique_id=656681247]
+visibility_range_end = 150.0
 transform = Transform3D(0.49335152, 0, -0.49335152, 0, 0.69770443, 0, 0.49335152, 0, 0.49335152, 0, 2.0335014, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -4797,17 +5081,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.1279, 0)
 shape = SubResource("tree_cyl143")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree143" unique_id=857146148]
+visibility_range_end = 150.0
 transform = Transform3D(0.7103356, 0, 0.7103356, 0, 1.0045663, 0, -0.7103356, 0, 0.7103356, 0, 2.9278688, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree143" unique_id=1095094620]
+visibility_range_end = 150.0
 transform = Transform3D(0.7103356, 0, -0.7103356, 0, 1.0045663, 0, 0.7103356, 0, 0.7103356, 0, 2.9278688, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -4820,17 +5106,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.3558, 0)
 shape = SubResource("tree_cyl144")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree144" unique_id=163617183]
+visibility_range_end = 150.0
 transform = Transform3D(0.50491637, 0, 0.50491637, 0, 0.7140596, 0, -0.50491637, 0, 0.50491637, 0, 2.0811696, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree144" unique_id=1868477466]
+visibility_range_end = 150.0
 transform = Transform3D(0.50491637, 0, -0.50491637, 0, 0.7140596, 0, 0.50491637, 0, 0.50491637, 0, 2.0811696, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -4843,17 +5131,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.8596, 0)
 shape = SubResource("tree_cyl145")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree145" unique_id=1418365356]
+visibility_range_end = 150.0
 transform = Transform3D(0.79516196, 0, 0.79516196, 0, 1.1245289, 0, -0.79516196, 0, 0.79516196, 0, 3.277507, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree145" unique_id=112610019]
+visibility_range_end = 150.0
 transform = Transform3D(0.79516196, 0, -0.79516196, 0, 1.1245289, 0, 0.79516196, 0, 0.79516196, 0, 3.277507, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -4866,17 +5156,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.9864, 0)
 shape = SubResource("tree_cyl146")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree146" unique_id=50078154]
+visibility_range_end = 150.0
 transform = Transform3D(1.1576147, 0, 1.1576147, 0, 1.6371145, 0, -1.1576147, 0, 1.1576147, 0, 4.7714686, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree146" unique_id=1705094964]
+visibility_range_end = 150.0
 transform = Transform3D(1.1576147, 0, -1.1576147, 0, 1.6371145, 0, 1.1576147, 0, 1.1576147, 0, 4.7714686, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -4889,17 +5181,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.4293, 0)
 shape = SubResource("tree_cyl147")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree147" unique_id=66452228]
+visibility_range_end = 150.0
 transform = Transform3D(0.97712123, 0, 0.97712123, 0, 1.3818581, 0, -0.97712123, 0, 0.97712123, 0, 4.0275083, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree147" unique_id=1296466482]
+visibility_range_end = 150.0
 transform = Transform3D(0.97712123, 0, -0.97712123, 0, 1.3818581, 0, 0.97712123, 0, 0.97712123, 0, 4.0275083, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -4912,17 +5206,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.2136, 0)
 shape = SubResource("tree_cyl148")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree148" unique_id=1334775331]
+visibility_range_end = 150.0
 transform = Transform3D(1.1839571, 0, 1.1839571, 0, 1.6743681, 0, -1.1839571, 0, 1.1839571, 0, 4.8800464, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree148" unique_id=991055030]
+visibility_range_end = 150.0
 transform = Transform3D(1.1839571, 0, -1.1839571, 0, 1.6743681, 0, 1.1839571, 0, 1.1839571, 0, 4.8800464, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -4935,17 +5231,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.4559, 0)
 shape = SubResource("tree_cyl149")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree149" unique_id=1734629158]
+visibility_range_end = 150.0
 transform = Transform3D(1.2120441, 0, 1.2120441, 0, 1.7140893, 0, -1.2120441, 0, 1.2120441, 0, 4.9958158, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree149" unique_id=318623848]
+visibility_range_end = 150.0
 transform = Transform3D(1.2120441, 0, -1.2120441, 0, 1.7140893, 0, 1.2120441, 0, 1.2120441, 0, 4.9958158, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -4958,17 +5256,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.3876, 0)
 shape = SubResource("tree_cyl150")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree150" unique_id=1375824839]
+visibility_range_end = 150.0
 transform = Transform3D(0.7404456, 0, 0.7404456, 0, 1.0471482, 0, -0.7404456, 0, 0.7404456, 0, 3.0519764, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree150" unique_id=365666144]
+visibility_range_end = 150.0
 transform = Transform3D(0.7404456, 0, -0.7404456, 0, 1.0471482, 0, 0.7404456, 0, 0.7404456, 0, 3.0519764, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -4981,17 +5281,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.7402, 0)
 shape = SubResource("tree_cyl151")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree151" unique_id=89518289]
+visibility_range_end = 150.0
 transform = Transform3D(0.7813202, 0, 0.7813202, 0, 1.1049536, 0, -0.7813202, 0, 0.7813202, 0, 3.2204537, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree151" unique_id=1846478238]
+visibility_range_end = 150.0
 transform = Transform3D(0.7813202, 0, -0.7813202, 0, 1.1049536, 0, 0.7813202, 0, 0.7813202, 0, 3.2204537, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -5004,17 +5306,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.8741, 0)
 shape = SubResource("tree_cyl152")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree152" unique_id=1741936204]
+visibility_range_end = 150.0
 transform = Transform3D(0.6809213, 0, 0.6809213, 0, 0.9629682, 0, -0.6809213, 0, 0.6809213, 0, 2.8066285, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree152" unique_id=2041615423]
+visibility_range_end = 150.0
 transform = Transform3D(0.6809213, 0, -0.6809213, 0, 0.9629682, 0, 0.6809213, 0, 0.6809213, 0, 2.8066285, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -5027,17 +5331,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.66, 0)
 shape = SubResource("tree_cyl153")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree153" unique_id=1210587210]
+visibility_range_end = 150.0
 transform = Transform3D(0.42426407, 0, 0.42426407, 0, 0.6, 0, -0.42426407, 0, 0.42426407, 0, 1.748736, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree153" unique_id=466542190]
+visibility_range_end = 150.0
 transform = Transform3D(0.42426407, 0, -0.42426407, 0, 0.6, 0, 0.42426407, 0, 0.42426407, 0, 1.748736, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -5050,17 +5356,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.9936, 0)
 shape = SubResource("tree_cyl154")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree154" unique_id=1757323402]
+visibility_range_end = 150.0
 transform = Transform3D(0.6947724, 0, 0.6947724, 0, 0.9825566, 0, -0.6947724, 0, 0.6947724, 0, 2.8637202, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree154" unique_id=2139373859]
+visibility_range_end = 150.0
 transform = Transform3D(0.6947724, 0, -0.6947724, 0, 0.9825566, 0, 0.6947724, 0, 0.6947724, 0, 2.8637202, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -5073,17 +5381,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.1258, 0)
 shape = SubResource("tree_cyl155")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree155" unique_id=1478842207]
+visibility_range_end = 150.0
 transform = Transform3D(0.8260223, 0, 0.8260223, 0, 1.168172, 0, -0.8260223, 0, 0.8260223, 0, 3.4047074, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree155" unique_id=104247086]
+visibility_range_end = 150.0
 transform = Transform3D(0.8260223, 0, -0.8260223, 0, 1.168172, 0, 0.8260223, 0, 0.8260223, 0, 3.4047074, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -5096,17 +5406,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.6862, 0)
 shape = SubResource("tree_cyl156")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree156" unique_id=1363032008]
+visibility_range_end = 150.0
 transform = Transform3D(0.7750637, 0, 0.7750637, 0, 1.0961056, 0, -0.7750637, 0, 0.7750637, 0, 3.1946654, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree156" unique_id=599829818]
+visibility_range_end = 150.0
 transform = Transform3D(0.7750637, 0, -0.7750637, 0, 1.0961056, 0, 0.7750637, 0, 0.7750637, 0, 3.1946654, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -5119,17 +5431,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.6115, 0)
 shape = SubResource("tree_cyl157")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree157" unique_id=1682772146]
+visibility_range_end = 150.0
 transform = Transform3D(1.2300811, 0, 1.2300811, 0, 1.7395973, 0, -1.2300811, 0, 1.2300811, 0, 5.070161, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree157" unique_id=1586163115]
+visibility_range_end = 150.0
 transform = Transform3D(1.2300811, 0, -1.2300811, 0, 1.7395973, 0, 1.2300811, 0, 1.2300811, 0, 5.070161, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -5142,17 +5456,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.3258, 0)
 shape = SubResource("tree_cyl158")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree158" unique_id=1948801329]
+visibility_range_end = 150.0
 transform = Transform3D(1.1969614, 0, 1.1969614, 0, 1.692759, 0, -1.1969614, 0, 1.1969614, 0, 4.933648, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree158" unique_id=885215162]
+visibility_range_end = 150.0
 transform = Transform3D(1.1969614, 0, -1.1969614, 0, 1.692759, 0, 1.1969614, 0, 1.1969614, 0, 4.933648, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -5165,17 +5481,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.2303, 0)
 shape = SubResource("tree_cyl159")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree159" unique_id=1565392203]
+visibility_range_end = 150.0
 transform = Transform3D(0.95404744, 0, 0.95404744, 0, 1.3492268, 0, -0.95404744, 0, 0.95404744, 0, 3.9324026, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree159" unique_id=1436591962]
+visibility_range_end = 150.0
 transform = Transform3D(0.95404744, 0, -0.95404744, 0, 1.3492268, 0, 0.95404744, 0, 0.95404744, 0, 3.9324026, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -5188,17 +5506,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.6486, 0)
 shape = SubResource("tree_cyl160")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree160" unique_id=506348385]
+visibility_range_end = 150.0
 transform = Transform3D(1.1184586, 0, 1.1184586, 0, 1.5817394, 0, -1.1184586, 0, 1.1184586, 0, 4.6100745, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree160" unique_id=430933803]
+visibility_range_end = 150.0
 transform = Transform3D(1.1184586, 0, -1.1184586, 0, 1.5817394, 0, 1.1184586, 0, 1.1184586, 0, 4.6100745, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -5211,17 +5531,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.6187, 0)
 shape = SubResource("tree_cyl161")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree161" unique_id=1056528191]
+visibility_range_end = 150.0
 transform = Transform3D(0.76723534, 0, 0.76723534, 0, 1.0850346, 0, -0.76723534, 0, 0.76723534, 0, 3.1623986, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree161" unique_id=1286973556]
+visibility_range_end = 150.0
 transform = Transform3D(0.76723534, 0, -0.76723534, 0, 1.0850346, 0, 0.76723534, 0, 0.76723534, 0, 3.1623986, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -5234,17 +5556,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.0696, 0)
 shape = SubResource("tree_cyl162")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree162" unique_id=1852037393]
+visibility_range_end = 150.0
 transform = Transform3D(0.47174376, 0, 0.47174376, 0, 0.66714644, 0, -0.47174376, 0, 0.47174376, 0, 1.9444383, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree162" unique_id=1477160912]
+visibility_range_end = 150.0
 transform = Transform3D(0.47174376, 0, -0.47174376, 0, 0.66714644, 0, 0.47174376, 0, 0.47174376, 0, 1.9444383, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -5257,17 +5581,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.0442, 0)
 shape = SubResource("tree_cyl163")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree163" unique_id=1124777953]
+visibility_range_end = 150.0
 transform = Transform3D(0.7006406, 0, 0.7006406, 0, 0.99085546, 0, -0.7006406, 0, 0.7006406, 0, 2.8879077, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree163" unique_id=1631419709]
+visibility_range_end = 150.0
 transform = Transform3D(0.7006406, 0, -0.7006406, 0, 0.99085546, 0, 0.7006406, 0, 0.7006406, 0, 2.8879077, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -5280,17 +5606,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.471, 0)
 shape = SubResource("tree_cyl164")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree164" unique_id=1363324296]
+visibility_range_end = 150.0
 transform = Transform3D(0.5182772, 0, 0.5182772, 0, 0.7329547, 0, -0.5182772, 0, 0.5182772, 0, 2.1362405, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree164" unique_id=1251153587]
+visibility_range_end = 150.0
 transform = Transform3D(0.5182772, 0, -0.5182772, 0, 0.7329547, 0, 0.5182772, 0, 0.5182772, 0, 2.1362405, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -5303,17 +5631,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.0951, 0)
 shape = SubResource("tree_cyl165")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree165" unique_id=1912179988]
+visibility_range_end = 150.0
 transform = Transform3D(0.5906151, 0, 0.5906151, 0, 0.83525586, 0, -0.5906151, 0, 0.5906151, 0, 2.4344034, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree165" unique_id=943868904]
+visibility_range_end = 150.0
 transform = Transform3D(0.5906151, 0, -0.5906151, 0, 0.83525586, 0, 0.5906151, 0, 0.5906151, 0, 2.4344034, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -5326,17 +5656,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.2104, 0)
 shape = SubResource("tree_cyl166")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree166" unique_id=1108407645]
+visibility_range_end = 150.0
 transform = Transform3D(1.0676587, 0, 1.0676587, 0, 1.5098974, 0, -1.0676587, 0, 1.0676587, 0, 4.4006863, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree166" unique_id=648542697]
+visibility_range_end = 150.0
 transform = Transform3D(1.0676587, 0, -1.0676587, 0, 1.5098974, 0, 1.0676587, 0, 1.0676587, 0, 4.4006863, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -5349,17 +5681,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.4414, 0)
 shape = SubResource("tree_cyl167")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree167" unique_id=808137489]
+visibility_range_end = 150.0
 transform = Transform3D(0.97852194, 0, 0.97852194, 0, 1.383839, 0, -0.97852194, 0, 0.97852194, 0, 4.033282, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree167" unique_id=529040836]
+visibility_range_end = 150.0
 transform = Transform3D(0.97852194, 0, -0.97852194, 0, 1.383839, 0, 0.97852194, 0, 0.97852194, 0, 4.033282, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -5372,17 +5706,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.3194, 0)
 shape = SubResource("tree_cyl168")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree168" unique_id=1191150505]
+visibility_range_end = 150.0
 transform = Transform3D(1.0802988, 0, 1.0802988, 0, 1.5277731, 0, -1.0802988, 0, 1.0802988, 0, 4.4527864, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree168" unique_id=1263634438]
+visibility_range_end = 150.0
 transform = Transform3D(1.0802988, 0, -1.0802988, 0, 1.5277731, 0, 1.0802988, 0, 1.0802988, 0, 4.4527864, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -5395,17 +5731,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.3646, 0)
 shape = SubResource("tree_cyl169")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree169" unique_id=864791653]
+visibility_range_end = 150.0
 transform = Transform3D(1.3173796, 0, 1.3173796, 0, 1.8630561, 0, -1.3173796, 0, 1.3173796, 0, 5.4299884, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree169" unique_id=1949060034]
+visibility_range_end = 150.0
 transform = Transform3D(1.3173796, 0, -1.3173796, 0, 1.8630561, 0, 1.3173796, 0, 1.3173796, 0, 5.4299884, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -5418,17 +5756,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.7694, 0)
 shape = SubResource("tree_cyl170")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree170" unique_id=1923083717]
+visibility_range_end = 150.0
 transform = Transform3D(0.9006232, 0, 0.9006232, 0, 1.2736735, 0, -0.9006232, 0, 0.9006232, 0, 3.712198, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree170" unique_id=1236106873]
+visibility_range_end = 150.0
 transform = Transform3D(0.9006232, 0, -0.9006232, 0, 1.2736735, 0, 0.9006232, 0, 0.9006232, 0, 3.712198, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -5441,17 +5781,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.8403, 0)
 shape = SubResource("tree_cyl171")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree171" unique_id=2029472977]
+visibility_range_end = 150.0
 transform = Transform3D(0.7929217, 0, 0.7929217, 0, 1.1213607, 0, -0.7929217, 0, 0.7929217, 0, 3.2682729, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree171" unique_id=1501721494]
+visibility_range_end = 150.0
 transform = Transform3D(0.7929217, 0, -0.7929217, 0, 1.1213607, 0, 0.7929217, 0, 0.7929217, 0, 3.2682729, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -5464,17 +5806,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.0756, 0)
 shape = SubResource("tree_cyl172")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree172" unique_id=44306945]
+visibility_range_end = 150.0
 transform = Transform3D(0.82019806, 0, 0.82019806, 0, 1.1599352, 0, -0.82019806, 0, 0.82019806, 0, 3.3807008, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree172" unique_id=1808607732]
+visibility_range_end = 150.0
 transform = Transform3D(0.82019806, 0, -0.82019806, 0, 1.1599352, 0, 0.82019806, 0, 0.82019806, 0, 3.3807008, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -5487,17 +5831,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.66, 0)
 shape = SubResource("tree_cyl173")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree173" unique_id=495397076]
+visibility_range_end = 150.0
 transform = Transform3D(0.42426407, 0, 0.42426407, 0, 0.6, 0, -0.42426407, 0, 0.42426407, 0, 1.748736, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree173" unique_id=918553112]
+visibility_range_end = 150.0
 transform = Transform3D(0.42426407, 0, -0.42426407, 0, 0.6, 0, 0.42426407, 0, 0.42426407, 0, 1.748736, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -5510,17 +5856,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.6847, 0)
 shape = SubResource("tree_cyl174")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree174" unique_id=159259819]
+visibility_range_end = 150.0
 transform = Transform3D(0.5430445, 0, 0.5430445, 0, 0.76798093, 0, -0.5430445, 0, 0.5430445, 0, 2.2383263, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree174" unique_id=278785031]
+visibility_range_end = 150.0
 transform = Transform3D(0.5430445, 0, -0.5430445, 0, 0.76798093, 0, 0.5430445, 0, 0.5430445, 0, 2.2383263, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -5533,17 +5881,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.9109, 0)
 shape = SubResource("tree_cyl175")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree175" unique_id=1423152065]
+visibility_range_end = 150.0
 transform = Transform3D(0.80110687, 0, 0.80110687, 0, 1.1329362, 0, -0.80110687, 0, 0.80110687, 0, 3.3020105, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree175" unique_id=1892848030]
+visibility_range_end = 150.0
 transform = Transform3D(0.80110687, 0, -0.80110687, 0, 1.1329362, 0, 0.80110687, 0, 0.80110687, 0, 3.3020105, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -5556,17 +5906,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.7754, 0)
 shape = SubResource("tree_cyl176")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree176" unique_id=2126343230]
+visibility_range_end = 150.0
 transform = Transform3D(0.6694838, 0, 0.6694838, 0, 0.9467931, 0, -0.6694838, 0, 0.6694838, 0, 2.7594852, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree176" unique_id=541854107]
+visibility_range_end = 150.0
 transform = Transform3D(0.6694838, 0, -0.6694838, 0, 0.9467931, 0, 0.6694838, 0, 0.6694838, 0, 2.7594852, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -5579,17 +5931,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.1119, 0)
 shape = SubResource("tree_cyl177")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree177" unique_id=1244163368]
+visibility_range_end = 150.0
 transform = Transform3D(1.0562409, 0, 1.0562409, 0, 1.4937502, 0, -1.0562409, 0, 1.0562409, 0, 4.3536243, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree177" unique_id=341717469]
+visibility_range_end = 150.0
 transform = Transform3D(1.0562409, 0, -1.0562409, 0, 1.4937502, 0, 1.0562409, 0, 1.0562409, 0, 4.3536243, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -5602,17 +5956,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.8955, 0)
 shape = SubResource("tree_cyl178")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree178" unique_id=56464964]
+visibility_range_end = 150.0
 transform = Transform3D(1.2629949, 0, 1.2629949, 0, 1.7861445, 0, -1.2629949, 0, 1.2629949, 0, 5.2058253, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree178" unique_id=521707578]
+visibility_range_end = 150.0
 transform = Transform3D(1.2629949, 0, -1.2629949, 0, 1.7861445, 0, 1.2629949, 0, 1.2629949, 0, 5.2058253, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -5625,17 +5981,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.4971, 0)
 shape = SubResource("tree_cyl179")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree179" unique_id=751877652]
+visibility_range_end = 150.0
 transform = Transform3D(0.9849783, 0, 0.9849783, 0, 1.3929697, 0, -0.9849783, 0, 0.9849783, 0, 4.0598936, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree179" unique_id=844243006]
+visibility_range_end = 150.0
 transform = Transform3D(0.9849783, 0, -0.9849783, 0, 1.3929697, 0, 0.9849783, 0, 0.9849783, 0, 4.0598936, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -5648,17 +6006,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.8431, 0)
 shape = SubResource("tree_cyl180")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree180" unique_id=837774094]
+visibility_range_end = 150.0
 transform = Transform3D(1.1409993, 0, 1.1409993, 0, 1.6136167, 0, -1.1409993, 0, 1.1409993, 0, 4.702983, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree180" unique_id=1491806035]
+visibility_range_end = 150.0
 transform = Transform3D(1.1409993, 0, -1.1409993, 0, 1.6136167, 0, 1.1409993, 0, 1.1409993, 0, 4.702983, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -5671,17 +6031,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.4688, 0)
 shape = SubResource("tree_cyl181")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree181" unique_id=1707863797]
+visibility_range_end = 150.0
 transform = Transform3D(0.9816976, 0, 0.9816976, 0, 1.3883301, 0, -0.9816976, 0, 0.9816976, 0, 4.0463715, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree181" unique_id=1419370377]
+visibility_range_end = 150.0
 transform = Transform3D(0.9816976, 0, -0.9816976, 0, 1.3883301, 0, 0.9816976, 0, 0.9816976, 0, 4.0463715, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -5694,17 +6056,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.553, 0)
 shape = SubResource("tree_cyl182")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree182" unique_id=20148343]
+visibility_range_end = 150.0
 transform = Transform3D(0.5277843, 0, 0.5277843, 0, 0.7463997, 0, -0.5277843, 0, 0.5277843, 0, 2.1754267, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree182" unique_id=1246948862]
+visibility_range_end = 150.0
 transform = Transform3D(0.5277843, 0, -0.5277843, 0, 0.7463997, 0, 0.5277843, 0, 0.5277843, 0, 2.1754267, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -5717,17 +6081,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.8448, 0)
 shape = SubResource("tree_cyl183")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree183" unique_id=1515509701]
+visibility_range_end = 150.0
 transform = Transform3D(0.6775231, 0, 0.6775231, 0, 0.9581623, 0, -0.6775231, 0, 0.6775231, 0, 2.7926214, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree183" unique_id=793396219]
+visibility_range_end = 150.0
 transform = Transform3D(0.6775231, 0, -0.6775231, 0, 0.9581623, 0, 0.6775231, 0, 0.6775231, 0, 2.7926214, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -5740,17 +6106,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.0476, 0)
 shape = SubResource("tree_cyl184")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree184" unique_id=1917365402]
+visibility_range_end = 150.0
 transform = Transform3D(0.58511823, 0, 0.58511823, 0, 0.82748216, 0, -0.58511823, 0, 0.58511823, 0, 2.4117465, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree184" unique_id=1848114987]
+visibility_range_end = 150.0
 transform = Transform3D(0.58511823, 0, -0.58511823, 0, 0.82748216, 0, 0.58511823, 0, 0.58511823, 0, 2.4117465, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -5763,17 +6131,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.8171, 0)
 shape = SubResource("tree_cyl185")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree185" unique_id=1538236364]
+visibility_range_end = 150.0
 transform = Transform3D(0.44247434, 0, 0.44247434, 0, 0.6257532, 0, -0.44247434, 0, 0.44247434, 0, 1.8237953, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree185" unique_id=1212774807]
+visibility_range_end = 150.0
 transform = Transform3D(0.44247434, 0, -0.44247434, 0, 0.6257532, 0, 0.44247434, 0, 0.44247434, 0, 1.8237953, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -5786,17 +6156,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.8845, 0)
 shape = SubResource("tree_cyl186")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree186" unique_id=232681427]
+visibility_range_end = 150.0
 transform = Transform3D(0.91396147, 0, 0.91396147, 0, 1.2925367, 0, -0.91396147, 0, 0.91396147, 0, 3.7671757, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree186" unique_id=203174348]
+visibility_range_end = 150.0
 transform = Transform3D(0.91396147, 0, -0.91396147, 0, 1.2925367, 0, 0.91396147, 0, 0.91396147, 0, 3.7671757, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -5809,17 +6181,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.4506, 0)
 shape = SubResource("tree_cyl187")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree187" unique_id=1497896541]
+visibility_range_end = 150.0
 transform = Transform3D(0.9795855, 0, 0.9795855, 0, 1.3853432, 0, -0.9795855, 0, 0.9795855, 0, 4.037666, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree187" unique_id=1400572998]
+visibility_range_end = 150.0
 transform = Transform3D(0.9795855, 0, -0.9795855, 0, 1.3853432, 0, 0.9795855, 0, 0.9795855, 0, 4.037666, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -5832,17 +6206,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.2941, 0)
 shape = SubResource("tree_cyl188")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree188" unique_id=626596447]
+visibility_range_end = 150.0
 transform = Transform3D(0.96144986, 0, 0.96144986, 0, 1.3596954, 0, -0.96144986, 0, 0.96144986, 0, 3.9629138, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree188" unique_id=104159513]
+visibility_range_end = 150.0
 transform = Transform3D(0.96144986, 0, -0.96144986, 0, 1.3596954, 0, 0.96144986, 0, 0.96144986, 0, 3.9629138, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -5855,17 +6231,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.439, 0)
 shape = SubResource("tree_cyl189")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree189" unique_id=1135274691]
+visibility_range_end = 150.0
 transform = Transform3D(1.3259999, 0, 1.3259999, 0, 1.875247, 0, -1.3259999, 0, 1.3259999, 0, 5.46552, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree189" unique_id=291670609]
+visibility_range_end = 150.0
 transform = Transform3D(1.3259999, 0, -1.3259999, 0, 1.875247, 0, 1.3259999, 0, 1.3259999, 0, 5.46552, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -5878,17 +6256,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.2928, 0)
 shape = SubResource("tree_cyl190")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree190" unique_id=1840123387]
+visibility_range_end = 150.0
 transform = Transform3D(1.077209, 0, 1.077209, 0, 1.5234036, 0, -1.077209, 0, 1.077209, 0, 4.4400516, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree190" unique_id=1610714021]
+visibility_range_end = 150.0
 transform = Transform3D(1.077209, 0, -1.077209, 0, 1.5234036, 0, 1.077209, 0, 1.077209, 0, 4.4400516, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -5901,17 +6281,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.0746, 0)
 shape = SubResource("tree_cyl191")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree191" unique_id=1419576536]
+visibility_range_end = 150.0
 transform = Transform3D(0.82007945, 0, 0.82007945, 0, 1.1597675, 0, -0.82007945, 0, 0.82007945, 0, 3.380212, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree191" unique_id=652067005]
+visibility_range_end = 150.0
 transform = Transform3D(0.82007945, 0, -0.82007945, 0, 1.1597675, 0, 0.82007945, 0, 0.82007945, 0, 3.380212, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -5924,17 +6306,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.0288, 0)
 shape = SubResource("tree_cyl192")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree192" unique_id=703150159]
+visibility_range_end = 150.0
 transform = Transform3D(0.9306903, 0, 0.9306903, 0, 1.3161949, 0, -0.9306903, 0, 0.9306903, 0, 3.8361292, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree192" unique_id=123191134]
+visibility_range_end = 150.0
 transform = Transform3D(0.9306903, 0, -0.9306903, 0, 1.3161949, 0, 0.9306903, 0, 0.9306903, 0, 3.8361292, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -5947,17 +6331,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.6092, 0)
 shape = SubResource("tree_cyl193")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree193" unique_id=2017649118]
+visibility_range_end = 150.0
 transform = Transform3D(0.5342921, 0, 0.5342921, 0, 0.75560313, 0, -0.5342921, 0, 0.5342921, 0, 2.2022507, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree193" unique_id=1722263896]
+visibility_range_end = 150.0
 transform = Transform3D(0.5342921, 0, -0.5342921, 0, 0.75560313, 0, 0.5342921, 0, 0.5342921, 0, 2.2022507, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -5970,17 +6356,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.7287, 0)
 shape = SubResource("tree_cyl194")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree194" unique_id=1619013368]
+visibility_range_end = 150.0
 transform = Transform3D(0.43222347, 0, 0.43222347, 0, 0.6112563, 0, -0.43222347, 0, 0.43222347, 0, 1.7815431, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree194" unique_id=509594845]
+visibility_range_end = 150.0
 transform = Transform3D(0.43222347, 0, -0.43222347, 0, 0.6112563, 0, 0.43222347, 0, 0.43222347, 0, 1.7815431, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -5993,17 +6381,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.5006, 0)
 shape = SubResource("tree_cyl195")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree195" unique_id=226567370]
+visibility_range_end = 150.0
 transform = Transform3D(0.75354654, 0, 0.75354654, 0, 1.0656757, 0, -0.75354654, 0, 0.75354654, 0, 3.1059759, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree195" unique_id=2029294496]
+visibility_range_end = 150.0
 transform = Transform3D(0.75354654, 0, -0.75354654, 0, 1.0656757, 0, 0.75354654, 0, 0.75354654, 0, 3.1059759, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -6016,17 +6406,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.3481, 0)
 shape = SubResource("tree_cyl196")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree196" unique_id=967558839]
+visibility_range_end = 150.0
 transform = Transform3D(0.6199523, 0, 0.6199523, 0, 0.876745, 0, -0.6199523, 0, 0.6199523, 0, 2.5553257, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree196" unique_id=2123575849]
+visibility_range_end = 150.0
 transform = Transform3D(0.6199523, 0, -0.6199523, 0, 0.876745, 0, 0.6199523, 0, 0.6199523, 0, 2.5553257, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -6039,17 +6431,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.3099, 0)
 shape = SubResource("tree_cyl197")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree197" unique_id=1325789760]
+visibility_range_end = 150.0
 transform = Transform3D(0.84735495, 0, 0.84735495, 0, 1.1983409, 0, -0.84735495, 0, 0.84735495, 0, 3.4926364, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree197" unique_id=1683116459]
+visibility_range_end = 150.0
 transform = Transform3D(0.84735495, 0, -0.84735495, 0, 1.1983409, 0, 0.84735495, 0, 0.84735495, 0, 3.4926364, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -6062,17 +6456,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.7848, 0)
 shape = SubResource("tree_cyl198")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree198" unique_id=1052317566]
+visibility_range_end = 150.0
 transform = Transform3D(1.2501638, 0, 1.2501638, 0, 1.7679986, 0, -1.2501638, 0, 1.2501638, 0, 5.152938, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree198" unique_id=1717579195]
+visibility_range_end = 150.0
 transform = Transform3D(1.2501638, 0, -1.2501638, 0, 1.7679986, 0, 1.2501638, 0, 1.2501638, 0, 5.152938, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -6085,17 +6481,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.9043, 0)
 shape = SubResource("tree_cyl199")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree199" unique_id=1380660643]
+visibility_range_end = 150.0
 transform = Transform3D(1.0321767, 0, 1.0321767, 0, 1.4597183, 0, -1.0321767, 0, 1.0321767, 0, 4.2544365, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree199" unique_id=1737037732]
+visibility_range_end = 150.0
 transform = Transform3D(1.0321767, 0, -1.0321767, 0, 1.4597183, 0, 1.0321767, 0, 1.0321767, 0, 4.2544365, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -6108,17 +6506,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.5738, 0)
 shape = SubResource("tree_cyl200")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree200" unique_id=565775378]
+visibility_range_end = 150.0
 transform = Transform3D(1.1097922, 0, 1.1097922, 0, 1.5694833, 0, -1.1097922, 0, 1.1097922, 0, 4.574353, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree200" unique_id=1725354396]
+visibility_range_end = 150.0
 transform = Transform3D(1.1097922, 0, -1.1097922, 0, 1.5694833, 0, 1.1097922, 0, 1.1097922, 0, 4.574353, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -6131,17 +6531,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.0151, 0)
 shape = SubResource("tree_cyl201")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree201" unique_id=879928064]
+visibility_range_end = 150.0
 transform = Transform3D(1.1609423, 0, 1.1609423, 0, 1.6418204, 0, -1.1609423, 0, 1.1609423, 0, 4.785184, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree201" unique_id=476941147]
+visibility_range_end = 150.0
 transform = Transform3D(1.1609423, 0, -1.1609423, 0, 1.6418204, 0, 1.1609423, 0, 1.1609423, 0, 4.785184, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
@@ -6154,17 +6556,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.7032, 0)
 shape = SubResource("tree_cyl202")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree202" unique_id=1813756133]
+visibility_range_end = 150.0
 transform = Transform3D(0.6611115, 0, 0.6611115, 0, 0.93495286, 0, -0.6611115, 0, 0.6611115, 0, 2.7249763, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree202" unique_id=366254448]
+visibility_range_end = 150.0
 transform = Transform3D(0.6611115, 0, -0.6611115, 0, 0.93495286, 0, 0.6611115, 0, 0.6611115, 0, 2.7249763, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex1")
@@ -6177,17 +6581,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.6547, 0)
 shape = SubResource("tree_cyl203")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree203" unique_id=2102701781]
+visibility_range_end = 150.0
 transform = Transform3D(0.6554892, 0, 0.6554892, 0, 0.9270017, 0, -0.6554892, 0, 0.6554892, 0, 2.701802, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree203" unique_id=1669862173]
+visibility_range_end = 150.0
 transform = Transform3D(0.6554892, 0, -0.6554892, 0, 0.9270017, 0, 0.6554892, 0, 0.6554892, 0, 2.701802, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex2")
@@ -6200,17 +6606,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.8367, 0)
 shape = SubResource("tree_cyl204")
 
 [node name="CrossA" type="Sprite3D" parent="Trees/Tree204" unique_id=1899916626]
+visibility_range_end = 150.0
 transform = Transform3D(0.67658913, 0, 0.67658913, 0, 0.9568415, 0, -0.67658913, 0, 0.67658913, 0, 2.788772, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")
 
 [node name="CrossB" type="Sprite3D" parent="Trees/Tree204" unique_id=801036495]
+visibility_range_end = 150.0
 transform = Transform3D(0.67658913, 0, -0.67658913, 0, 0.9568415, 0, 0.67658913, 0, 0.67658913, 0, 2.788772, 0)
 cast_shadow = 0
-visibility_range_end_margin = 4.0
+visibility_range_end_margin = 40.0
 pixel_size = 0.0088
 alpha_cut = 1
 texture = ExtResource("tree_tex5")

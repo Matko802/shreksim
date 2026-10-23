@@ -113,7 +113,7 @@ func _ready() -> void:
 	footstep_player.unit_size = 4.0
 	footstep_player.max_distance = 30.0
 	footstep_player.max_polyphony = 2
-	footstep_player.doppler_tracking = AudioStreamPlayer3D.DOPPLER_TRACKING_PHYSICS_STEP
+	footstep_player.doppler_tracking = AudioStreamPlayer3D.DOPPLER_TRACKING_DISABLED
 	add_child(footstep_player)
 
 	flashlight_container = (load("res://scenes/flashlight.tscn") as PackedScene).instantiate() as Node3D
