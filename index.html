@@ -133,7 +133,7 @@ body {
 
 		<script src="index.js"></script>
 		<script>
-const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":10221500,"index.wasm":39514754},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
+const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":false,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":23813588,"index.wasm":1508095},"focusCanvas":true,"gdextensionLibs":["libterrain.web.release.wasm32.nothreads.wasm"],"godotPoolSize":4};
 const GODOT_THREADS_ENABLED = false;
 const engine = new Engine(GODOT_CONFIG);
 
@@ -206,6 +206,14 @@ const engine = new Engine(GODOT_CONFIG);
 	}
 
 	fsBtn.addEventListener('click', toggleFullscreen);
+
+	function syncFullscreenButton() {
+		const fsOn = !!(document.fullscreenElement || document.webkitFullscreenElement);
+		fsBtn.style.display = fsOn ? 'none' : '';
+	}
+	document.addEventListener('fullscreenchange', syncFullscreenButton);
+	document.addEventListener('webkitfullscreenchange', syncFullscreenButton);
+	syncFullscreenButton();
 
 	const missing = Engine.getMissingFeatures({
 		threads: GODOT_THREADS_ENABLED,
