@@ -19,6 +19,7 @@ const LANGUAGES := [
 ]
 
 var camera_effects_enabled := true
+var debug_info_enabled := false
 var mouse_sensitivity := 0.0024
 var fullscreen_enabled := false
 var vsync_enabled := true
@@ -105,6 +106,10 @@ func set_language(code: String) -> void:
 	TranslationServer.set_locale(language)
 	save_settings()
 	setting_changed.emit(&"language", language)
+
+func set_debug_info(on: bool) -> void:
+	debug_info_enabled = on
+	setting_changed.emit(&"debug_info_enabled", on)
 
 func set_camera_effects(enabled: bool) -> void:
 	camera_effects_enabled = enabled

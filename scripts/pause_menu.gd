@@ -12,6 +12,7 @@ signal menu_requested
 @onready var slider: HSlider = %SensSlider
 @onready var sens_value: Label = %SensValue
 @onready var fx_check: CheckButton = %FXCheck
+@onready var debug_check: CheckButton = %DebugCheck
 @onready var fs_check: CheckButton = %FSCheck
 @onready var lang_option: OptionButton = %LangOption
 @onready var vsync_check: CheckButton = %VSyncCheck
@@ -38,6 +39,7 @@ func _ready() -> void:
 		aa_option.add_item(AA_LABELS[mode])
 	slider.value_changed.connect(_on_sensitivity_changed)
 	fx_check.toggled.connect(_on_fx_toggled)
+	debug_check.toggled.connect(_on_debug_toggled)
 	fs_check.toggled.connect(_on_fs_toggled)
 	lang_option.item_selected.connect(_on_language_selected)
 	vsync_check.toggled.connect(_on_vsync_toggled)
@@ -57,6 +59,8 @@ func _on_external_setting(setting_name: StringName, _value: Variant) -> void:
 	match setting_name:
 		&"fullscreen_enabled":
 			fs_check.set_pressed_no_signal(SettingsBus.fullscreen_enabled)
+		&"debug_info_enabled":
+			debug_check.set_pressed_no_signal(SettingsBus.debug_info_enabled)
 		&"vsync_enabled":
 			vsync_check.set_pressed_no_signal(SettingsBus.vsync_enabled)
 		&"anti_aliasing_mode":
@@ -85,6 +89,9 @@ func _on_sensitivity_changed(value: float) -> void:
 
 func _on_fx_toggled(on: bool) -> void:
 	SettingsBus.set_camera_effects(on)
+
+func _on_debug_toggled(on: bool) -> void:
+	SettingsBus.set_debug_info(on)
 
 func _on_fs_toggled(on: bool) -> void:
 	SettingsBus.set_fullscreen(on)
@@ -117,6 +124,7 @@ func _sync_controls() -> void:
 	slider.value = SettingsBus.mouse_sensitivity
 	_update_sens_value(SettingsBus.mouse_sensitivity)
 	fx_check.set_pressed_no_signal(SettingsBus.camera_effects_enabled)
+	debug_check.set_pressed_no_signal(SettingsBus.debug_info_enabled)
 	fs_check.set_pressed_no_signal(SettingsBus.fullscreen_enabled)
 	vsync_check.set_pressed_no_signal(SettingsBus.vsync_enabled)
 	aa_option.selected = clampi(_aa_modes.find(SettingsBus.anti_aliasing_mode), 0, _aa_modes.size() - 1)

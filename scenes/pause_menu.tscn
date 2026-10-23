@@ -142,6 +142,12 @@ theme_override_font_sizes/font_size = 18
 button_pressed = true
 text = "Camera effects"
 
+[node name="DebugCheck" type="CheckButton" parent="SettingsCenter/SettingsPanel/Box" unique_id=883212130]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Debug info"
+
 [node name="FSCheck" type="CheckButton" parent="SettingsCenter/SettingsPanel/Box" unique_id=883212106]
 unique_name_in_owner = true
 layout_mode = 2

@@ -17,6 +17,8 @@ func _ready() -> void:
 	_frame_times.resize(FPS_HISTORY_SIZE)
 	set_process(false)
 	_static_lines = _build_static_lines()
+	SettingsBus.setting_changed.connect(_on_external_setting)
+	visible = SettingsBus.debug_info_enabled
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
@@ -30,6 +32,12 @@ func _unhandled_input(event: InputEvent) -> void:
 			set_process(true)
 		elif not visible and not was_hidden:
 			set_process(false)
+
+func _on_external_setting(setting_name: StringName, value: Variant) -> void:
+	if setting_name != &"debug_info_enabled":
+		return
+	visible = bool(value)
+	set_process(bool(value))
 
 func _low_percent(count: int) -> float:
 	if _frames_recorded <= 0:

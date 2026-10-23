@@ -189,4 +189,4 @@ jobs:
             "ShrekSim-${{ github.ref_name }}-arm64.apk" \
             "ShrekSim.apk.sha256" \
             --title "${{ github.ref_name }}" \
-            --notes "Android APK build ${{ github.ref_name }} (arm64). Adds live render stats to the debug overlay so ground-view stall causes can be measured directly on the phone. If you installed an older signed build, uninstall it before installing this one.")
+            --notes "Android APK build ${{ github.ref_name }} (arm64). Settings now have a Debug info toggle, so on mobile you can open Pause, Settings and switch the fps and render stats overlay on without a keyboard. If you installed an older signed build, uninstall it before installing this one.")
