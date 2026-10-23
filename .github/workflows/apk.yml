@@ -189,4 +189,4 @@ jobs:
             "ShrekSim-${{ github.ref_name }}-arm64.apk" \
             "ShrekSim.apk.sha256" \
             --title "${{ github.ref_name }}" \
-            --notes "Android APK build ${{ github.ref_name }} (arm64). Ground mesh back to fine 2 m vertex spacing for real terrain shapes at the same vertex cost (the 4 m spacing made hills flat and stretched), water synced to it. Performance cuts from before stay in place: view distance 200 m, 4 terrain rings, 2 water rings, cheap mobile water, FXAA forced, vsync off. If you installed an older signed build, uninstall it before installing this one."
+            --notes "Android APK build ${{ github.ref_name }} (arm64). Ground and water meshes cut to 16 base resolution: about 4x fewer triangles on the terrain than the 32 setting, ground detail near you unchanged at 2 m spacing. If you installed an older signed build, uninstall it before installing this one."
