@@ -90,7 +90,7 @@ var _day_mix := 1.0
 var ground_mat: Resource
 var _terrain: Terrain3D
 var tree_planes: Array = []
-var tree_snap_pending: Array = []
+var snap_pending: Array = []
 var tree_sight_time := 0.0
 var onion_spot := -1
 
@@ -219,16 +219,19 @@ func _build_world() -> void:
 		var b := c.get_node_or_null("CrossB") as Sprite3D
 		if a != null and b != null:
 			tree_planes.append([a, b, a.basis, false])
-			tree_snap_pending.append(c)
+			snap_pending.append(c)
+	for c in get_node("Map/OnionSpots").get_children():
+		if c is Area3D:
+			snap_pending.append(c)
 	_snap_pending_trees()
 
 func _snap_pending_trees() -> void:
-	if tree_snap_pending.is_empty():
+	if snap_pending.is_empty():
 		return
 	if _terrain == null or _terrain.data == null:
 		return
 	var keep: Array = []
-	for c in tree_snap_pending:
+	for c in snap_pending:
 		var n := c as Node3D
 		if n == null:
 			continue
@@ -237,7 +240,10 @@ func _snap_pending_trees() -> void:
 			keep.append(n)
 			continue
 		n.position.y = raw
-	tree_snap_pending = keep
+		var o := n as Area3D
+		if o != null and o.has_meta("base_y"):
+			o.set_meta("base_y", raw)
+	snap_pending = keep
 
 func _update_tree_sight() -> void:
 	var px := player.global_position.x
@@ -304,6 +310,10 @@ func _build_onions() -> void:
 		_onion_activate(spot)
 
 func _onion_activate(area: Area3D) -> void:
+	if _terrain != null and _terrain.data != null:
+		var h := _terrain.data.get_height(Vector3(area.global_position.x, 0.0, area.global_position.z))
+		if not is_nan(h):
+			area.position.y = h
 	area.collision_layer = 2
 	area.visible = true
 	area.set_meta("onion", true)
@@ -600,9 +610,9 @@ func _physics_process(delta: float) -> void:
 func _tick_enemy(delta: float) -> void:
 	if not enemy_active and pages >= 1:
 		enemy_active = true
-		_spawn_enemy_behind()
 		if nav == null:
 			_build_nav()
+		_spawn_enemy_behind()
 	if not enemy_active:
 		return
 	enemy_bob_t += delta
@@ -808,11 +818,9 @@ func _build_nav() -> void:
 
 func _spawn_enemy_behind() -> void:
 	var fwd := -player.camera.global_basis.z
-	var behind := Vector2(-fwd.x, -fwd.z).normalized().rotated(randf_range(-1.0, 1.0))
-	var d := randf_range(19.2, 25.6)
-	var p := Vector2(player.global_position.x, player.global_position.z) + behind * d
-	p.x = clampf(p.x, -WORLD_HALF + WALL_SAFE, WORLD_HALF - WALL_SAFE)
-	p.y = clampf(p.y, -WORLD_HALF + WALL_SAFE, WORLD_HALF - WALL_SAFE)
+	var behind := Vector2(-fwd.x, -fwd.z).normalized()
+	var pc := Vector2(player.global_position.x, player.global_position.z)
+	var p: Vector2 = _pick_spawn_point(pc, behind)
 	enemy.global_position = Vector3(p.x, _terrain_height(p.x, p.y) + 5.0, p.y)
 	enemy.reset_physics_interpolation()
 	enemy.visible = false
@@ -821,9 +829,26 @@ func _spawn_enemy_behind() -> void:
 	enemy_arrived = false
 	enemy_lose_time = 0.0
 	enemy_pause = 0.0
-	last_seen = Vector2(player.global_position.x, player.global_position.z)
+	last_seen = pc
 	sees_cache = false
 	sees_timer = 0.0
+
+func _pick_spawn_point(from: Vector2, first_dir: Vector2) -> Vector2:
+	var dirs: Array[Vector2] = [first_dir, first_dir.rotated(0.9)]
+	for i in range(12):
+		dirs.append(first_dir.rotated(-1.0 + 2.0 * float(i) / 11.0))
+	var best_clear := -1.0
+	var best := Vector2(from.x, from.y + 22.0)
+	for dir in dirs:
+		var d := randf_range(19.2, 25.6)
+		var p := Vector2(from.x + dir.x * d, from.y + dir.y * d)
+		p.x = clampf(p.x, -WORLD_HALF + WALL_SAFE, WORLD_HALF - WALL_SAFE)
+		p.y = clampf(p.y, -WORLD_HALF + WALL_SAFE, WORLD_HALF - WALL_SAFE)
+		var clear: float = float(WORLD_HALF) if nav == null else nav.spawn_clearance(from, p)
+		if clear > best_clear:
+			best_clear = clear
+			best = p
+	return best
 
 func _win() -> void:
 	won = true

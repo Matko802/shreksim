@@ -239,5 +239,25 @@ func has_los(a_w: Vector2, b_w: Vector2) -> bool:
 				return false
 	return true
 
+func spawn_clearance(a_w: Vector2, b_w: Vector2) -> float:
+	var dist := a_w.distance_to(b_w)
+	if dist <= 0.001:
+		return float(WORLD_HALF)
+	var steps := maxi(int(dist / 0.8) + 1, 1)
+	var best := dist
+	for i in range(1, steps + 1):
+		var t := float(i) / float(steps)
+		var px := a_w.x + (b_w.x - a_w.x) * t
+		var pz := a_w.y + (b_w.y - a_w.y) * t
+		if absf(px) > WORLD_HALF - WALL_MARGIN or absf(pz) > WORLD_HALF - WALL_MARGIN:
+			return 0.0
+		for k in range(pts_x.size()):
+			var dx := px - pts_x[k]
+			var dz := pz - pts_y[k]
+			var d := sqrt(dx * dx + dz * dz)
+			if d < best:
+				best = d
+	return best
+
 func is_free_point(w: Vector2) -> bool:
 	return _is_free_w(w.x, w.y)

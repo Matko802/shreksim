@@ -189,4 +189,4 @@ jobs:
             "ShrekSim-${{ github.ref_name }}-arm64.apk" \
             "ShrekSim.apk.sha256" \
             --title "${{ github.ref_name }}" \
-            --notes "Android APK build ${{ github.ref_name }} (arm64). Performance build: distant trees cull beyond 150 m, antialiasing starts off on phones, CI on Godot 4.7 stable. If you installed an older signed build, uninstall it before installing this one."
+            --notes "Android APK build ${{ github.ref_name }} (arm64). Performance build: dense forest thinned via LOD trees that switch to 2D billboards beyond 50 m, ground mesh coarser (vertex spacing 2.0), floating onion/tree fixes, enemy sight no longer blocked at spawn, MSAA restored, CI on Godot 4.7 stable. If you installed an older signed build, uninstall it before installing this one."
