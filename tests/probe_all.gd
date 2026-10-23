@@ -96,7 +96,7 @@ func _probe_trees() -> int:
 
 func _probe_joystick() -> int:
 	var f := 0
-	var joy := VirtualJoystick.new()
+	var joy := SwampVirtualJoystick.new()
 	joy.action_left = &"move_left"
 	joy.action_right = &"move_right"
 	joy.action_up = &"move_forward"

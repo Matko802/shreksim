@@ -1,4 +1,4 @@
-class_name VirtualJoystick
+class_name SwampVirtualJoystick
 extends Control
 
 enum JoystickMode { JOYSTICK_FIXED, JOYSTICK_DYNAMIC }

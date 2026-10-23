@@ -5,7 +5,7 @@ var look_pointer := -1
 var look_last := Vector2.ZERO
 var btn_pointers := {}
 var grab_button: Panel
-var joystick: VirtualJoystick
+var joystick: SwampVirtualJoystick
 var tap_release_queue: Array = []
 var sprint_on := false
 var buttons := {}
@@ -109,9 +109,9 @@ func _build_ui() -> void:
 	_place(buttons["grab"], 1.0, 0.58, -(m + insets[2] + small * 1.2), -small * 0.5, small, small)
 	_place(buttons["pauseb"], 1.0, 0.0, -(m + insets[2] + small * 0.82), m + insets[1], small * 0.82, small * 0.82)
 	var joy_size := 160.0 * ui_scale
-	joystick = VirtualJoystick.new()
-	joystick.joystick_mode = VirtualJoystick.JOYSTICK_FIXED
-	joystick.visibility_mode = VirtualJoystick.VISIBILITY_ALWAYS
+	joystick = SwampVirtualJoystick.new()
+	joystick.joystick_mode = SwampVirtualJoystick.JoystickMode.JOYSTICK_FIXED
+	joystick.visibility_mode = SwampVirtualJoystick.VisibilityMode.VISIBILITY_ALWAYS
 	joystick.joystick_size = joy_size
 	joystick.tip_size = 60.0 * ui_scale
 	joystick.deadzone_ratio = 0.2

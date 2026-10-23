@@ -2,7 +2,7 @@ extends Control
 
 func _ready() -> void:
 	await get_tree().process_frame
-	var joy := VirtualJoystick.new()
+	var joy := SwampVirtualJoystick.new()
 	joy.action_left = &"move_left"
 	joy.action_right = &"move_right"
 	joy.action_up = &"move_forward"
