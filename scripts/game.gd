@@ -181,6 +181,8 @@ func _terrain_height(x: float, z: float) -> float:
 		return 0.0
 	return h
 
+static var _sky_shader: Shader
+
 func _build_world() -> void:
 	env = Environment.new()
 	env.background_mode = Environment.BG_SKY
@@ -189,8 +191,10 @@ func _build_world() -> void:
 	if SettingsBus._is_mobile() and terrain_node.ocean_material != null:
 		terrain_node.ocean_material = load("res://assets/maps/ocean_mobile.tres")
 	ground_mat = terrain_node.material
-	var sky_shader := Shader.new()
-	sky_shader.code = SKY_CUBE_SHADER
+	if _sky_shader == null:
+		_sky_shader = Shader.new()
+		_sky_shader.code = SKY_CUBE_SHADER
+	var sky_shader := _sky_shader
 	var sky_mat_ref := ShaderMaterial.new()
 	sky_mat_ref.shader = sky_shader
 	sky_mat_ref.set_shader_parameter("face", load("res://assets/images/sky/sky_starface.png"))

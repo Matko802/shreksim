@@ -104,7 +104,7 @@ func _ready() -> void:
 	camera = Camera3D.new()
 	camera.fov = ZOOM_FOV_MAX
 	camera.near = 0.05
-	camera.far = 260.0
+	camera.far = 200.0
 	camera.cull_mask = 3
 	head.add_child(camera)
 
