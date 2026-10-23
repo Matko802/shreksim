@@ -33,9 +33,6 @@ func _ready() -> void:
 	if mobile:
 		fullscreen_enabled = true
 		_apply_display()
-		var vp := get_viewport()
-		if vp != null:
-			vp.scaling_3d_scale = 0.7
 	_apply_anti_aliasing.call_deferred(anti_aliasing_mode)
 
 func load_settings() -> void:
