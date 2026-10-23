@@ -21,6 +21,18 @@ func _ready() -> void:
 	if game.player == null or not game.player is SwampPlayer:
 		failures += 1
 		print("FAIL player missing")
+	if game.far_tree_materials.size() != 3:
+		failures += 1
+		print("FAIL far tree batches: ", game.far_tree_materials.size())
+	if game.near_tree_materials.size() != 3:
+		failures += 1
+		print("FAIL near tree batches: ", game.near_tree_materials.size())
+	if game.player.flashlight_container.visible:
+		failures += 1
+		print("FAIL flashlight visible by default")
+	if game.nav == null:
+		failures += 1
+		print("FAIL nav not prebuilt")
 	var pool: Array = game.onions.duplicate()
 
 	game._collect(pool[0])

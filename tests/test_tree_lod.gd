@@ -6,57 +6,54 @@ var fails := 0
 func _ready() -> void:
 	game = load("res://scenes/game.tscn").instantiate()
 	add_child(game)
-	for i in range(4):
+	for i in range(60):
 		await get_tree().physics_frame
-	var tree: Node3D = game.get_node("Map/Trees/Tree003")
-	var cross: Node3D = tree.get_node("CrossA")
-	var flat: Node3D = tree.get_node_or_null("Flat")
-	if flat != null:
-		print("FAIL flat sprite still present")
-		fails += 1
-	fails += _num(cross, "end", 0.0)
-	fails += _num(cross, "end_margin", 4.0)
-	if not cross.visible:
-		print("FAIL cross not visible by default")
-		fails += 1
-	if cross.shaded:
-		print("FAIL tree sprites shaded")
-		fails += 1
-	var tor: Node3D = game.get_node("Map/Trees/Tree010")
-	var c2: Node3D = tor.get_node("CrossB")
-	if c2.visibility_range_end != 0.0:
-		print("FAIL CrossB range")
-		fails += 1
-	var far: Node3D = game.get_node("Map/Trees/FarTree001")
-	var far_a: Node3D = far.get_node("CrossA")
-	if far_a.get_node_or_null("Flat") != null:
-		print("FAIL far flat still present")
-		fails += 1
-	if far_a.visibility_range_end != 0.0:
-		print("FAIL far cross range")
-		fails += 1
-	var na: Vector3 = cross.global_basis.z
-	var tp: Vector3 = tree.global_position
-	var nl: float = sqrt(na.x * na.x + na.z * na.z)
-	game.player.global_position = Vector3(tp.x + na.x / nl * 4.0, tp.y + 2.0, tp.z + na.z / nl * 4.0)
-	game._update_tree_sight()
-	if not cross.visible:
-		print("FAIL face-on crossA hidden")
-		fails += 1
-	var c2b: Node3D = tree.get_node("CrossB")
-	var nb: Vector3 = c2b.global_basis.z
-	var ml: float = sqrt(nb.x * nb.x + nb.z * nb.z)
-	game.player.global_position = Vector3(tp.x + nb.x / ml * 4.0, tp.y + 2.0, tp.z + nb.z / ml * 4.0)
-	game._update_tree_sight()
-	if cross.visible or not c2b.visible:
-		print("FAIL edge-on sides mismatched")
-		fails += 1
+	var trees: Node3D = game.get_node("Map/Trees")
+	_check(game.far_instances.size() == 554, "far instances %d" % game.far_instances.size())
+	_check(game.near_instances.size() == 354, "near instances %d" % game.near_instances.size())
+	_check(game.player.camera.far >= 500.0, "camera far %f" % game.player.camera.far)
+	var batches := 0
+	for c in trees.get_children():
+		if c is MultiMeshInstance3D:
+			batches += 1
+	_check(batches == 6, "batches %d" % batches)
+	for m in game.far_tree_materials:
+		_check(is_equal_approx(float(m.get_shader_parameter("tree_far")), 500.0), "far cull")
+		_check(is_equal_approx(float(m.get_shader_parameter("tree_near")), 50.0), "far near")
+	for m in game.near_tree_materials:
+		_check(is_equal_approx(float(m.get_shader_parameter("tree_near")), 50.0), "near cull")
+	var tree: Node3D = trees.get_node("Tree003")
+	_check(tree.get_node_or_null("CrossA") == null, "source sprite not freed")
+	_check(game.far_instances.has(tree), "Tree003 not in far batch")
+	_check(game.near_instances.has(tree), "Tree003 not in near batch")
+	var buried := 0
+	for c in game.far_instances.keys():
+		var t: Transform3D = game.far_instances[c][2]
+		var wp: Vector3 = trees.global_transform * t.origin
+		var h: float = t.basis.get_scale().y
+		var g: float = game._terrain_height(wp.x, wp.z)
+		if wp.y - h * 0.5 < g - 0.05:
+			buried += 1
+	_check(buried == 0, "buried %d" % buried)
+	var onions_off := 0
+	for spot in game.get_node("Map/OnionSpots").get_children():
+		var area := spot as Area3D
+		var sprite := area.get_node_or_null("Sprite") as Sprite3D
+		if sprite == null:
+			continue
+		var box := sprite.get_aabb()
+		var center: Vector3 = sprite.global_transform * box.get_center()
+		var height := box.size.y * sprite.global_basis.y.length()
+		var ground: float = game._terrain_height(area.global_position.x, area.global_position.z)
+		if absf(center.y - height * 0.5 - ground) > 0.02:
+			onions_off += 1
+		if absf(area.global_position.y - ground) > 0.02:
+			onions_off += 1
+	_check(onions_off == 0, "onions off ground %d" % onions_off)
 	print("TREE LOD FAILS=", fails)
 	get_tree().quit(1 if fails > 0 else 0)
 
-func _num(node: Node3D, key: String, expected: float) -> int:
-	var got: float = node.get("visibility_range_" + key)
-	if absf(got - expected) > 0.001:
-		print("FAIL range ", key, " got ", got, " want ", expected)
-		return 1
-	return 0
+func _check(ok: bool, msg: String) -> void:
+	if not ok:
+		print("FAIL: ", msg)
+		fails += 1

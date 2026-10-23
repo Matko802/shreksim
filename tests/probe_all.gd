@@ -61,11 +61,10 @@ func _probe_trees() -> int:
 	var f := 0
 	var map = (load("res://scenes/map.tscn") as PackedScene).instantiate()
 	var trees := map.get_node("Trees")
-	var count := trees.get_child_count()
-	print("trees=", count)
+	var count := 0
 	var visible_flat := 0
 	var hidden_pair := 0
-	for t in trees.get_children():
+	for t in trees.find_children("*", "Node3D", true, false):
 		if t.get_node_or_null("TreeMesh") != null:
 			print("FAIL: leftover tree mesh on ", t.name)
 			f += 1
@@ -75,18 +74,22 @@ func _probe_trees() -> int:
 		if flat != null:
 			print("FAIL: old flat billboard on ", t.name)
 			f += 1
+		if a == null and b == null:
+			continue
 		if a == null or b == null:
 			print("FAIL: missing sprites on ", t.name)
 			f += 1
 			continue
-		if a.visibility_range_end != 150.0 or b.visibility_range_end != 150.0:
-			print("FAIL: missing far cull range on ", t.name)
+		count += 1
+		if a.visibility_range_end != 0.0 or b.visibility_range_end != 0.0:
+			print("FAIL: source sprite cull present on ", t.name)
 			f += 1
 		if t is StaticBody3D:
 			var col := t.get_node_or_null("Collision") as CollisionShape3D
 			if col == null or col.shape == null:
 				print("FAIL: collision missing on ", t.name)
 				f += 1
+	print("trees=", count)
 	print("editor flat visible=", visible_flat, " crossed hidden=", hidden_pair)
 	print("trees ok=", f)
 	return f

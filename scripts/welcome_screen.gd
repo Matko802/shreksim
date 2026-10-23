@@ -28,5 +28,5 @@ func _input(event: InputEvent) -> void:
 
 func _transition_to_menu() -> void:
 	if not is_queued_for_deletion():
-		Engine.max_fps = 0 if SettingsBus.fps_limit <= 0 or SettingsBus.fps_limit >= 360 else SettingsBus.fps_limit
+		Engine.max_fps = SettingsBus.effective_fps_limit()
 		get_tree().change_scene_to_file("res://scenes/menu.tscn")

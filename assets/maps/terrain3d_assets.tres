@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://d4lxdvtolc4d6" path="res://assets/textures/godotcraft/oak_wood_top.png" id="6_41lus"]
 [ext_resource type="Texture2D" uid="uid://62rtwf048mf" path="res://assets/textures/godotcraft/oak_wood_side.png" id="7_e8qo6"]
 [ext_resource type="Texture2D" uid="uid://b62rtwf048mf" path="res://assets/textures/godotcraft/bedrock.png" id="8_hsj3y"]
+[ext_resource type="Texture2D" uid="uid://c62rtwf048mf" path="res://assets/textures/godotcraft/obsidian.png" id="9_ce0em"]
 [ext_resource type="Texture2D" uid="uid://dvuevxqq00hh2" path="res://assets/textures/terrain3d/01__normal_texture.png" id="ext_01_normal"]
 [ext_resource type="Texture2D" uid="uid://x8e81yuuufy1" path="res://assets/textures/terrain3d/02__albedo_texture.png" id="ext_02_albedo"]
 [ext_resource type="Texture2D" uid="uid://83jdbtrif7ub" path="res://assets/textures/terrain3d/02__normal_texture.png" id="ext_02_normal"]
@@ -17,7 +18,6 @@
 [ext_resource type="Texture2D" uid="uid://pm0djew3cb2f" path="res://assets/textures/terrain3d/07__normal_texture.png" id="ext_07_normal"]
 [ext_resource type="Texture2D" uid="uid://dor1bkxfk7av1" path="res://assets/textures/terrain3d/08__normal_texture.png" id="ext_08_normal"]
 [ext_resource type="Texture2D" uid="uid://c5icip1uc0rat" path="res://assets/textures/terrain3d/09__normal_texture.png" id="ext_09_normal"]
-[ext_resource type="Texture2D" uid="uid://c62rtwf048mf" path="res://assets/textures/godotcraft/obsidian.png" id="9_ce0em"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nji0o"]
 transparency = 4
@@ -48,6 +48,7 @@ roughness = -1.0
 uv_scale = 6.0
 
 [sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_1eokw"]
+name = "02__albedo_texture"
 id = 1
 albedo_texture = ExtResource("ext_02_albedo")
 normal_texture = ExtResource("ext_02_normal")

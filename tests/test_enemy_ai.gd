@@ -54,19 +54,25 @@ func _ready() -> void:
 	hide_pos.y = clampf(hide_pos.y, -120.0, 120.0)
 	game.player.global_position = Vector3(hide_pos.x, game._terrain_height(hide_pos.x, hide_pos.y) + 2.0, hide_pos.y)
 	waited = 0
-	var entered_second := false
+	var entered_retreat := false
+	var retreat_visible := true
 	while waited < 1200:
 		await get_tree().physics_frame
 		waited += 1
-		if game.enemy_mode == "search":
-			entered_second = true
+		if game.enemy_mode == "retreat":
+			entered_retreat = true
+			if not game.enemy.visible:
+				retreat_visible = false
 		if game.enemy_mode == "wander":
 			break
 	if game.enemy_mode != "wander":
 		print("FAIL: never wandered, mode=", game.enemy_mode)
 		fails += 1
-	if not entered_second:
-		print("FAIL: never searched")
+	if not entered_retreat:
+		print("FAIL: never retreated")
+		fails += 1
+	if not retreat_visible:
+		print("FAIL: retreat was invisible")
 		fails += 1
 	var ep: Vector3 = Vector3(game.enemy.global_position.x, game.enemy.global_position.y, game.enemy.global_position.z)
 	for i in range(600):

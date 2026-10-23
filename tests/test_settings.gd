@@ -41,6 +41,17 @@ func _ready() -> void:
 	if Engine.max_fps != 0:
 		print("FAIL: unlimited fps ", Engine.max_fps)
 		fails += 1
+	var f11 := InputEventKey.new()
+	f11.physical_keycode = KEY_F11
+	f11.pressed = true
+	bus._input(f11)
+	if not bus.fullscreen_enabled:
+		print("FAIL: F11 fullscreen")
+		fails += 1
+	bus._input(f11)
+	if bus.fullscreen_enabled:
+		print("FAIL: F11 windowed")
+		fails += 1
 	bus.reset_settings()
 	if bus.anti_aliasing_mode != 2 or root_vp.msaa_3d != Viewport.MSAA_2X:
 		print("FAIL: reset aa")

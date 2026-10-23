@@ -165,17 +165,17 @@ jobs:
           GODOT_ANDROID_KEYSTORE_RELEASE_PASSWORD: ${{ env.KEYSTORE_PASSWORD }}
         run: |
           mkdir -p build
-          ./godot-editor --headless --install-android-build-template --export-release "Android" build/ShrekSim.apk
+          ./godot-editor --headless --install-android-build-template --export-release "Android" build/SwampSim.apk
 
       - name: Verify APK signature
         run: |
-          "$ANDROID_HOME/build-tools/$ANDROID_BUILD_TOOLS/apksigner" verify build/ShrekSim.apk
+          "$ANDROID_HOME/build-tools/$ANDROID_BUILD_TOOLS/apksigner" verify build/SwampSim.apk
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ShrekSim-APK-${{ github.sha }}
-          path: build/ShrekSim.apk
+          name: SwampSim-APK-${{ github.sha }}
+          path: build/SwampSim.apk
           if-no-files-found: error
 
       - name: Create GitHub release with APK
@@ -183,10 +183,10 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          sha256sum build/ShrekSim.apk > ShrekSim.apk.sha256
-          cp build/ShrekSim.apk "ShrekSim-${{ github.ref_name }}-arm64.apk"
+          sha256sum build/SwampSim.apk > SwampSim-Android-arm64.apk.sha256
+          cp build/SwampSim.apk SwampSim-Android-arm64.apk
           gh release create "${{ github.ref_name }}" \
-            "ShrekSim-${{ github.ref_name }}-arm64.apk" \
-            "ShrekSim.apk.sha256" \
-            --title "${{ github.ref_name }}" \
-            --notes "Android APK build ${{ github.ref_name }} (arm64). The map now ends at the playable borders: the terrain mesh stops near the border and invisible walls keep you inside, and on mobile the far plane shrinks while looking down so distant chunks are not drawn while they are fogged out anyway. If you installed an older signed build, uninstall it before installing this one."
+            SwampSim-Android-arm64.apk \
+            SwampSim-Android-arm64.apk.sha256 \
+            --title "Swamp Horror Simulator 3D ${{ github.ref_name }}" \
+            --notes-file RELEASE_NOTES.md

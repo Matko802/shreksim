@@ -3,6 +3,12 @@ android/build/.gradle/
 android/build/build/
 android/build/app/build/
 build/
+builds/*.apk
+builds/*.idsig
+builds/*.AppImage
+builds/*.zip
+builds/linux/
+builds/windows/
 *.tmp
 /tmp/
 /thumbs.db

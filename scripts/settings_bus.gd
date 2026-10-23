@@ -6,6 +6,8 @@ enum AntiAliasingMode { OFF = 0, FXAA = 1, MSAA_2X = 2, MSAA_4X = 3, MSAA_8X = 4
 
 const SAVE_PATH := "user://settings.cfg"
 const SETTINGS_VERSION := 2
+const MOBILE_FPS_CAP := 60
+const MOBILE_RENDER_SCALE := 0.8
 
 const LANGUAGES := [
 	["en", "English"],
@@ -27,20 +29,28 @@ var fps_limit := 0
 var anti_aliasing_mode: int = AntiAliasingMode.MSAA_2X
 var language := ""
 var _config := ConfigFile.new()
+var _mobile := OS.has_feature("android") or OS.has_feature("ios")
 
 func _ready() -> void:
-	load_settings()
-	var mobile := OS.has_feature("android") or OS.has_feature("ios")
-	if mobile:
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	if _mobile:
 		fullscreen_enabled = true
-		_apply_display()
-	_apply_anti_aliasing.call_deferred(anti_aliasing_mode)
+	load_settings()
+	_apply_anti_aliasing(anti_aliasing_mode)
+
+func _input(event: InputEvent) -> void:
+	if _mobile or not (event is InputEventKey):
+		return
+	if event.is_action_pressed(&"toggle_fullscreen"):
+		set_fullscreen(not fullscreen_enabled)
+		get_viewport().set_input_as_handled()
 
 func _is_mobile() -> bool:
-	return OS.has_feature("android") or OS.has_feature("ios")
+	return _mobile
 
 func load_settings() -> void:
 	var had_file := _config.load(SAVE_PATH) == OK
+	var needs_save := false
 	if had_file:
 		var version := int(_config.get_value("core", "version", 0))
 		camera_effects_enabled = bool(_config.get_value("video", "camera_effects_enabled", true))
@@ -50,14 +60,18 @@ func load_settings() -> void:
 		fps_limit = int(_config.get_value("video", "fps_limit", 0))
 		anti_aliasing_mode = int(_config.get_value("video", "anti_aliasing_mode", AntiAliasingMode.MSAA_2X))
 		language = str(_config.get_value("locale", "language", ""))
-		if _is_mobile():
-			vsync_enabled = false
-			anti_aliasing_mode = AntiAliasingMode.FXAA
-		if version != SETTINGS_VERSION:
-			_config.set_value("core", "version", SETTINGS_VERSION)
-			save_settings()
+		needs_save = version != SETTINGS_VERSION
+	if _mobile:
+		fullscreen_enabled = true
+		vsync_enabled = false
+		anti_aliasing_mode = AntiAliasingMode.FXAA
+		fps_limit = _mobile_fps_limit(fps_limit)
+	if needs_save:
+		_config.set_value("core", "version", SETTINGS_VERSION)
+		save_settings()
 	_apply_display()
 	_apply_language()
+	_apply_render_scale()
 
 func save_settings() -> void:
 	_config.set_value("core", "version", SETTINGS_VERSION)
@@ -71,12 +85,28 @@ func save_settings() -> void:
 	_config.save(SAVE_PATH)
 
 func taa_supported() -> bool:
-	return RenderingServer.get_current_rendering_method() == "forward_plus" or ProjectSettings.get_setting("rendering/renderer/rendering_method", "mobile") == "forward_plus" or ProjectSettings.get_setting("rendering/renderer/rendering_method.mobile", "mobile") == "forward_plus"
+	return RenderingServer.get_current_rendering_method() == "forward_plus"
+
+func effective_fps_limit() -> int:
+	return 0 if fps_limit <= 0 or fps_limit >= 360 else fps_limit
+
+func _mobile_fps_limit(limit: int) -> int:
+	if limit <= 0 or limit > MOBILE_FPS_CAP:
+		return MOBILE_FPS_CAP
+	return limit
 
 func _apply_display() -> void:
 	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED if vsync_enabled else DisplayServer.VSYNC_DISABLED)
 	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN if fullscreen_enabled else DisplayServer.WINDOW_MODE_WINDOWED)
-	Engine.max_fps = 0 if fps_limit <= 0 or fps_limit >= 360 else fps_limit
+	Engine.max_fps = effective_fps_limit()
+
+func _apply_render_scale() -> void:
+	var vp := get_viewport()
+	if vp == null:
+		return
+	if _mobile:
+		vp.scaling_3d_mode = Viewport.SCALING_3D_MODE_BILINEAR
+		vp.scaling_3d_scale = MOBILE_RENDER_SCALE
 
 func _apply_language() -> void:
 	if language == "":
@@ -135,6 +165,8 @@ func set_vsync_enabled(enabled: bool) -> void:
 
 func set_fps_limit(limit: int) -> void:
 	fps_limit = clampi(limit, 0, 360)
+	if _mobile:
+		fps_limit = _mobile_fps_limit(fps_limit)
 	_apply_display()
 	save_settings()
 	setting_changed.emit(&"fps_limit", fps_limit)
@@ -150,6 +182,8 @@ func set_anti_aliasing_mode(mode: int) -> void:
 	setting_changed.emit(&"anti_aliasing_mode", anti_aliasing_mode)
 
 func _apply_anti_aliasing(mode: int) -> void:
+	if _mobile:
+		mode = AntiAliasingMode.FXAA
 	var method := String(RenderingServer.get_current_rendering_method())
 	if mode == AntiAliasingMode.TAA and method != "forward_plus":
 		mode = AntiAliasingMode.FXAA
@@ -187,12 +221,14 @@ func reset_settings() -> void:
 	fps_limit = 0
 	anti_aliasing_mode = AntiAliasingMode.MSAA_2X
 	language = ""
-	if _is_mobile():
+	if _mobile:
 		fullscreen_enabled = true
 		vsync_enabled = false
 		anti_aliasing_mode = AntiAliasingMode.FXAA
+		fps_limit = MOBILE_FPS_CAP
 	_apply_anti_aliasing(anti_aliasing_mode)
 	_apply_display()
 	_apply_language()
+	_apply_render_scale()
 	save_settings()
 	setting_changed.emit(&"language", language)

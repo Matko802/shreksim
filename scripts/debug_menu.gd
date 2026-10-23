@@ -39,12 +39,10 @@ func _on_external_setting(setting_name: StringName, value: Variant) -> void:
 	visible = bool(value)
 	set_process(bool(value))
 
-func _low_percent(count: int) -> float:
-	if _frames_recorded <= 0:
+func _low_percent(sorted: PackedFloat32Array, count: int) -> float:
+	if sorted.is_empty():
 		return 0.0
-	var n: int = clampi(count, 1, _frames_recorded)
-	var sorted: PackedFloat32Array = _frame_times.slice(0, _frames_recorded)
-	sorted.sort()
+	var n: int = clampi(count, 1, sorted.size())
 	var total: float = 0.0
 	for i in n:
 		total += sorted[i]
@@ -59,10 +57,12 @@ func _process(delta: float) -> void:
 	if _accum < UPDATE_INTERVAL:
 		return
 	_accum = 0.0
+	var sorted: PackedFloat32Array = _frame_times.slice(0, _frames_recorded)
+	sorted.sort()
 	var fps := Engine.get_frames_per_second()
 	var latency_ms: float = delta * 1000.0
-	var low_1: float = _low_percent(int(_frames_recorded / 100.0))
-	var low_01: float = _low_percent(int(_frames_recorded / 1000.0))
+	var low_1: float = _low_percent(sorted, int(_frames_recorded / 100.0))
+	var low_01: float = _low_percent(sorted, int(_frames_recorded / 1000.0))
 	var draws: int = int(Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME))
 	var prims: int = int(Performance.get_monitor(Performance.RENDER_TOTAL_PRIMITIVES_IN_FRAME))
 	var objs: int = int(Performance.get_monitor(Performance.RENDER_TOTAL_OBJECTS_IN_FRAME))
@@ -70,12 +70,12 @@ func _process(delta: float) -> void:
 	var phys_time: float = Performance.get_monitor(Performance.TIME_PHYSICS_PROCESS) * 1000.0
 	var lines: PackedStringArray = PackedStringArray()
 	lines.append(" FPS: %d | Latency: %.1f ms | 1%% Low: %.1f | 0.1%% Low: %.1f" % [fps, latency_ms, low_1, low_01])
-	lines.append(" Draw: %d | Prims: %d k | Objs: %d | Proc: %.2f ms | Phys: %.2f ms" % [draws, prims / 1000, objs, proc_time, phys_time])
+	lines.append(" Draw: %d | Prims: %d k | Objs: %d | Proc: %.2f ms | Phys: %.2f ms" % [draws, int(prims / 1000.0), objs, proc_time, phys_time])
 	lines.append(_static_lines)
 	label.text = "\n".join(lines)
 
 func _build_static_lines() -> String:
-	var rendering_method: String = str(ProjectSettings.get_setting("rendering/renderer/rendering_method", "unknown"))
+	var rendering_method: String = str(RenderingServer.get_current_rendering_method())
 	var info: Array = OS.get_video_adapter_driver_info()
 	var rendering_driver: String = str(info[0]) if info.size() > 0 else "unknown"
 	var gpu_name: String = "unknown"

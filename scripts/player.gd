@@ -24,7 +24,7 @@ const STANDING_CAPSULE_HEIGHT: float = 1.932
 const STANDING_CAPSULE_CENTER_Y: float = 0.966
 const CROUCHING_CAPSULE_HEIGHT: float = 1.232
 const CROUCHING_CAPSULE_CENTER_Y: float = 0.672
-const CROUCH_TRANSITION_SMOOTHING: float = 10.0
+const CROUCH_TRANSITION_TIME: float = 0.28
 const UNCROUCH_CEILING_CLEARANCE: float = 0.056
 const CROUCH_WALK_SPEED: float = 1.792
 const STEP_INTERVAL_MIN: float = 0.32
@@ -61,6 +61,7 @@ var _input_dir: Vector2 = Vector2.ZERO
 var _head_pos: Vector3 = head_rest_pos
 var _is_crouching: bool = false
 var _crouch_blend: float = 0.0
+var _crouch_t: float = 0.0
 
 var _zoom_fov: float = ZOOM_FOV_MAX
 var _zoom_target: float = ZOOM_FOV_MAX
@@ -104,7 +105,7 @@ func _ready() -> void:
 	camera = Camera3D.new()
 	camera.fov = ZOOM_FOV_MAX
 	camera.near = 0.05
-	camera.far = 200.0
+	camera.far = 500.0
 	camera.cull_mask = 3
 	head.add_child(camera)
 
@@ -123,7 +124,7 @@ func _ready() -> void:
 	flashlight_model_animator = flashlight_container.get_node("%ModelAnimator") as AnimationPlayer
 	flashlight_toggle_player = flashlight_container.get_node("%TogglePlayer") as AudioStreamPlayer3D
 	flashlight_light.visible = false
-	flashlight_model_animator.play(&"model_draw")
+	flashlight_container.visible = false
 
 func _process(delta: float) -> void:
 	var pending_yaw := _look_yaw_target - _last_applied_yaw
@@ -239,6 +240,8 @@ func _physics_process(delta: float) -> void:
 	_update_footsteps(delta)
 
 func _update_flashlight_rotation(delta: float) -> void:
+	if not _flashlight_on:
+		return
 	var k: float = 1.0 - exp(-FLASHLIGHT_ROTATION_SMOOTHING * delta)
 	flashlight_light.quaternion = flashlight_light.quaternion.slerp(Quaternion.IDENTITY, k)
 	if flashlight_light.quaternion.is_equal_approx(Quaternion.IDENTITY):
@@ -329,12 +332,11 @@ func _update_head_position(delta: float) -> void:
 
 func _update_crouch_transition(delta: float) -> void:
 	var target := 1.0 if _is_crouching else 0.0
-	if _crouch_blend == target:
+	if _crouch_t == target:
 		return
-	var k: float = 1.0 - exp(-CROUCH_TRANSITION_SMOOTHING * delta)
-	_crouch_blend = lerpf(_crouch_blend, target, k)
-	if absf(target - _crouch_blend) < 0.0005:
-		_crouch_blend = target
+	_crouch_t = move_toward(_crouch_t, target, delta / CROUCH_TRANSITION_TIME)
+	var t := _crouch_t
+	_crouch_blend = t * t * (3.0 - 2.0 * t)
 	head_rest_pos = Vector3(0.0, lerpf(STANDING_HEAD_Y, CROUCHING_HEAD_Y, _crouch_blend), 0.0)
 	_collider.shape.height = lerpf(STANDING_CAPSULE_HEIGHT, CROUCHING_CAPSULE_HEIGHT, _crouch_blend)
 	_collider.position.y = lerpf(STANDING_CAPSULE_CENTER_Y, CROUCHING_CAPSULE_CENTER_Y, _crouch_blend)
