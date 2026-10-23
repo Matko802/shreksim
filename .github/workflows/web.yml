@@ -1,0 +1,86 @@
+name: Build Web
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: web-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  GODOT_VERSION: 4.7-stable
+  GODOT_TEMPLATES_DIR: 4.7.stable
+  GODOT_TEMPLATES_URL: https://github.com/godotengine/godot-builds/releases/download/4.7-stable/Godot_v4.7-stable_export_templates.tpz
+  GODOT_EDITOR_URL: https://github.com/godotengine/godot-builds/releases/download/4.7-stable/Godot_v4.7-stable_linux.x86_64.zip
+
+jobs:
+  web:
+    name: Web export and publish
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Checkout gh-pages
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: ghp
+          fetch-depth: 0
+
+      - name: Cache Godot editor + export templates
+        id: godot_cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            godot-editor
+            ~/.local/share/godot/export_templates/${{ env.GODOT_TEMPLATES_DIR }}
+          key: godot-web-${{ env.GODOT_VERSION }}-${{ env.GODOT_TEMPLATES_DIR }}-linux-x86_64-templates
+
+      - name: Download Godot editor and export templates
+        if: steps.godot_cache.outputs.cache-hit != 'true'
+        run: |
+          mkdir godot-editor-tmp
+          curl -fsSL "$GODOT_EDITOR_URL" -o editor.zip
+          unzip -q editor.zip -d godot-editor-tmp
+          mv godot-editor-tmp/Godot_v4.7-stable_linux.x86_64 godot-editor
+          rm -rf godot-editor-tmp editor.zip
+          chmod +x godot-editor
+
+          curl -fsSL "$GODOT_TEMPLATES_URL" -o templates.tpz
+          TMPD=$(mktemp -d)
+          unzip -q templates.tpz -d "$TMPD"
+          rm templates.tpz
+          mkdir -p "$HOME/.local/share/godot/export_templates"
+          mv "$TMPD/templates" "$HOME/.local/share/godot/export_templates/$GODOT_TEMPLATES_DIR"
+          rm -rf "$TMPD"
+
+      - name: Import assets
+        run: ./godot-editor --headless --import
+
+      - name: Export Web release
+        run: |
+          mkdir -p out/web
+          ./godot-editor --headless --export-release "Web" out/web/index.html
+          ls -la out/web
+          test -f out/web/index.wasm
+          test -f out/web/index.pck
+          test -f out/web/index.js
+
+      - name: Publish to gh-pages
+        run: |
+          rm -rf ghp/index.html ghp/index.js ghp/index.pck ghp/index.wasm ghp/index.png ghp/index.icon.png ghp/index.apple-touch-icon.png ghp/index.audio.position.worklet.js ghp/index.audio.worklet.js ghp/*.wasm
+          cp out/web/* ghp/
+          ls ghp/*.wasm
+          touch ghp/.nojekyll
+          cd ghp
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Web update: v1.4.5 (2D billboards beyond 50 m, denser forest, floating fixes, fullscreen button hides in fullscreen)" || echo "no web changes"
+          git push origin gh-pages

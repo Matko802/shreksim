@@ -207,6 +207,14 @@ const engine = new Engine(GODOT_CONFIG);
 
 	fsBtn.addEventListener('click', toggleFullscreen);
 
+	function syncFullscreenButton() {
+		const fsOn = !!(document.fullscreenElement || document.webkitFullscreenElement);
+		fsBtn.style.display = fsOn ? 'none' : '';
+	}
+	document.addEventListener('fullscreenchange', syncFullscreenButton);
+	document.addEventListener('webkitfullscreenchange', syncFullscreenButton);
+	syncFullscreenButton();
+
 	const missing = Engine.getMissingFeatures({
 		threads: GODOT_THREADS_ENABLED,
 	});
