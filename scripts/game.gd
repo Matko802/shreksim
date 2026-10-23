@@ -30,6 +30,9 @@ const TREE_EDGE_DOT := 0.18
 const TREE_2D_ENTER_SQ := 2704.0
 const TREE_2D_EXIT_SQ := 2304.0
 
+const FAR_TREE_SHADER: Shader = preload("res://scripts/far_tree_billboard.gdshader")
+const FAR_TREE_CULL_M := 150.0
+
 const PHASES := [
 	{"top": Color(0.3, 0.52, 0.85), "horizon": Color(0.8, 0.88, 0.86), "fog": 0.004, "sun": 1.35, "sun_color": Color(1.0, 0.97, 0.9), "ambient_energy": 1.0, "grass": Color(0.5, 0.68, 0.4), "sky_affect": 0.12, "day": 1.0},
 	{"top": Color(0.42, 0.64, 0.95), "horizon": Color(0.88, 0.94, 0.94), "fog": 0.003, "sun": 1.6, "sun_color": Color(1.0, 1.0, 0.98), "ambient_energy": 1.15, "grass": Color(0.55, 0.74, 0.44), "sky_affect": 0.1, "day": 1.0},
@@ -91,6 +94,11 @@ var ground_mat: Resource
 var _terrain: Terrain3D
 var tree_planes: Array = []
 var snap_pending: Array = []
+var far_tree_materials: Array[ShaderMaterial] = []
+var far_instances: Dictionary = {}
+var far_bake_ticks := 0
+var _far_trees_baked := false
+var _far_tint: Color = Color(1.0, 1.0, 1.0, 1.0)
 var tree_sight_time := 0.0
 var onion_spot := -1
 
@@ -223,8 +231,19 @@ func _build_world() -> void:
 	for c in trees.get_children():
 		var a := c.get_node_or_null("CrossA") as Sprite3D
 		var b := c.get_node_or_null("CrossB") as Sprite3D
-		if a != null and b != null:
+		if a == null or b == null:
+			continue
+		if c is StaticBody3D:
+			if a.visibility_range_fade_mode != GeometryInstance3D.VISIBILITY_RANGE_FADE_DISABLED:
+				a.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_DISABLED
+			if b.visibility_range_fade_mode != GeometryInstance3D.VISIBILITY_RANGE_FADE_DISABLED:
+				b.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_DISABLED
 			tree_planes.append([a, b, a.basis, false])
+			snap_pending.append(c)
+		else:
+			a.visible = false
+			b.visible = false
+			c.set_meta("far_tree", true)
 			snap_pending.append(c)
 	for c in get_node("Map/OnionSpots").get_children():
 		if c is Area3D:
@@ -232,9 +251,13 @@ func _build_world() -> void:
 	_snap_pending_trees()
 
 func _snap_pending_trees() -> void:
-	if snap_pending.is_empty():
-		return
 	if _terrain == null or _terrain.data == null:
+		return
+	if snap_pending.is_empty():
+		if not _far_trees_baked:
+			far_bake_ticks += 1
+			if far_bake_ticks >= 2:
+				_bake_far_trees()
 		return
 	var keep: Array = []
 	for c in snap_pending:
@@ -245,11 +268,94 @@ func _snap_pending_trees() -> void:
 		if is_nan(raw):
 			keep.append(n)
 			continue
+		if far_instances.has(c):
+			var inst: Array = far_instances[c]
+			var t: Transform3D = inst[2]
+			t.origin.y += raw - n.position.y
+			inst[2] = t
+			(inst[0] as MultiMesh).set_instance_transform(inst[1], t)
 		n.position.y = raw
 		var o := n as Area3D
 		if o != null and o.has_meta("base_y"):
 			o.set_meta("base_y", raw)
 	snap_pending = keep
+	if not _far_trees_baked:
+		far_bake_ticks += 1
+		if far_bake_ticks >= 2:
+			_bake_far_trees()
+
+func _bake_far_trees() -> void:
+	_far_trees_baked = true
+	var rows := []
+	var groups := {}
+	var trees := get_node("Map/Trees") as Node3D
+	var inv := trees.global_transform.affine_inverse()
+	for c in trees.get_children():
+		if not c.has_meta("far_tree"):
+			continue
+		var a := c.get_node_or_null("CrossA") as Sprite3D
+		var b := c.get_node_or_null("CrossB")
+		var row := [c, null, 0.0, 0.0, inv * c.global_position]
+		if a != null:
+			var tex: Texture2D = a.texture
+			if tex != null:
+				var box := a.get_aabb()
+				var w := box.size.x * a.global_basis.x.length()
+				var h := box.size.y * a.global_basis.y.length()
+				if w > 0.01 and h > 0.01:
+					row[1] = tex
+					row[2] = w
+					row[3] = h
+					row[4] = inv * (a.global_transform * box.get_center())
+		rows.append(row)
+		if a != null:
+			a.free()
+		if b != null:
+			b.free()
+	for row in rows:
+		if row[1] == null:
+			continue
+		var key := "%d|%f|%f" % [(row[1] as Texture2D).get_instance_id(), row[2], row[3]]
+		var g: Dictionary = groups.get(key, {})
+		if g.is_empty():
+			g["tex"] = row[1]
+			g["w"] = row[2]
+			g["h"] = row[3]
+			g["count"] = 0
+			g["cursor"] = 0
+			groups[key] = g
+		g["count"] += 1
+	for key in groups:
+		var g: Dictionary = groups[key]
+		var quad := QuadMesh.new()
+		quad.size = Vector2(g["w"], g["h"])
+		var mat := ShaderMaterial.new()
+		mat.shader = FAR_TREE_SHADER
+		mat.set_shader_parameter("tex", g["tex"])
+		mat.set_shader_parameter("tint", _far_tint)
+		mat.set_shader_parameter("tree_far", FAR_TREE_CULL_M)
+		var mm := MultiMesh.new()
+		mm.transform_format = MultiMesh.TRANSFORM_3D
+		mm.mesh = quad
+		mm.instance_count = g["count"]
+		var node := MultiMeshInstance3D.new()
+		node.multimesh = mm
+		node.material_override = mat
+		node.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		add_child(node)
+		far_tree_materials.append(mat)
+		g["mm"] = mm
+	for row in rows:
+		if row[1] == null:
+			continue
+		var key := "%d|%f|%f" % [(row[1] as Texture2D).get_instance_id(), row[2], row[3]]
+		var g: Dictionary = groups[key]
+		var idx: int = g["cursor"]
+		g["cursor"] = idx + 1
+		var t := Transform3D(Basis.IDENTITY, row[4])
+		(g["mm"] as MultiMesh).set_instance_transform(idx, t)
+		far_instances[row[0]] = [g["mm"], idx, t]
+
 
 func _update_tree_sight() -> void:
 	var px := player.global_position.x
@@ -380,6 +486,10 @@ func _vsize() -> Vector2:
 	return get_viewport().get_visible_rect().size
 
 func _process(delta: float) -> void:
+	if not far_tree_materials.is_empty() and player != null:
+		var cam := player.camera.global_position
+		for m in far_tree_materials:
+			m.set_shader_parameter("cam_pos", cam)
 	if static_playing:
 		_static_tick(delta)
 		return
@@ -525,6 +635,10 @@ func _apply_phase(ph: int) -> void:
 	var day_v := float(PHASES[ph]["day"])
 	var lit := clampf(0.55 + 0.45 * day_v, 0.55, 1.0)
 	var tint_v := Color(lit, lit, lit)
+	_far_tint = tint_v
+	if not far_tree_materials.is_empty():
+		for m in far_tree_materials:
+			m.set_shader_parameter("tint", tint_v)
 	for o in onions:
 		if is_instance_valid(o):
 			(o.get_child(0) as Sprite3D).modulate = tint_v
