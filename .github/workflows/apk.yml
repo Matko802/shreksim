@@ -96,7 +96,7 @@ jobs:
           path: |
             godot-editor
             ~/.local/share/godot/export_templates/${{ env.GODOT_TEMPLATES_DIR }}
-          key: godot-${{ env.GODOT_VERSION }}-linux-x86_64-templates
+          key: godot-${{ env.GODOT_VERSION }}-${{ env.GODOT_TEMPLATES_DIR }}-linux-x86_64-templates
 
       - name: Download Godot editor and export templates
         if: steps.godot_cache.outputs.cache-hit != 'true'
