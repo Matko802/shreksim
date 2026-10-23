@@ -55,8 +55,14 @@ func _process(delta: float) -> void:
 	var latency_ms: float = delta * 1000.0
 	var low_1: float = _low_percent(int(_frames_recorded / 100.0))
 	var low_01: float = _low_percent(int(_frames_recorded / 1000.0))
+	var draws: int = int(Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME))
+	var prims: int = int(Performance.get_monitor(Performance.RENDER_TOTAL_PRIMITIVES_IN_FRAME))
+	var objs: int = int(Performance.get_monitor(Performance.RENDER_TOTAL_OBJECTS_IN_FRAME))
+	var proc_time: float = Performance.get_monitor(Performance.TIME_PROCESS) * 1000.0
+	var phys_time: float = Performance.get_monitor(Performance.TIME_PHYSICS_PROCESS) * 1000.0
 	var lines: PackedStringArray = PackedStringArray()
 	lines.append(" FPS: %d | Latency: %.1f ms | 1%% Low: %.1f | 0.1%% Low: %.1f" % [fps, latency_ms, low_1, low_01])
+	lines.append(" Draw: %d | Prims: %d k | Objs: %d | Proc: %.2f ms | Phys: %.2f ms" % [draws, prims / 1000, objs, proc_time, phys_time])
 	lines.append(_static_lines)
 	label.text = "\n".join(lines)
 
