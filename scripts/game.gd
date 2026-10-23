@@ -160,6 +160,25 @@ func _ready() -> void:
 	_objective_text()
 	player.interact_pressed.connect(_try_collect_center)
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	if SettingsBus._is_mobile():
+		_warmup_shaders()
+
+const WARMUP_PITCHES: Array[float] = [-1.45, -0.7, 0.0, 1.0]
+const WARMUP_YAWS: Array[float] = [0.0, 2.0943951, 4.1887902]
+
+func _warmup_shaders() -> void:
+	var head := player.head
+	var prev_rot := head.rotation
+	var prev_pos := head.position
+	player.process_mode = Node.PROCESS_MODE_DISABLED
+	for yaw in WARMUP_YAWS:
+		player.rotate_y(yaw)
+		for pitch in WARMUP_PITCHES:
+			head.rotation = Vector3(pitch, 0.0, 0.0)
+			await RenderingServer.frame_post_draw
+	head.rotation = prev_rot
+	head.position = prev_pos
+	player.process_mode = Node.PROCESS_MODE_PAUSABLE
 
 func _build_ui() -> void:
 	hud = (load("res://scenes/hud.tscn") as PackedScene).instantiate()
@@ -199,9 +218,6 @@ func _build_world() -> void:
 	if SettingsBus._is_mobile() and terrain_node.ocean_material != null:
 		terrain_node.ocean_material = load("res://assets/maps/ocean_mobile.tres")
 	ground_mat = terrain_node.material
-	if SettingsBus._is_mobile() and ground_mat != null:
-		ground_mat.shader_override = preload("res://addons/terrain_3d/extras/shaders/lightweight.gdshader")
-		ground_mat.shader_override_enabled = true
 	if _sky_shader == null:
 		_sky_shader = Shader.new()
 		_sky_shader.code = SKY_CUBE_SHADER
