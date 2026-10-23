@@ -1,6 +1,7 @@
 [gd_resource type="Terrain3DMaterial" format=3 uid="uid://cue7saks5hld6"]
 
 [resource]
+world_background = 0
 _shader_parameters = {
 &"bias_distance": null,
 &"blend_sharpness": null,

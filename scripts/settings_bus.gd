@@ -5,6 +5,7 @@ signal setting_changed(setting_name: StringName, value: Variant)
 enum AntiAliasingMode { OFF = 0, FXAA = 1, MSAA_2X = 2, MSAA_4X = 3, MSAA_8X = 4, TAA = 5 }
 
 const SAVE_PATH := "user://settings.cfg"
+const SETTINGS_VERSION := 2
 
 const LANGUAGES := [
 	["en", "English"],
@@ -32,10 +33,15 @@ func _ready() -> void:
 	if mobile:
 		fullscreen_enabled = true
 		_apply_display()
+		var vp := get_viewport()
+		if vp != null:
+			vp.scaling_3d_scale = 0.7
 	_apply_anti_aliasing.call_deferred(anti_aliasing_mode)
 
 func load_settings() -> void:
-	if _config.load(SAVE_PATH) == OK:
+	var had_file := _config.load(SAVE_PATH) == OK
+	if had_file:
+		var version := int(_config.get_value("core", "version", 0))
 		camera_effects_enabled = bool(_config.get_value("video", "camera_effects_enabled", true))
 		mouse_sensitivity = float(_config.get_value("input", "mouse_sensitivity", mouse_sensitivity))
 		fullscreen_enabled = bool(_config.get_value("video", "fullscreen_enabled", false))
@@ -43,10 +49,16 @@ func load_settings() -> void:
 		fps_limit = int(_config.get_value("video", "fps_limit", 0))
 		anti_aliasing_mode = int(_config.get_value("video", "anti_aliasing_mode", AntiAliasingMode.MSAA_2X))
 		language = str(_config.get_value("locale", "language", ""))
+		if version < SETTINGS_VERSION and (OS.has_feature("android") or OS.has_feature("ios")):
+			anti_aliasing_mode = AntiAliasingMode.MSAA_2X
+		if version != SETTINGS_VERSION:
+			_config.set_value("core", "version", SETTINGS_VERSION)
+			save_settings()
 	_apply_display()
 	_apply_language()
 
 func save_settings() -> void:
+	_config.set_value("core", "version", SETTINGS_VERSION)
 	_config.set_value("video", "camera_effects_enabled", camera_effects_enabled)
 	_config.set_value("input", "mouse_sensitivity", mouse_sensitivity)
 	_config.set_value("video", "fullscreen_enabled", fullscreen_enabled)

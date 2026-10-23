@@ -3,6 +3,8 @@ extends Control
 const GREEN := Color(0.0, 0.8, 0.27)
 const DARK_GREEN := Color(0.0, 0.4, 0.13)
 const RELEASE_API := "https://api.github.com/repos/Matko802/shreksim/releases/latest"
+const RELEASES_PAGE := "https://github.com/Matko802/shreksim/releases"
+const RELEASE_ATOM := "https://github.com/Matko802/shreksim/releases.atom"
 
 var music: AudioStreamPlayer
 var meme: AudioStreamPlayer
@@ -129,30 +131,51 @@ func _setup_version() -> void:
 
 func _check_update() -> void:
 	update_http = HTTPRequest.new()
-	update_http.timeout = 6.0
+	update_http.timeout = 10.0
 	add_child(update_http)
 	update_http.request_completed.connect(_on_update_check)
 	update_http.request(RELEASE_API, ["Accept: application/vnd.github+json"])
 
-func _on_update_check(result: int, code: int, _headers: PackedStringArray, body: PackedByteArray) -> void:
-	if result != HTTPRequest.RESULT_SUCCESS or code < 200 or code >= 300 or body.is_empty():
-		return
-	var data: Variant = JSON.parse_string(body.get_string_from_utf8())
-	if not (data is Dictionary):
-		return
-	var tag := str(data.get("tag_name", ""))
-	if tag == "" or not _tag_is_newer(tag):
-		return
+func _show_update(tag: String) -> void:
 	update_page = "https://github.com/Matko802/shreksim/releases/tag/" + tag
 	version_label.text = tr("v%s - tap to update") % tag.lstrip("v")
 	version_label.add_theme_color_override("font_color", GREEN)
 	update_button.visible = true
 
-func _on_update_pressed() -> void:
-	if update_page == "":
+func _check_update_fallback() -> void:
+	if update_http == null or not is_instance_valid(update_http):
 		return
+	update_http.queue_free()
+	update_http = HTTPRequest.new()
+	update_http.timeout = 10.0
+	add_child(update_http)
+	update_http.request_completed.connect(_on_atom_check)
+	update_http.request(RELEASE_ATOM)
+
+func _on_update_check(result: int, code: int, _headers: PackedStringArray, body: PackedByteArray) -> void:
+	if result != HTTPRequest.RESULT_SUCCESS or code < 200 or code >= 300 or body.is_empty():
+		_check_update_fallback()
+		return
+	var data: Variant = JSON.parse_string(body.get_string_from_utf8())
+	if not (data is Dictionary):
+		_check_update_fallback()
+		return
+	var tag := str(data.get("tag_name", ""))
+	if tag != "" and _tag_is_newer(tag):
+		_show_update(tag)
+
+func _on_atom_check(result: int, code: int, _headers: PackedStringArray, body: PackedByteArray) -> void:
+	if result != HTTPRequest.RESULT_SUCCESS or code < 200 or code >= 300 or body.is_empty():
+		return
+	var regex := RegEx.new()
+	regex.compile("releases/tag/v(\\d+\\.\\d+\\.\\d+)")
+	var m := regex.search(body.get_string_from_utf8())
+	if m != null and _tag_is_newer("v" + m.get_string(1)):
+		_show_update("v" + m.get_string(1))
+
+func _on_update_pressed() -> void:
 	click.play()
-	OS.shell_open(update_page)
+	OS.shell_open(update_page if update_page != "" else RELEASES_PAGE)
 
 func _tag_is_newer(tag: String) -> bool:
 	var cur := str(ProjectSettings.get_setting("application/config/version", "0.0.0")).lstrip("v").split(".")
@@ -167,11 +190,9 @@ func _tag_is_newer(tag: String) -> bool:
 	return false
 
 func _on_version_input(event: InputEvent) -> void:
-	if update_page == "":
-		return
 	if (event is InputEventMouseButton and event.pressed) or (event is InputEventScreenTouch and event.pressed):
 		click.play()
-		OS.shell_open(update_page)
+		OS.shell_open(update_page if update_page != "" else RELEASES_PAGE)
 
 func _pick_skin(skin: GameState.EnemySkin) -> void:
 	GameState.skin = skin
