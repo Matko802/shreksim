@@ -25,8 +25,10 @@ var _aa_modes: Array[int] = []
 func _ready() -> void:
 	visible = false
 	settings_center.visible = false
-	if OS.has_feature("android") or OS.has_feature("ios"):
+	if SettingsBus._is_mobile():
 		fs_check.visible = false
+		vsync_check.visible = false
+		aa_option.get_parent().visible = false
 	for entry in SettingsBus.LANGUAGES:
 		lang_option.add_item(entry[1])
 	_aa_modes = [0, 1, 2, 3, 4]

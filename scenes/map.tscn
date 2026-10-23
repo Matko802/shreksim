@@ -845,6 +845,7 @@ assets = ExtResource("t3d_assets")
 vertex_spacing = 4.0
 mesh_size = 32
 mesh_lods = 5
+ocean_mesh_lods = 3
 collision_mode = 3
 displacement_sharpness = 0.5
 ocean_material = ExtResource("3_2lpho")

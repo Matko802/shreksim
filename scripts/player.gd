@@ -43,7 +43,7 @@ const JUMP_CLEARANCE: float = 0.336
 
 var head_rest_pos: Vector3 = Vector3(0.0, STANDING_HEAD_Y, 0.0)
 
-var _flashlight_on: bool = true
+var _flashlight_on: bool = false
 var _look_yaw_target: float = 0.0
 var _look_pitch: float = 0.0
 var _look_yaw_applied: float = 0.0
@@ -122,6 +122,7 @@ func _ready() -> void:
 	flashlight_model = flashlight_container.get_node("Model") as Node3D
 	flashlight_model_animator = flashlight_container.get_node("%ModelAnimator") as AnimationPlayer
 	flashlight_toggle_player = flashlight_container.get_node("%TogglePlayer") as AudioStreamPlayer3D
+	flashlight_light.visible = false
 	flashlight_model_animator.play(&"model_draw")
 
 func _process(delta: float) -> void:
@@ -153,6 +154,7 @@ func _process(delta: float) -> void:
 func toggle_flashlight() -> void:
 	_flashlight_on = not _flashlight_on
 	flashlight_light.visible = _flashlight_on
+	flashlight_container.visible = _flashlight_on
 	flashlight_model_animator.play(&"model_draw" if _flashlight_on else &"model_holster")
 	flashlight_toggle_player.play()
 	flashlight_toggled.emit(_flashlight_on)
@@ -162,6 +164,7 @@ func set_flashlight_on(on: bool) -> void:
 		return
 	_flashlight_on = on
 	flashlight_light.visible = on
+	flashlight_container.visible = on
 	flashlight_model_animator.play(&"model_draw" if on else &"model_holster")
 
 func is_flashlight_on() -> bool:

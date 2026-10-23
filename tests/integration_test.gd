@@ -41,9 +41,9 @@ func _ready() -> void:
 	if game.music != null and game.music.playing:
 		failures += 1
 		print("FAIL music should never play: ", track)
-	if not game.player.is_flashlight_on():
+	if game.player.is_flashlight_on():
 		failures += 1
-		print("FAIL flashlight should start on")
+		print("FAIL flashlight should start off")
 
 	var prev_speed: float = game.player.WALK_SPEED
 	Input.action_press("move_forward")

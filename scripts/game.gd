@@ -186,6 +186,8 @@ func _build_world() -> void:
 	env.background_mode = Environment.BG_SKY
 	var terrain_node := get_node("Map/Terrain") as Terrain3D
 	_terrain = terrain_node
+	if SettingsBus._is_mobile() and terrain_node.ocean_material != null:
+		terrain_node.ocean_material = load("res://assets/maps/ocean_mobile.tres")
 	ground_mat = terrain_node.material
 	var sky_shader := Shader.new()
 	sky_shader.code = SKY_CUBE_SHADER

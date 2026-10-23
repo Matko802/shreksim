@@ -35,6 +35,9 @@ func _ready() -> void:
 		_apply_display()
 	_apply_anti_aliasing.call_deferred(anti_aliasing_mode)
 
+func _is_mobile() -> bool:
+	return OS.has_feature("android") or OS.has_feature("ios")
+
 func load_settings() -> void:
 	var had_file := _config.load(SAVE_PATH) == OK
 	if had_file:
@@ -46,8 +49,9 @@ func load_settings() -> void:
 		fps_limit = int(_config.get_value("video", "fps_limit", 0))
 		anti_aliasing_mode = int(_config.get_value("video", "anti_aliasing_mode", AntiAliasingMode.MSAA_2X))
 		language = str(_config.get_value("locale", "language", ""))
-		if version < SETTINGS_VERSION and (OS.has_feature("android") or OS.has_feature("ios")):
-			anti_aliasing_mode = AntiAliasingMode.MSAA_2X
+		if _is_mobile():
+			vsync_enabled = false
+			anti_aliasing_mode = AntiAliasingMode.FXAA
 		if version != SETTINGS_VERSION:
 			_config.set_value("core", "version", SETTINGS_VERSION)
 			save_settings()
@@ -119,10 +123,10 @@ func set_fullscreen(enabled: bool) -> void:
 	setting_changed.emit(&"fullscreen_enabled", enabled)
 
 func set_vsync_enabled(enabled: bool) -> void:
-	vsync_enabled = enabled
+	vsync_enabled = enabled and not _is_mobile()
 	_apply_display()
 	save_settings()
-	setting_changed.emit(&"vsync_enabled", enabled)
+	setting_changed.emit(&"vsync_enabled", vsync_enabled)
 
 func set_fps_limit(limit: int) -> void:
 	fps_limit = clampi(limit, 0, 360)
@@ -131,6 +135,8 @@ func set_fps_limit(limit: int) -> void:
 	setting_changed.emit(&"fps_limit", fps_limit)
 
 func set_anti_aliasing_mode(mode: int) -> void:
+	if _is_mobile():
+		mode = AntiAliasingMode.FXAA
 	if mode == AntiAliasingMode.TAA and not taa_supported():
 		mode = AntiAliasingMode.FXAA
 	anti_aliasing_mode = clampi(mode, 0, AntiAliasingMode.TAA)
@@ -176,8 +182,10 @@ func reset_settings() -> void:
 	fps_limit = 0
 	anti_aliasing_mode = AntiAliasingMode.MSAA_2X
 	language = ""
-	if OS.has_feature("android") or OS.has_feature("ios"):
+	if _is_mobile():
 		fullscreen_enabled = true
+		vsync_enabled = false
+		anti_aliasing_mode = AntiAliasingMode.FXAA
 	_apply_anti_aliasing(anti_aliasing_mode)
 	_apply_display()
 	_apply_language()

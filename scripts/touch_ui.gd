@@ -41,15 +41,12 @@ func _safe_insets() -> Vector4:
 		b = maxf(0.0, float(disp.y - raw.position.y - raw.size.y) * ky)
 	return Vector4(l, t, r, b)
 
-func _circle_panel(size: float, color: Color) -> Panel:
+func _circle_panel(size: float) -> Panel:
 	var p := Panel.new()
 	p.size = Vector2(size, size)
 	var sb := StyleBoxFlat.new()
-	sb.bg_color = color
+	sb.bg_color = Color(0, 0, 0, 0.55)
 	sb.set_corner_radius_all(int(size * 0.5))
-	sb.set_border_width_all(maxi(1, roundi(size * 0.035)))
-	var border := color.lightened(0.4)
-	sb.border_color = Color(border.r, border.g, border.b, color.a)
 	p.add_theme_stylebox_override("panel", sb)
 	return p
 
@@ -85,11 +82,11 @@ func _place(p: Control, ax: float, ay: float, off_left: float, off_top: float, w
 	p.offset_bottom = off_top + h
 	p.pivot_offset = Vector2(w, h) * 0.5
 
-func _add_button(id: String, text: String, size: float, color: Color) -> void:
-	var p := _circle_panel(size, color)
+func _add_button(id: String, text: String, size: float) -> void:
+	var p := _circle_panel(size)
 	p.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_label_of(p, text, size)
-	p.set_meta("base", color)
+	p.set_meta("base", Color(0, 0, 0, 0.55))
 	add_child(p)
 	buttons[id] = p
 
@@ -99,16 +96,16 @@ func _build_ui() -> void:
 	var small := 58.0 * ui_scale
 	var jump := 88.0 * ui_scale
 	var gap := 12.0 * ui_scale
-	_add_button("jump", tr("JUMP"), jump, Color(0.18, 0.5, 0.24, 0.42))
-	_add_button("sprint", tr("RUN"), small, Color(0.5, 0.38, 0.12, 0.42))
-	_add_button("crouch", tr("DUCK"), small, Color(0.22, 0.38, 0.48, 0.42))
-	_add_button("light", tr("LIGHT"), small, Color(0.62, 0.52, 0.16, 0.42))
-	_add_button("grab", tr("GRAB"), small, Color(0.55, 0.28, 0.18, 0.42))
-	_add_button("pauseb", "I I", small * 0.82, Color(0.25, 0.25, 0.28, 0.45))
+	_add_button("jump", tr("JUMP"), jump)
+	_add_button("sprint", tr("RUN"), small)
+	_add_button("crouch", tr("DUCK"), small)
+	_add_button("light", tr("LIGHT"), small)
+	_add_button("grab", tr("GRAB"), small)
+	_add_button("pauseb", "I I", small * 0.82)
 	_place(buttons["jump"], 1.0, 1.0, -(m + insets[2] + jump), -(m + insets[3] + jump), jump, jump)
 	_place(buttons["sprint"], 1.0, 1.0, -(m + insets[2] + small), -(m + insets[3] + jump + gap + small), small, small)
 	_place(buttons["crouch"], 1.0, 1.0, -(m + insets[2] + jump + gap + small), -(m + insets[3] + small), small, small)
-	_place(buttons["light"], 1.0, 1.0, -(m + insets[2] + jump + gap + small), -(m + insets[3] + small * 1.5 + gap), small, small)
+	_place(buttons["light"], 1.0, 1.0, -(m + insets[2] + jump + gap + small), -(m + insets[3] + small * 2.0 + gap), small, small)
 	_place(buttons["grab"], 1.0, 0.58, -(m + insets[2] + small * 1.2), -small * 0.5, small, small)
 	_place(buttons["pauseb"], 1.0, 0.0, -(m + insets[2] + small * 0.82), m + insets[1], small * 0.82, small * 0.82)
 	var joy_size := 160.0 * ui_scale
@@ -123,10 +120,10 @@ func _build_ui() -> void:
 	joystick.action_up = &"move_forward"
 	joystick.action_down = &"move_back"
 	_place(joystick, 0.0, 1.0, m + insets[0], -(m + insets[3] + joy_size), joy_size, joy_size)
-	joystick.add_theme_stylebox_override("normal_joystick", _joy_style(joy_size, Color(1, 1, 1, 0.09), 5.6 * ui_scale))
-	joystick.add_theme_stylebox_override("pressed_joystick", _joy_style(joy_size, Color(1, 1, 1, 0.14), 5.6 * ui_scale))
-	joystick.add_theme_stylebox_override("normal_tip", _joy_style(60.0 * ui_scale, Color(1.0, 0.97, 0.88, 0.5), 2.1 * ui_scale))
-	joystick.add_theme_stylebox_override("pressed_tip", _joy_style(60.0 * ui_scale, Color(1.0, 0.97, 0.88, 0.68), 2.1 * ui_scale))
+	joystick.add_theme_stylebox_override("normal_joystick", _joy_style(joy_size, Color(0, 0, 0, 0.45), 3.0 * ui_scale))
+	joystick.add_theme_stylebox_override("pressed_joystick", _joy_style(joy_size, Color(0, 0, 0, 0.62), 3.0 * ui_scale))
+	joystick.add_theme_stylebox_override("normal_tip", _joy_style(60.0 * ui_scale, Color(0, 0, 0, 0.55), 2.4 * ui_scale))
+	joystick.add_theme_stylebox_override("pressed_tip", _joy_style(60.0 * ui_scale, Color(1, 1, 1, 0.92), 0.0))
 	add_child(joystick)
 	grab_button = buttons["grab"]
 	grab_button.visible = false
@@ -200,7 +197,8 @@ func _handle_press(idx: int, pos: Vector2) -> void:
 		if not p.get_global_rect().has_point(pos):
 			continue
 		btn_pointers[idx] = id
-		p.modulate = Color(1.25, 1.25, 1.25)
+		var sb: StyleBoxFlat = p.get_theme_stylebox("panel")
+		sb.bg_color = Color(1, 1, 1, 0.9)
 		match id:
 			"jump":
 				Input.action_press("jump")
@@ -213,8 +211,6 @@ func _handle_press(idx: int, pos: Vector2) -> void:
 					Input.action_press("sprint")
 				else:
 					Input.action_release("sprint")
-				var sb: StyleBoxFlat = p.get_theme_stylebox("panel")
-				sb.bg_color = Color(0.85, 0.62, 0.1, 0.75) if sprint_on else (p.get_meta("base") as Color)
 			"light":
 				_fire_action("flashlight")
 			"grab":
@@ -234,7 +230,11 @@ func _handle_release(idx: int) -> void:
 		var id: String = btn_pointers[idx]
 		btn_pointers.erase(idx)
 		var p: Panel = buttons[id]
-		p.modulate = Color(1, 1, 1)
+		var sb: StyleBoxFlat = p.get_theme_stylebox("panel")
+		if id == "sprint" and sprint_on:
+			sb.bg_color = Color(1, 1, 1, 0.9)
+		else:
+			sb.bg_color = p.get_meta("base") as Color
 		if id == "jump":
 			Input.action_release("jump")
 		return
