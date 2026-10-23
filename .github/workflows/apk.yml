@@ -15,7 +15,7 @@ concurrency:
 
 env:
   GODOT_VERSION: 4.7-stable
-  GODOT_TEMPLATES_DIR: 4.7
+  GODOT_TEMPLATES_DIR: 4.7.stable
   GODOT_TEMPLATES_URL: https://github.com/godotengine/godot-builds/releases/download/4.7-stable/Godot_v4.7-stable_export_templates.tpz
   GODOT_EDITOR_URL: https://github.com/godotengine/godot-builds/releases/download/4.7-stable/Godot_v4.7-stable_linux.x86_64.zip
   ANDROID_COMPILE_SDK: 36
