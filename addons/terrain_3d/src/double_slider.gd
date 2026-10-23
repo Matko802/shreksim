@@ -22,11 +22,16 @@ func _ready() -> void:
 	# Setup Display Scale
 	# 0 auto, 1 75%, 2 100%, 3 125%, 4 150%, 5 175%, 6 200%, 7 custom
 	var es: EditorSettings = EditorInterface.get_editor_settings()
-	var ds: int = es.get_setting("interface/editor/display_scale")
+	var ds: int = 2
+	if es != null:
+		var raw: Variant = es.get_setting("interface/editor/display_scale")
+		if raw != null:
+			ds = int(raw)
 	if ds == 0:
 		ds = 2
 	elif ds == 7:
-		display_scale = es.get_setting("interface/editor/custom_display_scale")
+		var raw_custom: Variant = es.get_setting("interface/editor/custom_display_scale")
+		display_scale = float(raw_custom) if raw_custom != null else 1.0
 	else:
 		display_scale = float(ds + 2) * .25
 

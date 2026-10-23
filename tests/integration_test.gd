@@ -143,9 +143,13 @@ func _ready() -> void:
 	if g3.pages != 1:
 		failures += 1
 		print("FAIL endless collect")
-	if is_instance_valid(op):
+	var respawned: Area3D = g3.onions[g3.onions.size() - 1]
+	if respawned == null or respawned == op or not respawned.visible:
 		failures += 1
 		print("FAIL endless did not respawn onion")
+	if op.visible or op.has_meta("onion"):
+		failures += 1
+		print("FAIL endless onion not deactivated")
 	if g3.hud.pages_label.text != "1":
 		failures += 1
 		print("FAIL endless label: ", g3.hud.pages_label.text)
