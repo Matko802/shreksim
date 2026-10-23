@@ -93,6 +93,7 @@ var far_tree_materials: Array[ShaderMaterial] = []
 var snap_pending: Array = []
 var far_instances: Dictionary = {}
 var far_bake_ticks := 0
+var _snap_tick := 0.0
 var _far_trees_baked := false
 var _far_tint: Color = Color(1.0, 1.0, 1.0, 1.0)
 var onion_spot := -1
@@ -164,6 +165,10 @@ const WARMUP_PITCHES: Array[float] = [-1.45, -0.7, 0.0, 1.0]
 const WARMUP_YAWS: Array[float] = [0.0, 2.0943951, 4.1887902]
 
 func _run_load_sequence() -> void:
+	var guard := 0
+	while (not _far_trees_baked or not snap_pending.is_empty()) and guard < 600:
+		guard += 1
+		await RenderingServer.frame_post_draw
 	await _warmup_shaders()
 	var tw := create_tween()
 	tw.tween_property(_loading_rect, "modulate:a", 0.0, 0.35)
@@ -364,12 +369,14 @@ func _bake_far_trees() -> void:
 	for row in rows:
 		if row[1] == null:
 			continue
-		var key := "%d|%f|%f" % [(row[1] as Texture2D).get_instance_id(), row[2], row[3]]
+		var bw := roundf(row[2] * 10.0) / 10.0
+		var bh := roundf(row[3] * 10.0) / 10.0
+		var key := "%d|%f|%f" % [(row[1] as Texture2D).get_instance_id(), bw, bh]
 		var g: Dictionary = groups.get(key, {})
 		if g.is_empty():
 			g["tex"] = row[1]
-			g["w"] = row[2]
-			g["h"] = row[3]
+			g["w"] = bw
+			g["h"] = bh
 			g["count"] = 0
 			g["cursor"] = 0
 			groups[key] = g
@@ -397,11 +404,13 @@ func _bake_far_trees() -> void:
 	for row in rows:
 		if row[1] == null:
 			continue
-		var key := "%d|%f|%f" % [(row[1] as Texture2D).get_instance_id(), row[2], row[3]]
+		var bw := roundf(row[2] * 10.0) / 10.0
+		var bh := roundf(row[3] * 10.0) / 10.0
+		var key := "%d|%f|%f" % [(row[1] as Texture2D).get_instance_id(), bw, bh]
 		var g: Dictionary = groups[key]
 		var idx: int = g["cursor"]
 		g["cursor"] = idx + 1
-		var t := Transform3D(Basis.IDENTITY, row[4])
+		var t := Transform3D(Basis.from_scale(Vector3(row[2] / bw, row[3] / bh, 1.0)), row[4])
 		(g["mm"] as MultiMesh).set_instance_transform(idx, t)
 		far_instances[row[0]] = [g["mm"], idx, t]
 
@@ -495,6 +504,10 @@ func _process(delta: float) -> void:
 		var cam := player.camera.global_position
 		for m in far_tree_materials:
 			m.set_shader_parameter("cam_pos", cam)
+	_snap_tick -= delta
+	if _snap_tick <= 0.0 and (_far_trees_baked or not snap_pending.is_empty() or far_bake_ticks < 2):
+		_snap_tick = 0.12
+		_snap_pending_trees()
 	if static_playing:
 		_static_tick(delta)
 		return

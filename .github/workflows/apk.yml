@@ -189,4 +189,4 @@ jobs:
             "ShrekSim-${{ github.ref_name }}-arm64.apk" \
             "ShrekSim.apk.sha256" \
             --title "${{ github.ref_name }}" \
-            --notes "Android APK build ${{ github.ref_name }} (arm64). All 554 near terrain trees are now batched into multimeshes like the far trees, removing over a thousand individual sprite draw calls and the per frame tree visibility loop, plus a proper loading screen hides the spawn shader precompile and the warmup also covers the flashlight and enemy shaders. If you installed an older signed build, uninstall it before installing this one."
+            --notes "Android APK build ${{ github.ref_name }} (arm64). Fixes the tree batching: the loading screen now waits until the terrain heights are ready so all trees bake correctly and reappear, tree sizes are quantized so the trees render in a handful of multimeshes instead of hundreds. If you installed an older signed build, uninstall it before installing this one."

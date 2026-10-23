@@ -16,7 +16,8 @@ void vertex() {
 	dir = l > 0.0001 ? dir / l : vec3(0.0, 0.0, 1.0);
 	vec3 right = vec3(dir.z, 0.0, -dir.x);
 	mat3 billboard = mat3(right, vec3(0.0, 1.0, 0.0), dir);
-	VERTEX = billboard * VERTEX;
+	vec3 scale = vec3(length(MODEL_MATRIX[0].xyz), length(MODEL_MATRIX[1].xyz), 1.0);
+	VERTEX = billboard * (VERTEX * scale);
 	view_dist = l;
 }
 
