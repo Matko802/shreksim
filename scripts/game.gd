@@ -27,6 +27,8 @@ const ENEMY_PATH_INTERVAL := 0.6
 const ENEMY_WHISKER_DIST := 3.2
 const WALL_SAFE := 6.0
 const TREE_EDGE_DOT := 0.18
+const TREE_2D_ENTER_SQ := 2704.0
+const TREE_2D_EXIT_SQ := 2304.0
 
 const PHASES := [
 	{"top": Color(0.3, 0.52, 0.85), "horizon": Color(0.8, 0.88, 0.86), "fog": 0.004, "sun": 1.35, "sun_color": Color(1.0, 0.97, 0.9), "ambient_energy": 1.0, "grass": Color(0.5, 0.68, 0.4), "sky_affect": 0.12, "day": 1.0},
@@ -88,6 +90,7 @@ var _day_mix := 1.0
 var ground_mat: Resource
 var _terrain: Terrain3D
 var tree_planes: Array = []
+var tree_snap_pending: Array = []
 var tree_sight_time := 0.0
 var onion_spot := -1
 
@@ -215,18 +218,54 @@ func _build_world() -> void:
 		var a := c.get_node_or_null("CrossA") as Sprite3D
 		var b := c.get_node_or_null("CrossB") as Sprite3D
 		if a != null and b != null:
-			tree_planes.append([a, b])
+			tree_planes.append([a, b, a.basis, false])
+			tree_snap_pending.append(c)
+	_snap_pending_trees()
+
+func _snap_pending_trees() -> void:
+	if tree_snap_pending.is_empty():
+		return
+	if _terrain == null or _terrain.data == null:
+		return
+	var keep: Array = []
+	for c in tree_snap_pending:
+		var n := c as Node3D
+		if n == null:
+			continue
+		var raw := _terrain.data.get_height(Vector3(n.global_position.x, 0.0, n.global_position.z))
+		if is_nan(raw):
+			keep.append(n)
+			continue
+		n.position.y = raw
+	tree_snap_pending = keep
 
 func _update_tree_sight() -> void:
 	var px := player.global_position.x
 	var pz := player.global_position.z
+	_snap_pending_trees()
 	for pair in tree_planes:
 		var a := pair[0] as Sprite3D
 		var b := pair[1] as Sprite3D
+		var ab: Basis = pair[2]
 		var tpos: Vector3 = a.global_position
 		var vx := tpos.x - px
 		var vz := tpos.z - pz
-		var vlen := sqrt(vx * vx + vz * vz)
+		var d2 := vx * vx + vz * vz
+		if pair[3]:
+			if d2 > TREE_2D_EXIT_SQ:
+				b.visible = false
+				continue
+			pair[3] = false
+			a.billboard = BaseMaterial3D.BILLBOARD_DISABLED
+			a.basis = ab
+		elif d2 > TREE_2D_ENTER_SQ:
+			pair[3] = true
+			a.billboard = BaseMaterial3D.BILLBOARD_FIXED_Y
+			a.basis = Basis.from_scale(ab.get_scale())
+			a.visible = true
+			b.visible = false
+			continue
+		var vlen := sqrt(d2)
 		if vlen < 0.001:
 			continue
 		vx /= vlen

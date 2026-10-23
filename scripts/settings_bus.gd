@@ -28,13 +28,9 @@ var _config := ConfigFile.new()
 
 func _ready() -> void:
 	load_settings()
-	var saved_aa: bool = _config.has_section_key("video", "anti_aliasing_mode")
 	var mobile := OS.has_feature("android") or OS.has_feature("ios")
 	if mobile:
 		fullscreen_enabled = true
-		if not saved_aa:
-			anti_aliasing_mode = AntiAliasingMode.OFF
-			save_settings()
 		_apply_display()
 	_apply_anti_aliasing.call_deferred(anti_aliasing_mode)
 
