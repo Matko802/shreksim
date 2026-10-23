@@ -200,10 +200,8 @@ func _build_world() -> void:
 		terrain_node.ocean_material = load("res://assets/maps/ocean_mobile.tres")
 	ground_mat = terrain_node.material
 	if SettingsBus._is_mobile() and ground_mat != null:
-		ground_mat.output_specular = false
-		ground_mat.set_shader_parameter(&"flat_terrain_normals", true)
-		ground_mat.set_shader_parameter(&"depth_blur", 2.0)
-		ground_mat.set_shader_parameter(&"bias_distance", 64.0)
+		ground_mat.shader_override = preload("res://addons/terrain_3d/extras/shaders/lightweight.gdshader")
+		ground_mat.shader_override_enabled = true
 	if _sky_shader == null:
 		_sky_shader = Shader.new()
 		_sky_shader.code = SKY_CUBE_SHADER
