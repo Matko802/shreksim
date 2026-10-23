@@ -189,4 +189,4 @@ jobs:
             "ShrekSim-${{ github.ref_name }}-arm64.apk" \
             "ShrekSim.apk.sha256" \
             --title "${{ github.ref_name }}" \
-            --notes "Android APK build ${{ github.ref_name }} (arm64). Fixes the tree batching: the loading screen now waits until the terrain heights are ready so all trees bake correctly and reappear, tree sizes are quantized so the trees render in a handful of multimeshes instead of hundreds. If you installed an older signed build, uninstall it before installing this one."
+            --notes "Android APK build ${{ github.ref_name }} (arm64). The map now ends at the playable borders: the terrain mesh stops near the border and invisible walls keep you inside, and on mobile the far plane shrinks while looking down so distant chunks are not drawn while they are fogged out anyway. If you installed an older signed build, uninstall it before installing this one."

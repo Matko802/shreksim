@@ -96,6 +96,7 @@ var far_bake_ticks := 0
 var _snap_tick := 0.0
 var _far_trees_baked := false
 var _far_tint: Color = Color(1.0, 1.0, 1.0, 1.0)
+var _cam_far_current := 200.0
 var onion_spot := -1
 
 var enemy: Sprite3D
@@ -261,6 +262,7 @@ func _build_world() -> void:
 	if SettingsBus._is_mobile() and terrain_node.ocean_material != null:
 		terrain_node.ocean_material = load("res://assets/maps/ocean_mobile.tres")
 	ground_mat = terrain_node.material
+	_build_border_walls()
 	if _sky_shader == null:
 		_sky_shader = Shader.new()
 		_sky_shader.code = SKY_CUBE_SHADER
@@ -288,6 +290,22 @@ func _build_world() -> void:
 	sun.shadow_enabled = false
 	sun.directional_shadow_max_distance = 40.0
 	add_child(sun)
+
+func _build_border_walls() -> void:
+	var wall_shape := BoxShape3D.new()
+	wall_shape.size = Vector3(WORLD_HALF * 2.0 + 18.0, 40.0, 2.0)
+	for i in 4:
+		var wall := StaticBody3D.new()
+		wall.position = Vector3(0.0, 20.0, WORLD_HALF + 1.5) if i < 2 else Vector3(WORLD_HALF + 1.5, 20.0, 0.0)
+		if i == 1 or i == 3:
+			wall.position.x = -wall.position.x
+			wall.position.z = -wall.position.z
+		if i >= 2:
+			wall.rotation.y = 1.5707963
+		var col := CollisionShape3D.new()
+		col.shape = wall_shape
+		wall.add_child(col)
+		add_child(wall)
 
 	var trees := get_node("Map/Trees")
 	for c in trees.get_children():
@@ -504,6 +522,7 @@ func _process(delta: float) -> void:
 		var cam := player.camera.global_position
 		for m in far_tree_materials:
 			m.set_shader_parameter("cam_pos", cam)
+	_update_far_plane(delta)
 	_snap_tick -= delta
 	if _snap_tick <= 0.0 and (_far_trees_baked or not snap_pending.is_empty() or far_bake_ticks < 2):
 		_snap_tick = 0.12
@@ -557,6 +576,16 @@ func _set_touch_grab(v: bool) -> void:
 	_grab_shown = v
 	if _touch != null:
 		_touch.set_grab_visible(v)
+
+func _update_far_plane(delta: float) -> void:
+	if not SettingsBus._is_mobile() or player == null:
+		return
+	var pitch := player.head.global_rotation.x
+	var down := clampf(-pitch / 1.0, 0.0, 1.0)
+	var target := lerpf(200.0, 70.0, down * down)
+	_cam_far_current = lerpf(_cam_far_current, target, clampf(8.0 * delta, 0.0, 1.0))
+	if absf(player.camera.far - _cam_far_current) > 0.25:
+		player.camera.far = _cam_far_current
 
 func _ray_onion() -> Area3D:
 	var center := _vsize() * 0.5
