@@ -26,9 +26,6 @@ const ENEMY_SEARCH_TIME := 6.0
 const ENEMY_PATH_INTERVAL := 0.6
 const ENEMY_WHISKER_DIST := 3.2
 const WALL_SAFE := 6.0
-const TREE_EDGE_DOT := 0.18
-const TREE_2D_ENTER_SQ := 2704.0
-const TREE_2D_EXIT_SQ := 2304.0
 
 const FAR_TREE_SHADER: Shader = preload("res://scripts/far_tree_billboard.gdshader")
 const FAR_TREE_CULL_M := 150.0
@@ -92,14 +89,12 @@ var sky_mat: ShaderMaterial
 var _day_mix := 1.0
 var ground_mat: Resource
 var _terrain: Terrain3D
-var tree_planes: Array = []
-var snap_pending: Array = []
 var far_tree_materials: Array[ShaderMaterial] = []
+var snap_pending: Array = []
 var far_instances: Dictionary = {}
 var far_bake_ticks := 0
 var _far_trees_baked := false
 var _far_tint: Color = Color(1.0, 1.0, 1.0, 1.0)
-var tree_sight_time := 0.0
 var onion_spot := -1
 
 var enemy: Sprite3D
@@ -133,6 +128,8 @@ var onion_bob_t := 0.0
 var hud: CanvasLayer
 var pause_menu: CanvasLayer
 var _touch: Node
+var loading_layer: CanvasLayer
+var _loading_rect: ColorRect
 var static_frames: Array[Texture2D] = []
 var threat_frames: Array[Texture2D] = []
 var static_time := 0.0
@@ -161,16 +158,29 @@ func _ready() -> void:
 	player.interact_pressed.connect(_try_collect_center)
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	if SettingsBus._is_mobile():
-		_warmup_shaders()
+		_run_load_sequence()
 
 const WARMUP_PITCHES: Array[float] = [-1.45, -0.7, 0.0, 1.0]
 const WARMUP_YAWS: Array[float] = [0.0, 2.0943951, 4.1887902]
+
+func _run_load_sequence() -> void:
+	await _warmup_shaders()
+	var tw := create_tween()
+	tw.tween_property(_loading_rect, "modulate:a", 0.0, 0.35)
+	await tw.finished
+	loading_layer.queue_free()
+	loading_layer = null
+	_loading_rect = null
 
 func _warmup_shaders() -> void:
 	var head := player.head
 	var prev_rot := head.rotation
 	var prev_pos := head.position
+	var enemy_was := enemy.visible
+	var fl_was := player.flashlight_light.visible
 	player.process_mode = Node.PROCESS_MODE_DISABLED
+	enemy.visible = true
+	player.flashlight_light.visible = true
 	for yaw in WARMUP_YAWS:
 		player.rotate_y(yaw)
 		for pitch in WARMUP_PITCHES:
@@ -178,6 +188,8 @@ func _warmup_shaders() -> void:
 			await RenderingServer.frame_post_draw
 	head.rotation = prev_rot
 	head.position = prev_pos
+	enemy.visible = enemy_was
+	player.flashlight_light.visible = fl_was
 	player.process_mode = Node.PROCESS_MODE_PAUSABLE
 
 func _build_ui() -> void:
@@ -188,6 +200,32 @@ func _build_ui() -> void:
 	var touch := (load("res://scenes/touch_ui.tscn") as PackedScene).instantiate()
 	add_child(touch)
 	_touch = touch
+	if SettingsBus._is_mobile():
+		loading_layer = CanvasLayer.new()
+		loading_layer.layer = 95
+		add_child(loading_layer)
+		_loading_rect = ColorRect.new()
+		_loading_rect.color = Color(0.02, 0.05, 0.02, 1.0)
+		_loading_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
+		_loading_rect.mouse_filter = Control.MOUSE_FILTER_STOP
+		loading_layer.add_child(_loading_rect)
+		var box := VBoxContainer.new()
+		box.set_anchors_preset(Control.PRESET_CENTER)
+		box.grow_horizontal = Control.GROW_DIRECTION_BOTH
+		box.grow_vertical = Control.GROW_DIRECTION_BOTH
+		box.alignment = BoxContainer.ALIGNMENT_CENTER
+		_loading_rect.add_child(box)
+		var title := Label.new()
+		title.text = "SWAMP HORROR SIMULATOR 3D"
+		title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		title.add_theme_font_size_override("font_size", 34)
+		title.add_theme_color_override("font_color", Color(0.55, 0.95, 0.55))
+		box.add_child(title)
+		var sub := Label.new()
+		sub.text = "Loading..."
+		sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		sub.add_theme_font_size_override("font_size", 18)
+		box.add_child(sub)
 	pause_menu.resume_requested.connect(_toggle_pause)
 	pause_menu.restart_requested.connect(_restart)
 	pause_menu.menu_requested.connect(_to_menu)
@@ -252,18 +290,10 @@ func _build_world() -> void:
 		var b := c.get_node_or_null("CrossB") as Sprite3D
 		if a == null or b == null:
 			continue
-		if c is StaticBody3D:
-			if a.visibility_range_fade_mode != GeometryInstance3D.VISIBILITY_RANGE_FADE_DISABLED:
-				a.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_DISABLED
-			if b.visibility_range_fade_mode != GeometryInstance3D.VISIBILITY_RANGE_FADE_DISABLED:
-				b.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_DISABLED
-			tree_planes.append([a, b, a.basis, false])
-			snap_pending.append(c)
-		else:
-			a.visible = false
-			b.visible = false
-			c.set_meta("far_tree", true)
-			snap_pending.append(c)
+		a.visible = false
+		b.visible = false
+		c.set_meta("far_tree", true)
+		snap_pending.append(c)
 	for c in get_node("Map/OnionSpots").get_children():
 		if c is Area3D:
 			snap_pending.append(c)
@@ -375,50 +405,6 @@ func _bake_far_trees() -> void:
 		(g["mm"] as MultiMesh).set_instance_transform(idx, t)
 		far_instances[row[0]] = [g["mm"], idx, t]
 
-
-func _update_tree_sight() -> void:
-	var px := player.global_position.x
-	var pz := player.global_position.z
-	_snap_pending_trees()
-	for pair in tree_planes:
-		var a := pair[0] as Sprite3D
-		var b := pair[1] as Sprite3D
-		var ab: Basis = pair[2]
-		var tpos: Vector3 = a.global_position
-		var vx := tpos.x - px
-		var vz := tpos.z - pz
-		var d2 := vx * vx + vz * vz
-		if pair[3]:
-			if d2 > TREE_2D_EXIT_SQ:
-				b.visible = false
-				continue
-			pair[3] = false
-			a.billboard = BaseMaterial3D.BILLBOARD_DISABLED
-			a.basis = ab
-		elif d2 > TREE_2D_ENTER_SQ:
-			pair[3] = true
-			a.billboard = BaseMaterial3D.BILLBOARD_FIXED_Y
-			a.basis = Basis.from_scale(ab.get_scale())
-			a.visible = true
-			b.visible = false
-			continue
-		var vlen := sqrt(d2)
-		if vlen < 0.001:
-			continue
-		vx /= vlen
-		vz /= vlen
-		var na := a.global_basis.z
-		var dota := absf(na.x * vx + na.z * vz)
-		var nb := b.global_basis.z
-		var dotb := absf(nb.x * vx + nb.z * vz)
-		var a_on := dota >= TREE_EDGE_DOT
-		var b_on := dotb >= TREE_EDGE_DOT
-		if not a_on and not b_on:
-			a_on = dota >= dotb
-			b_on = not a_on
-		a.visible = a_on
-		b.visible = b_on
-
 func _next_onion() -> Area3D:
 	var spots := get_node("Map/OnionSpots").get_children()
 	for i in spots.size():
@@ -520,10 +506,6 @@ func _process(delta: float) -> void:
 			o.position.y = float(o.get_meta("base_y")) + sin(onion_bob_t * 2.0 + o.position.x * 0.01) * 0.12
 			o.rotation.y += delta * 0.9
 	_update_threat(delta)
-	tree_sight_time -= delta
-	if tree_sight_time <= 0.0:
-		tree_sight_time = 0.12
-		_update_tree_sight()
 	_prompt_timer -= delta
 	if _prompt_timer <= 0.0:
 		_prompt_timer = PROMPT_INTERVAL
@@ -661,9 +643,6 @@ func _apply_phase(ph: int) -> void:
 	for o in onions:
 		if is_instance_valid(o):
 			(o.get_child(0) as Sprite3D).modulate = tint_v
-	for pair in tree_planes:
-		(pair[0] as Sprite3D).modulate = tint_v
-		(pair[1] as Sprite3D).modulate = tint_v
 
 func _color_close(a: Color, b: Color, eps: float) -> bool:
 	return absf(a.r - b.r) < eps and absf(a.g - b.g) < eps and absf(a.b - b.b) < eps and absf(a.a - b.a) < eps
