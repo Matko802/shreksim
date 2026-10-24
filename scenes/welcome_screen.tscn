@@ -1,11 +1,10 @@
 [gd_scene format=3 uid="uid://dbgw1ntro8f31"]
 
-[ext_resource type="Script" path="res://scripts/welcome_screen.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://assets/images/menu/watchshark.png" id="2_logo"]
-[ext_resource type="Texture2D" path="res://assets/images/menu/godot_icon.svg" id="3_godot"]
-[ext_resource type="AudioStream" path="res://assets/sounds/welcome.wav" id="4_audio"]
+[ext_resource type="Script" uid="uid://dinmq75oqsqs1" path="res://scripts/welcome_screen.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://c0b7b2grpmxr3" path="res://assets/images/menu/watchshark.png" id="2_logo"]
+[ext_resource type="AudioStream" uid="uid://dyo18oopcsrvm" path="res://assets/sounds/welcome.wav" id="4_audio"]
 
-[node name="WelcomeScreen" type="Control"]
+[node name="WelcomeScreen" type="Control" unique_id=92599942]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,7 +13,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_script")
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="." unique_id=645315769]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -23,7 +22,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="Center" type="CenterContainer" parent="."]
+[node name="Center" type="CenterContainer" parent="." unique_id=818001095]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -31,36 +30,27 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Box" type="VBoxContainer" parent="Center"]
+[node name="Box" type="VBoxContainer" parent="Center" unique_id=719454713]
 layout_mode = 2
 theme_override_constants/separation = 18
 
-[node name="Logo" type="TextureRect" parent="Center/Box"]
+[node name="Logo" type="TextureRect" parent="Center/Box" unique_id=760794043]
 custom_minimum_size = Vector2(300, 300)
 layout_mode = 2
 texture = ExtResource("2_logo")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="CreditsRow" type="HBoxContainer" parent="Center/Box"]
+[node name="CreditsRow" type="HBoxContainer" parent="Center/Box" unique_id=1456904245]
 layout_mode = 2
 theme_override_constants/separation = 12
 alignment = 1
 
-[node name="MadeBy" type="Label" parent="Center/Box/CreditsRow"]
+[node name="MadeBy" type="Label" parent="Center/Box/CreditsRow" unique_id=825976053]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 22
 text = "Made by Matko802"
 
-[node name="GodotLogo" type="TextureRect" parent="Center/Box/CreditsRow"]
-custom_minimum_size = Vector2(30, 30)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture = ExtResource("3_godot")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1405411987]
 stream = ExtResource("4_audio")

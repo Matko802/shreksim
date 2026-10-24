@@ -1,6 +1,7 @@
 extends Node3D
 
 const WORLD_HALF := 128.0
+const FLOATING_ORIGIN_CELL := 32.0
 const NAV := preload("res://scripts/enemy_nav.gd")
 const TOTAL_PAGES := 8
 const START_TIME := 150.0
@@ -31,9 +32,11 @@ const WALL_SAFE := 6.0
 
 const FAR_TREE_SHADER: Shader = preload("res://scripts/far_tree_billboard.gdshader")
 const NEAR_TREE_SHADER: Shader = preload("res://scripts/near_tree_cross.gdshader")
-const MOBILE_TERRAIN_SHADER: Shader = preload("res://scripts/mobile_terrain.gdshader")
-const FAR_TREE_CULL_M := 500.0
-const TREE_NEAR_M := 50.0
+const TERRAIN_SHADER: Shader = preload("res://scripts/mobile_terrain_lite.gdshader")
+const FAR_TREE_CULL := 150.0
+const TREE_NEAR := 32.0
+const MOBILE_PHYSICS_TICKS := 30
+const MOBILE_MAX_PHYSICS_STEPS := 4
 
 const PHASES := [
 	{"top": Color(0.3, 0.52, 0.85), "horizon": Color(0.8, 0.88, 0.86), "fog": 0.004, "sun": 1.35, "sun_color": Color(1.0, 0.97, 0.9), "ambient_energy": 1.0, "grass": Color(0.5, 0.68, 0.4), "sky_affect": 0.12, "day": 1.0},
@@ -94,6 +97,10 @@ var sky_mat: ShaderMaterial
 var _day_mix := 1.0
 var _terrain: Terrain3D
 var _mobile := false
+var render_origin := Vector3.ZERO
+var terrain_render_target: Node3D
+var onion_sprites: Dictionary = {}
+var onion_visuals: Array[Area3D] = []
 var far_tree_materials: Array[ShaderMaterial] = []
 var near_tree_materials: Array[ShaderMaterial] = []
 var snap_pending: Array = []
@@ -107,6 +114,7 @@ var _phase_fog := 0.0
 var onion_spot := -1
 
 var enemy: Sprite3D
+var enemy_anchor: Node3D
 var enemy_active := false
 var enemy_bob_t := 0.0
 var threat := 0.0
@@ -145,6 +153,8 @@ var static_frames: Array[Texture2D] = []
 var threat_frames: Array[Texture2D] = []
 var static_time := 0.0
 var static_playing := false
+var _static_frame_idx := -1
+var _static_alpha := -1.0
 
 var music: AudioStreamPlayer
 var music_streams: Array[AudioStream] = []
@@ -155,12 +165,17 @@ var allstar: AudioStreamPlayer
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	_mobile = SettingsBus._is_mobile()
+	if _mobile:
+		Engine.physics_ticks_per_second = MOBILE_PHYSICS_TICKS
+		Engine.max_physics_steps_per_frame = MOBILE_MAX_PHYSICS_STEPS
 	endless = GameState.game_type == "endless"
 	set_meta("best_start", GameState.best_endless)
 	_build_world()
 	_build_player()
+	_build_onion_visuals()
 	_build_onions()
 	_build_enemy()
+	_set_render_origin(Vector3.ZERO)
 	_build_ui()
 	_build_audio()
 	_apply_phase(0)
@@ -254,6 +269,83 @@ func _build_player() -> void:
 	player.process_mode = Node.PROCESS_MODE_PAUSABLE
 	player.position = Vector3(0, CAMERA_HEIGHT, 0)
 	add_child(player)
+	terrain_render_target = Node3D.new()
+	terrain_render_target.name = "TerrainRenderTarget"
+	terrain_render_target.physics_interpolation_mode = Node3D.PHYSICS_INTERPOLATION_MODE_OFF
+	add_child(terrain_render_target)
+	if _terrain != null:
+		_terrain.clipmap_target = terrain_render_target
+		_terrain.collision_target = player
+		_terrain.light_target = sun
+	_sync_terrain_target()
+
+func _update_render_origin() -> void:
+	if player == null:
+		return
+	var shift := Vector3.ZERO
+	var delta := player.global_position - render_origin
+	if absf(delta.x) >= FLOATING_ORIGIN_CELL:
+		shift.x = signf(delta.x) * FLOATING_ORIGIN_CELL
+	if absf(delta.z) >= FLOATING_ORIGIN_CELL:
+		shift.z = signf(delta.z) * FLOATING_ORIGIN_CELL
+	if shift != Vector3.ZERO:
+		_set_render_origin(render_origin + shift)
+
+func _sync_terrain_target() -> void:
+	if terrain_render_target == null or player == null:
+		return
+	terrain_render_target.global_position = Vector3(
+		player.global_position.x - render_origin.x,
+		0.0,
+		player.global_position.z - render_origin.z)
+
+func _set_render_origin(origin: Vector3) -> void:
+	render_origin = Vector3(origin.x, 0.0, origin.z)
+	var offset := -render_origin
+	if player != null:
+		player.set_render_offset(offset)
+	_sync_terrain_target()
+	if enemy != null:
+		enemy.position = Vector3(offset.x, 0.0, offset.z)
+		enemy.reset_physics_interpolation()
+	if _terrain != null:
+		var terrain_mat := _terrain.material as Terrain3DMaterial
+		if terrain_mat != null:
+			terrain_mat.set_shader_param(&"render_origin", render_origin)
+	_apply_tree_render_origin()
+	for area in onion_visuals:
+		if is_instance_valid(area):
+			_place_onion_sprite(area)
+
+func _apply_tree_render_origin() -> void:
+	for mat in far_tree_materials:
+		if mat != null:
+			mat.set_shader_parameter("render_origin", render_origin)
+	for mat in near_tree_materials:
+		if mat != null:
+			mat.set_shader_parameter("render_origin", render_origin)
+
+func _build_onion_visuals() -> void:
+	for c in get_node("Map/OnionSpots").get_children():
+		if c is Area3D:
+			var area := c as Area3D
+			var sprite := area.get_node_or_null("Sprite") as Sprite3D
+			if sprite == null:
+				continue
+			var base := sprite.position
+			sprite.top_level = true
+			onion_sprites[area] = [sprite, base]
+			onion_visuals.append(area)
+			_place_onion_sprite(area)
+
+func _place_onion_sprite(area: Area3D) -> void:
+	if not is_instance_valid(area) or not onion_sprites.has(area):
+		return
+	var entry: Array = onion_sprites[area]
+	var sprite := entry[0] as Sprite3D
+	var base := entry[1] as Vector3
+	if sprite != null:
+		sprite.global_position = area.global_transform * base - render_origin
 
 func _terrain_height(x: float, z: float) -> float:
 	if _terrain == null or _terrain.data == null:
@@ -270,13 +362,13 @@ func _build_world() -> void:
 	env = Environment.new()
 	env.background_mode = Environment.BG_SKY
 	_terrain = get_node_or_null("Map/Terrain") as Terrain3D
-	if _terrain != null and _mobile:
+	if _terrain != null:
 		_terrain.cast_shadows = RenderingServer.SHADOW_CASTING_SETTING_OFF
 		var terrain_mat := _terrain.material as Terrain3DMaterial
 		if terrain_mat != null:
 			terrain_mat.output_specular = false
 			terrain_mat.max_regions = 64
-			terrain_mat.shader_override = MOBILE_TERRAIN_SHADER
+			terrain_mat.shader_override = TERRAIN_SHADER
 			terrain_mat.shader_override_enabled = true
 			terrain_mat.update()
 	_build_border_walls()
@@ -375,6 +467,7 @@ func _snap_pending_trees() -> void:
 		var o := n as Area3D
 		if o != null and o.has_meta("base_y"):
 			o.set_meta("base_y", raw)
+			_place_onion_sprite(o)
 	snap_pending = keep
 	if not _far_trees_baked:
 		far_bake_ticks += 1
@@ -429,6 +522,8 @@ func _bake_far_trees() -> void:
 		if row[5]:
 			g["near_count"] += 1
 	var cross := _make_cross_mesh()
+	var tree_far := FAR_TREE_CULL
+	var tree_near := TREE_NEAR
 	for key in groups:
 		var g: Dictionary = groups[key]
 		var quad := QuadMesh.new()
@@ -437,8 +532,9 @@ func _bake_far_trees() -> void:
 		mat.shader = FAR_TREE_SHADER
 		mat.set_shader_parameter("tex", g["tex"])
 		mat.set_shader_parameter("tint", _far_tint)
-		mat.set_shader_parameter("tree_far", FAR_TREE_CULL_M)
-		mat.set_shader_parameter("tree_near", TREE_NEAR_M)
+		mat.set_shader_parameter("tree_far", tree_far)
+		mat.set_shader_parameter("tree_near", tree_near)
+		mat.set_shader_parameter("render_origin", render_origin)
 		var mm := MultiMesh.new()
 		mm.transform_format = MultiMesh.TRANSFORM_3D
 		mm.mesh = quad
@@ -455,7 +551,8 @@ func _bake_far_trees() -> void:
 			nmat.shader = NEAR_TREE_SHADER
 			nmat.set_shader_parameter("tex", g["tex"])
 			nmat.set_shader_parameter("tint", _far_tint)
-			nmat.set_shader_parameter("tree_near", TREE_NEAR_M)
+			nmat.set_shader_parameter("tree_near", tree_near)
+			nmat.set_shader_parameter("render_origin", render_origin)
 			var nmm := MultiMesh.new()
 			nmm.transform_format = MultiMesh.TRANSFORM_3D
 			nmm.mesh = cross
@@ -536,6 +633,7 @@ func _onion_activate(area: Area3D) -> void:
 	area.set_meta("onion", true)
 	area.set_meta("base_y", area.position.y)
 	onions.append(area)
+	_place_onion_sprite(area)
 
 func _onion_deactivate(area: Area3D) -> void:
 	var base_y := float(area.get_meta("base_y")) if area.has_meta("base_y") else area.position.y
@@ -547,7 +645,12 @@ func _onion_deactivate(area: Area3D) -> void:
 	area.remove_meta("base_y")
 
 func _build_enemy() -> void:
+	enemy_anchor = Node3D.new()
+	enemy_anchor.physics_interpolation_mode = Node3D.PHYSICS_INTERPOLATION_MODE_ON
+	enemy_anchor.position = Vector3(0, 5, 0)
+	add_child(enemy_anchor)
 	enemy = Sprite3D.new()
+	enemy.physics_interpolation_mode = Node3D.PHYSICS_INTERPOLATION_MODE_OFF
 	var tex := GameState.skin_texture()
 	enemy.texture = tex
 	enemy.billboard = StandardMaterial3D.BILLBOARD_FIXED_Y
@@ -557,10 +660,10 @@ func _build_enemy() -> void:
 	enemy.alpha_cut = SpriteBase3D.ALPHA_CUT_DISABLED
 	enemy.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	enemy.modulate = Color(1.0, 1.0, 1.0, 1.0)
-	enemy.position = Vector3(0, 5, 0)
+	enemy.position = Vector3.ZERO
 	enemy.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	enemy.visible = false
-	add_child(enemy)
+	enemy_anchor.add_child(enemy)
 	enemy_chase_audio = AudioStreamPlayer3D.new()
 	enemy_chase_audio.max_distance = ENEMY_CHASE_RADIUS
 	enemy_chase_audio.unit_size = 16.0
@@ -619,8 +722,10 @@ func _update_threat(delta: float) -> void:
 	if not enemy_active or enemy == null or not enemy.visible:
 		hud.hide_static()
 		threat = 0.0
+		_static_frame_idx = -1
+		_static_alpha = -1.0
 		return
-	var to := enemy.global_position - player.global_position
+	var to := enemy_anchor.global_position - player.global_position
 	to.y = 0.0
 	var dist := to.length()
 	var t := clampf(1.0 - dist / THREAT_RANGE, 0.0, 1.0)
@@ -628,9 +733,15 @@ func _update_threat(delta: float) -> void:
 	var alpha := threat * STATIC_MAX_ALPHA
 	if alpha <= 0.005:
 		hud.hide_static()
+		_static_frame_idx = -1
+		_static_alpha = -1.0
 		return
 	static_time += delta
-	hud.show_static(threat_frames[int(static_time / 0.07) % threat_frames.size()], alpha)
+	var frame_idx := int(static_time / 0.07) % threat_frames.size()
+	if frame_idx != _static_frame_idx or absf(alpha - _static_alpha) >= 0.02:
+		_static_frame_idx = frame_idx
+		_static_alpha = alpha
+		hud.show_static(threat_frames[frame_idx], alpha)
 
 func _update_prompt() -> void:
 	var grab_now := (endless or pages < TOTAL_PAGES) and _ray_onion() != null
@@ -650,7 +761,7 @@ func _ray_onion() -> Area3D:
 	var center := _vsize() * 0.5
 	if player == null or player.camera == null:
 		return null
-	var from := player.camera.project_ray_origin(center)
+	var from := player.camera.project_ray_origin(center) + render_origin
 	var to := from + player.camera.project_ray_normal(center) * ONION_RANGE
 	var params := PhysicsRayQueryParameters3D.create(from, to)
 	params.collide_with_areas = true
@@ -813,6 +924,8 @@ func _start_music_phase(ph: int) -> void:
 func _physics_process(delta: float) -> void:
 	if game_over or paused:
 		return
+	_update_render_origin()
+	_sync_terrain_target()
 	_tick_enemy(delta)
 
 func _tick_enemy(delta: float) -> void:
@@ -837,7 +950,7 @@ func _tick_enemy(delta: float) -> void:
 			if enemy_lose_time > ENEMY_MEMORY:
 				_begin_retreat()
 		if enemy_mode == "hunt":
-			var to_p := player.global_position - enemy.global_position
+			var to_p := player.global_position - enemy_anchor.global_position
 			to_p.y = 0.0
 			if to_p.length() < KILL_RADIUS:
 				_die()
@@ -867,7 +980,7 @@ func _tick_enemy(delta: float) -> void:
 			enemy_chase_audio.stop()
 	enemy.visible = true
 	enemy.modulate = Color(1.0, 1.0, 1.0, enemy_fade)
-	enemy.global_position.y = _terrain_height(enemy.global_position.x, enemy.global_position.z) + 5.0 + sin(enemy_bob_t * 2.2) * 0.24
+	enemy_anchor.global_position.y = _terrain_height(enemy_anchor.global_position.x, enemy_anchor.global_position.z) + 5.0 + sin(enemy_bob_t * 2.2) * 0.24
 
 func _begin_retreat() -> void:
 	enemy_mode = "retreat"
@@ -884,7 +997,7 @@ func _begin_retreat() -> void:
 
 func _pick_retreat_target() -> Vector2:
 	var pc := Vector2(player.global_position.x, player.global_position.z)
-	var ec := Vector2(enemy.global_position.x, enemy.global_position.z)
+	var ec := Vector2(enemy_anchor.global_position.x, enemy_anchor.global_position.z)
 	var away := ec - pc
 	if away.length() < 0.5:
 		away = Vector2(cos(enemy_yaw), sin(enemy_yaw))
@@ -900,21 +1013,21 @@ func _pick_retreat_target() -> Vector2:
 	return best
 
 func _enemy_retreat_advance(delta: float) -> void:
-	var pos := Vector2(enemy.global_position.x, enemy.global_position.z)
+	var pos := Vector2(enemy_anchor.global_position.x, enemy_anchor.global_position.z)
 	var dir := enemy_goal - pos
 	if dir.length() < 0.5:
 		enemy_goal = _pick_retreat_target()
 		return
 	dir = dir.normalized()
 	dir = _whisker_dir(dir, delta)
-	var next_pos := enemy.global_position
+	var next_pos := enemy_anchor.global_position
 	next_pos.x += dir.x * ENEMY_RETREAT_SPEED * delta
 	next_pos.z += dir.y * ENEMY_RETREAT_SPEED * delta
-	enemy.global_position = next_pos
+	enemy_anchor.global_position = next_pos
 	enemy_yaw = lerp_angle(enemy_yaw, dir.angle(), clampf(10.0 * delta, 0.0, 1.0))
 
 func _enemy_sees_player() -> bool:
-	var to_p := player.global_position - enemy.global_position
+	var to_p := player.global_position - enemy_anchor.global_position
 	to_p.y = 0.0
 	var dist := to_p.length()
 	if dist < 0.001:
@@ -923,7 +1036,7 @@ func _enemy_sees_player() -> bool:
 	var pdir := Vector2(to_p.x, to_p.z) / dist
 	if dist <= ENEMY_VISION_DIST and (dist <= 3.0 or absf(fwd.angle_to(pdir)) <= ENEMY_FOV_HALF):
 		var p2 := Vector2(player.global_position.x, player.global_position.z)
-		if nav != null and nav.has_los(Vector2(enemy.global_position.x, enemy.global_position.z), p2):
+		if nav != null and nav.has_los(Vector2(enemy_anchor.global_position.x, enemy_anchor.global_position.z), p2):
 			return true
 	return player.is_sprinting() and dist <= ENEMY_HEAR_RUN
 
@@ -931,10 +1044,10 @@ func _enemy_advance(delta: float, target: Vector2, speed: float) -> void:
 	enemy_path_time -= delta
 	if enemy_path_time <= 0.0:
 		enemy_path_time = ENEMY_PATH_INTERVAL
-		enemy_path = nav.find_path(Vector2(enemy.global_position.x, enemy.global_position.z), target)
+		enemy_path = nav.find_path(Vector2(enemy_anchor.global_position.x, enemy_anchor.global_position.z), target)
 		enemy_path_i = 0
 		enemy_arrived = enemy_path.is_empty()
-	var pos := Vector2(enemy.global_position.x, enemy.global_position.z)
+	var pos := Vector2(enemy_anchor.global_position.x, enemy_anchor.global_position.z)
 	var steer := target
 	if enemy_path_i < enemy_path.size():
 		steer = enemy_path[enemy_path_i]
@@ -951,10 +1064,10 @@ func _enemy_advance(delta: float, target: Vector2, speed: float) -> void:
 	if d > 0.001:
 		dir = dir / d
 		dir = _whisker_dir(dir, delta)
-		var next_pos := enemy.global_position
+		var next_pos := enemy_anchor.global_position
 		next_pos.x += dir.x * speed * delta
 		next_pos.z += dir.y * speed * delta
-		enemy.global_position = next_pos
+		enemy_anchor.global_position = next_pos
 		enemy_yaw = lerp_angle(enemy_yaw, dir.angle(), clampf(6.0 * delta, 0.0, 1.0))
 
 func _whisker_dir(dir: Vector2, delta: float) -> Vector2:
@@ -964,8 +1077,8 @@ func _whisker_dir(dir: Vector2, delta: float) -> Vector2:
 	enemy_whisker_timer = ENEMY_WHISKER_INTERVAL
 	enemy_whisker_last = dir
 	var space := get_world_3d().direct_space_state
-	var y := _terrain_height(enemy.global_position.x, enemy.global_position.z) + 4.5
-	var origin := Vector3(enemy.global_position.x, y, enemy.global_position.z)
+	var y := _terrain_height(enemy_anchor.global_position.x, enemy_anchor.global_position.z) + 4.5
+	var origin := Vector3(enemy_anchor.global_position.x, y, enemy_anchor.global_position.z)
 	var to := origin + Vector3(dir.x, 0.0, dir.y) * ENEMY_WHISKER_DIST
 	var mid := PhysicsRayQueryParameters3D.create(origin, to, 1)
 	if space.intersect_ray(mid).is_empty():
@@ -1022,8 +1135,8 @@ func _spawn_enemy_front() -> void:
 	var front := Vector2(fwd.x, fwd.z).normalized()
 	var pc := Vector2(player.global_position.x, player.global_position.z)
 	var p: Vector2 = _pick_spawn_point(pc, front)
-	enemy.global_position = Vector3(p.x, _terrain_height(p.x, p.y) + 5.0, p.y)
-	enemy.reset_physics_interpolation()
+	enemy_anchor.global_position = Vector3(p.x, _terrain_height(p.x, p.y) + 5.0, p.y)
+	enemy_anchor.reset_physics_interpolation()
 	enemy.visible = true
 	enemy.modulate = Color(1.0, 1.0, 1.0, 1.0)
 	enemy_yaw = (pc - p).angle()

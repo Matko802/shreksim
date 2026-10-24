@@ -15,10 +15,10 @@ func _ready() -> void:
 	bus.reset_settings()
 	await get_tree().process_frame
 	var root_vp: Viewport = get_tree().root
-	if bus.anti_aliasing_mode != 2:
+	if bus.anti_aliasing_mode != 0:
 		print("FAIL: default aa ", bus.anti_aliasing_mode)
 		fails += 1
-	if root_vp.msaa_3d != Viewport.MSAA_2X:
+	if root_vp.msaa_3d != Viewport.MSAA_DISABLED:
 		print("FAIL: boot msaa ", root_vp.msaa_3d)
 		fails += 1
 	bus.set_anti_aliasing_mode(5)
@@ -53,7 +53,7 @@ func _ready() -> void:
 		print("FAIL: F11 windowed")
 		fails += 1
 	bus.reset_settings()
-	if bus.anti_aliasing_mode != 2 or root_vp.msaa_3d != Viewport.MSAA_2X:
+	if bus.anti_aliasing_mode != 0 or root_vp.msaa_3d != Viewport.MSAA_DISABLED:
 		print("FAIL: reset aa")
 		fails += 1
 	if bus.fps_limit != 0 or Engine.max_fps != 0:
@@ -61,6 +61,22 @@ func _ready() -> void:
 		fails += 1
 	if bus.vsync_enabled != true:
 		print("FAIL: reset vsync")
+		fails += 1
+	bus.set_render_scale(0.8)
+	if absf(root_vp.scaling_3d_scale - 0.8) > 0.001:
+		print("FAIL: desktop render scale apply ", root_vp.scaling_3d_scale)
+		fails += 1
+	var cfg3 := ConfigFile.new()
+	cfg3.set_value("core", "version", 5)
+	cfg3.set_value("video", "anti_aliasing_mode", 2)
+	cfg3.set_value("video", "render_scale", 0.7)
+	cfg3.save("user://settings.cfg")
+	bus.load_settings()
+	if bus.anti_aliasing_mode != 0 or root_vp.msaa_3d != Viewport.MSAA_DISABLED:
+		print("FAIL: desktop migration aa ", bus.anti_aliasing_mode)
+		fails += 1
+	if absf(root_vp.scaling_3d_scale - 1.0) > 0.001:
+		print("FAIL: desktop migration render scale ", root_vp.scaling_3d_scale)
 		fails += 1
 	bus._mobile = true
 	var cfg2 := ConfigFile.new()
@@ -72,7 +88,7 @@ func _ready() -> void:
 	if bus.fps_limit != 0:
 		print("FAIL: mobile migration fps ", bus.fps_limit)
 		fails += 1
-	if bus.anti_aliasing_mode != 2 or root_vp.msaa_3d != Viewport.MSAA_2X:
+	if bus.anti_aliasing_mode != 0 or root_vp.msaa_3d != Viewport.MSAA_DISABLED:
 		print("FAIL: mobile migration aa ", bus.anti_aliasing_mode)
 		fails += 1
 	if absf(root_vp.scaling_3d_scale - 1.0) > 0.001:
@@ -86,9 +102,15 @@ func _ready() -> void:
 	if bus.anti_aliasing_mode != 3 or root_vp.msaa_3d != Viewport.MSAA_4X:
 		print("FAIL: mobile aa option ", bus.anti_aliasing_mode)
 		fails += 1
+	if root_vp.screen_space_aa != Viewport.SCREEN_SPACE_AA_DISABLED:
+		print("FAIL: mobile msaa still fxaa ", root_vp.screen_space_aa)
+		fails += 1
 	bus.reset_settings()
-	if bus.fps_limit != 0 or bus.anti_aliasing_mode != 2:
+	if bus.fps_limit != 0 or bus.anti_aliasing_mode != 0:
 		print("FAIL: mobile reset")
+		fails += 1
+	if absf(root_vp.scaling_3d_scale - 1.0) > 0.001:
+		print("FAIL: mobile reset render scale ", root_vp.scaling_3d_scale)
 		fails += 1
 	bus._mobile = false
 	bus.load_settings()

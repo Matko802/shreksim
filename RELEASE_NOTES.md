@@ -1,7 +1,10 @@
-# v1.4.25
+# v1.4.26
 
-- Terrain3D returns on PC and Android with a mobile-first setup: lightweight terrain shader, 64-region cap, fewer mesh LODs, smaller clipmap meshes, no tessellation, no world-noise background, no cull margin, and dynamic game-only collision. Terrain geometry drops from roughly 166k to 20k primitives.
-- Shrek now runs away fast and slowly fades out when he loses you, then stays hidden until you collect another onion. He reappears 20-25 m in front of you, including his first appearance after the first onion.
-- The fog no longer thickens when Shrek loses you.
-- Android is no longer capped at 60 FPS. It renders at native 1.0 resolution with MSAA 2x by default and the same anti-aliasing options as desktop. Dynamic resolution scaling and FSR are removed.
-- Enemy steering raycasts are throttled, and the onion prompt skips work when there are no onions left to collect.
+- Added a floating-origin renderer: the player stays near the render origin and the world shifts in 32 m chunks. Physics, collision, navigation, and AI stay in absolute coordinates, while terrain, trees, onions, and Shrek render in shifted space.
+- Fixed the one-frame flicker at origin shifts by applying the camera offset per frame instead of through physics interpolation.
+- Android and desktop now share the same rendering: native 1.0 3D render scale, anti-aliasing off by default, a 200 m camera far plane, the same terrain shader, and the same tree draw distances. Android runs physics at 30 Hz with no FPS cap.
+- Replaced the full Terrain3D texture blend with a per-pixel Lambert shader that blends the packed control map bilinearly, keeping path edges smooth at about 2.3x lower cost.
+- Terrain behind the camera is frustum-culled, distant LODs are removed by the 200 m far plane, and collision shapes are 32 m.
+- Near trees render only within 32 m and distant trees only within 150 m. Both LODs reject out-of-range instances in the vertex shader.
+- Android exports are pinned to ETC2/ASTC textures.
+- Video settings migrate automatically; old configs reset anti-aliasing and render scale once so PC and mobile match.

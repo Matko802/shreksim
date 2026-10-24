@@ -38,10 +38,12 @@ const ZOOM_FOV_MAX: float = 70.0
 const ZOOM_SMOOTHING: float = 10.0
 const ZOOM_SCROLL_STEP: float = 5.0
 const ZOOM_MIN_STEPS: float = 2.0
+const CAMERA_FAR: float = 200.0
 
 const JUMP_CLEARANCE: float = 0.336
 
 var head_rest_pos: Vector3 = Vector3(0.0, STANDING_HEAD_Y, 0.0)
+var render_offset: Vector3 = Vector3.ZERO
 
 var _flashlight_on: bool = false
 var _look_yaw_target: float = 0.0
@@ -100,13 +102,15 @@ func _ready() -> void:
 
 	head = Node3D.new()
 	head.position = Vector3(0, STANDING_HEAD_Y, 0)
+	head.physics_interpolation_mode = Node3D.PHYSICS_INTERPOLATION_MODE_OFF
 	add_child(head)
 
 	camera = Camera3D.new()
 	camera.fov = ZOOM_FOV_MAX
 	camera.near = 0.05
-	camera.far = 500.0
+	camera.far = CAMERA_FAR
 	camera.cull_mask = 3
+	camera.physics_interpolation_mode = Node3D.PHYSICS_INTERPOLATION_MODE_OFF
 	head.add_child(camera)
 
 	footstep_player = AudioStreamPlayer3D.new()
@@ -115,6 +119,7 @@ func _ready() -> void:
 	footstep_player.max_distance = 30.0
 	footstep_player.max_polyphony = 2
 	footstep_player.doppler_tracking = AudioStreamPlayer3D.DOPPLER_TRACKING_DISABLED
+	footstep_player.physics_interpolation_mode = Node3D.PHYSICS_INTERPOLATION_MODE_OFF
 	add_child(footstep_player)
 
 	flashlight_container = (load("res://scenes/flashlight.tscn") as PackedScene).instantiate() as Node3D
@@ -151,6 +156,9 @@ func _process(delta: float) -> void:
 			_zoom_fov = _zoom_target
 	if camera.fov != _zoom_fov:
 		camera.fov = _zoom_fov
+
+func set_render_offset(offset: Vector3) -> void:
+	render_offset = Vector3(offset.x, 0.0, offset.z)
 
 func toggle_flashlight() -> void:
 	_flashlight_on = not _flashlight_on
@@ -316,9 +324,12 @@ func _apply_head_transform() -> void:
 	var target_rotation := Vector3(_look_pitch_applied + bob, sway, roll_amount)
 	if head.rotation != target_rotation:
 		head.rotation = target_rotation
-	var target_position := _head_pos + Vector3(0.0, _land_bounce, 0.0)
+	var local_offset := transform.basis.inverse() * render_offset
+	var target_position := _head_pos + Vector3(0.0, _land_bounce, 0.0) + local_offset
 	if head.position != target_position:
 		head.position = target_position
+	if footstep_player != null:
+		footstep_player.position = local_offset
 
 func _update_head_position(delta: float) -> void:
 	var target_pos: Vector3 = head_rest_pos

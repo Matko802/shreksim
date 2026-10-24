@@ -11,17 +11,17 @@ func _ready() -> void:
 	var trees: Node3D = game.get_node("Map/Trees")
 	_check(game.far_instances.size() == 554, "far instances %d" % game.far_instances.size())
 	_check(game.near_instances.size() == 354, "near instances %d" % game.near_instances.size())
-	_check(game.player.camera.far >= 500.0, "camera far %f" % game.player.camera.far)
+	_check(game.player.camera.far >= 200.0, "camera far %f" % game.player.camera.far)
 	var batches := 0
 	for c in trees.get_children():
 		if c is MultiMeshInstance3D:
 			batches += 1
 	_check(batches == 6, "batches %d" % batches)
 	for m in game.far_tree_materials:
-		_check(is_equal_approx(float(m.get_shader_parameter("tree_far")), 500.0), "far cull")
-		_check(is_equal_approx(float(m.get_shader_parameter("tree_near")), 50.0), "far near")
+		_check(is_equal_approx(float(m.get_shader_parameter("tree_far")), 150.0), "far cull")
+		_check(is_equal_approx(float(m.get_shader_parameter("tree_near")), 32.0), "far near")
 	for m in game.near_tree_materials:
-		_check(is_equal_approx(float(m.get_shader_parameter("tree_near")), 50.0), "near cull")
+		_check(is_equal_approx(float(m.get_shader_parameter("tree_near")), 32.0), "near cull")
 	var tree: Node3D = trees.get_node("Tree003")
 	_check(tree.get_node_or_null("CrossA") == null, "source sprite not freed")
 	_check(game.far_instances.has(tree), "Tree003 not in far batch")

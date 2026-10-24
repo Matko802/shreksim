@@ -8,7 +8,10 @@ const HITCH_USEC: int = 100000
 
 @onready var label: RichTextLabel = $Panel/MarginContainer/Label
 
-var _static_lines: String = ""
+@export var verbose: bool = false
+
+var _env_lines: String = ""
+var _gpu_line: String = ""
 var _frame_us: PackedInt64Array = PackedInt64Array()
 var _frame_stamp: PackedInt64Array = PackedInt64Array()
 var _ring_index: int = 0
@@ -24,7 +27,7 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	_frame_us.resize(RING_SIZE)
 	_frame_stamp.resize(RING_SIZE)
-	_static_lines = _build_static_lines()
+	_build_static_lines()
 	SettingsBus.setting_changed.connect(_on_external_setting)
 	_set_active(SettingsBus.debug_info_enabled)
 
@@ -91,7 +94,7 @@ func _process(_delta: float) -> void:
 	var hitches: int = 0
 	var hitch_cutoff: int = now - 1000000
 	for i in RING_SIZE:
-		if _frame_stamp[i] < cutoff:
+		if _frame_stamp[i] == 0 or _frame_stamp[i] < cutoff:
 			continue
 		var t: int = _frame_us[i]
 		times.append(t)
@@ -123,15 +126,17 @@ func _process(_delta: float) -> void:
 	var objs: int = int(Performance.get_monitor(Performance.RENDER_TOTAL_OBJECTS_IN_FRAME))
 	var proc_ms: float = Performance.get_monitor(Performance.TIME_PROCESS) * 1000.0
 	var phys_ms: float = Performance.get_monitor(Performance.TIME_PHYSICS_PROCESS) * 1000.0
-	var gpu_text: String = "n/a"
+	var gpu_value: String = "n/a"
 	if _gpu_ms > 0.0:
-		gpu_text = "%.1f ms (%.1f FPS)" % [_gpu_ms, 1000.0 / _gpu_ms]
+		gpu_value = "%.1f" % _gpu_ms
 	var lines: PackedStringArray = PackedStringArray()
-	lines.append(" Loop: %.1f FPS | Engine: %.0f | Frame avg: %.1f ms | Max: %.1f ms" % [_fps, engine_fps, avg_ms, max_ms])
-	lines.append(" Hitches: %d/s | GPU: %s | Render CPU: %.2f ms" % [hitches, gpu_text, render_cpu])
-	lines.append(" 1%% Low: %.1f FPS | 0.1%% Low: %.1f FPS" % [low_1, low_01])
-	lines.append(" Draw: %d | Prims: %d k | Objs: %d | Proc max: %.2f ms | Phys: %.2f ms" % [draws, int(prims / 1000.0), objs, proc_ms, phys_ms])
-	lines.append(_static_lines)
+	lines.append("%.0f FPS · %.1f ms · max %.0f · 1%% %.0f" % [_fps, avg_ms, max_ms, low_1])
+	lines.append("GPU %s · CPU %.1f · proc %.1f · phys %.2f" % [gpu_value, render_cpu, proc_ms, phys_ms])
+	lines.append("draw %d · prims %.1fM · objs %d" % [draws, float(prims) / 1000000.0, objs])
+	lines.append(_gpu_line)
+	if verbose:
+		lines.append("engine %.0f · 0.1%% %.0f · %d hitch/s" % [engine_fps, low_01, hitches])
+		lines.append(_env_lines)
 	label.text = "\n".join(lines)
 
 func _low_fps(sorted_times: Array[int], count: int) -> float:
@@ -144,7 +149,7 @@ func _low_fps(sorted_times: Array[int], count: int) -> float:
 		return 0.0
 	return 1000000.0 / avg_us
 
-func _build_static_lines() -> String:
+func _build_static_lines() -> void:
 	var rendering_method: String = str(RenderingServer.get_current_rendering_method())
 	var info: Array = OS.get_video_adapter_driver_info()
 	var rendering_driver: String = str(info[0]) if info.size() > 0 else "unknown"
@@ -176,10 +181,17 @@ func _build_static_lines() -> String:
 	var screen_text: String = "%dx%d" % [screen_size.x, screen_size.y]
 	if refresh > 0.0:
 		screen_text = "%s @ %.0f Hz" % [screen_text, refresh]
-	var lines: PackedStringArray = PackedStringArray()
-	lines.append(" Godot %s (%s)" % [engine_version, rendering_driver])
-	lines.append(" Renderer: %s | Screen: %s | Cap: %d" % [rendering_method, screen_text, Engine.max_fps])
-	lines.append(" OS: %s" % os_name)
-	lines.append(" GPU: %s [%s]" % [gpu_name, gpu_vendor])
-	lines.append(" CPU: %s (%d cores)" % [cpu_name, cpu_cores])
-	return "\n".join(lines)
+	var env: PackedStringArray = PackedStringArray()
+	env.append("Godot %s · %s · %s" % [engine_version, rendering_method, rendering_driver])
+	env.append("%s · %d cores · %s" % [os_name, cpu_cores, gpu_vendor])
+	env.append(cpu_name)
+	_gpu_line = "%s · %s" % [_short_gpu_name(gpu_name), screen_text]
+	_env_lines = "\n".join(env)
+
+func _short_gpu_name(raw: String) -> String:
+	var re := RegEx.new()
+	re.compile("\\([^)]*\\)")
+	var clean: String = re.sub(raw, "", true)
+	while clean.contains("  "):
+		clean = clean.replace("  ", " ")
+	return clean.strip_edges()

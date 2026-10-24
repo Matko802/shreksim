@@ -5,7 +5,7 @@ signal setting_changed(setting_name: StringName, value: Variant)
 enum AntiAliasingMode { OFF = 0, FXAA = 1, MSAA_2X = 2, MSAA_4X = 3, MSAA_8X = 4, TAA = 5 }
 
 const SAVE_PATH := "user://settings.cfg"
-const SETTINGS_VERSION := 3
+const SETTINGS_VERSION := 6
 
 const LANGUAGES := [
 	["en", "English"],
@@ -24,7 +24,8 @@ var mouse_sensitivity := 0.0024
 var fullscreen_enabled := false
 var vsync_enabled := true
 var fps_limit := 0
-var anti_aliasing_mode: int = AntiAliasingMode.MSAA_2X
+var anti_aliasing_mode: int = AntiAliasingMode.OFF
+var render_scale := 1.0
 var language := ""
 var _config := ConfigFile.new()
 var _mobile := OS.has_feature("android") or OS.has_feature("ios")
@@ -34,7 +35,6 @@ func _ready() -> void:
 	if _mobile:
 		fullscreen_enabled = true
 	load_settings()
-	_apply_anti_aliasing(anti_aliasing_mode)
 
 func _input(event: InputEvent) -> void:
 	if _mobile or not (event is InputEventKey):
@@ -56,16 +56,20 @@ func load_settings() -> void:
 		fullscreen_enabled = bool(_config.get_value("video", "fullscreen_enabled", false))
 		vsync_enabled = bool(_config.get_value("video", "vsync_enabled", true))
 		fps_limit = int(_config.get_value("video", "fps_limit", 0))
-		anti_aliasing_mode = int(_config.get_value("video", "anti_aliasing_mode", AntiAliasingMode.MSAA_2X))
+		anti_aliasing_mode = int(_config.get_value("video", "anti_aliasing_mode", AntiAliasingMode.OFF))
+		render_scale = float(_config.get_value("video", "render_scale", 1.0))
 		language = str(_config.get_value("locale", "language", ""))
 	if _mobile:
 		fullscreen_enabled = true
 		vsync_enabled = false
-		if version < 3:
+		if version < 6:
 			fps_limit = 0
-			anti_aliasing_mode = AntiAliasingMode.MSAA_2X
+	if version < 6:
+		anti_aliasing_mode = AntiAliasingMode.OFF
+		render_scale = 1.0
 	if not had_file or version != SETTINGS_VERSION:
 		save_settings()
+	_apply_anti_aliasing(anti_aliasing_mode)
 	_apply_display()
 	_apply_language()
 	_apply_render_scale()
@@ -78,6 +82,7 @@ func save_settings() -> void:
 	_config.set_value("video", "vsync_enabled", vsync_enabled)
 	_config.set_value("video", "fps_limit", fps_limit)
 	_config.set_value("video", "anti_aliasing_mode", anti_aliasing_mode)
+	_config.set_value("video", "render_scale", render_scale)
 	_config.set_value("locale", "language", language)
 	_config.save(SAVE_PATH)
 
@@ -93,13 +98,11 @@ func _apply_display() -> void:
 	Engine.max_fps = effective_fps_limit()
 
 func _apply_render_scale() -> void:
-	if not _mobile:
-		return
 	var vp := get_viewport()
 	if vp == null:
 		return
 	vp.scaling_3d_mode = Viewport.SCALING_3D_MODE_BILINEAR
-	vp.scaling_3d_scale = 1.0
+	vp.scaling_3d_scale = clampf(render_scale, 0.5, 1.0)
 
 func _apply_language() -> void:
 	if language == "":
@@ -162,6 +165,12 @@ func set_fps_limit(limit: int) -> void:
 	save_settings()
 	setting_changed.emit(&"fps_limit", fps_limit)
 
+func set_render_scale(value: float) -> void:
+	render_scale = clampf(value, 0.5, 1.0)
+	_apply_render_scale()
+	save_settings()
+	setting_changed.emit(&"render_scale", render_scale)
+
 func set_anti_aliasing_mode(mode: int) -> void:
 	if mode == AntiAliasingMode.TAA and not taa_supported():
 		mode = AntiAliasingMode.FXAA
@@ -198,7 +207,7 @@ func _apply_anti_aliasing(mode: int) -> void:
 	if msaa_value != Viewport.MSAA_DISABLED:
 		root.msaa_3d = msaa_value
 		root.use_taa = false
-		root.screen_space_aa = Viewport.SCREEN_SPACE_AA_FXAA if method != "forward_plus" else Viewport.SCREEN_SPACE_AA_DISABLED
+		root.screen_space_aa = Viewport.SCREEN_SPACE_AA_DISABLED
 
 func reset_settings() -> void:
 	camera_effects_enabled = true
@@ -206,7 +215,8 @@ func reset_settings() -> void:
 	fullscreen_enabled = false
 	vsync_enabled = true
 	fps_limit = 0
-	anti_aliasing_mode = AntiAliasingMode.MSAA_2X
+	anti_aliasing_mode = AntiAliasingMode.OFF
+	render_scale = 1.0
 	language = ""
 	if _mobile:
 		fullscreen_enabled = true

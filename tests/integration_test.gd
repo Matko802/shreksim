@@ -71,10 +71,11 @@ func _ready() -> void:
 		failures += 1
 		print("FAIL walk speed: ", hs)
 
-	game.enemy.global_position = game.player.global_position + Vector3(0, 0, 24.0)
+	game.enemy_anchor.global_position = game.player.global_position + Vector3(0, 0, 24.0)
+	game.enemy_anchor.reset_physics_interpolation()
 	for i in range(60):
 		await get_tree().physics_frame
-	var to_e: Vector3 = game.enemy.global_position - game.player.global_position
+	var to_e: Vector3 = game.enemy_anchor.global_position - game.player.global_position
 	to_e.y = 0.0
 	var chased: float = to_e.length()
 	if chased >= 22.8:
@@ -83,7 +84,8 @@ func _ready() -> void:
 	if not game.hud.static_overlay.visible:
 		failures += 1
 		print("FAIL static overlay missing at threat")
-	game.enemy.global_position = game.player.global_position + Vector3(0, 0, 48.0)
+	game.enemy_anchor.global_position = game.player.global_position + Vector3(0, 0, 48.0)
+	game.enemy_anchor.reset_physics_interpolation()
 	for i in range(50):
 		await get_tree().physics_frame
 	await get_tree().process_frame
