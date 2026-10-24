@@ -29,15 +29,19 @@ chmod +x SwampSim-Linux-x86_64.AppImage
 ./SwampSim-Linux-x86_64.AppImage
 ```
 
+## What's new in v1.4.27
+
+- Fixed the camera swinging sideways when the floating origin shifts while you are turning. The render offset now uses the interpolated player transform that the player is actually drawn with, so the camera stays exactly on the player through every shift.
+
 ## What's new in v1.4.26
 
-- Android and desktop now share the same rendering: native 1.0 3D render scale, anti-aliasing off by default, a 200 m camera far plane, the same terrain shader, and the same tree draw distances. Android additionally runs 30 Hz physics.
+- Android and desktop share the same rendering: native 1.0 3D render scale, anti-aliasing off by default, a 200 m camera far plane, the same terrain shader, and the same tree draw distances. Android additionally runs 30 Hz physics.
 - The terrain shader now uses two albedo fetches per pixel instead of the full Terrain3D per-texture blend. It blends the packed control map bilinearly so path edges stay smooth, and lights the terrain per pixel with Lambert shading. It measured about 2.3x cheaper than the full Terrain3D shader at 1535x864.
 - Godot's frustum culling removes terrain chunks behind the camera, and the 200 m far plane removes distant terrain LODs. Terrain collision shapes are 32 m, cutting the number of collision shapes.
 - Near trees render only within 32 m and distant trees only within 150 m on both platforms. Both tree LODs now reject out-of-range instances in the vertex shader instead of running the fragment shader just to discard them.
 - Android exports are pinned to ETC2/ASTC textures.
 - Video settings migrate automatically; an old config resets anti-aliasing and render scale once so PC and mobile match.
-- Movement now uses a floating origin: the player stays near the render origin and the terrain, trees, and props shift in 32 m chunks around them. Physics, collision, and AI keep absolute coordinates, while rendering and shader height sampling use render space, so the terrain is still culled exactly like before. The first-person camera applies the shift per frame instead of through physics interpolation, so the world and camera move on the same frame with no visible flicker.
+- Movement now uses a floating origin: the player stays near the render origin and the terrain, trees, and props shift in 32 m chunks around them. Physics, collision, and AI keep absolute coordinates, while rendering and shader height sampling use render space, so the terrain is still culled exactly like before. The first-person camera applies the shift per frame instead of through physics interpolation, so the world and camera move on the same frame with no visible flicker. The camera offset is built from the interpolated player transform that the body is drawn with, so turning through a shift cannot swing the camera around the player.
 
 ## What's new in v1.4.25
 

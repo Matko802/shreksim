@@ -324,7 +324,7 @@ func _apply_head_transform() -> void:
 	var target_rotation := Vector3(_look_pitch_applied + bob, sway, roll_amount)
 	if head.rotation != target_rotation:
 		head.rotation = target_rotation
-	var local_offset := transform.basis.inverse() * render_offset
+	var local_offset := get_global_transform_interpolated().basis.inverse() * render_offset
 	var target_position := _head_pos + Vector3(0.0, _land_bounce, 0.0) + local_offset
 	if head.position != target_position:
 		head.position = target_position

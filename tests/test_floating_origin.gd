@@ -66,6 +66,25 @@ func _ready() -> void:
 	_check_close(eye.x, game.player.global_position.x, "ray origin x", 0.05)
 	_check_close(eye.z, game.player.global_position.z, "ray origin z", 0.05)
 	_check_close(eye.y, game.player.global_position.y + 1.68, "ray origin y", 0.08)
+
+	var orbit := 0.0
+	var exercised := 0
+	for i in range(80):
+		game.player.rotate_y(0.05)
+		await get_tree().process_frame
+		var rendered_player: Transform3D = game.player.get_global_transform_interpolated()
+		if absf(rendered_player.basis.get_euler().y - game.player.rotation.y) <= 0.001:
+			continue
+		exercised += 1
+		game.player._apply_head_transform()
+		rendered_player = game.player.get_global_transform_interpolated()
+		var rendered_camera: Transform3D = rendered_player * game.player.head.transform
+		var deviation := Vector2(
+			rendered_camera.origin.x - rendered_player.origin.x + game.render_origin.x,
+			rendered_camera.origin.z - rendered_player.origin.z + game.render_origin.z).length()
+		orbit = maxf(orbit, deviation)
+	_check(exercised > 0, "rotation interpolation not exercised")
+	_check(orbit < 0.001, "camera orbits during rotation at origin %s: %f" % [game.render_origin, orbit])
 	_finish()
 
 func _assert_origin(expected: Vector3, label: String) -> void:
