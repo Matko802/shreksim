@@ -8,6 +8,14 @@ const SAVE_PATH := "user://settings.cfg"
 const SETTINGS_VERSION := 2
 const MOBILE_FPS_CAP := 60
 const MOBILE_RENDER_SCALE := 0.8
+const DRS_MIN_SCALE := 0.55
+const DRS_WINDOW := 0.5
+const DRS_STEP_DOWN := 0.05
+const DRS_STEP_UP := 0.02
+const DRS_DOWN_FPS := 57.0
+const DRS_UP_FPS := 59.0
+const DRS_UP_WINDOWS := 3
+const DRS_COOLDOWN := 0.3
 
 const LANGUAGES := [
 	["en", "English"],
@@ -30,6 +38,11 @@ var anti_aliasing_mode: int = AntiAliasingMode.MSAA_2X
 var language := ""
 var _config := ConfigFile.new()
 var _mobile := OS.has_feature("android") or OS.has_feature("ios")
+var _drs_scale := MOBILE_RENDER_SCALE
+var _drs_window := 0.0
+var _drs_frames := 0
+var _drs_good := 0
+var _drs_cooldown := 0.0
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -44,6 +57,44 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed(&"toggle_fullscreen"):
 		set_fullscreen(not fullscreen_enabled)
 		get_viewport().set_input_as_handled()
+
+func _process(delta: float) -> void:
+	if not _mobile:
+		return
+	if _drs_cooldown > 0.0:
+		_drs_cooldown = maxf(_drs_cooldown - delta, 0.0)
+		_drs_window = 0.0
+		_drs_frames = 0
+		return
+	_drs_window += delta
+	_drs_frames += 1
+	if _drs_window < DRS_WINDOW:
+		return
+	var fps := float(_drs_frames) / _drs_window
+	_drs_window = 0.0
+	_drs_frames = 0
+	var vp := get_viewport()
+	if vp == null:
+		return
+	_drs_scale = vp.scaling_3d_scale
+	if fps < DRS_DOWN_FPS:
+		_drs_good = 0
+		var smaller := maxf(_drs_scale - DRS_STEP_DOWN, DRS_MIN_SCALE)
+		if smaller < _drs_scale - 0.0001:
+			vp.scaling_3d_scale = smaller
+			_drs_scale = smaller
+			_drs_cooldown = DRS_COOLDOWN
+	elif fps > DRS_UP_FPS:
+		_drs_good += 1
+		if _drs_good >= DRS_UP_WINDOWS:
+			_drs_good = 0
+			var larger := minf(_drs_scale + DRS_STEP_UP, MOBILE_RENDER_SCALE)
+			if larger > _drs_scale + 0.0001:
+				vp.scaling_3d_scale = larger
+				_drs_scale = larger
+				_drs_cooldown = DRS_COOLDOWN
+	else:
+		_drs_good = 0
 
 func _is_mobile() -> bool:
 	return _mobile
@@ -107,6 +158,11 @@ func _apply_render_scale() -> void:
 	if _mobile:
 		vp.scaling_3d_mode = Viewport.SCALING_3D_MODE_BILINEAR
 		vp.scaling_3d_scale = MOBILE_RENDER_SCALE
+		_drs_scale = MOBILE_RENDER_SCALE
+		_drs_window = 0.0
+		_drs_frames = 0
+		_drs_good = 0
+		_drs_cooldown = 0.6
 
 func _apply_language() -> void:
 	if language == "":

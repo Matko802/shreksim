@@ -31,6 +31,7 @@ const WALL_SAFE := 6.0
 
 const FAR_TREE_SHADER: Shader = preload("res://scripts/far_tree_billboard.gdshader")
 const NEAR_TREE_SHADER: Shader = preload("res://scripts/near_tree_cross.gdshader")
+const MOBILE_TERRAIN_SHADER: Shader = preload("res://scripts/mobile_terrain.gdshader")
 const FAR_TREE_CULL_M := 500.0
 const TREE_NEAR_M := 50.0
 
@@ -274,8 +275,10 @@ func _build_world() -> void:
 		var terrain_mat := terrain_node.material as Terrain3DMaterial
 		if terrain_mat != null:
 			terrain_mat.output_specular = false
-			terrain_mat.set_shader_param(&"depth_blur", 2.0)
-			terrain_mat.set_shader_param(&"bias_distance", 64.0)
+			terrain_mat.max_regions = 64
+			terrain_mat.shader_override = MOBILE_TERRAIN_SHADER
+			terrain_mat.shader_override_enabled = true
+			terrain_mat.update()
 	_build_border_walls()
 	if _sky_shader == null:
 		_sky_shader = Shader.new()

@@ -29,20 +29,17 @@ chmod +x SwampSim-Linux-x86_64.AppImage
 ./SwampSim-Linux-x86_64.AppImage
 ```
 
-## What's new in v1.4.23
+## What's new in v1.4.24
 
-- Added a **Mobile renderer** path with FXAA, a 60 FPS cap, and 0.8 render scale for smoother Android performance.
-- Reworked tree rendering with crossed 3D quads up close and batched billboards in the distance, out to 500 m.
-- Trees and onions now sit correctly on the terrain instead of floating or sinking.
-- Shrek now retreats into thick fog and fades away after losing sight of you for 5 seconds.
-- Added **F11** to toggle fullscreen on desktop.
-- Smoother cubic crouch animation and cleaner editor output.
+- Android now uses a dedicated lightweight terrain shader with fewer texture lookups, making terrain rendering roughly a third faster.
+- Adaptive 3D render resolution scales between 0.55x and 0.8x on the fly to hold 60 FPS, which especially helps when looking down at the ground.
+- Desktop keeps the full Forward+ renderer and the original terrain shader, unchanged.
 
 ## About
 
 The swamp is full of onions. Grab all eight before the 150 second timer runs out. Shrek hunts by sound and sight, and the fog gets much worse when he is close. There is also an endless mode for chasing a high score.
 
-The game runs on the Mobile renderer on Android and Forward+ on desktop. Trees use a hybrid LOD system so the forest stays dense without overwhelming low-end phones.
+The game runs on the Mobile renderer on Android and Forward+ on desktop. Trees use a hybrid LOD system so the forest stays dense without overwhelming low-end phones. On Android the 3D render resolution also adapts on the fly to protect the 60 FPS target.
 
 ## Controls
 
