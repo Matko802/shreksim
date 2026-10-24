@@ -62,5 +62,35 @@ func _ready() -> void:
 	if bus.vsync_enabled != true:
 		print("FAIL: reset vsync")
 		fails += 1
+	bus._mobile = true
+	var cfg2 := ConfigFile.new()
+	cfg2.set_value("core", "version", 2)
+	cfg2.set_value("video", "fps_limit", 60)
+	cfg2.set_value("video", "anti_aliasing_mode", 1)
+	cfg2.save("user://settings.cfg")
+	bus.load_settings()
+	if bus.fps_limit != 0:
+		print("FAIL: mobile migration fps ", bus.fps_limit)
+		fails += 1
+	if bus.anti_aliasing_mode != 2 or root_vp.msaa_3d != Viewport.MSAA_2X:
+		print("FAIL: mobile migration aa ", bus.anti_aliasing_mode)
+		fails += 1
+	if absf(root_vp.scaling_3d_scale - 1.0) > 0.001:
+		print("FAIL: mobile render scale ", root_vp.scaling_3d_scale)
+		fails += 1
+	bus.set_fps_limit(144)
+	if bus.fps_limit != 144 or Engine.max_fps != 144:
+		print("FAIL: mobile fps not uncapped ", bus.fps_limit, " ", Engine.max_fps)
+		fails += 1
+	bus.set_anti_aliasing_mode(3)
+	if bus.anti_aliasing_mode != 3 or root_vp.msaa_3d != Viewport.MSAA_4X:
+		print("FAIL: mobile aa option ", bus.anti_aliasing_mode)
+		fails += 1
+	bus.reset_settings()
+	if bus.fps_limit != 0 or bus.anti_aliasing_mode != 2:
+		print("FAIL: mobile reset")
+		fails += 1
+	bus._mobile = false
+	bus.load_settings()
 	print("SETTINGS FAILS=", fails)
 	get_tree().quit(1 if fails > 0 else 0)

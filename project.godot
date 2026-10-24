@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Swamp Horror Simulator 3D"
-config/version="1.4.24"
+config/version="1.4.25"
 run/main_scene="res://scenes/welcome_screen.tscn"
 config/features=PackedStringArray("4.7", "Mobile")
 boot_splash/bg_color=Color(0, 0, 0, 1)
@@ -119,5 +119,4 @@ common/physics_interpolation=true
 
 [rendering]
 
-renderer/rendering_method.mobile="mobile"
 textures/vram_compression/import_etc2_astc=true

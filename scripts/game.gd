@@ -6,10 +6,8 @@ const TOTAL_PAGES := 8
 const START_TIME := 150.0
 const KILL_RADIUS := 2.8
 const ENEMY_CHASE_RADIUS := 200.0
-const ENEMY_REAPPEAR_MIN := 8.0
-const ENEMY_REAPPEAR_MAX := 14.0
-const ENEMY_STALK_DIST_MIN := 17.0
-const ENEMY_STALK_DIST_MAX := 25.0
+const ENEMY_RESPAWN_DIST_MIN := 20.0
+const ENEMY_RESPAWN_DIST_MAX := 25.0
 const CAMERA_HEIGHT := 1.76
 const ONION_RANGE := 14.4
 const STATIC_MAX_ALPHA := 0.25
@@ -22,11 +20,13 @@ const ENEMY_FOV_HALF := 0.85
 const ENEMY_VISION_DIST := 30.0
 const ENEMY_HEAR_RUN := 16.0
 const ENEMY_MEMORY := 5.0
-const ENEMY_RETREAT_HOLD := 3.2
-const ENEMY_RETREAT_FADE := 1.4
-const ENEMY_FOG_DENSITY := 0.085
+const ENEMY_RETREAT_FADE := 3.0
+const ENEMY_RETREAT_SPEED := 15.0
+const ENEMY_RETREAT_DIST_MIN := 70.0
+const ENEMY_RETREAT_DIST_MAX := 110.0
 const ENEMY_PATH_INTERVAL := 0.6
 const ENEMY_WHISKER_DIST := 3.2
+const ENEMY_WHISKER_INTERVAL := 0.1
 const WALL_SAFE := 6.0
 
 const FAR_TREE_SHADER: Shader = preload("res://scripts/far_tree_billboard.gdshader")
@@ -111,15 +111,13 @@ var enemy_active := false
 var enemy_bob_t := 0.0
 var threat := 0.0
 var nav: EnemyNav
-var enemy_mode := "wander"
+var enemy_mode := "hidden"
 var enemy_path := PackedVector2Array()
 var enemy_path_i := 0
 var enemy_path_time := 0.0
 var enemy_arrived := false
 var enemy_goal_ok := false
 var enemy_goal := Vector2.ZERO
-var enemy_pause := 0.0
-var enemy_reappear_time := 0.0
 var enemy_chase_audio: AudioStreamPlayer3D
 var music_phase := 0
 var enemy_yaw := 0.0
@@ -127,7 +125,9 @@ var enemy_lose_time := 0.0
 var enemy_retreat_time := 0.0
 var enemy_retreat_goal_ok := false
 var enemy_fade := 1.0
-var enemy_fog := 0.0
+var enemy_whisker_timer := 0.0
+var enemy_whisker_offset := 0.0
+var enemy_whisker_last := Vector2.ZERO
 var last_seen := Vector2.ZERO
 var sees_cache := false
 var sees_timer := 0.0
@@ -256,6 +256,8 @@ func _build_player() -> void:
 	add_child(player)
 
 func _terrain_height(x: float, z: float) -> float:
+	if _terrain == null or _terrain.data == null:
+		return 0.0
 	var p := Vector3(clampf(x, -255.0, 255.0), 0.0, clampf(z, -255.0, 255.0))
 	var h := _terrain.data.get_height(p)
 	if is_nan(h):
@@ -267,12 +269,10 @@ static var _sky_shader: Shader
 func _build_world() -> void:
 	env = Environment.new()
 	env.background_mode = Environment.BG_SKY
-	var terrain_node := get_node("Map/Terrain") as Terrain3D
-	_terrain = terrain_node
-	if _mobile:
-		if terrain_node.ocean_material != null:
-			terrain_node.ocean_material = load("res://assets/maps/ocean_mobile.tres")
-		var terrain_mat := terrain_node.material as Terrain3DMaterial
+	_terrain = get_node_or_null("Map/Terrain") as Terrain3D
+	if _terrain != null and _mobile:
+		_terrain.cast_shadows = RenderingServer.SHADOW_CASTING_SETTING_OFF
+		var terrain_mat := _terrain.material as Terrain3DMaterial
 		if terrain_mat != null:
 			terrain_mat.output_specular = false
 			terrain_mat.max_regions = 64
@@ -614,7 +614,6 @@ func _process(delta: float) -> void:
 	if not endless:
 		_time_tick(delta)
 	_lerp_phase(clampf(1.0 - exp(-PHASE_SMOOTHING * delta), 0.0, 1.0))
-	_update_enemy_fog(delta)
 
 func _update_threat(delta: float) -> void:
 	if not enemy_active or enemy == null or not enemy.visible:
@@ -634,7 +633,7 @@ func _update_threat(delta: float) -> void:
 	hud.show_static(threat_frames[int(static_time / 0.07) % threat_frames.size()], alpha)
 
 func _update_prompt() -> void:
-	var grab_now := _ray_onion() != null and (endless or pages < TOTAL_PAGES)
+	var grab_now := (endless or pages < TOTAL_PAGES) and _ray_onion() != null
 	hud.set_prompt(tr("[E]  Grab onion") if grab_now else "")
 	_set_touch_grab(grab_now)
 
@@ -646,15 +645,6 @@ func _set_touch_grab(v: bool) -> void:
 	_grab_shown = v
 	if _touch != null:
 		_touch.set_grab_visible(v)
-
-func _update_enemy_fog(delta: float) -> void:
-	var target := 0.0
-	if enemy_mode == "retreat":
-		target = maxf(ENEMY_FOG_DENSITY, _phase_fog) - _phase_fog
-	enemy_fog = lerpf(enemy_fog, target, clampf(2.2 * delta, 0.0, 1.0))
-	if enemy_fog < 0.00005:
-		enemy_fog = 0.0
-	env.fog_density = _phase_fog + enemy_fog
 
 func _ray_onion() -> Area3D:
 	var center := _vsize() * 0.5
@@ -727,6 +717,7 @@ func _collect(onion: Area3D) -> void:
 	hud.set_pages_text(_pages_text())
 	onions.erase(onion)
 	_onion_deactivate(onion)
+	_on_onion_collected()
 	if endless:
 		var spot := _next_onion()
 		if spot != null:
@@ -774,7 +765,7 @@ func _lerp_phase(weight: float) -> void:
 	var sun_c: Color = t["sun_color"]
 	env.fog_light_color = env.fog_light_color.lerp(fog_color_t, weight)
 	_phase_fog = lerpf(_phase_fog, fog_t, weight)
-	env.fog_density = _phase_fog + enemy_fog
+	env.fog_density = _phase_fog
 	env.fog_sky_affect = lerpf(env.fog_sky_affect, affect_t, weight)
 	env.ambient_light_energy = lerpf(env.ambient_light_energy, amb_t, weight)
 	_day_mix = lerpf(_day_mix, day_t, weight)
@@ -792,7 +783,7 @@ func _lerp_phase(weight: float) -> void:
 	if settled:
 		env.fog_light_color = fog_color_t
 		_phase_fog = fog_t
-		env.fog_density = _phase_fog + enemy_fog
+		env.fog_density = _phase_fog
 		env.fog_sky_affect = affect_t
 		env.ambient_light_energy = amb_t
 		_day_mix = day_t
@@ -829,73 +820,40 @@ func _tick_enemy(delta: float) -> void:
 		enemy_active = true
 		if nav == null:
 			_build_nav()
-		_spawn_enemy_behind()
-	if not enemy_active:
+		_spawn_enemy_front()
+	if not enemy_active or enemy_mode == "hidden":
 		return
 	enemy_bob_t += delta
-	sees_timer -= delta
-	if sees_timer <= 0.0:
-		sees_timer = 0.1
-		sees_cache = _enemy_sees_player()
-	if sees_cache:
-		enemy_lose_time = 0.0
-		last_seen = Vector2(player.global_position.x, player.global_position.z)
-		if enemy_mode != "hunt":
-			enemy_path_time = 0.0
-			enemy_path = PackedVector2Array()
-			enemy_path_i = 0
-			enemy_retreat_time = 0.0
-			enemy_retreat_goal_ok = false
-			enemy_fade = 1.0
-		enemy_mode = "hunt"
-		enemy_arrived = false
-	else:
-		enemy_lose_time += delta
-		if enemy_mode == "hunt" and enemy_lose_time > ENEMY_MEMORY:
-			_begin_retreat()
-	var to_p := player.global_position - enemy.global_position
-	to_p.y = 0.0
-	if enemy_mode == "hunt" and to_p.length() < KILL_RADIUS:
-		_die()
-		return
-	var base := minf(ENEMY_FOLLOW_BASE + ENEMY_FOLLOW_PER_PAGE * pages, ENEMY_SPEED_CAP)
 	if enemy_mode == "hunt":
-		_enemy_advance(delta, last_seen, base)
-	elif enemy_mode == "retreat":
+		sees_timer -= delta
+		if sees_timer <= 0.0:
+			sees_timer = 0.1
+			sees_cache = _enemy_sees_player()
+		if sees_cache:
+			enemy_lose_time = 0.0
+			last_seen = Vector2(player.global_position.x, player.global_position.z)
+		else:
+			enemy_lose_time += delta
+			if enemy_lose_time > ENEMY_MEMORY:
+				_begin_retreat()
+		if enemy_mode == "hunt":
+			var to_p := player.global_position - enemy.global_position
+			to_p.y = 0.0
+			if to_p.length() < KILL_RADIUS:
+				_die()
+				return
+			var base := minf(ENEMY_FOLLOW_BASE + ENEMY_FOLLOW_PER_PAGE * pages, ENEMY_SPEED_CAP)
+			_enemy_advance(delta, last_seen, base)
+	if enemy_mode == "retreat":
 		enemy_retreat_time += delta
-		if not enemy_retreat_goal_ok or enemy_arrived:
+		if not enemy_retreat_goal_ok:
 			enemy_goal = _pick_retreat_target()
 			enemy_retreat_goal_ok = true
-			enemy_arrived = false
-			enemy_path = PackedVector2Array()
-			enemy_path_i = 0
-			enemy_path_time = 0.0
-		_enemy_advance(delta, enemy_goal, ENEMY_SPEED_CAP)
-		if enemy_retreat_time > ENEMY_RETREAT_HOLD:
-			enemy_fade = maxf(0.0, 1.0 - (enemy_retreat_time - ENEMY_RETREAT_HOLD) / ENEMY_RETREAT_FADE)
+		_enemy_retreat_advance(delta)
+		enemy_fade = maxf(0.0, 1.0 - enemy_retreat_time / ENEMY_RETREAT_FADE)
 		if enemy_fade <= 0.0:
-			enemy_retreat_time = 0.0
-			enemy_retreat_goal_ok = false
-			_set_enemy_mode("wander")
-	else:
-		enemy_reappear_time -= delta
-		if enemy_reappear_time <= 0.0:
-			_stalk_reappear()
+			_set_enemy_mode("hidden")
 			return
-		if enemy_pause > 0.0:
-			enemy_pause -= delta
-			enemy_yaw += delta * 0.5
-		else:
-			if not enemy_goal_ok:
-				enemy_goal = _pick_wander_target()
-				enemy_goal_ok = true
-				enemy_arrived = false
-				enemy_path = PackedVector2Array()
-				enemy_path_time = 0.0
-			_enemy_advance(delta, enemy_goal, base * 0.5)
-			if enemy_arrived:
-				enemy_goal_ok = false
-				enemy_pause = randf_range(1.2, 2.6)
 	var chasing := enemy_mode == "hunt"
 	if enemy_chase_audio != null:
 		if chasing:
@@ -907,7 +865,7 @@ func _tick_enemy(delta: float) -> void:
 				enemy_chase_audio.play()
 		elif enemy_chase_audio.playing:
 			enemy_chase_audio.stop()
-	enemy.visible = chasing or enemy_mode == "retreat"
+	enemy.visible = true
 	enemy.modulate = Color(1.0, 1.0, 1.0, enemy_fade)
 	enemy.global_position.y = _terrain_height(enemy.global_position.x, enemy.global_position.z) + 5.0 + sin(enemy_bob_t * 2.2) * 0.24
 
@@ -916,7 +874,9 @@ func _begin_retreat() -> void:
 	enemy_retreat_time = 0.0
 	enemy_retreat_goal_ok = false
 	enemy_fade = 1.0
-	enemy_pause = 0.0
+	enemy_goal_ok = false
+	enemy_whisker_timer = 0.0
+	enemy_whisker_offset = 0.0
 	enemy_path = PackedVector2Array()
 	enemy_path_i = 0
 	enemy_path_time = 0.0
@@ -927,17 +887,31 @@ func _pick_retreat_target() -> Vector2:
 	var ec := Vector2(enemy.global_position.x, enemy.global_position.z)
 	var away := ec - pc
 	if away.length() < 0.5:
-		away = Vector2(-sin(enemy_yaw), cos(enemy_yaw))
+		away = Vector2(cos(enemy_yaw), sin(enemy_yaw))
 	away = away.normalized()
 	var best := ec
-	for i in 20:
-		var p: Vector2 = ec + away.rotated(randf_range(-0.9, 0.9)) * randf_range(36.0, 64.0)
+	for i in 24:
+		var p: Vector2 = ec + away.rotated(randf_range(-0.7, 0.7)) * randf_range(ENEMY_RETREAT_DIST_MIN, ENEMY_RETREAT_DIST_MAX)
 		p.x = clampf(p.x, -WORLD_HALF + WALL_SAFE, WORLD_HALF - WALL_SAFE)
 		p.y = clampf(p.y, -WORLD_HALF + WALL_SAFE, WORLD_HALF - WALL_SAFE)
 		best = p
 		if nav == null or nav.is_free_point(p):
 			return p
 	return best
+
+func _enemy_retreat_advance(delta: float) -> void:
+	var pos := Vector2(enemy.global_position.x, enemy.global_position.z)
+	var dir := enemy_goal - pos
+	if dir.length() < 0.5:
+		enemy_goal = _pick_retreat_target()
+		return
+	dir = dir.normalized()
+	dir = _whisker_dir(dir, delta)
+	var next_pos := enemy.global_position
+	next_pos.x += dir.x * ENEMY_RETREAT_SPEED * delta
+	next_pos.z += dir.y * ENEMY_RETREAT_SPEED * delta
+	enemy.global_position = next_pos
+	enemy_yaw = lerp_angle(enemy_yaw, dir.angle(), clampf(10.0 * delta, 0.0, 1.0))
 
 func _enemy_sees_player() -> bool:
 	var to_p := player.global_position - enemy.global_position
@@ -976,20 +950,26 @@ func _enemy_advance(delta: float, target: Vector2, speed: float) -> void:
 	var d := dir.length()
 	if d > 0.001:
 		dir = dir / d
-		dir = _whisker_dir(dir)
+		dir = _whisker_dir(dir, delta)
 		var next_pos := enemy.global_position
 		next_pos.x += dir.x * speed * delta
 		next_pos.z += dir.y * speed * delta
 		enemy.global_position = next_pos
 		enemy_yaw = lerp_angle(enemy_yaw, dir.angle(), clampf(6.0 * delta, 0.0, 1.0))
 
-func _whisker_dir(dir: Vector2) -> Vector2:
+func _whisker_dir(dir: Vector2, delta: float) -> Vector2:
+	enemy_whisker_timer -= delta
+	if enemy_whisker_timer > 0.0 and enemy_whisker_last.dot(dir) > 0.7:
+		return dir.rotated(enemy_whisker_offset)
+	enemy_whisker_timer = ENEMY_WHISKER_INTERVAL
+	enemy_whisker_last = dir
 	var space := get_world_3d().direct_space_state
 	var y := _terrain_height(enemy.global_position.x, enemy.global_position.z) + 4.5
 	var origin := Vector3(enemy.global_position.x, y, enemy.global_position.z)
 	var to := origin + Vector3(dir.x, 0.0, dir.y) * ENEMY_WHISKER_DIST
 	var mid := PhysicsRayQueryParameters3D.create(origin, to, 1)
 	if space.intersect_ray(mid).is_empty():
+		enemy_whisker_offset = 0.0
 		return dir
 	var best := dir
 	for a in [-1.0, 1.0]:
@@ -997,63 +977,29 @@ func _whisker_dir(dir: Vector2) -> Vector2:
 		var q := PhysicsRayQueryParameters3D.create(origin, origin + Vector3(alt.x, 0.0, alt.y) * ENEMY_WHISKER_DIST * 1.4, 1)
 		var h := space.intersect_ray(q)
 		if h.is_empty():
-			return alt
+			best = alt
+			break
+	enemy_whisker_offset = dir.angle_to(best)
 	return best
-
-func _pick_wander_target() -> Vector2:
-	var target := Vector2.ZERO
-	var attempts := 0
-	while attempts < 24:
-		attempts += 1
-		var pc := Vector2(player.global_position.x, player.global_position.z)
-		if randf() < 0.4:
-			var ang := randf() * TAU
-			target = pc + Vector2(cos(ang), sin(ang)) * randf_range(26.0, 52.0)
-		else:
-			target = Vector2(randf_range(-WORLD_HALF + 10.0, WORLD_HALF - 10.0), randf_range(-WORLD_HALF + 10.0, WORLD_HALF - 10.0))
-		target.x = clampf(target.x, -WORLD_HALF + WALL_SAFE, WORLD_HALF - WALL_SAFE)
-		target.y = clampf(target.y, -WORLD_HALF + WALL_SAFE, WORLD_HALF - WALL_SAFE)
-		if nav.is_free_point(target):
-			return target
-	return target
 
 func _set_enemy_mode(m: String) -> void:
 	enemy_mode = m
-	if m == "wander":
-		enemy_reappear_time = randf_range(ENEMY_REAPPEAR_MIN, ENEMY_REAPPEAR_MAX)
-		enemy_goal_ok = false
-		enemy_path = PackedVector2Array()
-		enemy_path_i = 0
-		enemy_path_time = 0.0
-
-func _stalk_reappear() -> void:
-	var fwd := -player.camera.global_basis.z
-	var pc := Vector2(player.global_position.x, player.global_position.z)
-	var dir := Vector2(-fwd.x, -fwd.z).normalized().rotated(randf_range(-1.2, 1.2))
-	var p := pc + dir * randf_range(ENEMY_STALK_DIST_MIN, ENEMY_STALK_DIST_MAX)
-	p.x = clampf(p.x, -WORLD_HALF + WALL_SAFE, WORLD_HALF - WALL_SAFE)
-	p.y = clampf(p.y, -WORLD_HALF + WALL_SAFE, WORLD_HALF - WALL_SAFE)
-	var tries := 8
-	while tries > 0 and nav != null and not nav.is_free_point(p):
-		tries -= 1
-		dir = Vector2(-fwd.x, -fwd.z).normalized().rotated(randf_range(-1.2, 1.2))
-		p = pc + dir * randf_range(ENEMY_STALK_DIST_MIN, ENEMY_STALK_DIST_MAX)
-		p.x = clampf(p.x, -WORLD_HALF + WALL_SAFE, WORLD_HALF - WALL_SAFE)
-		p.y = clampf(p.y, -WORLD_HALF + WALL_SAFE, WORLD_HALF - WALL_SAFE)
-	enemy.global_position = Vector3(p.x, _terrain_height(p.x, p.y) + 5.0, p.y)
-	enemy.reset_physics_interpolation()
-	enemy_yaw = (pc - p).angle()
-	enemy_arrived = false
-	enemy_lose_time = 0.0
-	enemy_retreat_time = 0.0
-	enemy_retreat_goal_ok = false
-	enemy_fade = 1.0
-	enemy_pause = 0.0
+	enemy_goal_ok = false
+	enemy_path = PackedVector2Array()
+	enemy_path_i = 0
 	enemy_path_time = 0.0
-	sees_timer = 0.0
-	sees_cache = false
-	last_seen = pc
-	enemy_mode = "hunt"
+	enemy_arrived = false
+	if m == "hidden":
+		enemy_fade = 0.0
+		enemy.visible = false
+		enemy.modulate = Color(1.0, 1.0, 1.0, 0.0)
+		enemy_retreat_goal_ok = false
+		if enemy_chase_audio != null and enemy_chase_audio.playing:
+			enemy_chase_audio.stop()
+
+func _on_onion_collected() -> void:
+	if enemy_active and enemy_mode == "hidden":
+		_spawn_enemy_front()
 
 func _build_nav() -> void:
 	nav = NAV.new()
@@ -1071,34 +1017,40 @@ func _build_nav() -> void:
 		rs.append(cyl.radius)
 	nav.build(xs, zs, rs)
 
-func _spawn_enemy_behind() -> void:
+func _spawn_enemy_front() -> void:
 	var fwd := -player.camera.global_basis.z
-	var behind := Vector2(-fwd.x, -fwd.z).normalized()
+	var front := Vector2(fwd.x, fwd.z).normalized()
 	var pc := Vector2(player.global_position.x, player.global_position.z)
-	var p: Vector2 = _pick_spawn_point(pc, behind)
+	var p: Vector2 = _pick_spawn_point(pc, front)
 	enemy.global_position = Vector3(p.x, _terrain_height(p.x, p.y) + 5.0, p.y)
 	enemy.reset_physics_interpolation()
-	enemy.visible = false
-	enemy_yaw = Vector2(player.global_position.x - p.x, player.global_position.z - p.y).angle()
-	_set_enemy_mode("wander")
+	enemy.visible = true
+	enemy.modulate = Color(1.0, 1.0, 1.0, 1.0)
+	enemy_yaw = (pc - p).angle()
+	enemy_mode = "hunt"
 	enemy_arrived = false
+	enemy_goal_ok = false
+	enemy_path = PackedVector2Array()
+	enemy_path_i = 0
+	enemy_path_time = 0.0
 	enemy_lose_time = 0.0
 	enemy_retreat_time = 0.0
 	enemy_retreat_goal_ok = false
 	enemy_fade = 1.0
-	enemy_pause = 0.0
+	enemy_whisker_timer = 0.0
+	enemy_whisker_offset = 0.0
 	last_seen = pc
 	sees_cache = false
 	sees_timer = 0.0
 
 func _pick_spawn_point(from: Vector2, first_dir: Vector2) -> Vector2:
-	var dirs: Array[Vector2] = [first_dir, first_dir.rotated(0.9)]
+	var dirs: Array[Vector2] = [first_dir, first_dir.rotated(0.5), first_dir.rotated(-0.5)]
 	for i in range(12):
-		dirs.append(first_dir.rotated(-1.0 + 2.0 * float(i) / 11.0))
+		dirs.append(first_dir.rotated(-0.7 + 1.4 * float(i) / 11.0))
 	var best_clear := -1.0
 	var best := Vector2(from.x, from.y + 22.0)
 	for dir in dirs:
-		var d := randf_range(19.2, 25.6)
+		var d := randf_range(ENEMY_RESPAWN_DIST_MIN, ENEMY_RESPAWN_DIST_MAX)
 		var p := Vector2(from.x + dir.x * d, from.y + dir.y * d)
 		p.x = clampf(p.x, -WORLD_HALF + WALL_SAFE, WORLD_HALF - WALL_SAFE)
 		p.y = clampf(p.y, -WORLD_HALF + WALL_SAFE, WORLD_HALF - WALL_SAFE)

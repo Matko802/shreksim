@@ -13,3 +13,4 @@ _shader_parameters = {
 &"private": null
 }
 world_background = 0
+max_regions = 64

@@ -1,6 +1,7 @@
-# v1.4.24
+# v1.4.25
 
-- Mobile performance pass aimed at holding 60 FPS: terrain now uses a dedicated lightweight shader with fewer texture lookups and no expensive specular work. Terrain rendering is roughly a third faster in profiling.
-- Adaptive 3D render resolution on Android scales between 0.55x and 0.8x on the fly to protect the frame rate, which especially helps when looking down at the ground.
-- Desktop keeps the full Forward+ renderer and the original terrain shader, unchanged.
-- No gameplay or visual content changes.
+- Terrain3D returns on PC and Android with a mobile-first setup: lightweight terrain shader, 64-region cap, fewer mesh LODs, smaller clipmap meshes, no tessellation, no world-noise background, no cull margin, and dynamic game-only collision. Terrain geometry drops from roughly 166k to 20k primitives.
+- Shrek now runs away fast and slowly fades out when he loses you, then stays hidden until you collect another onion. He reappears 20-25 m in front of you, including his first appearance after the first onion.
+- The fog no longer thickens when Shrek loses you.
+- Android is no longer capped at 60 FPS. It renders at native 1.0 resolution with MSAA 2x by default and the same anti-aliasing options as desktop. Dynamic resolution scaling and FSR are removed.
+- Enemy steering raycasts are throttled, and the onion prompt skips work when there are no onions left to collect.

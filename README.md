@@ -29,17 +29,18 @@ chmod +x SwampSim-Linux-x86_64.AppImage
 ./SwampSim-Linux-x86_64.AppImage
 ```
 
-## What's new in v1.4.24
+## What's new in v1.4.25
 
-- Android now uses a dedicated lightweight terrain shader with fewer texture lookups, making terrain rendering roughly a third faster.
-- Adaptive 3D render resolution scales between 0.55x and 0.8x on the fly to hold 60 FPS, which especially helps when looking down at the ground.
-- Desktop keeps the full Forward+ renderer and the original terrain shader, unchanged.
+- Terrain3D is back on PC and Android, tuned for mobile: a lightweight terrain shader, a 64-region cap, fewer mesh LODs, smaller clipmap meshes, no tessellation, no world-noise background, no cull margin, and dynamic game-only collision. Terrain geometry drops from roughly 166k to 20k primitives.
+- Shrek now runs away fast and slowly fades out when he loses you, then stays hidden until you collect another onion. He reappears 20-25 m in front of you, including his first appearance after the first onion.
+- The fog no longer thickens when Shrek loses you.
+- Android is no longer capped at 60 FPS. It renders at native 1.0 resolution with MSAA 2x by default and the same anti-aliasing options as desktop. Dynamic resolution scaling and FSR are removed.
 
 ## About
 
-The swamp is full of onions. Grab all eight before the 150 second timer runs out. Shrek hunts by sound and sight, and the fog gets much worse when he is close. There is also an endless mode for chasing a high score.
+The swamp is full of onions. Grab all eight before the 150 second timer runs out. Shrek hunts by sound and sight, and the fog thickens as the night goes on. There is also an endless mode for chasing a high score.
 
-The game runs on the Mobile renderer on Android and Forward+ on desktop. Trees use a hybrid LOD system so the forest stays dense without overwhelming low-end phones. On Android the 3D render resolution also adapts on the fly to protect the 60 FPS target.
+The game runs on the Mobile renderer on Android and Forward+ on desktop. Terrain3D uses a mobile-tuned clipmap and a lightweight shader on Android. Trees use a hybrid LOD system so the forest stays dense without overwhelming low-end phones. Android renders at native resolution with MSAA 2x and no frame cap.
 
 ## Controls
 

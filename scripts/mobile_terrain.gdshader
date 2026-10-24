@@ -1,5 +1,3 @@
-
-
 shader_type spatial;
 render_mode blend_mix,depth_draw_opaque,cull_back,diffuse_burley,specular_schlick_ggx,skip_vertex_transform;
 
@@ -51,7 +49,6 @@ uniform float region_blend : hint_range(.001, 1., 0.001) = 0.25;
 uniform bool flat_terrain_normals = false;
 uniform bool textures_enabled = true;
 uniform float blend_sharpness : hint_range(0, 1) = 0.5;
-uniform float distant_normal_scale : hint_range(1.0, 10.0, 0.1) = 2.0;
 group_uniforms;
 
 group_uniforms auto_shader;
@@ -395,7 +392,7 @@ void fragment() {
 	SPECULAR = 0.0;
 
 	NORMAL_MAP = fma(normalize(normal_rough.xzy), vec3(0.5), vec3(0.5));
-	NORMAL_MAP_DEPTH = normal_map_depth * clamp(max(length(base_ddx.xz), length(base_ddy.xz)), 1.0, distant_normal_scale);
+	NORMAL_MAP_DEPTH = normal_map_depth;
 
 	AO = clamp(ao, 0., 1.);
 	AO_LIGHT_AFFECT = ao_affect;

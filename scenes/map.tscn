@@ -1,6 +1,5 @@
 [gd_scene format=3 uid="uid://bswampmap0001"]
 
-[ext_resource type="Material" uid="uid://cgk4glwmc4vk2" path="res://addons/terrain_3d/extras/shaders/M_ocean.tres" id="3_2lpho"]
 [ext_resource type="Texture2D" uid="uid://duq7xk2feblfy" path="res://assets/images/items/onion.png" id="9_onion"]
 [ext_resource type="Terrain3DAssets" uid="uid://dv13p1xkbfmh" path="res://assets/maps/terrain3d_assets.tres" id="t3d_assets"]
 [ext_resource type="Terrain3DMaterial" uid="uid://cue7saks5hld6" path="res://assets/maps/terrain3d_material.tres" id="t3d_material"]
@@ -842,10 +841,14 @@ radius = 0.4784
 data_directory = "res://assets/maps/terrain3d/"
 material = ExtResource("t3d_material")
 assets = ExtResource("t3d_assets")
-displacement_sharpness = 0.5
-ocean_mesh_lods = 2
-ocean_mesh_size = 16
-ocean_material = ExtResource("3_2lpho")
+collision_mode = 1
+collision_shape_size = 16
+collision_radius = 64
+mesh_lods = 4
+mesh_size = 16
+vertex_spacing = 1.0
+cull_margin = 0.0
+free_editor_textures = true
 top_level = true
 metadata/_edit_lock_ = true
 

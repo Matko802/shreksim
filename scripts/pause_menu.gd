@@ -29,8 +29,6 @@ func _ready() -> void:
 	if SettingsBus._is_mobile():
 		fs_check.visible = false
 		vsync_check.visible = false
-		aa_option.get_parent().visible = false
-		fps_slider.max_value = 60.0
 	for entry in SettingsBus.LANGUAGES:
 		lang_option.add_item(entry[1])
 	_aa_modes = [0, 1, 2, 3, 4]
