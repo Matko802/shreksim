@@ -15,6 +15,9 @@ func _ready() -> void:
 	bus.reset_settings()
 	await get_tree().process_frame
 	var root_vp: Viewport = get_tree().root
+	if bus.quality_preset != 2 or absf(bus.render_distance - 200.0) > 0.001:
+		print("FAIL: desktop quality defaults ", bus.quality_preset, " ", bus.render_distance)
+		fails += 1
 	if bus.anti_aliasing_mode != 0:
 		print("FAIL: default aa ", bus.anti_aliasing_mode)
 		fails += 1
@@ -91,8 +94,19 @@ func _ready() -> void:
 	if bus.anti_aliasing_mode != 0 or root_vp.msaa_3d != Viewport.MSAA_DISABLED:
 		print("FAIL: mobile migration aa ", bus.anti_aliasing_mode)
 		fails += 1
-	if absf(root_vp.scaling_3d_scale - 1.0) > 0.001:
+	if absf(root_vp.scaling_3d_scale - 0.65) > 0.001:
 		print("FAIL: mobile render scale ", root_vp.scaling_3d_scale)
+		fails += 1
+	if bus.quality_preset != 0 or absf(bus.render_distance - 64.0) > 0.001:
+		print("FAIL: mobile quality defaults ", bus.quality_preset, " ", bus.render_distance)
+		fails += 1
+	bus.set_quality_preset(1)
+	if bus.quality_preset != 1 or absf(root_vp.scaling_3d_scale - 0.8) > 0.001 or root_vp.screen_space_aa != Viewport.SCREEN_SPACE_AA_FXAA:
+		print("FAIL: medium preset ", bus.quality_preset, " ", root_vp.scaling_3d_scale, " ", root_vp.screen_space_aa)
+		fails += 1
+	bus.set_render_distance(96.0)
+	if absf(bus.render_distance - 96.0) > 0.001:
+		print("FAIL: render distance setter ", bus.render_distance)
 		fails += 1
 	bus.set_fps_limit(144)
 	if bus.fps_limit != 144 or Engine.max_fps != 144:
@@ -109,10 +123,19 @@ func _ready() -> void:
 	if bus.fps_limit != 0 or bus.anti_aliasing_mode != 0:
 		print("FAIL: mobile reset")
 		fails += 1
-	if absf(root_vp.scaling_3d_scale - 1.0) > 0.001:
+	if absf(root_vp.scaling_3d_scale - 0.65) > 0.001:
 		print("FAIL: mobile reset render scale ", root_vp.scaling_3d_scale)
 		fails += 1
+	if bus.quality_preset != 0 or absf(bus.render_distance - 64.0) > 0.001:
+		print("FAIL: mobile reset quality ", bus.quality_preset, " ", bus.render_distance)
+		fails += 1
+	var cleanup := DirAccess.open("user://")
+	if cleanup != null and cleanup.file_exists("settings.cfg"):
+		cleanup.remove("settings.cfg")
 	bus._mobile = false
 	bus.load_settings()
+	if bus.quality_preset != 2 or absf(bus.render_distance - 200.0) > 0.001:
+		print("FAIL: desktop reload quality ", bus.quality_preset, " ", bus.render_distance)
+		fails += 1
 	print("SETTINGS FAILS=", fails)
 	get_tree().quit(1 if fails > 0 else 0)

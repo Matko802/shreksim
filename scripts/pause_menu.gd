@@ -19,6 +19,11 @@ signal menu_requested
 @onready var aa_option: OptionButton = %AAOption
 @onready var fps_slider: HSlider = %FPSLimitSlider
 @onready var fps_label: Label = %FPSLimitLabel
+@onready var quality_option: OptionButton = %QualityOption
+@onready var distance_slider: HSlider = %DistanceSlider
+@onready var distance_value: Label = %DistanceValue
+@onready var render_scale_slider: HSlider = %RenderScaleSlider
+@onready var render_scale_value: Label = %RenderScaleValue
 
 const AA_LABELS := ["Off", "FXAA", "MSAA 2x", "MSAA 4x", "MSAA 8x", "TAA"]
 var _aa_modes: Array[int] = []
@@ -31,6 +36,8 @@ func _ready() -> void:
 		vsync_check.visible = false
 	for entry in SettingsBus.LANGUAGES:
 		lang_option.add_item(entry[1])
+	for label in SettingsBus.QUALITY_LABELS:
+		quality_option.add_item(tr(label))
 	_aa_modes = [0, 1, 2, 3, 4]
 	if SettingsBus.taa_supported():
 		_aa_modes.append(5)
@@ -44,6 +51,9 @@ func _ready() -> void:
 	vsync_check.toggled.connect(_on_vsync_toggled)
 	aa_option.item_selected.connect(_on_aa_selected)
 	fps_slider.value_changed.connect(_on_fps_changed)
+	quality_option.item_selected.connect(_on_quality_selected)
+	distance_slider.value_changed.connect(_on_distance_changed)
+	render_scale_slider.value_changed.connect(_on_render_scale_changed)
 	settings_btn.pressed.connect(_show_settings)
 	back_settings_btn.pressed.connect(_hide_settings)
 	reset_btn.pressed.connect(_on_reset_pressed)
@@ -67,6 +77,14 @@ func _on_external_setting(setting_name: StringName, _value: Variant) -> void:
 		&"fps_limit":
 			fps_slider.set_value_no_signal(360.0 if SettingsBus.fps_limit <= 0 or SettingsBus.fps_limit >= 360 else float(SettingsBus.fps_limit))
 			_update_fps_label(SettingsBus.fps_limit)
+		&"quality_preset":
+			quality_option.selected = SettingsBus.quality_preset
+		&"render_distance":
+			distance_slider.set_value_no_signal(SettingsBus.render_distance)
+			_update_distance_value(SettingsBus.render_distance)
+		&"render_scale":
+			render_scale_slider.set_value_no_signal(SettingsBus.render_scale * 100.0)
+			_update_render_scale_value(SettingsBus.render_scale * 100.0)
 
 func set_open(open: bool) -> void:
 	visible = open
@@ -112,8 +130,26 @@ func _on_fps_changed(value: float) -> void:
 	SettingsBus.set_fps_limit(limit)
 	_update_fps_label(SettingsBus.fps_limit)
 
+func _on_quality_selected(idx: int) -> void:
+	SettingsBus.set_quality_preset(idx)
+	_sync_controls()
+
+func _on_distance_changed(value: float) -> void:
+	SettingsBus.set_render_distance(value)
+	_update_distance_value(SettingsBus.render_distance)
+
+func _on_render_scale_changed(value: float) -> void:
+	SettingsBus.set_render_scale(value / 100.0)
+	_update_render_scale_value(SettingsBus.render_scale * 100.0)
+
 func _update_fps_label(limit: int) -> void:
 	fps_label.text = "Off" if limit <= 0 else str(limit)
+
+func _update_distance_value(value: float) -> void:
+	distance_value.text = "%d m" % int(round(value))
+
+func _update_render_scale_value(value: float) -> void:
+	render_scale_value.text = "%d%%" % int(round(value))
 
 func _on_reset_pressed() -> void:
 	SettingsBus.reset_settings()
@@ -129,6 +165,11 @@ func _sync_controls() -> void:
 	aa_option.selected = clampi(_aa_modes.find(SettingsBus.anti_aliasing_mode), 0, _aa_modes.size() - 1)
 	fps_slider.set_value_no_signal(360.0 if SettingsBus.fps_limit <= 0 or SettingsBus.fps_limit >= 360 else float(SettingsBus.fps_limit))
 	_update_fps_label(SettingsBus.fps_limit)
+	quality_option.selected = SettingsBus.quality_preset
+	distance_slider.set_value_no_signal(SettingsBus.render_distance)
+	_update_distance_value(SettingsBus.render_distance)
+	render_scale_slider.set_value_no_signal(SettingsBus.render_scale * 100.0)
+	_update_render_scale_value(SettingsBus.render_scale * 100.0)
 	lang_option.selected = SettingsBus.language_index()
 
 func _update_sens_value(value: float) -> void:

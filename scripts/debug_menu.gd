@@ -103,7 +103,6 @@ func _process(_delta: float) -> void:
 	times.sort()
 	var count: int = times.size()
 	var avg_ms: float = 0.0
-	var max_ms: float = 0.0
 	var low_1: float = 0.0
 	var low_01: float = 0.0
 	if count > 0:
@@ -111,7 +110,6 @@ func _process(_delta: float) -> void:
 		for t in times:
 			total += t
 		avg_ms = float(total) / float(count) / 1000.0
-		max_ms = float(times[count - 1]) / 1000.0
 		low_1 = _low_fps(times, maxi(1, int(ceil(float(count) * 0.01))))
 		low_01 = _low_fps(times, maxi(1, int(ceil(float(count) * 0.001))))
 	if _measuring:
@@ -130,12 +128,12 @@ func _process(_delta: float) -> void:
 	if _gpu_ms > 0.0:
 		gpu_value = "%.1f" % _gpu_ms
 	var lines: PackedStringArray = PackedStringArray()
-	lines.append("%.0f FPS · %.1f ms · max %.0f · 1%% %.0f" % [_fps, avg_ms, max_ms, low_1])
+	lines.append("%.0f FPS · %.1f ms · 1%% %.0f · 0.1%% %.0f" % [_fps, avg_ms, low_1, low_01])
 	lines.append("GPU %s · CPU %.1f · proc %.1f · phys %.2f" % [gpu_value, render_cpu, proc_ms, phys_ms])
 	lines.append("draw %d · prims %.1fM · objs %d" % [draws, float(prims) / 1000000.0, objs])
 	lines.append(_gpu_line)
 	if verbose:
-		lines.append("engine %.0f · 0.1%% %.0f · %d hitch/s" % [engine_fps, low_01, hitches])
+		lines.append("engine %.0f · %d hitch/s" % [engine_fps, hitches])
 		lines.append(_env_lines)
 	label.text = "\n".join(lines)
 

@@ -157,3 +157,13 @@ L'ogre arrive après le premier oignon et te SUIT.
 Il accélère à chaque oignon.
 La neige à l'écran augmente quand il s'approche.
 Il te poursuit à pleine vitesse, que tu le voies ou non. Ne le laisse pas te toucher."
+"Quality","Quality","Kvalita","Kvalita","Jakość","Minőség","Qualität","Calidad","Qualité"
+"Low","Low","Nízka","Nízká","Niska","Alacsony","Niedrig","Baja","Basse"
+"Medium","Medium","Stredná","Střední","Średnia","Közepes","Mittel","Media","Moyenne"
+"High","High","Vysoká","Vysoká","Wysoka","Magas","Hoch","Alta","Haute"
+"Render distance","Render distance","Vzdialenosť vykresľovania","Vzdálenost vykreslování","Odległość rysowania","Renderelési távolság","Sichtweite","Distancia de dibujado","Distance d'affichage"
+"Render scale","Render scale","Mierka vykresľovania","Měřítko vykreslování","Skala renderowania","Renderelési méretarány","Render-Skalierung","Escala de dibujado","Échelle de rendu"
+"Debug info","Debug info","Ladiace údaje","Ladicí údaje","Informacje debugowania","Hibainfó","Debug-Info","Información de depuración","Infos de débogage"
+"VSync","VSync","VSync","VSync","VSync","VSync","VSync","VSync","VSync"
+"Anti-aliasing","Anti-aliasing","Vyhladzovanie","Vyhlazování","Wygładzanie","Élsimítás","Kantenglättung","Suavizado","Anticrénelage"
+"FPS limit","FPS limit","Limit FPS","Limit FPS","Limit FPS","FPS-korlát","FPS-Limit","Límite de FPS","Limite FPS"

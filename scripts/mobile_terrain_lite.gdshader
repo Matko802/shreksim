@@ -17,8 +17,6 @@ render_mode blend_mix,depth_draw_opaque,cull_back,diffuse_lambert,specular_disab
     #define dFdyCoarse(a) dFdy(a)
 #endif
 
-uniform vec3 render_origin = vec3(0.0);
-
 group_uniforms private;
 uniform vec3 _target_pos = vec3(0.f);
 uniform float _mesh_size = 48.f;
@@ -158,7 +156,7 @@ void vertex() {
 
 
 	vec3 render_pos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
-	v_vertex = render_pos + render_origin;
+	v_vertex = render_pos;
 
 
 	float scale = MODEL_MATRIX[0][0];
@@ -218,7 +216,7 @@ void vertex() {
 		v_normal = normalize(vec3(h - u, _vertex_spacing, h - v));
 	}
 
-	VERTEX = (VIEW_MATRIX * vec4(v_vertex - render_origin, 1.0)).xyz;
+	VERTEX = (VIEW_MATRIX * vec4(v_vertex, 1.0)).xyz;
 
 	NORMAL = normalize((VIEW_MATRIX * vec4(v_normal, 0.0)).xyz);
 }

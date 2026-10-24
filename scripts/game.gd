@@ -1,7 +1,6 @@
 extends Node3D
 
 const WORLD_HALF := 128.0
-const FLOATING_ORIGIN_CELL := 32.0
 const NAV := preload("res://scripts/enemy_nav.gd")
 const TOTAL_PAGES := 8
 const START_TIME := 150.0
@@ -33,8 +32,10 @@ const WALL_SAFE := 6.0
 const FAR_TREE_SHADER: Shader = preload("res://scripts/far_tree_billboard.gdshader")
 const NEAR_TREE_SHADER: Shader = preload("res://scripts/near_tree_cross.gdshader")
 const TERRAIN_SHADER: Shader = preload("res://scripts/mobile_terrain_lite.gdshader")
-const FAR_TREE_CULL := 150.0
+const TREE_FAR_MAX := 150.0
 const TREE_NEAR := 32.0
+const STATIC_BLINK_TIME := 0.5
+const STATIC_BLINK_COUNT := 3
 const MOBILE_PHYSICS_TICKS := 30
 const MOBILE_MAX_PHYSICS_STEPS := 4
 
@@ -97,10 +98,7 @@ var sky_mat: ShaderMaterial
 var _day_mix := 1.0
 var _terrain: Terrain3D
 var _mobile := false
-var render_origin := Vector3.ZERO
-var terrain_render_target: Node3D
-var onion_sprites: Dictionary = {}
-var onion_visuals: Array[Area3D] = []
+var terrain_target: Node3D
 var far_tree_materials: Array[ShaderMaterial] = []
 var near_tree_materials: Array[ShaderMaterial] = []
 var snap_pending: Array = []
@@ -165,6 +163,7 @@ var allstar: AudioStreamPlayer
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	_mobile = SettingsBus._is_mobile()
+	SettingsBus.setting_changed.connect(_on_setting_changed)
 	if _mobile:
 		Engine.physics_ticks_per_second = MOBILE_PHYSICS_TICKS
 		Engine.max_physics_steps_per_frame = MOBILE_MAX_PHYSICS_STEPS
@@ -172,10 +171,8 @@ func _ready() -> void:
 	set_meta("best_start", GameState.best_endless)
 	_build_world()
 	_build_player()
-	_build_onion_visuals()
 	_build_onions()
 	_build_enemy()
-	_set_render_origin(Vector3.ZERO)
 	_build_ui()
 	_build_audio()
 	_apply_phase(0)
@@ -269,83 +266,20 @@ func _build_player() -> void:
 	player.process_mode = Node.PROCESS_MODE_PAUSABLE
 	player.position = Vector3(0, CAMERA_HEIGHT, 0)
 	add_child(player)
-	terrain_render_target = Node3D.new()
-	terrain_render_target.name = "TerrainRenderTarget"
-	terrain_render_target.physics_interpolation_mode = Node3D.PHYSICS_INTERPOLATION_MODE_OFF
-	add_child(terrain_render_target)
+	terrain_target = Node3D.new()
+	terrain_target.name = "TerrainTarget"
+	terrain_target.physics_interpolation_mode = Node3D.PHYSICS_INTERPOLATION_MODE_OFF
+	add_child(terrain_target)
 	if _terrain != null:
-		_terrain.clipmap_target = terrain_render_target
+		_terrain.clipmap_target = terrain_target
 		_terrain.collision_target = player
 		_terrain.light_target = sun
 	_sync_terrain_target()
 
-func _update_render_origin() -> void:
-	if player == null:
-		return
-	var shift := Vector3.ZERO
-	var delta := player.global_position - render_origin
-	if absf(delta.x) >= FLOATING_ORIGIN_CELL:
-		shift.x = signf(delta.x) * FLOATING_ORIGIN_CELL
-	if absf(delta.z) >= FLOATING_ORIGIN_CELL:
-		shift.z = signf(delta.z) * FLOATING_ORIGIN_CELL
-	if shift != Vector3.ZERO:
-		_set_render_origin(render_origin + shift)
-
 func _sync_terrain_target() -> void:
-	if terrain_render_target == null or player == null:
+	if terrain_target == null or player == null:
 		return
-	terrain_render_target.global_position = Vector3(
-		player.global_position.x - render_origin.x,
-		0.0,
-		player.global_position.z - render_origin.z)
-
-func _set_render_origin(origin: Vector3) -> void:
-	render_origin = Vector3(origin.x, 0.0, origin.z)
-	var offset := -render_origin
-	if player != null:
-		player.set_render_offset(offset)
-	_sync_terrain_target()
-	if enemy != null:
-		enemy.position = Vector3(offset.x, 0.0, offset.z)
-		enemy.reset_physics_interpolation()
-	if _terrain != null:
-		var terrain_mat := _terrain.material as Terrain3DMaterial
-		if terrain_mat != null:
-			terrain_mat.set_shader_param(&"render_origin", render_origin)
-	_apply_tree_render_origin()
-	for area in onion_visuals:
-		if is_instance_valid(area):
-			_place_onion_sprite(area)
-
-func _apply_tree_render_origin() -> void:
-	for mat in far_tree_materials:
-		if mat != null:
-			mat.set_shader_parameter("render_origin", render_origin)
-	for mat in near_tree_materials:
-		if mat != null:
-			mat.set_shader_parameter("render_origin", render_origin)
-
-func _build_onion_visuals() -> void:
-	for c in get_node("Map/OnionSpots").get_children():
-		if c is Area3D:
-			var area := c as Area3D
-			var sprite := area.get_node_or_null("Sprite") as Sprite3D
-			if sprite == null:
-				continue
-			var base := sprite.position
-			sprite.top_level = true
-			onion_sprites[area] = [sprite, base]
-			onion_visuals.append(area)
-			_place_onion_sprite(area)
-
-func _place_onion_sprite(area: Area3D) -> void:
-	if not is_instance_valid(area) or not onion_sprites.has(area):
-		return
-	var entry: Array = onion_sprites[area]
-	var sprite := entry[0] as Sprite3D
-	var base := entry[1] as Vector3
-	if sprite != null:
-		sprite.global_position = area.global_transform * base - render_origin
+	terrain_target.global_position = Vector3(player.global_position.x, 0.0, player.global_position.z)
 
 func _terrain_height(x: float, z: float) -> float:
 	if _terrain == null or _terrain.data == null:
@@ -467,12 +401,30 @@ func _snap_pending_trees() -> void:
 		var o := n as Area3D
 		if o != null and o.has_meta("base_y"):
 			o.set_meta("base_y", raw)
-			_place_onion_sprite(o)
 	snap_pending = keep
 	if not _far_trees_baked:
 		far_bake_ticks += 1
 		if far_bake_ticks >= 2:
 			_bake_far_trees()
+
+func _tree_distances() -> Vector2:
+	var far := minf(SettingsBus.render_distance, TREE_FAR_MAX)
+	var near := clampf(SettingsBus.render_distance * 0.22, 16.0, TREE_NEAR)
+	return Vector2(far, near)
+
+func _apply_tree_distances() -> void:
+	var distances := _tree_distances()
+	for mat in far_tree_materials:
+		if mat != null:
+			mat.set_shader_parameter("tree_far", distances.x)
+			mat.set_shader_parameter("tree_near", distances.y)
+	for mat in near_tree_materials:
+		if mat != null:
+			mat.set_shader_parameter("tree_near", distances.y)
+
+func _on_setting_changed(setting_name: StringName, _value: Variant) -> void:
+	if setting_name == &"render_distance":
+		_apply_tree_distances()
 
 func _bake_far_trees() -> void:
 	_far_trees_baked = true
@@ -522,8 +474,9 @@ func _bake_far_trees() -> void:
 		if row[5]:
 			g["near_count"] += 1
 	var cross := _make_cross_mesh()
-	var tree_far := FAR_TREE_CULL
-	var tree_near := TREE_NEAR
+	var distances := _tree_distances()
+	var tree_far := distances.x
+	var tree_near := distances.y
 	for key in groups:
 		var g: Dictionary = groups[key]
 		var quad := QuadMesh.new()
@@ -534,7 +487,6 @@ func _bake_far_trees() -> void:
 		mat.set_shader_parameter("tint", _far_tint)
 		mat.set_shader_parameter("tree_far", tree_far)
 		mat.set_shader_parameter("tree_near", tree_near)
-		mat.set_shader_parameter("render_origin", render_origin)
 		var mm := MultiMesh.new()
 		mm.transform_format = MultiMesh.TRANSFORM_3D
 		mm.mesh = quad
@@ -552,7 +504,6 @@ func _bake_far_trees() -> void:
 			nmat.set_shader_parameter("tex", g["tex"])
 			nmat.set_shader_parameter("tint", _far_tint)
 			nmat.set_shader_parameter("tree_near", tree_near)
-			nmat.set_shader_parameter("render_origin", render_origin)
 			var nmm := MultiMesh.new()
 			nmm.transform_format = MultiMesh.TRANSFORM_3D
 			nmm.mesh = cross
@@ -633,7 +584,6 @@ func _onion_activate(area: Area3D) -> void:
 	area.set_meta("onion", true)
 	area.set_meta("base_y", area.position.y)
 	onions.append(area)
-	_place_onion_sprite(area)
 
 func _onion_deactivate(area: Area3D) -> void:
 	var base_y := float(area.get_meta("base_y")) if area.has_meta("base_y") else area.position.y
@@ -761,7 +711,7 @@ func _ray_onion() -> Area3D:
 	var center := _vsize() * 0.5
 	if player == null or player.camera == null:
 		return null
-	var from := player.camera.project_ray_origin(center) + render_origin
+	var from := player.camera.project_ray_origin(center)
 	var to := from + player.camera.project_ray_normal(center) * ONION_RANGE
 	var params := PhysicsRayQueryParameters3D.create(from, to)
 	params.collide_with_areas = true
@@ -790,13 +740,14 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 		return
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		if game_over and not static_playing:
-			_to_menu()
+		if game_over or static_playing:
+			if game_over and not static_playing:
+				_to_menu()
 			return
 		if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED and not paused:
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 			return
-		if not paused and not game_over:
+		if not paused:
 			var on: Area3D = _ray_onion()
 			if on != null:
 				_collect(on)
@@ -924,7 +875,6 @@ func _start_music_phase(ph: int) -> void:
 func _physics_process(delta: float) -> void:
 	if game_over or paused:
 		return
-	_update_render_origin()
 	_sync_terrain_target()
 	_tick_enemy(delta)
 
@@ -1224,16 +1174,16 @@ func _result_text() -> String:
 
 func _static_tick(delta: float) -> void:
 	static_time += delta
-	var slot := int(static_time / 1.0)
-	if slot == 0:
-		hud.show_static(static_frames[1], 1.0)
-	elif slot == 1:
-		hud.show_static(static_frames[2], 1.0)
-	else:
-		static_playing = false
-		if static_sound != null and static_sound.playing:
-			static_sound.stop()
-		hud.show_result(load(get_meta("result_path")), true, get_meta("result_text"))
+	var slot := int(static_time / STATIC_BLINK_TIME)
+	if slot < STATIC_BLINK_COUNT:
+		var frame := clampi(1 + slot % 3, 0, static_frames.size() - 1)
+		hud.show_static(static_frames[frame], 1.0)
+		return
+	static_playing = false
+	if static_sound != null and static_sound.playing:
+		static_sound.stop()
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	hud.show_result(load(get_meta("result_path")), true, get_meta("result_text"))
 
 func _toggle_pause() -> void:
 	if game_over:

@@ -5,10 +5,9 @@ uniform sampler2D tex : source_color, filter_linear_mipmap, repeat_disable;
 uniform float tree_far = 150.0;
 uniform float tree_near = 50.0;
 uniform vec4 tint = vec4(1.0, 1.0, 1.0, 1.0);
-uniform vec3 render_origin = vec3(0.0);
 
 void vertex() {
-	vec3 origin = MODEL_MATRIX[3].xyz - render_origin;
+	vec3 origin = MODEL_MATRIX[3].xyz;
 	vec3 to_cam = CAMERA_POSITION_WORLD - origin;
 	float view_dist = length(to_cam);
 	if (view_dist < tree_near || view_dist > tree_far) {

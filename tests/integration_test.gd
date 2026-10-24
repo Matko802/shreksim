@@ -129,12 +129,40 @@ func _ready() -> void:
 	add_child(g2)
 	await get_tree().process_frame
 	await get_tree().physics_frame
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	g2._die()
-	await _wait(0.4)
 	if not g2.static_playing:
 		failures += 1
 		print("FAIL static not playing")
-	await _wait(2.6)
+	g2._static_tick(0.01)
+	var tex1: Texture2D = g2.hud.static_overlay.texture
+	if tex1 == null or tex1.resource_path != "res://assets/images/static/static1.png":
+		failures += 1
+		print("FAIL first static frame: ", tex1.resource_path if tex1 else "null")
+	g2._static_tick(0.5)
+	var tex2: Texture2D = g2.hud.static_overlay.texture
+	if tex2 == null or tex2 == tex1:
+		failures += 1
+		print("FAIL second static frame")
+	g2._static_tick(0.5)
+	var tex3: Texture2D = g2.hud.static_overlay.texture
+	if tex3 == null or tex3 == tex2:
+		failures += 1
+		print("FAIL third static frame")
+	if Input.mouse_mode != Input.MOUSE_MODE_VISIBLE:
+		failures += 1
+		print("FAIL mouse locked during static")
+	var click := InputEventMouseButton.new()
+	click.button_index = MOUSE_BUTTON_LEFT
+	click.pressed = true
+	g2._unhandled_input(click)
+	if Input.mouse_mode != Input.MOUSE_MODE_VISIBLE:
+		failures += 1
+		print("FAIL mouse recaptured during static")
+	g2._static_tick(0.5)
+	if g2.static_playing:
+		failures += 1
+		print("FAIL static did not finish")
 	var tex: Texture2D = g2.hud.static_overlay.texture
 	if tex == null or tex.resource_path != "res://assets/images/results/fail2.png":
 		failures += 1

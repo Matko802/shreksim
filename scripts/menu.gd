@@ -2,9 +2,12 @@ extends Control
 
 const GREEN := Color(0.0, 0.8, 0.27)
 const DARK_GREEN := Color(0.0, 0.4, 0.13)
-const RELEASE_API := "https://api.github.com/repos/Matko802/shreksim/releases/latest"
+const RELEASES_API := "https://api.github.com/repos/Matko802/shreksim/releases?per_page=30"
+const TAGS_API := "https://api.github.com/repos/Matko802/shreksim/tags?per_page=30"
 const RELEASES_PAGE := "https://github.com/Matko802/shreksim/releases"
 const RELEASE_ATOM := "https://github.com/Matko802/shreksim/releases.atom"
+const API_HEADERS := ["Accept: application/vnd.github+json", "User-Agent: SwampSim"]
+const UPDATE_URLS := [TAGS_API, RELEASES_API, RELEASE_ATOM]
 
 var music: AudioStreamPlayer
 var meme: AudioStreamPlayer
@@ -15,6 +18,7 @@ var version_label: Label
 var update_button: Button
 var update_http: HTTPRequest
 var update_page := ""
+var update_stage := 0
 
 @onready var enemy_panel: PanelContainer = %EnemyPanel
 @onready var stats_panel: PanelContainer = %StatsPanel
@@ -129,65 +133,114 @@ func _setup_version() -> void:
 	update_button.pressed.connect(_on_update_pressed)
 	add_child(update_button)
 
-func _check_update() -> void:
-	update_http = HTTPRequest.new()
-	update_http.timeout = 10.0
-	add_child(update_http)
-	update_http.request_completed.connect(_on_update_check)
-	update_http.request(RELEASE_API, ["Accept: application/vnd.github+json"])
-
 func _show_update(tag: String) -> void:
-	update_page = "https://github.com/Matko802/shreksim/releases/tag/" + tag
+	update_page = RELEASES_PAGE
 	version_label.text = tr("v%s - tap to update") % tag.lstrip("v")
 	version_label.add_theme_color_override("font_color", GREEN)
 	update_button.visible = true
 
-func _check_update_fallback() -> void:
-	if update_http == null or not is_instance_valid(update_http):
+func _check_update() -> void:
+	update_stage = 0
+	_start_update_request()
+
+func _start_update_request() -> void:
+	if update_stage >= UPDATE_URLS.size():
 		return
-	update_http.queue_free()
+	if update_http != null and is_instance_valid(update_http):
+		update_http.queue_free()
 	update_http = HTTPRequest.new()
 	update_http.timeout = 10.0
 	add_child(update_http)
-	update_http.request_completed.connect(_on_atom_check)
-	update_http.request(RELEASE_ATOM)
+	update_http.request_completed.connect(_on_update_response)
+	var err := update_http.request(str(UPDATE_URLS[update_stage]), API_HEADERS)
+	if err != OK:
+		_next_update_stage()
 
-func _on_update_check(result: int, code: int, _headers: PackedStringArray, body: PackedByteArray) -> void:
+func _next_update_stage() -> void:
+	update_stage += 1
+	_start_update_request()
+
+func _on_update_response(result: int, code: int, _headers: PackedStringArray, body: PackedByteArray) -> void:
+	var handled := false
+	if update_stage < 2:
+		handled = _consume_tag_list(result, code, body)
+	else:
+		handled = _consume_atom(result, code, body)
+	if not handled:
+		_next_update_stage()
+
+func _consume_tag_list(result: int, code: int, body: PackedByteArray) -> bool:
 	if result != HTTPRequest.RESULT_SUCCESS or code < 200 or code >= 300 or body.is_empty():
-		_check_update_fallback()
-		return
+		return false
 	var data: Variant = JSON.parse_string(body.get_string_from_utf8())
-	if not (data is Dictionary):
-		_check_update_fallback()
-		return
-	var tag := str(data.get("tag_name", ""))
-	if tag != "" and _tag_is_newer(tag):
-		_show_update(tag)
+	if not (data is Array):
+		return false
+	var best := _best_tag(data as Array)
+	if best != "" and _tag_is_newer(best):
+		_show_update(best)
+	return true
 
-func _on_atom_check(result: int, code: int, _headers: PackedStringArray, body: PackedByteArray) -> void:
+func _best_tag(items: Array) -> String:
+	var best := ""
+	for item in items:
+		if not (item is Dictionary):
+			continue
+		var data := item as Dictionary
+		var tag := str(data.get("tag_name", data.get("name", "")))
+		if not _is_release_tag(tag):
+			continue
+		if best == "" or _tag_newer_than(tag, best):
+			best = tag
+	return best
+
+func _consume_atom(result: int, code: int, body: PackedByteArray) -> bool:
 	if result != HTTPRequest.RESULT_SUCCESS or code < 200 or code >= 300 or body.is_empty():
-		return
+		return false
 	var regex := RegEx.new()
 	regex.compile("releases/tag/v(\\d+\\.\\d+\\.\\d+)")
-	var m := regex.search(body.get_string_from_utf8())
-	if m != null and _tag_is_newer("v" + m.get_string(1)):
-		_show_update("v" + m.get_string(1))
+	var best := ""
+	for m in regex.search_all(body.get_string_from_utf8()):
+		var tag := "v" + m.get_string(1)
+		if best == "" or _tag_newer_than(tag, best):
+			best = tag
+	if best != "" and _tag_is_newer(best):
+		_show_update(best)
+	return true
 
 func _on_update_pressed() -> void:
 	click.play()
 	OS.shell_open(update_page if update_page != "" else RELEASES_PAGE)
 
-func _tag_is_newer(tag: String) -> bool:
-	var cur := str(ProjectSettings.get_setting("application/config/version", "0.0.0")).lstrip("v").split(".")
-	var nxt := tag.lstrip("v").split(".")
+func _current_version() -> String:
+	return str(ProjectSettings.get_setting("application/config/version", "0.0.0"))
+
+func _is_release_tag(tag: String) -> bool:
+	var regex := RegEx.new()
+	regex.compile("^[vV]?\\d+\\.\\d+\\.\\d+$")
+	return regex.search(tag) != null
+
+func _version_parts(tag: String) -> Array[int]:
+	var parts: Array[int] = [0, 0, 0]
+	var regex := RegEx.new()
+	regex.compile("^[vV]?(\\d+)\\.(\\d+)\\.(\\d+)")
+	var m := regex.search(tag)
+	if m != null:
+		for i in 3:
+			parts[i] = int(m.get_string(i + 1))
+	return parts
+
+func _tag_newer_than(tag: String, other: String) -> bool:
+	var a := _version_parts(tag)
+	var b := _version_parts(other)
 	for i in 3:
-		var a := int(cur[i]) if i < cur.size() else 0
-		var b := int(nxt[i]) if i < nxt.size() else 0
-		if b > a:
+		if a[i] > b[i]:
 			return true
-		if b < a:
+		if a[i] < b[i]:
 			return false
 	return false
+
+func _tag_is_newer(tag: String) -> bool:
+	return _tag_newer_than(tag, _current_version())
 
 func _on_version_input(event: InputEvent) -> void:
 	if (event is InputEventMouseButton and event.pressed) or (event is InputEventScreenTouch and event.pressed):

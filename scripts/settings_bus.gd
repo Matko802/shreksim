@@ -3,9 +3,20 @@ extends Node
 signal setting_changed(setting_name: StringName, value: Variant)
 
 enum AntiAliasingMode { OFF = 0, FXAA = 1, MSAA_2X = 2, MSAA_4X = 3, MSAA_8X = 4, TAA = 5 }
+enum QualityPreset { LOW = 0, MEDIUM = 1, HIGH = 2 }
+
+const QUALITY_PRESETS := [
+	{"render_scale": 0.65, "anti_aliasing": AntiAliasingMode.OFF},
+	{"render_scale": 0.8, "anti_aliasing": AntiAliasingMode.FXAA},
+	{"render_scale": 1.0, "anti_aliasing": AntiAliasingMode.OFF},
+]
+const QUALITY_LABELS := ["Low", "Medium", "High"]
+const RENDER_DISTANCE_MIN := 48.0
+const RENDER_DISTANCE_MAX := 200.0
+const MOBILE_RENDER_DISTANCE := 64.0
 
 const SAVE_PATH := "user://settings.cfg"
-const SETTINGS_VERSION := 6
+const SETTINGS_VERSION := 7
 
 const LANGUAGES := [
 	["en", "English"],
@@ -26,6 +37,8 @@ var vsync_enabled := true
 var fps_limit := 0
 var anti_aliasing_mode: int = AntiAliasingMode.OFF
 var render_scale := 1.0
+var quality_preset: int = QualityPreset.HIGH
+var render_distance := RENDER_DISTANCE_MAX
 var language := ""
 var _config := ConfigFile.new()
 var _mobile := OS.has_feature("android") or OS.has_feature("ios")
@@ -58,6 +71,8 @@ func load_settings() -> void:
 		fps_limit = int(_config.get_value("video", "fps_limit", 0))
 		anti_aliasing_mode = int(_config.get_value("video", "anti_aliasing_mode", AntiAliasingMode.OFF))
 		render_scale = float(_config.get_value("video", "render_scale", 1.0))
+		quality_preset = int(_config.get_value("video", "quality_preset", QualityPreset.HIGH))
+		render_distance = float(_config.get_value("video", "render_distance", RENDER_DISTANCE_MAX))
 		language = str(_config.get_value("locale", "language", ""))
 	if _mobile:
 		fullscreen_enabled = true
@@ -67,6 +82,15 @@ func load_settings() -> void:
 	if version < 6:
 		anti_aliasing_mode = AntiAliasingMode.OFF
 		render_scale = 1.0
+	if version < 7:
+		quality_preset = _default_quality_preset()
+		render_distance = _default_render_distance()
+		var profile: Dictionary = QUALITY_PRESETS[quality_preset]
+		render_scale = clampf(float(profile["render_scale"]), 0.5, 1.0)
+		anti_aliasing_mode = int(profile["anti_aliasing"])
+	if quality_preset < 0 or quality_preset >= QUALITY_PRESETS.size():
+		quality_preset = _default_quality_preset()
+	render_distance = clampf(render_distance, RENDER_DISTANCE_MIN, RENDER_DISTANCE_MAX)
 	if not had_file or version != SETTINGS_VERSION:
 		save_settings()
 	_apply_anti_aliasing(anti_aliasing_mode)
@@ -83,6 +107,8 @@ func save_settings() -> void:
 	_config.set_value("video", "fps_limit", fps_limit)
 	_config.set_value("video", "anti_aliasing_mode", anti_aliasing_mode)
 	_config.set_value("video", "render_scale", render_scale)
+	_config.set_value("video", "quality_preset", quality_preset)
+	_config.set_value("video", "render_distance", render_distance)
 	_config.set_value("locale", "language", language)
 	_config.save(SAVE_PATH)
 
@@ -171,6 +197,29 @@ func set_render_scale(value: float) -> void:
 	save_settings()
 	setting_changed.emit(&"render_scale", render_scale)
 
+func set_quality_preset(preset: int) -> void:
+	quality_preset = clampi(preset, QualityPreset.LOW, QualityPreset.HIGH)
+	var profile: Dictionary = QUALITY_PRESETS[quality_preset]
+	render_scale = clampf(float(profile["render_scale"]), 0.5, 1.0)
+	anti_aliasing_mode = int(profile["anti_aliasing"])
+	_apply_render_scale()
+	_apply_anti_aliasing(anti_aliasing_mode)
+	save_settings()
+	setting_changed.emit(&"quality_preset", quality_preset)
+	setting_changed.emit(&"render_scale", render_scale)
+	setting_changed.emit(&"anti_aliasing_mode", anti_aliasing_mode)
+
+func set_render_distance(value: float) -> void:
+	render_distance = clampf(value, RENDER_DISTANCE_MIN, RENDER_DISTANCE_MAX)
+	save_settings()
+	setting_changed.emit(&"render_distance", render_distance)
+
+func _default_quality_preset() -> int:
+	return QualityPreset.LOW if _mobile else QualityPreset.HIGH
+
+func _default_render_distance() -> float:
+	return MOBILE_RENDER_DISTANCE if _mobile else RENDER_DISTANCE_MAX
+
 func set_anti_aliasing_mode(mode: int) -> void:
 	if mode == AntiAliasingMode.TAA and not taa_supported():
 		mode = AntiAliasingMode.FXAA
@@ -215,8 +264,11 @@ func reset_settings() -> void:
 	fullscreen_enabled = false
 	vsync_enabled = true
 	fps_limit = 0
-	anti_aliasing_mode = AntiAliasingMode.OFF
-	render_scale = 1.0
+	quality_preset = _default_quality_preset()
+	render_distance = _default_render_distance()
+	var profile: Dictionary = QUALITY_PRESETS[quality_preset]
+	anti_aliasing_mode = int(profile["anti_aliasing"])
+	render_scale = clampf(float(profile["render_scale"]), 0.5, 1.0)
 	language = ""
 	if _mobile:
 		fullscreen_enabled = true
@@ -226,4 +278,8 @@ func reset_settings() -> void:
 	_apply_language()
 	_apply_render_scale()
 	save_settings()
+	setting_changed.emit(&"quality_preset", quality_preset)
+	setting_changed.emit(&"render_distance", render_distance)
+	setting_changed.emit(&"render_scale", render_scale)
+	setting_changed.emit(&"anti_aliasing_mode", anti_aliasing_mode)
 	setting_changed.emit(&"language", language)
