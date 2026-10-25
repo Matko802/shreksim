@@ -7544,2602 +7544,2602 @@ transform = Transform3D(0.999503, 0, -0.999503, 0, 1.41351, 0, 0.999503, 0, 0.99
 pixel_size = 0.0088
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree001" type="Node3D" parent="Trees" unique_id=1314399767]
+[node name="Tree355" type="Node3D" parent="Trees" unique_id=1314399767]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -152.76784, -0.044615, -33.142223)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree001" unique_id=1736278962]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree355" unique_id=1736278962]
 transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 7.2, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree001" unique_id=323986201]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree355" unique_id=323986201]
 transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 0, 7.2, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree002" type="Node3D" parent="Trees" unique_id=1957371309]
+[node name="Tree356" type="Node3D" parent="Trees" unique_id=1957371309]
 transform = Transform3D(0.999123, 0, 0.041875, 0, 1, 0, -0.041875, 0, 0.999123, 162.24358, -0.128544, 117.45506)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree002" unique_id=1383979859]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree356" unique_id=1383979859]
 transform = Transform3D(1.176723, 0, 1.176723, 0, 1.664138, 0, -1.176723, 0, 1.176723, 0, 11.981794, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree002" unique_id=160916977]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree356" unique_id=160916977]
 transform = Transform3D(1.176723, 0, -1.176723, 0, 1.664138, 0, 1.176723, 0, 1.176723, 0, 11.981794, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree003" type="Node3D" parent="Trees" unique_id=1450434724]
+[node name="Tree357" type="Node3D" parent="Trees" unique_id=1450434724]
 transform = Transform3D(0.996493, 0, 0.083677, 0, 1, 0, -0.083677, 0, 0.996493, 106.96665, -0.149406, 138.92227)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree003" unique_id=1749360010]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree357" unique_id=1749360010]
 transform = Transform3D(1.340972, 0, 1.340972, 0, 1.896422, 0, -1.340972, 0, 1.340972, 0, 13.654238, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree003" unique_id=901741025]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree357" unique_id=901741025]
 transform = Transform3D(1.340972, 0, -1.340972, 0, 1.896422, 0, 1.340972, 0, 1.340972, 0, 13.654238, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree004" type="Node3D" parent="Trees" unique_id=806566593]
+[node name="Tree358" type="Node3D" parent="Trees" unique_id=806566593]
 transform = Transform3D(0.992115, 0, 0.125331, 0, 1, 0, -0.125331, 0, 0.992115, 156.5583, -0.175346, -158.4968)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree004" unique_id=1584554996]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree358" unique_id=1584554996]
 transform = Transform3D(1.093051, 0, 1.093051, 0, 1.545808, 0, -1.093051, 0, 1.093051, 0, 11.129818, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree004" unique_id=469398559]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree358" unique_id=469398559]
 transform = Transform3D(1.093051, 0, -1.093051, 0, 1.545808, 0, 1.093051, 0, 1.093051, 0, 11.129818, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree005" type="Node3D" parent="Trees" unique_id=1740112524]
+[node name="Tree359" type="Node3D" parent="Trees" unique_id=1740112524]
 transform = Transform3D(0.985997, 0, 0.166766, 0, 1, 0, -0.166766, 0, 0.985997, -157.75923, -0.175936, 108.41458)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree005" unique_id=459964800]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree359" unique_id=459964800]
 transform = Transform3D(0.820043, 0, 0.820043, 0, 1.159716, 0, -0.820043, 0, 0.820043, 0, 8.349955, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree005" unique_id=1496258727]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree359" unique_id=1496258727]
 transform = Transform3D(0.820043, 0, -0.820043, 0, 1.159716, 0, 0.820043, 0, 0.820043, 0, 8.349955, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree006" type="Node3D" parent="Trees" unique_id=1505812775]
+[node name="Tree360" type="Node3D" parent="Trees" unique_id=1505812775]
 transform = Transform3D(0.978148, 0, 0.207909, 0, 1, 0, -0.207909, 0, 0.978148, -169.00177, 0.002185, -166.36026)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree006" unique_id=785963110]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree360" unique_id=785963110]
 transform = Transform3D(1.245488, 0, 1.245488, 0, 1.761385, 0, -1.245488, 0, 1.245488, 0, 12.681972, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree006" unique_id=583266267]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree360" unique_id=583266267]
 transform = Transform3D(1.245488, 0, -1.245488, 0, 1.761385, 0, 1.245488, 0, 1.245488, 0, 12.681972, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree007" type="Node3D" parent="Trees" unique_id=216822417]
+[node name="Tree361" type="Node3D" parent="Trees" unique_id=216822417]
 transform = Transform3D(0.968584, 0, 0.248686, 0, 1, 0, -0.248686, 0, 0.968584, 147.92812, -0.356128, 150.15436)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree007" unique_id=133587134]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree361" unique_id=133587134]
 transform = Transform3D(1.320851, 0, 1.320851, 0, 1.867965, 0, -1.320851, 0, 1.320851, 0, 13.449348, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree007" unique_id=742819316]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree361" unique_id=742819316]
 transform = Transform3D(1.320851, 0, -1.320851, 0, 1.867965, 0, 1.320851, 0, 1.320851, 0, 13.449348, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree008" type="Node3D" parent="Trees" unique_id=603856016]
+[node name="Tree362" type="Node3D" parent="Trees" unique_id=603856016]
 transform = Transform3D(0.957321, 0, 0.289027, 0, 1, 0, -0.289027, 0, 0.957321, 138.50589, 0.231807, -53.48622)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree008" unique_id=137526212]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree362" unique_id=137526212]
 transform = Transform3D(0.997128, 0, 0.997128, 0, 1.410152, 0, -0.997128, 0, 0.997128, 0, 10.153094, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree008" unique_id=1594347269]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree362" unique_id=1594347269]
 transform = Transform3D(0.997128, 0, -0.997128, 0, 1.410152, 0, 0.997128, 0, 0.997128, 0, 10.153094, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree009" type="Node3D" parent="Trees" unique_id=495630924]
+[node name="Tree363" type="Node3D" parent="Trees" unique_id=495630924]
 transform = Transform3D(0.944378, 0, 0.328862, 0, 1, 0, -0.328862, 0, 0.944378, 145.00847, 0.053941, 44.230553)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree009" unique_id=1734981768]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree363" unique_id=1734981768]
 transform = Transform3D(0.929394, 0, 0.929394, 0, 1.314362, 0, -0.929394, 0, 0.929394, 0, 9.463406, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree009" unique_id=1737599639]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree363" unique_id=1737599639]
 transform = Transform3D(0.929394, 0, -0.929394, 0, 1.314362, 0, 0.929394, 0, 0.929394, 0, 9.463406, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree010" type="Node3D" parent="Trees" unique_id=370930212]
+[node name="Tree364" type="Node3D" parent="Trees" unique_id=370930212]
 transform = Transform3D(0.929779, 0, 0.368119, 0, 1, 0, -0.368119, 0, 0.929779, 25.606867, 0.366276, 165.29482)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree010" unique_id=2013941259]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree364" unique_id=2013941259]
 transform = Transform3D(1.297161, 0, 1.297161, 0, 1.834462, 0, -1.297161, 0, 1.297161, 0, 13.208126, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree010" unique_id=1836723531]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree364" unique_id=1836723531]
 transform = Transform3D(1.297161, 0, -1.297161, 0, 1.834462, 0, 1.297161, 0, 1.297161, 0, 13.208126, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree011" type="Node3D" parent="Trees" unique_id=1434391564]
+[node name="Tree365" type="Node3D" parent="Trees" unique_id=1434391564]
 transform = Transform3D(0.913548, 0, 0.406731, 0, 1, 0, -0.406731, 0, 0.913548, -39.054085, 0.022207, -150.18565)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree011" unique_id=2032604483]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree365" unique_id=2032604483]
 transform = Transform3D(1.281245, 0, 1.281245, 0, 1.811955, 0, -1.281245, 0, 1.281245, 0, 13.046076, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree011" unique_id=1984786292]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree365" unique_id=1984786292]
 transform = Transform3D(1.281245, 0, -1.281245, 0, 1.811955, 0, 1.281245, 0, 1.281245, 0, 13.046076, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree012" type="Node3D" parent="Trees" unique_id=1401857324]
+[node name="Tree366" type="Node3D" parent="Trees" unique_id=1401857324]
 transform = Transform3D(0.895715, 0, 0.444629, 0, 1, 0, -0.444629, 0, 0.895715, 168.8572, 0.249257, 23.622656)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree012" unique_id=1056418678]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree366" unique_id=1056418678]
 transform = Transform3D(0.891997, 0, 0.891997, 0, 1.261475, 0, -0.891997, 0, 0.891997, 0, 9.08262, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree012" unique_id=1817185117]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree366" unique_id=1817185117]
 transform = Transform3D(0.891997, 0, -0.891997, 0, 1.261475, 0, 0.891997, 0, 0.891997, 0, 9.08262, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree013" type="Node3D" parent="Trees" unique_id=411153307]
+[node name="Tree367" type="Node3D" parent="Trees" unique_id=411153307]
 transform = Transform3D(0.87631, 0, 0.481747, 0, 1, 0, -0.481747, 0, 0.87631, -54.980446, 0.049811, 134.23792)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree013" unique_id=1193696560]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree367" unique_id=1193696560]
 transform = Transform3D(1.031689, 0, 1.031689, 0, 1.459029, 0, -1.031689, 0, 1.031689, 0, 10.505009, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree013" unique_id=898403424]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree367" unique_id=898403424]
 transform = Transform3D(1.031689, 0, -1.031689, 0, 1.459029, 0, 1.031689, 0, 1.031689, 0, 10.505009, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree014" type="Node3D" parent="Trees" unique_id=1938726719]
+[node name="Tree368" type="Node3D" parent="Trees" unique_id=1938726719]
 transform = Transform3D(0.855369, 0, 0.51802, 0, 1, 0, -0.51802, 0, 0.855369, 125.87877, -0.501192, 168.0246)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree014" unique_id=411132039]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree368" unique_id=411132039]
 transform = Transform3D(1.330103, 0, 1.330103, 0, 1.88105, 0, -1.330103, 0, 1.330103, 0, 13.54356, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree014" unique_id=671407609]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree368" unique_id=671407609]
 transform = Transform3D(1.330103, 0, -1.330103, 0, 1.88105, 0, 1.330103, 0, 1.330103, 0, 13.54356, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree015" type="Node3D" parent="Trees" unique_id=752252956]
+[node name="Tree369" type="Node3D" parent="Trees" unique_id=752252956]
 transform = Transform3D(0.832926, 0, 0.553384, 0, 1, 0, -0.553384, 0, 0.832926, -168.37106, 0.656082, 54.10145)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree015" unique_id=235669506]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree369" unique_id=235669506]
 transform = Transform3D(1.223414, 0, 1.223414, 0, 1.730169, 0, -1.223414, 0, 1.223414, 0, 12.457217, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree015" unique_id=1920339407]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree369" unique_id=1920339407]
 transform = Transform3D(1.223414, 0, -1.223414, 0, 1.730169, 0, 1.223414, 0, 1.223414, 0, 12.457217, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree016" type="Node3D" parent="Trees" unique_id=370761571]
+[node name="Tree370" type="Node3D" parent="Trees" unique_id=370761571]
 transform = Transform3D(0.809023, 0, 0.587777, 0, 1, 0, -0.587777, 0, 0.809023, -144.30138, 0.025927, -122.60541)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree016" unique_id=448640344]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree370" unique_id=448640344]
 transform = Transform3D(0.780998, 0, 0.780998, 0, 1.104497, 0, -0.780998, 0, 0.780998, 0, 7.952378, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree016" unique_id=1457068447]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree370" unique_id=1457068447]
 transform = Transform3D(0.780998, 0, -0.780998, 0, 1.104497, 0, 0.780998, 0, 0.780998, 0, 7.952378, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree017" type="Node3D" parent="Trees" unique_id=1096104348]
+[node name="Tree371" type="Node3D" parent="Trees" unique_id=1096104348]
 transform = Transform3D(0.7837, 0, 0.62114, 0, 1, 0, -0.62114, 0, 0.7837, 167.26678, 0.322745, 102.51056)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree017" unique_id=1766317192]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree371" unique_id=1766317192]
 transform = Transform3D(1.12368, 0, 1.12368, 0, 1.589124, 0, -1.12368, 0, 1.12368, 0, 11.441693, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree017" unique_id=236764015]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree371" unique_id=236764015]
 transform = Transform3D(1.12368, 0, -1.12368, 0, 1.589124, 0, 1.12368, 0, 1.12368, 0, 11.441693, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree018" type="Node3D" parent="Trees" unique_id=1231740541]
+[node name="Tree372" type="Node3D" parent="Trees" unique_id=1231740541]
 transform = Transform3D(0.757002, 0, 0.653412, 0, 1, 0, -0.653412, 0, 0.757002, 160.66258, -0.515286, -3.987908)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree018" unique_id=2127361168]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree372" unique_id=2127361168]
 transform = Transform3D(1.343268, 0, 1.343268, 0, 1.899668, 0, -1.343268, 0, 1.343268, 0, 13.67761, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree018" unique_id=80544933]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree372" unique_id=80544933]
 transform = Transform3D(1.343268, 0, -1.343268, 0, 1.899668, 0, 1.343268, 0, 1.343268, 0, 13.67761, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree019" type="Node3D" parent="Trees" unique_id=787725552]
+[node name="Tree373" type="Node3D" parent="Trees" unique_id=787725552]
 transform = Transform3D(0.728977, 0, 0.684539, 0, 1, 0, -0.684539, 0, 0.728977, -106.65803, -0.366026, -146.58331)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree019" unique_id=1665608513]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree373" unique_id=1665608513]
 transform = Transform3D(1.149193, 0, 1.149193, 0, 1.625204, 0, -1.149193, 0, 1.149193, 0, 11.701469, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree019" unique_id=339500284]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree373" unique_id=339500284]
 transform = Transform3D(1.149193, 0, -1.149193, 0, 1.625204, 0, 1.149193, 0, 1.149193, 0, 11.701469, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree020" type="Node3D" parent="Trees" unique_id=1772086986]
+[node name="Tree374" type="Node3D" parent="Trees" unique_id=1772086986]
 transform = Transform3D(0.699672, 0, 0.714464, 0, 1, 0, -0.714464, 0, 0.699672, 134.83861, 0.132187, -44.67831)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree020" unique_id=1177089201]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree374" unique_id=1177089201]
 transform = Transform3D(0.746561, 0, 0.746561, 0, 1.055797, 0, -0.746561, 0, 0.746561, 0, 7.601738, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree020" unique_id=1513889258]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree374" unique_id=1513889258]
 transform = Transform3D(0.746561, 0, -0.746561, 0, 1.055797, 0, 0.746561, 0, 0.746561, 0, 7.601738, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree021" type="Node3D" parent="Trees" unique_id=511302871]
+[node name="Tree375" type="Node3D" parent="Trees" unique_id=511302871]
 transform = Transform3D(0.66914, 0, 0.743136, 0, 1, 0, -0.743136, 0, 0.66914, -29.067408, -0.132871, 160.4463)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree021" unique_id=254128431]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree375" unique_id=254128431]
 transform = Transform3D(1.202447, 0, 1.202447, 0, 1.700517, 0, -1.202447, 0, 1.202447, 0, 12.243722, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree021" unique_id=1766719632]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree375" unique_id=1766719632]
 transform = Transform3D(1.202447, 0, -1.202447, 0, 1.700517, 0, 1.202447, 0, 1.202447, 0, 12.243722, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree022" type="Node3D" parent="Trees" unique_id=1535525509]
+[node name="Tree376" type="Node3D" parent="Trees" unique_id=1535525509]
 transform = Transform3D(0.637434, 0, 0.770505, 0, 1, 0, -0.770505, 0, 0.637434, 134.62846, 0.004398, 60.09242)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree022" unique_id=1672607026]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree376" unique_id=1672607026]
 transform = Transform3D(1.336238, 0, 1.336238, 0, 1.889726, 0, -1.336238, 0, 1.336238, 0, 13.606027, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree022" unique_id=1715495796]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree376" unique_id=1715495796]
 transform = Transform3D(1.336238, 0, -1.336238, 0, 1.889726, 0, 1.336238, 0, 1.336238, 0, 13.606027, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree023" type="Node3D" parent="Trees" unique_id=1579579287]
+[node name="Tree377" type="Node3D" parent="Trees" unique_id=1579579287]
 transform = Transform3D(0.60461, 0, 0.796521, 0, 1, 0, -0.796521, 0, 0.60461, 88.78629, -0.849703, -169.19347)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree023" unique_id=1556153625]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree377" unique_id=1556153625]
 transform = Transform3D(1.060938, 0, 1.060938, 0, 1.500393, 0, -1.060938, 0, 1.060938, 0, 10.80283, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree023" unique_id=100017721]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree377" unique_id=100017721]
 transform = Transform3D(1.060938, 0, -1.060938, 0, 1.500393, 0, 1.060938, 0, 1.060938, 0, 10.80283, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree024" type="Node3D" parent="Trees" unique_id=1225168591]
+[node name="Tree378" type="Node3D" parent="Trees" unique_id=1225168591]
 transform = Transform3D(0.570726, 0, 0.821141, 0, 1, 0, -0.821141, 0, 0.570726, -33.68729, 0.088009, 145.6287)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree024" unique_id=245870049]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree378" unique_id=245870049]
 transform = Transform3D(0.858654, 0, 0.858654, 0, 1.21432, 0, -0.858654, 0, 0.858654, 0, 8.743104, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree024" unique_id=843499277]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree378" unique_id=843499277]
 transform = Transform3D(0.858654, 0, -0.858654, 0, 1.21432, 0, 0.858654, 0, 0.858654, 0, 8.743104, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree025" type="Node3D" parent="Trees" unique_id=1931729613]
+[node name="Tree379" type="Node3D" parent="Trees" unique_id=1931729613]
 transform = Transform3D(0.53584, 0, 0.84432, 0, 1, 0, -0.84432, 0, 0.53584, -64.7795, 0.047993, 138.09074)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree025" unique_id=781911852]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree379" unique_id=781911852]
 transform = Transform3D(1.265489, 0, 1.265489, 0, 1.789672, 0, -1.265489, 0, 1.265489, 0, 12.885638, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree025" unique_id=1036906935]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree379" unique_id=1036906935]
 transform = Transform3D(1.265489, 0, -1.265489, 0, 1.789672, 0, 1.265489, 0, 1.265489, 0, 12.885638, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree026" type="Node3D" parent="Trees" unique_id=336215288]
+[node name="Tree380" type="Node3D" parent="Trees" unique_id=336215288]
 transform = Transform3D(0.500014, 0, 0.866017, 0, 1, 0, -0.866017, 0, 0.500014, -126.330124, -1.015796, -164.21489)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree026" unique_id=730324295]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree380" unique_id=730324295]
 transform = Transform3D(1.309237, 0, 1.309237, 0, 1.851541, 0, -1.309237, 0, 1.309237, 0, 13.331095, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree026" unique_id=1079456335]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree380" unique_id=1079456335]
 transform = Transform3D(1.309237, 0, -1.309237, 0, 1.851541, 0, 1.309237, 0, 1.309237, 0, 13.331095, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree027" type="Node3D" parent="Trees" unique_id=200196599]
+[node name="Tree381" type="Node3D" parent="Trees" unique_id=200196599]
 transform = Transform3D(0.463311, 0, 0.886196, 0, 1, 0, -0.886196, 0, 0.463311, 73.362656, -0.29166, -146.81274)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree027" unique_id=103129329]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree381" unique_id=103129329]
 transform = Transform3D(0.96145, 0, 0.96145, 0, 1.359696, 0, -0.96145, 0, 0.96145, 0, 9.789811, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree027" unique_id=803940732]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree381" unique_id=803940732]
 transform = Transform3D(0.96145, 0, -0.96145, 0, 1.359696, 0, 0.96145, 0, 0.96145, 0, 9.789811, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree028" type="Node3D" parent="Trees" unique_id=1047390999]
+[node name="Tree382" type="Node3D" parent="Trees" unique_id=1047390999]
 transform = Transform3D(0.425795, 0, 0.90482, 0, 1, 0, -0.90482, 0, 0.425795, -142.19804, 0.086965, 3.313471)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree028" unique_id=1703168381]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree382" unique_id=1703168381]
 transform = Transform3D(0.965936, 0, 0.965936, 0, 1.36604, 0, -0.965936, 0, 0.965936, 0, 9.835488, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree028" unique_id=1134287003]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree382" unique_id=1134287003]
 transform = Transform3D(0.965936, 0, -0.965936, 0, 1.36604, 0, 0.965936, 0, 0.965936, 0, 9.835488, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree029" type="Node3D" parent="Trees" unique_id=1601584087]
+[node name="Tree383" type="Node3D" parent="Trees" unique_id=1601584087]
 transform = Transform3D(0.387532, 0, 0.921856, 0, 1, 0, -0.921856, 0, 0.387532, 162.85686, -0.232155, -67.43777)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree029" unique_id=43608860]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree383" unique_id=43608860]
 transform = Transform3D(1.310806, 0, 1.310806, 0, 1.85376, 0, -1.310806, 0, 1.310806, 0, 13.347072, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree029" unique_id=435546878]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree383" unique_id=435546878]
 transform = Transform3D(1.310806, 0, -1.310806, 0, 1.85376, 0, 1.310806, 0, 1.310806, 0, 13.347072, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree030" type="Node3D" parent="Trees" unique_id=13698480]
+[node name="Tree384" type="Node3D" parent="Trees" unique_id=13698480]
 transform = Transform3D(0.34859, 0, 0.937275, 0, 1, 0, -0.937275, 0, 0.34859, -155.55434, 0.321907, -93.89057)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree030" unique_id=1668522194]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree384" unique_id=1668522194]
 transform = Transform3D(1.263121, 0, 1.263121, 0, 1.786323, 0, -1.263121, 0, 1.263121, 0, 12.861526, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree030" unique_id=1550898188]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree384" unique_id=1550898188]
 transform = Transform3D(1.263121, 0, -1.263121, 0, 1.786323, 0, 1.263121, 0, 1.263121, 0, 12.861526, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree031" type="Node3D" parent="Trees" unique_id=363602254]
+[node name="Tree385" type="Node3D" parent="Trees" unique_id=363602254]
 transform = Transform3D(0.309035, 0, 0.951051, 0, 1, 0, -0.951051, 0, 0.309035, 159.73271, -0.261944, 9.281237)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree031" unique_id=34814127]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree385" unique_id=34814127]
 transform = Transform3D(0.853889, 0, 0.853889, 0, 1.207581, 0, -0.853889, 0, 0.853889, 0, 8.694583, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree031" unique_id=227505566]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree385" unique_id=227505566]
 transform = Transform3D(0.853889, 0, -0.853889, 0, 1.207581, 0, 0.853889, 0, 0.853889, 0, 8.694583, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree032" type="Node3D" parent="Trees" unique_id=1865964608]
+[node name="Tree386" type="Node3D" parent="Trees" unique_id=1865964608]
 transform = Transform3D(0.268939, 0, 0.963157, 0, 1, 0, -0.963157, 0, 0.268939, 103.369225, -0.358911, -140.6571)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree032" unique_id=651497106]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree386" unique_id=651497106]
 transform = Transform3D(1.065002, 0, 1.065002, 0, 1.50614, 0, -1.065002, 0, 1.065002, 0, 10.844208, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree032" unique_id=1214850882]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree386" unique_id=1214850882]
 transform = Transform3D(1.065002, 0, -1.065002, 0, 1.50614, 0, 1.065002, 0, 1.065002, 0, 10.844208, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree033" type="Node3D" parent="Trees" unique_id=1404075309]
+[node name="Tree387" type="Node3D" parent="Trees" unique_id=1404075309]
 transform = Transform3D(0.228371, 0, 0.973574, 0, 1, 0, -0.973574, 0, 0.228371, -114.3371, -0.248778, 139.73756)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree033" unique_id=1946717988]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree387" unique_id=1946717988]
 transform = Transform3D(1.336958, 0, 1.336958, 0, 1.890745, 0, -1.336958, 0, 1.336958, 0, 13.613364, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree033" unique_id=1212544028]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree387" unique_id=1212544028]
 transform = Transform3D(1.336958, 0, -1.336958, 0, 1.890745, 0, 1.336958, 0, 1.336958, 0, 13.613364, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree034" type="Node3D" parent="Trees" unique_id=1386520912]
+[node name="Tree388" type="Node3D" parent="Trees" unique_id=1386520912]
 transform = Transform3D(0.187402, 0, 0.982283, 0, 1, 0, -0.982283, 0, 0.187402, 157.0629, 0.116024, -134.96498)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree034" unique_id=1030737342]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree388" unique_id=1030737342]
 transform = Transform3D(1.199355, 0, 1.199355, 0, 1.696144, 0, -1.199355, 0, 1.199355, 0, 12.212237, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree034" unique_id=903376402]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree388" unique_id=903376402]
 transform = Transform3D(1.199355, 0, -1.199355, 0, 1.696144, 0, 1.199355, 0, 1.199355, 0, 12.212237, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree035" type="Node3D" parent="Trees" unique_id=1307017498]
+[node name="Tree389" type="Node3D" parent="Trees" unique_id=1307017498]
 transform = Transform3D(0.146105, 0, 0.989269, 0, 1, 0, -0.989269, 0, 0.146105, -141.11557, 0.172639, -101.535065)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree035" unique_id=78824820]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree389" unique_id=78824820]
 transform = Transform3D(0.741668, 0, 0.741668, 0, 1.048876, 0, -0.741668, 0, 0.741668, 0, 7.551907, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree035" unique_id=940780277]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree389" unique_id=940780277]
 transform = Transform3D(0.741668, 0, -0.741668, 0, 1.048876, 0, 0.741668, 0, 0.741668, 0, 7.551907, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree036" type="Node3D" parent="Trees" unique_id=350645187]
+[node name="Tree390" type="Node3D" parent="Trees" unique_id=350645187]
 transform = Transform3D(0.104551, 0, 0.99452, 0, 1, 0, -0.99452, 0, 0.104551, 143.67528, -0.196465, -135.84512)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree036" unique_id=2131284973]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree390" unique_id=2131284973]
 transform = Transform3D(1.152706, 0, 1.152706, 0, 1.630173, 0, -1.152706, 0, 1.152706, 0, 11.737246, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree036" unique_id=595319097]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree390" unique_id=595319097]
 transform = Transform3D(1.152706, 0, -1.152706, 0, 1.630173, 0, 1.152706, 0, 1.152706, 0, 11.737246, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree037" type="Node3D" parent="Trees" unique_id=1627387376]
+[node name="Tree391" type="Node3D" parent="Trees" unique_id=1627387376]
 transform = Transform3D(0.062814, 0, 0.998025, 0, 1, 0, -0.998025, 0, 0.062814, 81.70769, -0.11847, 156.10834)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree037" unique_id=534482580]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree391" unique_id=534482580]
 transform = Transform3D(1.343116, 0, 1.343116, 0, 1.899453, 0, -1.343116, 0, 1.343116, 0, 13.676062, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree037" unique_id=894015010]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree391" unique_id=894015010]
 transform = Transform3D(1.343116, 0, -1.343116, 0, 1.899453, 0, 1.343116, 0, 1.343116, 0, 13.676062, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree038" type="Node3D" parent="Trees" unique_id=1038187884]
+[node name="Tree392" type="Node3D" parent="Trees" unique_id=1038187884]
 transform = Transform3D(0.020966, 0, 0.99978, 0, 1, 0, -0.99978, 0, 0.020966, -154.5881, -0.013174, 8.484848)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree038" unique_id=1327115231]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree392" unique_id=1327115231]
 transform = Transform3D(1.119962, 0, 1.119962, 0, 1.583865, 0, -1.119962, 0, 1.119962, 0, 11.403828, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree038" unique_id=571969542]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree392" unique_id=571969542]
 transform = Transform3D(1.119962, 0, -1.119962, 0, 1.583865, 0, 1.119962, 0, 1.119962, 0, 11.403828, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree039" type="Node3D" parent="Trees" unique_id=536252517]
+[node name="Tree393" type="Node3D" parent="Trees" unique_id=536252517]
 transform = Transform3D(-0.020918, 0, 0.999781, 0, 1, 0, -0.999781, 0, -0.020918, 161.39209, -0.078248, 154.12904)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree039" unique_id=1529672796]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree393" unique_id=1529672796]
 transform = Transform3D(0.785864, 0, 0.785864, 0, 1.11138, 0, -0.785864, 0, 0.785864, 0, 8.001936, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree039" unique_id=1569867162]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree393" unique_id=1569867162]
 transform = Transform3D(0.785864, 0, -0.785864, 0, 1.11138, 0, 0.785864, 0, 0.785864, 0, 8.001936, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree040" type="Node3D" parent="Trees" unique_id=971655541]
+[node name="Tree394" type="Node3D" parent="Trees" unique_id=971655541]
 transform = Transform3D(-0.062765, 0, 0.998028, 0, 1, 0, -0.998028, 0, -0.062765, 87.55348, -0.189254, -135.49585)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree040" unique_id=633594435]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree394" unique_id=633594435]
 transform = Transform3D(1.226265, 0, 1.226265, 0, 1.7342, 0, -1.226265, 0, 1.226265, 0, 12.48624, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree040" unique_id=1021299951]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree394" unique_id=1021299951]
 transform = Transform3D(1.226265, 0, -1.226265, 0, 1.7342, 0, 1.226265, 0, 1.226265, 0, 12.48624, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree041" type="Node3D" parent="Trees" unique_id=1692559485]
+[node name="Tree395" type="Node3D" parent="Trees" unique_id=1692559485]
 transform = Transform3D(-0.104503, 0, 0.994525, 0, 1, 0, -0.994525, 0, -0.104503, 115.446434, -0.754827, -151.22356)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree041" unique_id=870751063]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree395" unique_id=870751063]
 transform = Transform3D(1.329084, 0, 1.329084, 0, 1.879608, 0, -1.329084, 0, 1.329084, 0, 13.533178, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree041" unique_id=696292506]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree395" unique_id=696292506]
 transform = Transform3D(1.329084, 0, -1.329084, 0, 1.879608, 0, 1.329084, 0, 1.329084, 0, 13.533178, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree042" type="Node3D" parent="Trees" unique_id=2138871937]
+[node name="Tree396" type="Node3D" parent="Trees" unique_id=2138871937]
 transform = Transform3D(-0.146057, 0, 0.989276, 0, 1, 0, -0.989276, 0, -0.146057, -135.93405, -0.198671, 152.79321)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree042" unique_id=1027203416]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree396" unique_id=1027203416]
 transform = Transform3D(1.027463, 0, 1.027463, 0, 1.453052, 0, -1.027463, 0, 1.027463, 0, 10.461974, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree042" unique_id=2044376202]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree396" unique_id=2044376202]
 transform = Transform3D(1.027463, 0, -1.027463, 0, 1.453052, 0, 1.027463, 0, 1.027463, 0, 10.461974, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree043" type="Node3D" parent="Trees" unique_id=1140777810]
+[node name="Tree397" type="Node3D" parent="Trees" unique_id=1140777810]
 transform = Transform3D(-0.187355, 0, 0.982292, 0, 1, 0, -0.982292, 0, -0.187355, 141.28479, -0.219668, 171.75227)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree043" unique_id=1957656798]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree397" unique_id=1957656798]
 transform = Transform3D(0.896682, 0, 0.896682, 0, 1.2681, 0, -0.896682, 0, 0.896682, 0, 9.13032, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree043" unique_id=94710394]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree397" unique_id=94710394]
 transform = Transform3D(0.896682, 0, -0.896682, 0, 1.2681, 0, 0.896682, 0, 0.896682, 0, 9.13032, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree044" type="Node3D" parent="Trees" unique_id=1500431699]
+[node name="Tree398" type="Node3D" parent="Trees" unique_id=1500431699]
 transform = Transform3D(-0.228324, 0, 0.973585, 0, 1, 0, -0.973585, 0, -0.228324, -169.3828, -0.010225, 37.22616)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree044" unique_id=1784347255]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree398" unique_id=1784347255]
 transform = Transform3D(1.283343, 0, 1.283343, 0, 1.814921, 0, -1.283343, 0, 1.283343, 0, 13.067431, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree044" unique_id=2112086012]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree398" unique_id=2112086012]
 transform = Transform3D(1.283343, 0, -1.283343, 0, 1.814921, 0, 1.283343, 0, 1.283343, 0, 13.067431, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree045" type="Node3D" parent="Trees" unique_id=1969847792]
+[node name="Tree399" type="Node3D" parent="Trees" unique_id=1969847792]
 transform = Transform3D(-0.268893, 0, 0.96317, 0, 1, 0, -0.96317, 0, -0.268893, 3.288972, 0.100922, 137.9845)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree045" unique_id=1396033602]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree399" unique_id=1396033602]
 transform = Transform3D(1.295307, 0, 1.295307, 0, 1.831841, 0, -1.295307, 0, 1.295307, 0, 13.189255, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree045" unique_id=1413900656]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree399" unique_id=1413900656]
 transform = Transform3D(1.295307, 0, -1.295307, 0, 1.831841, 0, 1.295307, 0, 1.295307, 0, 13.189255, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree046" type="Node3D" parent="Trees" unique_id=322286641]
+[node name="Tree400" type="Node3D" parent="Trees" unique_id=322286641]
 transform = Transform3D(-0.308989, 0, 0.951066, 0, 1, 0, -0.951066, 0, -0.308989, -61.83394, -0.193907, 170.846)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree046" unique_id=1296792982]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree400" unique_id=1296792982]
 transform = Transform3D(0.924795, 0, 0.924795, 0, 1.307857, 0, -0.924795, 0, 0.924795, 0, 9.41657, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree046" unique_id=1553213916]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree400" unique_id=1553213916]
 transform = Transform3D(0.924795, 0, -0.924795, 0, 1.307857, 0, 0.924795, 0, 0.924795, 0, 9.41657, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree047" type="Node3D" parent="Trees" unique_id=978998779]
+[node name="Tree401" type="Node3D" parent="Trees" unique_id=978998779]
 transform = Transform3D(-0.348544, 0, 0.937292, 0, 1, 0, -0.937292, 0, -0.348544, 143.82736, -0.077561, 99.34465)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree047" unique_id=1546360733]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree401" unique_id=1546360733]
 transform = Transform3D(1.001483, 0, 1.001483, 0, 1.41631, 0, -1.001483, 0, 1.001483, 0, 10.197432, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree047" unique_id=942241011]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree401" unique_id=942241011]
 transform = Transform3D(1.001483, 0, -1.001483, 0, 1.41631, 0, 1.001483, 0, 1.001483, 0, 10.197432, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree048" type="Node3D" parent="Trees" unique_id=1690661877]
+[node name="Tree402" type="Node3D" parent="Trees" unique_id=1690661877]
 transform = Transform3D(-0.387488, 0, 0.921875, 0, 1, 0, -0.921875, 0, -0.387488, 27.2716, 0.354465, -144.23395)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree048" unique_id=840232198]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree402" unique_id=840232198]
 transform = Transform3D(1.322129, 0, 1.322129, 0, 1.869772, 0, -1.322129, 0, 1.322129, 0, 13.462358, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree048" unique_id=1459542984]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree402" unique_id=1459542984]
 transform = Transform3D(1.322129, 0, -1.322129, 0, 1.869772, 0, 1.322129, 0, 1.322129, 0, 13.462358, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree049" type="Node3D" parent="Trees" unique_id=1908862181]
+[node name="Tree403" type="Node3D" parent="Trees" unique_id=1908862181]
 transform = Transform3D(-0.425751, 0, 0.90484, 0, 1, 0, -0.90484, 0, -0.425751, -167.53525, -0.172633, -138.02559)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree049" unique_id=1381652258]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree403" unique_id=1381652258]
 transform = Transform3D(1.242858, 0, 1.242858, 0, 1.757666, 0, -1.242858, 0, 1.242858, 0, 12.655195, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree049" unique_id=2135820452]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree403" unique_id=2135820452]
 transform = Transform3D(1.242858, 0, -1.242858, 0, 1.757666, 0, 1.242858, 0, 1.242858, 0, 12.655195, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree050" type="Node3D" parent="Trees" unique_id=948713614]
+[node name="Tree404" type="Node3D" parent="Trees" unique_id=948713614]
 transform = Transform3D(-0.463268, 0, 0.886218, 0, 1, 0, -0.886218, 0, -0.463268, -52.659332, 0.003673, 148.57416)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree050" unique_id=92450915]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree404" unique_id=92450915]
 transform = Transform3D(0.815216, 0, 0.815216, 0, 1.152889, 0, -0.815216, 0, 0.815216, 0, 8.300801, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree050" unique_id=1434281211]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree404" unique_id=1434281211]
 transform = Transform3D(0.815216, 0, -0.815216, 0, 1.152889, 0, 0.815216, 0, 0.815216, 0, 8.300801, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree051" type="Node3D" parent="Trees" unique_id=256641457]
+[node name="Tree405" type="Node3D" parent="Trees" unique_id=256641457]
 transform = Transform3D(-0.499972, 0, 0.866042, 0, 1, 0, -0.866042, 0, -0.499972, 147.46574, -0.078422, 13.181948)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree051" unique_id=340413468]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree405" unique_id=340413468]
 transform = Transform3D(1.096938, 0, 1.096938, 0, 1.551304, 0, -1.096938, 0, 1.096938, 0, 11.169389, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree051" unique_id=1596420083]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree405" unique_id=1596420083]
 transform = Transform3D(1.096938, 0, -1.096938, 0, 1.551304, 0, 1.096938, 0, 1.096938, 0, 11.169389, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree052" type="Node3D" parent="Trees" unique_id=1201634508]
+[node name="Tree406" type="Node3D" parent="Trees" unique_id=1201634508]
 transform = Transform3D(-0.535799, 0, 0.844345, 0, 1, 0, -0.844345, 0, -0.535799, 48.266697, 0.183077, -166.02893)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree052" unique_id=1500929981]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree406" unique_id=1500929981]
 transform = Transform3D(1.34139, 0, 1.34139, 0, 1.897013, 0, -1.34139, 0, 1.34139, 0, 13.658494, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree052" unique_id=1616195878]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree406" unique_id=1616195878]
 transform = Transform3D(1.34139, 0, -1.34139, 0, 1.897013, 0, 1.34139, 0, 1.34139, 0, 13.658494, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree053" type="Node3D" parent="Trees" unique_id=1215819666]
+[node name="Tree407" type="Node3D" parent="Trees" unique_id=1215819666]
 transform = Transform3D(-0.570686, 0, 0.821168, 0, 1, 0, -0.821168, 0, -0.570686, 70.55313, -0.260237, -169.70317)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree053" unique_id=1305518684]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree407" unique_id=1305518684]
 transform = Transform3D(1.173401, 0, 1.173401, 0, 1.65944, 0, -1.173401, 0, 1.173401, 0, 11.947968, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree053" unique_id=323514599]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree407" unique_id=323514599]
 transform = Transform3D(1.173401, 0, -1.173401, 0, 1.65944, 0, 1.173401, 0, 1.173401, 0, 11.947968, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree054" type="Node3D" parent="Trees" unique_id=302738913]
+[node name="Tree408" type="Node3D" parent="Trees" unique_id=302738913]
 transform = Transform3D(-0.604572, 0, 0.79655, 0, 1, 0, -0.79655, 0, -0.604572, 146.95622, -0.059976, 29.896332)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree054" unique_id=477052332]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree408" unique_id=477052332]
 transform = Transform3D(0.712009, 0, 0.712009, 0, 1.006933, 0, -0.712009, 0, 0.712009, 0, 7.249918, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree054" unique_id=1832674143]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree408" unique_id=1832674143]
 transform = Transform3D(0.712009, 0, -0.712009, 0, 1.006933, 0, 0.712009, 0, 0.712009, 0, 7.249918, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree055" type="Node3D" parent="Trees" unique_id=1527314976]
+[node name="Tree409" type="Node3D" parent="Trees" unique_id=1527314976]
 transform = Transform3D(-0.637397, 0, 0.770535, 0, 1, 0, -0.770535, 0, -0.637397, 38.42386, 0.362068, 164.36664)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree055" unique_id=2078061395]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree409" unique_id=2078061395]
 transform = Transform3D(1.180018, 0, 1.180018, 0, 1.668797, 0, -1.180018, 0, 1.180018, 0, 12.015338, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree055" unique_id=630185211]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree409" unique_id=630185211]
 transform = Transform3D(1.180018, 0, -1.180018, 0, 1.668797, 0, 1.180018, 0, 1.180018, 0, 12.015338, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree056" type="Node3D" parent="Trees" unique_id=270171517]
+[node name="Tree410" type="Node3D" parent="Trees" unique_id=270171517]
 transform = Transform3D(-0.669104, 0, 0.743168, 0, 1, 0, -0.743168, 0, -0.669104, 150.83502, 0.109865, 83.978386)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree056" unique_id=1254896556]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree410" unique_id=1254896556]
 transform = Transform3D(1.340517, 0, 1.340517, 0, 1.895777, 0, -1.340517, 0, 1.340517, 0, 13.649594, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree056" unique_id=549445754]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree410" unique_id=549445754]
 transform = Transform3D(1.340517, 0, -1.340517, 0, 1.895777, 0, 1.340517, 0, 1.340517, 0, 13.649594, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree057" type="Node3D" parent="Trees" unique_id=1498707774]
+[node name="Tree411" type="Node3D" parent="Trees" unique_id=1498707774]
 transform = Transform3D(-0.699638, 0, 0.714498, 0, 1, 0, -0.714498, 0, -0.699638, 68.85045, -0.099305, -138.39099)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree057" unique_id=1317203747]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree411" unique_id=1317203747]
 transform = Transform3D(1.089142, 0, 1.089142, 0, 1.54028, 0, -1.089142, 0, 1.089142, 0, 11.090016, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree057" unique_id=958891264]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree411" unique_id=958891264]
 transform = Transform3D(1.089142, 0, -1.089142, 0, 1.54028, 0, 1.089142, 0, 1.089142, 0, 11.090016, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree058" type="Node3D" parent="Trees" unique_id=938497654]
+[node name="Tree412" type="Node3D" parent="Trees" unique_id=938497654]
 transform = Transform3D(-0.728943, 0, 0.684574, 0, 1, 0, -0.684574, 0, -0.728943, 147.77408, -0.086425, 111.215324)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree058" unique_id=1494814326]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree412" unique_id=1494814326]
 transform = Transform3D(0.824864, 0, 0.824864, 0, 1.166534, 0, -0.824864, 0, 0.824864, 0, 8.399045, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree058" unique_id=1986025276]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree412" unique_id=1986025276]
 transform = Transform3D(0.824864, 0, -0.824864, 0, 1.166534, 0, 0.824864, 0, 0.824864, 0, 8.399045, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree059" type="Node3D" parent="Trees" unique_id=1932805425]
+[node name="Tree413" type="Node3D" parent="Trees" unique_id=1932805425]
 transform = Transform3D(-0.756971, 0, 0.653449, 0, 1, 0, -0.653449, 0, -0.756971, -37.17327, -0.018397, -140.99048)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree059" unique_id=1013960543]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree413" unique_id=1013960543]
 transform = Transform3D(1.248085, 0, 1.248085, 0, 1.765059, 0, -1.248085, 0, 1.248085, 0, 12.708425, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree059" unique_id=1128272809]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree413" unique_id=1128272809]
 transform = Transform3D(1.248085, 0, -1.248085, 0, 1.765059, 0, 1.248085, 0, 1.248085, 0, 12.708425, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree060" type="Node3D" parent="Trees" unique_id=1792992618]
+[node name="Tree414" type="Node3D" parent="Trees" unique_id=1792992618]
 transform = Transform3D(-0.78367, 0, 0.621178, 0, 1, 0, -0.621178, 0, -0.78367, 48.648994, 0.336275, 165.96024)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree060" unique_id=2104814367]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree414" unique_id=2104814367]
 transform = Transform3D(1.319536, 0, 1.319536, 0, 1.866106, 0, -1.319536, 0, 1.319536, 0, 13.435963, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree060" unique_id=940868688]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree414" unique_id=940868688]
 transform = Transform3D(1.319536, 0, -1.319536, 0, 1.866106, 0, 1.319536, 0, 1.319536, 0, 13.435963, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree061" type="Node3D" parent="Trees" unique_id=1365754497]
+[node name="Tree415" type="Node3D" parent="Trees" unique_id=1365754497]
 transform = Transform3D(-0.808994, 0, 0.587816, 0, 1, 0, -0.587816, 0, -0.808994, 4.581548, 0.736862, -160.79561)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree061" unique_id=1586310759]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree415" unique_id=1586310759]
 transform = Transform3D(0.992756, 0, 0.992756, 0, 1.403969, 0, -0.992756, 0, 0.992756, 0, 10.108577, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree061" unique_id=632913931]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree415" unique_id=632913931]
 transform = Transform3D(0.992756, 0, -0.992756, 0, 1.403969, 0, 0.992756, 0, 0.992756, 0, 10.108577, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree062" type="Node3D" parent="Trees" unique_id=391922078]
+[node name="Tree416" type="Node3D" parent="Trees" unique_id=391922078]
 transform = Transform3D(-0.8329, 0, 0.553424, 0, 1, 0, -0.553424, 0, -0.8329, -170.85121, -0.733595, -10.022212)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree062" unique_id=1430817980]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree416" unique_id=1430817980]
 transform = Transform3D(0.933981, 0, 0.933981, 0, 1.320849, 0, -0.933981, 0, 0.933981, 0, 9.510113, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree062" unique_id=1842475451]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree416" unique_id=1842475451]
 transform = Transform3D(0.933981, 0, -0.933981, 0, 1.320849, 0, 0.933981, 0, 0.933981, 0, 9.510113, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree063" type="Node3D" parent="Trees" unique_id=873258470]
+[node name="Tree417" type="Node3D" parent="Trees" unique_id=873258470]
 transform = Transform3D(-0.855344, 0, 0.518061, 0, 1, 0, -0.518061, 0, -0.855344, 65.0143, -0.135416, -161.93373)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree063" unique_id=223825732]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree417" unique_id=223825732]
 transform = Transform3D(1.29898, 0, 1.29898, 0, 1.837035, 0, -1.29898, 0, 1.29898, 0, 13.226652, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree063" unique_id=1955273782]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree417" unique_id=1955273782]
 transform = Transform3D(1.29898, 0, -1.29898, 0, 1.837035, 0, 1.29898, 0, 1.29898, 0, 13.226652, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree064" type="Node3D" parent="Trees" unique_id=1979770285]
+[node name="Tree418" type="Node3D" parent="Trees" unique_id=1979770285]
 transform = Transform3D(-0.876287, 0, 0.481789, 0, 1, 0, -0.481789, 0, -0.876287, -154.93501, 0.053196, 19.794498)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree064" unique_id=2067601530]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree418" unique_id=2067601530]
 transform = Transform3D(1.279114, 0, 1.279114, 0, 1.80894, 0, -1.279114, 0, 1.279114, 0, 13.024368, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree064" unique_id=1933028673]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree418" unique_id=1933028673]
 transform = Transform3D(1.279114, 0, -1.279114, 0, 1.80894, 0, 1.279114, 0, 1.279114, 0, 13.024368, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree065" type="Node3D" parent="Trees" unique_id=2135615885]
+[node name="Tree419" type="Node3D" parent="Trees" unique_id=2135615885]
 transform = Transform3D(-0.895694, 0, 0.444672, 0, 1, 0, -0.444672, 0, -0.895694, 107.37841, -0.4248, 160.51967)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree065" unique_id=1005963557]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree419" unique_id=1005963557]
 transform = Transform3D(0.887301, 0, 0.887301, 0, 1.254833, 0, -0.887301, 0, 0.887301, 0, 9.034798, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree065" unique_id=1717425888]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree419" unique_id=1717425888]
 transform = Transform3D(0.887301, 0, -0.887301, 0, 1.254833, 0, 0.887301, 0, 0.887301, 0, 9.034798, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree066" type="Node3D" parent="Trees" unique_id=482390202]
+[node name="Tree420" type="Node3D" parent="Trees" unique_id=482390202]
 transform = Transform3D(-0.913528, 0, 0.406775, 0, 1, 0, -0.406775, 0, -0.913528, 143.78738, 0.067937, -37.75096)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree066" unique_id=725430755]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree420" unique_id=725430755]
 transform = Transform3D(1.035896, 0, 1.035896, 0, 1.464978, 0, -1.035896, 0, 1.035896, 0, 10.547842, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree066" unique_id=681851883]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree420" unique_id=681851883]
 transform = Transform3D(1.035896, 0, -1.035896, 0, 1.464978, 0, 1.035896, 0, 1.035896, 0, 10.547842, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree067" type="Node3D" parent="Trees" unique_id=814424744]
+[node name="Tree421" type="Node3D" parent="Trees" unique_id=814424744]
 transform = Transform3D(-0.929761, 0, 0.368164, 0, 1, 0, -0.368164, 0, -0.929761, -138.613, 0.195165, -89.4613)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree067" unique_id=1180528381]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree421" unique_id=1180528381]
 transform = Transform3D(1.331085, 0, 1.331085, 0, 1.882438, 0, -1.331085, 0, 1.331085, 0, 13.553554, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree067" unique_id=1150111252]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree421" unique_id=1150111252]
 transform = Transform3D(1.331085, 0, -1.331085, 0, 1.882438, 0, 1.331085, 0, 1.331085, 0, 13.553554, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree068" type="Node3D" parent="Trees" unique_id=2135937788]
+[node name="Tree422" type="Node3D" parent="Trees" unique_id=2135937788]
 transform = Transform3D(-0.944362, 0, 0.328907, 0, 1, 0, -0.328907, 0, -0.944362, -160.01549, -0.185373, -41.77661)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree068" unique_id=474826078]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree422" unique_id=474826078]
 transform = Transform3D(1.220533, 0, 1.220533, 0, 1.726095, 0, -1.220533, 0, 1.220533, 0, 12.427884, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree068" unique_id=1557591622]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree422" unique_id=1557591622]
 transform = Transform3D(1.220533, 0, -1.220533, 0, 1.726095, 0, 1.220533, 0, 1.220533, 0, 12.427884, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree069" type="Node3D" parent="Trees" unique_id=465818848]
+[node name="Tree423" type="Node3D" parent="Trees" unique_id=465818848]
 transform = Transform3D(-0.957307, 0, 0.289074, 0, 1, 0, -0.289074, 0, -0.957307, 139.27612, -0.50017, 154.61736)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree069" unique_id=416215351]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree423" unique_id=416215351]
 transform = Transform3D(0.776126, 0, 0.776126, 0, 1.097609, 0, -0.776126, 0, 0.776126, 0, 7.902785, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree069" unique_id=2019761223]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree423" unique_id=2019761223]
 transform = Transform3D(0.776126, 0, -0.776126, 0, 1.097609, 0, 0.776126, 0, 0.776126, 0, 7.902785, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree070" type="Node3D" parent="Trees" unique_id=892952062]
+[node name="Tree424" type="Node3D" parent="Trees" unique_id=892952062]
 transform = Transform3D(-0.968572, 0, 0.248733, 0, 1, 0, -0.248733, 0, -0.968572, 147.22346, 0.150665, -111.912575)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree070" unique_id=999986330]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree424" unique_id=999986330]
 transform = Transform3D(1.127374, 0, 1.127374, 0, 1.594347, 0, -1.127374, 0, 1.127374, 0, 11.479298, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree070" unique_id=1173312746]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree424" unique_id=1173312746]
 transform = Transform3D(1.127374, 0, -1.127374, 0, 1.594347, 0, 1.127374, 0, 1.127374, 0, 11.479298, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree071" type="Node3D" parent="Trees" unique_id=1950307207]
+[node name="Tree425" type="Node3D" parent="Trees" unique_id=1950307207]
 transform = Transform3D(-0.978138, 0, 0.207956, 0, 1, 0, -0.207956, 0, -0.978138, -138.15625, 0.15661, 33.651688)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree071" unique_id=1760075980]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree425" unique_id=1760075980]
 transform = Transform3D(1.343382, 0, 1.343382, 0, 1.89983, 0, -1.343382, 0, 1.343382, 0, 13.678776, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree071" unique_id=252027475]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree425" unique_id=252027475]
 transform = Transform3D(1.343382, 0, -1.343382, 0, 1.89983, 0, 1.343382, 0, 1.343382, 0, 13.678776, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree072" type="Node3D" parent="Trees" unique_id=2023307239]
+[node name="Tree426" type="Node3D" parent="Trees" unique_id=2023307239]
 transform = Transform3D(-0.985988, 0, 0.166814, 0, 1, 0, -0.166814, 0, -0.985988, 72.30699, -0.335989, -157.68704)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree072" unique_id=2045963392]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree426" unique_id=2045963392]
 transform = Transform3D(1.145654, 0, 1.145654, 0, 1.620199, 0, -1.145654, 0, 1.145654, 0, 11.665433, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree072" unique_id=901759175]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree426" unique_id=901759175]
 transform = Transform3D(1.145654, 0, -1.145654, 0, 1.620199, 0, 1.145654, 0, 1.145654, 0, 11.665433, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree073" type="Node3D" parent="Trees" unique_id=1533059434]
+[node name="Tree427" type="Node3D" parent="Trees" unique_id=1533059434]
 transform = Transform3D(-0.992109, 0, 0.125379, 0, 1, 0, -0.125379, 0, -0.992109, 168.52327, 0.169719, 143.02661)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree073" unique_id=1924292847]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree427" unique_id=1924292847]
 transform = Transform3D(0.751453, 0, 0.751453, 0, 1.062715, 0, -0.751453, 0, 0.751453, 0, 7.651548, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree073" unique_id=520458728]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree427" unique_id=520458728]
 transform = Transform3D(0.751453, 0, -0.751453, 0, 1.062715, 0, 0.751453, 0, 0.751453, 0, 7.651548, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree074" type="Node3D" parent="Trees" unique_id=119675775]
+[node name="Tree428" type="Node3D" parent="Trees" unique_id=119675775]
 transform = Transform3D(-0.996489, 0, 0.083725, 0, 1, 0, -0.083725, 0, -0.996489, 152.42833, 0.035557, 98.07391)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree074" unique_id=1416528754]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree428" unique_id=1416528754]
 transform = Transform3D(1.20551, 0, 1.20551, 0, 1.704848, 0, -1.20551, 0, 1.20551, 0, 12.274906, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree074" unique_id=332606891]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree428" unique_id=332606891]
 transform = Transform3D(1.20551, 0, -1.20551, 0, 1.704848, 0, 1.20551, 0, 1.20551, 0, 12.274906, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree075" type="Node3D" parent="Trees" unique_id=326385763]
+[node name="Tree429" type="Node3D" parent="Trees" unique_id=326385763]
 transform = Transform3D(-0.999121, 0, 0.041923, 0, 1, 0, -0.041923, 0, -0.999121, -57.762894, -0.126244, -149.60255)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree075" unique_id=1372199984]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree429" unique_id=1372199984]
 transform = Transform3D(1.335481, 0, 1.335481, 0, 1.888656, 0, -1.335481, 0, 1.335481, 0, 13.598323, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree075" unique_id=1886664478]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree429" unique_id=1886664478]
 transform = Transform3D(1.335481, 0, -1.335481, 0, 1.888656, 0, 1.335481, 0, 1.335481, 0, 13.598323, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree076" type="Node3D" parent="Trees" unique_id=211342639]
+[node name="Tree430" type="Node3D" parent="Trees" unique_id=211342639]
 transform = Transform3D(-1, 0, 0.000048, 0, 1, 0, -0.000048, 0, -1, -160.40738, -0.05493, 27.565338)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree076" unique_id=1244236465]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree430" unique_id=1244236465]
 transform = Transform3D(1.056853, 0, 1.056853, 0, 1.494616, 0, -1.056853, 0, 1.056853, 0, 10.761235, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree076" unique_id=1080708106]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree430" unique_id=1080708106]
 transform = Transform3D(1.056853, 0, -1.056853, 0, 1.494616, 0, 1.056853, 0, 1.056853, 0, 10.761235, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree077" type="Node3D" parent="Trees" unique_id=2048757838]
+[node name="Tree431" type="Node3D" parent="Trees" unique_id=2048757838]
 transform = Transform3D(-0.999125, 0, -0.041827, 0, 1, 0, 0.041827, 0, -0.999125, -122.60014, -0.07187, -136.5342)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree077" unique_id=1072407329]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree431" unique_id=1072407329]
 transform = Transform3D(0.863411, 0, 0.863411, 0, 1.221047, 0, -0.863411, 0, 0.863411, 0, 8.791538, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree077" unique_id=1025969470]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree431" unique_id=1025969470]
 transform = Transform3D(0.863411, 0, -0.863411, 0, 1.221047, 0, 0.863411, 0, 0.863411, 0, 8.791538, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree078" type="Node3D" parent="Trees" unique_id=1121851333]
+[node name="Tree432" type="Node3D" parent="Trees" unique_id=1121851333]
 transform = Transform3D(-0.996497, 0, -0.083629, 0, 1, 0, 0.083629, 0, -0.996497, 56.826057, 0.173382, 149.8256)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree078" unique_id=1996954767]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree432" unique_id=1996954767]
 transform = Transform3D(1.267824, 0, 1.267824, 0, 1.792975, 0, -1.267824, 0, 1.267824, 0, 12.90942, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree078" unique_id=654335062]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree432" unique_id=654335062]
 transform = Transform3D(1.267824, 0, -1.267824, 0, 1.792975, 0, 1.267824, 0, 1.267824, 0, 12.90942, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree079" type="Node3D" parent="Trees" unique_id=2133826521]
+[node name="Tree433" type="Node3D" parent="Trees" unique_id=2133826521]
 transform = Transform3D(-0.992121, 0, -0.125283, 0, 1, 0, 0.125283, 0, -0.992121, 147.63423, -0.118263, -20.677748)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree079" unique_id=242833263]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree433" unique_id=242833263]
 transform = Transform3D(1.307632, 0, 1.307632, 0, 1.849271, 0, -1.307632, 0, 1.307632, 0, 13.314751, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree079" unique_id=593994959]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree433" unique_id=593994959]
 transform = Transform3D(1.307632, 0, -1.307632, 0, 1.849271, 0, 1.307632, 0, 1.307632, 0, 13.314751, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree080" type="Node3D" parent="Trees" unique_id=1014335658]
+[node name="Tree434" type="Node3D" parent="Trees" unique_id=1014335658]
 transform = Transform3D(-0.986005, 0, -0.166719, 0, 1, 0, 0.166719, 0, -0.986005, -169.23154, 0.19012, 125.3889)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree080" unique_id=314665381]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree434" unique_id=314665381]
 transform = Transform3D(0.956949, 0, 0.956949, 0, 1.353331, 0, -0.956949, 0, 0.956949, 0, 9.743983, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree080" unique_id=1093257122]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree434" unique_id=1093257122]
 transform = Transform3D(0.956949, 0, -0.956949, 0, 1.353331, 0, 0.956949, 0, 0.956949, 0, 9.743983, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree081" type="Node3D" parent="Trees" unique_id=932509711]
+[node name="Tree435" type="Node3D" parent="Trees" unique_id=932509711]
 transform = Transform3D(-0.978158, 0, -0.207861, 0, 1, 0, 0.207861, 0, -0.978158, -159.1719, -0.444221, 149.17938)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree081" unique_id=1815877390]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree435" unique_id=1815877390]
 transform = Transform3D(0.970407, 0, 0.970407, 0, 1.372363, 0, -0.970407, 0, 0.970407, 0, 9.881014, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree081" unique_id=930105167]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree435" unique_id=930105167]
 transform = Transform3D(0.970407, 0, -0.970407, 0, 1.372363, 0, 0.970407, 0, 0.970407, 0, 9.881014, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree082" type="Node3D" parent="Trees" unique_id=1120792710]
+[node name="Tree436" type="Node3D" parent="Trees" unique_id=1120792710]
 transform = Transform3D(-0.968596, 0, -0.24864, 0, 1, 0, 0.24864, 0, -0.968596, -158.84662, 0.136089, 37.218925)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree082" unique_id=1270806743]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree436" unique_id=1270806743]
 transform = Transform3D(1.312339, 0, 1.312339, 0, 1.855928, 0, -1.312339, 0, 1.312339, 0, 13.362682, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree082" unique_id=69638959]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree436" unique_id=69638959]
 transform = Transform3D(1.312339, 0, -1.312339, 0, 1.855928, 0, 1.312339, 0, 1.312339, 0, 13.362682, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree083" type="Node3D" parent="Trees" unique_id=765451995]
+[node name="Tree437" type="Node3D" parent="Trees" unique_id=765451995]
 transform = Transform3D(-0.957335, 0, -0.288981, 0, 1, 0, 0.288981, 0, -0.957335, 134.58269, -0.012754, 70.08204)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree083" unique_id=315397914]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree437" unique_id=315397914]
 transform = Transform3D(1.26072, 0, 1.26072, 0, 1.782927, 0, -1.26072, 0, 1.26072, 0, 12.837074, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree083" unique_id=2108085619]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree437" unique_id=2108085619]
 transform = Transform3D(1.26072, 0, -1.26072, 0, 1.782927, 0, 1.26072, 0, 1.26072, 0, 12.837074, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree084" type="Node3D" parent="Trees" unique_id=1424088971]
+[node name="Tree438" type="Node3D" parent="Trees" unique_id=1424088971]
 transform = Transform3D(-0.944394, 0, -0.328816, 0, 1, 0, 0.328816, 0, -0.944394, 56.90954, 0.133373, -157.10483)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree084" unique_id=772362133]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree438" unique_id=772362133]
 transform = Transform3D(0.849115, 0, 0.849115, 0, 1.200829, 0, -0.849115, 0, 0.849115, 0, 8.645969, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree084" unique_id=931208323]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree438" unique_id=931208323]
 transform = Transform3D(0.849115, 0, -0.849115, 0, 1.200829, 0, 0.849115, 0, 0.849115, 0, 8.645969, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree085" type="Node3D" parent="Trees" unique_id=1212723214]
+[node name="Tree439" type="Node3D" parent="Trees" unique_id=1212723214]
 transform = Transform3D(-0.929796, 0, -0.368074, 0, 1, 0, 0.368074, 0, -0.929796, -156.5859, 0.287253, 62.094696)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree085" unique_id=1729181254]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree439" unique_id=1729181254]
 transform = Transform3D(1.069045, 0, 1.069045, 0, 1.511858, 0, -1.069045, 0, 1.069045, 0, 10.885378, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree085" unique_id=1185298686]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree439" unique_id=1185298686]
 transform = Transform3D(1.069045, 0, -1.069045, 0, 1.511858, 0, 1.069045, 0, 1.069045, 0, 10.885378, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree086" type="Node3D" parent="Trees" unique_id=1060583547]
+[node name="Tree440" type="Node3D" parent="Trees" unique_id=1060583547]
 transform = Transform3D(-0.913568, 0, -0.406687, 0, 1, 0, 0.406687, 0, -0.913568, -147.24968, -0.488169, 121.06997)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree086" unique_id=1862252565]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree440" unique_id=1862252565]
 transform = Transform3D(1.337641, 0, 1.337641, 0, 1.89171, 0, -1.337641, 0, 1.337641, 0, 13.620312, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree086" unique_id=442518003]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree440" unique_id=442518003]
 transform = Transform3D(1.337641, 0, -1.337641, 0, 1.89171, 0, 1.337641, 0, 1.337641, 0, 13.620312, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree087" type="Node3D" parent="Trees" unique_id=273056397]
+[node name="Tree441" type="Node3D" parent="Trees" unique_id=273056397]
 transform = Transform3D(-0.895736, 0, -0.444586, 0, 1, 0, 0.444586, 0, -0.895736, -139.50615, -1.312645, -170.26756)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree087" unique_id=2066374593]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree441" unique_id=2066374593]
 transform = Transform3D(1.196233, 0, 1.196233, 0, 1.691729, 0, -1.196233, 0, 1.196233, 0, 12.180449, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree087" unique_id=667560126]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree441" unique_id=667560126]
 transform = Transform3D(1.196233, 0, -1.196233, 0, 1.691729, 0, 1.196233, 0, 1.196233, 0, 12.180449, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree088" type="Node3D" parent="Trees" unique_id=154158888]
+[node name="Tree442" type="Node3D" parent="Trees" unique_id=154158888]
 transform = Transform3D(-0.876334, 0, -0.481705, 0, 1, 0, 0.481705, 0, -0.876334, -160.0375, -0.351275, -155.75053)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree088" unique_id=1698229236]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree442" unique_id=1698229236]
 transform = Transform3D(0.736772, 0, 0.736772, 0, 1.041953, 0, -0.736772, 0, 0.736772, 0, 7.502062, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree088" unique_id=333480954]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree442" unique_id=333480954]
 transform = Transform3D(0.736772, 0, -0.736772, 0, 1.041953, 0, 0.736772, 0, 0.736772, 0, 7.502062, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree089" type="Node3D" parent="Trees" unique_id=985843134]
+[node name="Tree443" type="Node3D" parent="Trees" unique_id=985843134]
 transform = Transform3D(-0.855394, 0, -0.517979, 0, 1, 0, 0.517979, 0, -0.855394, 126.62167, -0.122823, 134.42688)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree089" unique_id=1376116343]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree443" unique_id=1376116343]
 transform = Transform3D(1.156193, 0, 1.156193, 0, 1.635104, 0, -1.156193, 0, 1.156193, 0, 11.772749, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree089" unique_id=438908084]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree443" unique_id=438908084]
 transform = Transform3D(1.156193, 0, -1.156193, 0, 1.635104, 0, 1.156193, 0, 1.156193, 0, 11.772749, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree090" type="Node3D" parent="Trees" unique_id=1362603062]
+[node name="Tree444" type="Node3D" parent="Trees" unique_id=1362603062]
 transform = Transform3D(-0.832953, 0, -0.553344, 0, 1, 0, 0.553344, 0, -0.832953, 84.79592, -0.094223, 136.30019)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree090" unique_id=404927482]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree444" unique_id=404927482]
 transform = Transform3D(1.342926, 0, 1.342926, 0, 1.899185, 0, -1.342926, 0, 1.342926, 0, 13.674132, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree090" unique_id=1655091842]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree444" unique_id=1655091842]
 transform = Transform3D(1.342926, 0, -1.342926, 0, 1.899185, 0, 1.342926, 0, 1.342926, 0, 13.674132, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree091" type="Node3D" parent="Trees" unique_id=408944945]
+[node name="Tree445" type="Node3D" parent="Trees" unique_id=408944945]
 transform = Transform3D(-0.809051, 0, -0.587738, 0, 1, 0, 0.587738, 0, -0.809051, 31.563614, 0.524918, -153.91629)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree091" unique_id=1826208695]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree445" unique_id=1826208695]
 transform = Transform3D(1.116219, 0, 1.116219, 0, 1.578572, 0, -1.116219, 0, 1.116219, 0, 11.365718, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree091" unique_id=1634387044]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree445" unique_id=1634387044]
 transform = Transform3D(1.116219, 0, -1.116219, 0, 1.578572, 0, 1.116219, 0, 1.116219, 0, 11.365718, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree092" type="Node3D" parent="Trees" unique_id=1877623644]
+[node name="Tree446" type="Node3D" parent="Trees" unique_id=1877623644]
 transform = Transform3D(-0.78373, 0, -0.621102, 0, 1, 0, 0.621102, 0, -0.78373, -83.323135, -0.010005, 143.15804)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree092" unique_id=847611441]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree446" unique_id=847611441]
 transform = Transform3D(0.790726, 0, 0.790726, 0, 1.118256, 0, -0.790726, 0, 0.790726, 0, 8.051443, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree092" unique_id=1627016367]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree446" unique_id=1627016367]
 transform = Transform3D(0.790726, 0, -0.790726, 0, 1.118256, 0, 0.790726, 0, 0.790726, 0, 8.051443, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree093" type="Node3D" parent="Trees" unique_id=670475243]
+[node name="Tree447" type="Node3D" parent="Trees" unique_id=670475243]
 transform = Transform3D(-0.757034, 0, -0.653376, 0, 1, 0, 0.653376, 0, -0.757034, -52.434284, 0.03649, -158.20084)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree093" unique_id=470819824]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree447" unique_id=470819824]
 transform = Transform3D(1.229085, 0, 1.229085, 0, 1.738188, 0, -1.229085, 0, 1.229085, 0, 12.514954, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree093" unique_id=36536516]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree447" unique_id=36536516]
 transform = Transform3D(1.229085, 0, -1.229085, 0, 1.738188, 0, 1.229085, 0, 1.229085, 0, 12.514954, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree094" type="Node3D" parent="Trees" unique_id=1864884835]
+[node name="Tree448" type="Node3D" parent="Trees" unique_id=1864884835]
 transform = Transform3D(-0.729009, 0, -0.684504, 0, 1, 0, 0.684504, 0, -0.729009, -162.4775, -0.190478, 16.0393)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree094" unique_id=1627344894]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree448" unique_id=1627344894]
 transform = Transform3D(1.328028, 0, 1.328028, 0, 1.878115, 0, -1.328028, 0, 1.328028, 0, 13.522428, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree094" unique_id=831215428]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree448" unique_id=831215428]
 transform = Transform3D(1.328028, 0, -1.328028, 0, 1.878115, 0, 1.328028, 0, 1.328028, 0, 13.522428, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree095" type="Node3D" parent="Trees" unique_id=553472240]
+[node name="Tree449" type="Node3D" parent="Trees" unique_id=553472240]
 transform = Transform3D(-0.699706, 0, -0.71443, 0, 1, 0, 0.71443, 0, -0.699706, 142.55513, -0.716834, -164.9264)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree095" unique_id=867967119]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree449" unique_id=867967119]
 transform = Transform3D(1.023218, 0, 1.023218, 0, 1.447049, 0, -1.023218, 0, 1.023218, 0, 10.418753, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree095" unique_id=1826571337]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree449" unique_id=1826571337]
 transform = Transform3D(1.023218, 0, -1.023218, 0, 1.447049, 0, 1.023218, 0, 1.023218, 0, 10.418753, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree096" type="Node3D" parent="Trees" unique_id=2076082624]
+[node name="Tree450" type="Node3D" parent="Trees" unique_id=2076082624]
 transform = Transform3D(-0.669176, 0, -0.743104, 0, 1, 0, 0.743104, 0, -0.669176, -79.133415, -0.022462, 169.07149)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree096" unique_id=1768168766]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree450" unique_id=1768168766]
 transform = Transform3D(0.901356, 0, 0.901356, 0, 1.27471, 0, -0.901356, 0, 0.901356, 0, 9.177912, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree096" unique_id=1400797370]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree450" unique_id=1400797370]
 transform = Transform3D(0.901356, 0, -0.901356, 0, 1.27471, 0, 0.901356, 0, 0.901356, 0, 9.177912, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree097" type="Node3D" parent="Trees" unique_id=1962877527]
+[node name="Tree451" type="Node3D" parent="Trees" unique_id=1962877527]
 transform = Transform3D(-0.637472, 0, -0.770474, 0, 1, 0, 0.770474, 0, -0.637472, -48.620636, -0.087055, -150.38657)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree097" unique_id=464314487]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree451" unique_id=464314487]
 transform = Transform3D(1.285406, 0, 1.285406, 0, 1.817839, 0, -1.285406, 0, 1.285406, 0, 13.088441, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree097" unique_id=544281612]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree451" unique_id=544281612]
 transform = Transform3D(1.285406, 0, -1.285406, 0, 1.817839, 0, 1.285406, 0, 1.285406, 0, 13.088441, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree098" type="Node3D" parent="Trees" unique_id=690815710]
+[node name="Tree452" type="Node3D" parent="Trees" unique_id=690815710]
 transform = Transform3D(-0.604649, 0, -0.796492, 0, 1, 0, 0.796492, 0, -0.604649, -145.29974, -0.296543, 96.85048)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree098" unique_id=1947303509]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree452" unique_id=1947303509]
 transform = Transform3D(1.293418, 0, 1.293418, 0, 1.829169, 0, -1.293418, 0, 1.293418, 0, 13.170017, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree098" unique_id=1502619321]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree452" unique_id=1502619321]
 transform = Transform3D(1.293418, 0, -1.293418, 0, 1.829169, 0, 1.293418, 0, 1.293418, 0, 13.170017, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree099" type="Node3D" parent="Trees" unique_id=738230637]
+[node name="Tree453" type="Node3D" parent="Trees" unique_id=738230637]
 transform = Transform3D(-0.570765, 0, -0.821113, 0, 1, 0, 0.821113, 0, -0.570765, -150.73698, 0.234442, -107.682335)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree099" unique_id=761920758]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree453" unique_id=761920758]
 transform = Transform3D(0.920182, 0, 0.920182, 0, 1.301333, 0, -0.920182, 0, 0.920182, 0, 9.369598, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree099" unique_id=303482857]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree453" unique_id=303482857]
 transform = Transform3D(0.920182, 0, -0.920182, 0, 1.301333, 0, 0.920182, 0, 0.920182, 0, 9.369598, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree100" type="Node3D" parent="Trees" unique_id=584631319]
+[node name="Tree454" type="Node3D" parent="Trees" unique_id=584631319]
 transform = Transform3D(-0.53588, 0, -0.844294, 0, 1, 0, 0.844294, 0, -0.53588, -134.77065, -0.069969, -140.98227)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree100" unique_id=498987918]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree454" unique_id=498987918]
 transform = Transform3D(1.00582, 0, 1.00582, 0, 1.422444, 0, -1.00582, 0, 1.00582, 0, 10.241597, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree100" unique_id=348849075]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree454" unique_id=348849075]
 transform = Transform3D(1.00582, 0, -1.00582, 0, 1.422444, 0, 1.00582, 0, 1.00582, 0, 10.241597, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree101" type="Node3D" parent="Trees" unique_id=271915827]
+[node name="Tree455" type="Node3D" parent="Trees" unique_id=271915827]
 transform = Transform3D(-0.500056, 0, -0.865993, 0, 1, 0, 0.865993, 0, -0.500056, 41.08462, 0.032799, 134.49036)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree101" unique_id=1124880076]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree455" unique_id=1124880076]
 transform = Transform3D(1.32337, 0, 1.32337, 0, 1.871528, 0, -1.32337, 0, 1.32337, 0, 13.475002, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree101" unique_id=1938318098]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree455" unique_id=1938318098]
 transform = Transform3D(1.32337, 0, -1.32337, 0, 1.871528, 0, 1.32337, 0, 1.32337, 0, 13.475002, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree102" type="Node3D" parent="Trees" unique_id=2084937703]
+[node name="Tree456" type="Node3D" parent="Trees" unique_id=2084937703]
 transform = Transform3D(-0.463353, 0, -0.886174, 0, 1, 0, 0.886174, 0, -0.463353, -71.254486, -0.295809, -165.28777)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree102" unique_id=247793691]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree456" unique_id=247793691]
 transform = Transform3D(1.240196, 0, 1.240196, 0, 1.753902, 0, -1.240196, 0, 1.240196, 0, 12.628094, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree102" unique_id=731870372]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree456" unique_id=731870372]
 transform = Transform3D(1.240196, 0, -1.240196, 0, 1.753902, 0, 1.240196, 0, 1.240196, 0, 12.628094, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree103" type="Node3D" parent="Trees" unique_id=477745547]
+[node name="Tree457" type="Node3D" parent="Trees" unique_id=477745547]
 transform = Transform3D(-0.425839, 0, -0.904799, 0, 1, 0, 0.904799, 0, -0.425839, 137.3147, -0.159904, 132.65652)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree103" unique_id=1462188458]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree457" unique_id=1462188458]
 transform = Transform3D(0.810382, 0, 0.810382, 0, 1.146053, 0, -0.810382, 0, 0.810382, 0, 8.251582, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree103" unique_id=175522243]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree457" unique_id=175522243]
 transform = Transform3D(0.810382, 0, -0.810382, 0, 1.146053, 0, 0.810382, 0, 0.810382, 0, 8.251582, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree104" type="Node3D" parent="Trees" unique_id=1032426227]
+[node name="Tree458" type="Node3D" parent="Trees" unique_id=1032426227]
 transform = Transform3D(-0.387577, 0, -0.921837, 0, 1, 0, 0.921837, 0, -0.387577, 90.05801, -0.170543, 143.22243)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree104" unique_id=373430977]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree458" unique_id=373430977]
 transform = Transform3D(1.100801, 0, 1.100801, 0, 1.556767, 0, -1.100801, 0, 1.100801, 0, 11.208722, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree104" unique_id=821835094]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree458" unique_id=821835094]
 transform = Transform3D(1.100801, 0, -1.100801, 0, 1.556767, 0, 1.100801, 0, 1.100801, 0, 11.208722, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree105" type="Node3D" parent="Trees" unique_id=549193848]
+[node name="Tree459" type="Node3D" parent="Trees" unique_id=549193848]
 transform = Transform3D(-0.348635, 0, -0.937259, 0, 1, 0, 0.937259, 0, -0.348635, -163.08238, 0.373681, -115.75927)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree105" unique_id=22593598]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree459" unique_id=22593598]
 transform = Transform3D(1.341771, 0, 1.341771, 0, 1.89755, 0, -1.341771, 0, 1.341771, 0, 13.66236, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree105" unique_id=490306280]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree459" unique_id=490306280]
 transform = Transform3D(1.341771, 0, -1.341771, 0, 1.89755, 0, 1.341771, 0, 1.341771, 0, 13.66236, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree106" type="Node3D" parent="Trees" unique_id=1051270964]
+[node name="Tree460" type="Node3D" parent="Trees" unique_id=1051270964]
 transform = Transform3D(-0.309081, 0, -0.951036, 0, 1, 0, 0.951036, 0, -0.309081, 85.15943, 0.019824, 168.70097)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree106" unique_id=158412830]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree460" unique_id=158412830]
 transform = Transform3D(1.170051, 0, 1.170051, 0, 1.654702, 0, -1.170051, 0, 1.170051, 0, 11.913854, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree106" unique_id=1449600941]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree460" unique_id=1449600941]
 transform = Transform3D(1.170051, 0, -1.170051, 0, 1.654702, 0, 1.170051, 0, 1.170051, 0, 11.913854, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree107" type="Node3D" parent="Trees" unique_id=592657165]
+[node name="Tree461" type="Node3D" parent="Trees" unique_id=592657165]
 transform = Transform3D(-0.268985, 0, -0.963144, 0, 1, 0, 0.963144, 0, -0.268985, 148.29524, 0.246033, -68.13366)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree107" unique_id=196493365]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree461" unique_id=196493365]
 transform = Transform3D(0.716911, 0, 0.716911, 0, 1.013865, 0, -0.716911, 0, 0.716911, 0, 7.299828, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree107" unique_id=129316011]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree461" unique_id=129316011]
 transform = Transform3D(0.716911, 0, -0.716911, 0, 1.013865, 0, 0.716911, 0, 0.716911, 0, 7.299828, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree108" type="Node3D" parent="Trees" unique_id=756938149]
+[node name="Tree462" type="Node3D" parent="Trees" unique_id=756938149]
 transform = Transform3D(-0.228418, 0, -0.973563, 0, 1, 0, 0.973563, 0, -0.228418, -115.38998, -0.103808, 157.67789)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree108" unique_id=2136587539]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree462" unique_id=2136587539]
 transform = Transform3D(1.183284, 0, 1.183284, 0, 1.673416, 0, -1.183284, 0, 1.183284, 0, 12.048595, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree108" unique_id=256900003]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree462" unique_id=256900003]
 transform = Transform3D(1.183284, 0, -1.183284, 0, 1.673416, 0, 1.183284, 0, 1.183284, 0, 12.048595, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree109" type="Node3D" parent="Trees" unique_id=1097162649]
+[node name="Tree463" type="Node3D" parent="Trees" unique_id=1097162649]
 transform = Transform3D(-0.187449, 0, -0.982274, 0, 1, 0, 0.982274, 0, -0.187449, -130.42091, -0.255248, -148.11578)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree109" unique_id=1857804447]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree463" unique_id=1857804447]
 transform = Transform3D(1.340024, 0, 1.340024, 0, 1.89508, 0, -1.340024, 0, 1.340024, 0, 13.644576, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree109" unique_id=1913535772]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree463" unique_id=1913535772]
 transform = Transform3D(1.340024, 0, -1.340024, 0, 1.89508, 0, 1.340024, 0, 1.340024, 0, 13.644576, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree110" type="Node3D" parent="Trees" unique_id=1461700425]
+[node name="Tree464" type="Node3D" parent="Trees" unique_id=1461700425]
 transform = Transform3D(-0.146152, 0, -0.989262, 0, 1, 0, 0.989262, 0, -0.146152, -162.89616, 0.14426, -56.15632)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree110" unique_id=1482426801]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree464" unique_id=1482426801]
 transform = Transform3D(1.085211, 0, 1.085211, 0, 1.53472, 0, -1.085211, 0, 1.085211, 0, 11.049984, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree110" unique_id=1115697473]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree464" unique_id=1115697473]
 transform = Transform3D(1.085211, 0, -1.085211, 0, 1.53472, 0, 1.085211, 0, 1.085211, 0, 11.049984, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree111" type="Node3D" parent="Trees" unique_id=2035618700]
+[node name="Tree465" type="Node3D" parent="Trees" unique_id=2035618700]
 transform = Transform3D(-0.104599, 0, -0.994514, 0, 1, 0, 0.994514, 0, -0.104599, 142.79839, 0.001708, -5.547405)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree111" unique_id=1980206876]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree465" unique_id=1980206876]
 transform = Transform3D(0.829678, 0, 0.829678, 0, 1.173342, 0, -0.829678, 0, 0.829678, 0, 8.448062, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree111" unique_id=1070736462]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree465" unique_id=1070736462]
 transform = Transform3D(0.829678, 0, -0.829678, 0, 1.173342, 0, 0.829678, 0, 0.829678, 0, 8.448062, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree112" type="Node3D" parent="Trees" unique_id=1850170155]
+[node name="Tree466" type="Node3D" parent="Trees" unique_id=1850170155]
 transform = Transform3D(-0.062861, 0, -0.998022, 0, 1, 0, 0.998022, 0, -0.062861, 157.88324, 0.12031, 27.519882)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree112" unique_id=2102348656]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree466" unique_id=2102348656]
 transform = Transform3D(1.250651, 0, 1.250651, 0, 1.768688, 0, -1.250651, 0, 1.250651, 0, 12.734554, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree112" unique_id=925350494]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree466" unique_id=925350494]
 transform = Transform3D(1.250651, 0, -1.250651, 0, 1.768688, 0, 1.250651, 0, 1.250651, 0, 12.734554, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree113" type="Node3D" parent="Trees" unique_id=1787889858]
+[node name="Tree467" type="Node3D" parent="Trees" unique_id=1787889858]
 transform = Transform3D(-0.021014, 0, -0.999779, 0, 1, 0, 0.999779, 0, -0.021014, -27.174807, 0.075873, 151.99217)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree113" unique_id=611556663]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree467" unique_id=611556663]
 transform = Transform3D(1.318185, 0, 1.318185, 0, 1.864196, 0, -1.318185, 0, 1.318185, 0, 13.422211, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree113" unique_id=276877216]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree467" unique_id=276877216]
 transform = Transform3D(1.318185, 0, -1.318185, 0, 1.864196, 0, 1.318185, 0, 1.318185, 0, 13.422211, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree114" type="Node3D" parent="Trees" unique_id=857943257]
+[node name="Tree468" type="Node3D" parent="Trees" unique_id=857943257]
 transform = Transform3D(0.02087, 0, -0.999782, 0, 1, 0, 0.999782, 0, 0.02087, -65.48067, 0.080837, 149.9841)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree114" unique_id=1880604785]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree468" unique_id=1880604785]
 transform = Transform3D(0.988367, 0, 0.988367, 0, 1.397762, 0, -0.988367, 0, 0.988367, 0, 10.063886, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree114" unique_id=1532868796]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree468" unique_id=1532868796]
 transform = Transform3D(0.988367, 0, -0.988367, 0, 1.397762, 0, 0.988367, 0, 0.988367, 0, 10.063886, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree115" type="Node3D" parent="Trees" unique_id=60210417]
+[node name="Tree469" type="Node3D" parent="Trees" unique_id=60210417]
 transform = Transform3D(0.062717, 0, -0.998031, 0, 1, 0, 0.998031, 0, 0.062717, 166.44014, 0.367492, -121.32193)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree115" unique_id=211049187]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree469" unique_id=211049187]
 transform = Transform3D(0.938554, 0, 0.938554, 0, 1.327316, 0, -0.938554, 0, 0.938554, 0, 9.556675, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree115" unique_id=965461755]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree469" unique_id=965461755]
 transform = Transform3D(0.938554, 0, -0.938554, 0, 1.327316, 0, 0.938554, 0, 0.938554, 0, 9.556675, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree116" type="Node3D" parent="Trees" unique_id=1115396696]
+[node name="Tree470" type="Node3D" parent="Trees" unique_id=1115396696]
 transform = Transform3D(0.104455, 0, -0.99453, 0, 1, 0, 0.99453, 0, 0.104455, -67.28957, -0.029511, 162.14584)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree116" unique_id=378686955]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree470" unique_id=378686955]
 transform = Transform3D(1.300763, 0, 1.300763, 0, 1.839557, 0, -1.300763, 0, 1.300763, 0, 13.24481, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree116" unique_id=345211222]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree470" unique_id=345211222]
 transform = Transform3D(1.300763, 0, -1.300763, 0, 1.839557, 0, 1.300763, 0, 1.300763, 0, 13.24481, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree117" type="Node3D" parent="Trees" unique_id=896010401]
+[node name="Tree471" type="Node3D" parent="Trees" unique_id=896010401]
 transform = Transform3D(0.146009, 0, -0.989283, 0, 1, 0, 0.989283, 0, 0.146009, 134.74168, -0.231413, -137.90877)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree117" unique_id=1760249763]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree471" unique_id=1760249763]
 transform = Transform3D(1.276948, 0, 1.276948, 0, 1.805877, 0, -1.276948, 0, 1.276948, 0, 13.002314, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree117" unique_id=253945162]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree471" unique_id=253945162]
 transform = Transform3D(1.276948, 0, -1.276948, 0, 1.805877, 0, 1.276948, 0, 1.276948, 0, 13.002314, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree118" type="Node3D" parent="Trees" unique_id=1240139934]
+[node name="Tree472" type="Node3D" parent="Trees" unique_id=1240139934]
 transform = Transform3D(0.187307, 0, -0.982301, 0, 1, 0, 0.982301, 0, 0.187307, 147.80972, 0.184938, -103.25011)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree118" unique_id=127870689]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree472" unique_id=127870689]
 transform = Transform3D(0.882594, 0, 0.882594, 0, 1.248177, 0, -0.882594, 0, 0.882594, 0, 8.986874, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree118" unique_id=897347499]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree472" unique_id=897347499]
 transform = Transform3D(0.882594, 0, -0.882594, 0, 1.248177, 0, 0.882594, 0, 0.882594, 0, 8.986874, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree119" type="Node3D" parent="Trees" unique_id=1161831450]
+[node name="Tree473" type="Node3D" parent="Trees" unique_id=1161831450]
 transform = Transform3D(0.228277, 0, -0.973596, 0, 1, 0, 0.973596, 0, 0.228277, -152.78806, -0.010109, -131.9612)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree119" unique_id=509872191]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree473" unique_id=509872191]
 transform = Transform3D(1.040083, 0, 1.040083, 0, 1.4709, 0, -1.040083, 0, 1.040083, 0, 10.59048, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree119" unique_id=880632402]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree473" unique_id=880632402]
 transform = Transform3D(1.040083, 0, -1.040083, 0, 1.4709, 0, 1.040083, 0, 1.040083, 0, 10.59048, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree120" type="Node3D" parent="Trees" unique_id=421794743]
+[node name="Tree474" type="Node3D" parent="Trees" unique_id=421794743]
 transform = Transform3D(0.268846, 0, -0.963183, 0, 1, 0, 0.963183, 0, 0.268846, 20.003288, 0.052885, 134.02507)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree120" unique_id=991724415]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree474" unique_id=991724415]
 transform = Transform3D(1.33203, 0, 1.33203, 0, 1.883775, 0, -1.33203, 0, 1.33203, 0, 13.56318, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree120" unique_id=1449408249]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree474" unique_id=1449408249]
 transform = Transform3D(1.33203, 0, -1.33203, 0, 1.883775, 0, 1.33203, 0, 1.33203, 0, 13.56318, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree121" type="Node3D" parent="Trees" unique_id=1426658219]
+[node name="Tree475" type="Node3D" parent="Trees" unique_id=1426658219]
 transform = Transform3D(0.308944, 0, -0.95108, 0, 1, 0, 0.95108, 0, 0.308944, 101.01262, -0.223994, 149.45232)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree121" unique_id=1304598755]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree475" unique_id=1304598755]
 transform = Transform3D(1.217621, 0, 1.217621, 0, 1.721977, 0, -1.217621, 0, 1.217621, 0, 12.398234, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree121" unique_id=1043060274]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree475" unique_id=1043060274]
 transform = Transform3D(1.217621, 0, -1.217621, 0, 1.721977, 0, 1.217621, 0, 1.217621, 0, 12.398234, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree122" type="Node3D" parent="Trees" unique_id=1731846097]
+[node name="Tree476" type="Node3D" parent="Trees" unique_id=1731846097]
 transform = Transform3D(0.348499, 0, -0.937309, 0, 1, 0, 0.937309, 0, 0.348499, -0.753115, 0.206188, -137.90297)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree122" unique_id=1934799436]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree476" unique_id=1934799436]
 transform = Transform3D(0.771251, 0, 0.771251, 0, 1.090714, 0, -0.771251, 0, 0.771251, 0, 7.853141, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree122" unique_id=1290431525]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree476" unique_id=1290431525]
 transform = Transform3D(0.771251, 0, -0.771251, 0, 1.090714, 0, 0.771251, 0, 0.771251, 0, 7.853141, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree123" type="Node3D" parent="Trees" unique_id=935802566]
+[node name="Tree477" type="Node3D" parent="Trees" unique_id=935802566]
 transform = Transform3D(0.387443, 0, -0.921894, 0, 1, 0, 0.921894, 0, 0.387443, -171.84558, 0.694929, 85.2902)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree123" unique_id=39185881]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree477" unique_id=39185881]
 transform = Transform3D(1.131042, 0, 1.131042, 0, 1.599535, 0, -1.131042, 0, 1.131042, 0, 11.516652, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree123" unique_id=673421360]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree477" unique_id=673421360]
 transform = Transform3D(1.131042, 0, -1.131042, 0, 1.599535, 0, 1.131042, 0, 1.131042, 0, 11.516652, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree124" type="Node3D" parent="Trees" unique_id=1250311461]
+[node name="Tree478" type="Node3D" parent="Trees" unique_id=1250311461]
 transform = Transform3D(0.425708, 0, -0.904861, 0, 1, 0, 0.904861, 0, 0.425708, -132.73425, -0.663264, -158.28227)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree124" unique_id=1758651526]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree478" unique_id=1758651526]
 transform = Transform3D(1.343459, 0, 1.343459, 0, 1.899938, 0, -1.343459, 0, 1.343459, 0, 13.679554, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree124" unique_id=460098137]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree478" unique_id=460098137]
 transform = Transform3D(1.343459, 0, -1.343459, 0, 1.899938, 0, 1.343459, 0, 1.343459, 0, 13.679554, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree125" type="Node3D" parent="Trees" unique_id=951710282]
+[node name="Tree479" type="Node3D" parent="Trees" unique_id=951710282]
 transform = Transform3D(0.463226, 0, -0.88624, 0, 1, 0, 0.88624, 0, 0.463226, 155.22841, -0.078703, -147.62463)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree125" unique_id=151844204]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree479" unique_id=151844204]
 transform = Transform3D(1.142089, 0, 1.142089, 0, 1.615157, 0, -1.142089, 0, 1.142089, 0, 11.62913, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree125" unique_id=1076880690]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree479" unique_id=1076880690]
 transform = Transform3D(1.142089, 0, -1.142089, 0, 1.615157, 0, 1.142089, 0, 1.142089, 0, 11.62913, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree126" type="Node3D" parent="Trees" unique_id=1810154792]
+[node name="Tree480" type="Node3D" parent="Trees" unique_id=1810154792]
 transform = Transform3D(0.499931, 0, -0.866066, 0, 1, 0, 0.866066, 0, 0.499931, -32.84931, 0.457471, -162.80602)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree126" unique_id=1445402932]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree480" unique_id=1445402932]
 transform = Transform3D(0.756342, 0, 0.756342, 0, 1.069629, 0, -0.756342, 0, 0.756342, 0, 7.701329, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree126" unique_id=1490984442]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree480" unique_id=1490984442]
 transform = Transform3D(0.756342, 0, -0.756342, 0, 1.069629, 0, 0.756342, 0, 0.756342, 0, 7.701329, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree127" type="Node3D" parent="Trees" unique_id=1365881257]
+[node name="Tree481" type="Node3D" parent="Trees" unique_id=1365881257]
 transform = Transform3D(0.535759, 0, -0.844371, 0, 1, 0, 0.844371, 0, 0.535759, -74.08248, 0.08771, 156.44785)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree127" unique_id=145379592]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree481" unique_id=145379592]
 transform = Transform3D(1.208543, 0, 1.208543, 0, 1.709138, 0, -1.208543, 0, 1.208543, 0, 12.305794, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree127" unique_id=58519035]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree481" unique_id=58519035]
 transform = Transform3D(1.208543, 0, -1.208543, 0, 1.709138, 0, 1.208543, 0, 1.208543, 0, 12.305794, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree128" type="Node3D" parent="Trees" unique_id=2018497256]
+[node name="Tree482" type="Node3D" parent="Trees" unique_id=2018497256]
 transform = Transform3D(0.570647, 0, -0.821196, 0, 1, 0, 0.821196, 0, 0.570647, -162.75562, 0.238354, -74.090965)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree128" unique_id=1527308087]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree482" unique_id=1527308087]
 transform = Transform3D(1.334687, 0, 1.334687, 0, 1.887532, 0, -1.334687, 0, 1.334687, 0, 13.59023, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree128" unique_id=1863442409]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree482" unique_id=1863442409]
 transform = Transform3D(1.334687, 0, -1.334687, 0, 1.887532, 0, 1.334687, 0, 1.334687, 0, 13.59023, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree129" type="Node3D" parent="Trees" unique_id=785407223]
+[node name="Tree483" type="Node3D" parent="Trees" unique_id=785407223]
 transform = Transform3D(0.604534, 0, -0.79658, 0, 1, 0, 0.79658, 0, 0.604534, 146.72437, 0.186607, -92.01613)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree129" unique_id=1135819061]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree483" unique_id=1135819061]
 transform = Transform3D(1.052747, 0, 1.052747, 0, 1.488809, 0, -1.052747, 0, 1.052747, 0, 10.719425, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree129" unique_id=1443612648]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree483" unique_id=1443612648]
 transform = Transform3D(1.052747, 0, -1.052747, 0, 1.488809, 0, 1.052747, 0, 1.052747, 0, 10.719425, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree130" type="Node3D" parent="Trees" unique_id=454819893]
+[node name="Tree484" type="Node3D" parent="Trees" unique_id=454819893]
 transform = Transform3D(0.63736, 0, -0.770566, 0, 1, 0, 0.770566, 0, 0.63736, 161.93916, 0.01039, 19.211292)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree130" unique_id=1407414976]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree484" unique_id=1407414976]
 transform = Transform3D(0.868158, 0, 0.868158, 0, 1.227761, 0, -0.868158, 0, 0.868158, 0, 8.839879, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree130" unique_id=841892852]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree484" unique_id=841892852]
 transform = Transform3D(0.868158, 0, -0.868158, 0, 1.227761, 0, 0.868158, 0, 0.868158, 0, 8.839879, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree131" type="Node3D" parent="Trees" unique_id=816865537]
+[node name="Tree485" type="Node3D" parent="Trees" unique_id=816865537]
 transform = Transform3D(0.669069, 0, -0.743201, 0, 1, 0, 0.743201, 0, 0.669069, -166.11517, -0.401235, -1.098525)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree131" unique_id=753645447]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree485" unique_id=753645447]
 transform = Transform3D(1.270126, 0, 1.270126, 0, 1.79623, 0, -1.270126, 0, 1.270126, 0, 12.932856, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree131" unique_id=968752520]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree485" unique_id=968752520]
 transform = Transform3D(1.270126, 0, -1.270126, 0, 1.79623, 0, 1.270126, 0, 1.270126, 0, 12.932856, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree132" type="Node3D" parent="Trees" unique_id=748654890]
+[node name="Tree486" type="Node3D" parent="Trees" unique_id=748654890]
 transform = Transform3D(0.699603, 0, -0.714531, 0, 1, 0, 0.714531, 0, 0.699603, -42.137043, 0.009025, 147.27379)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree132" unique_id=123406675]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree486" unique_id=123406675]
 transform = Transform3D(1.305992, 0, 1.305992, 0, 1.846952, 0, -1.305992, 0, 1.305992, 0, 13.298054, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree132" unique_id=194017566]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree486" unique_id=194017566]
 transform = Transform3D(1.305992, 0, -1.305992, 0, 1.846952, 0, 1.305992, 0, 1.305992, 0, 13.298054, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree133" type="Node3D" parent="Trees" unique_id=1975881086]
+[node name="Tree487" type="Node3D" parent="Trees" unique_id=1975881086]
 transform = Transform3D(0.728911, 0, -0.684609, 0, 1, 0, 0.684609, 0, 0.728911, -137.21233, -0.130252, 69.68385)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree133" unique_id=374873665]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree487" unique_id=374873665]
 transform = Transform3D(0.952433, 0, 0.952433, 0, 1.346944, 0, -0.952433, 0, 0.952433, 0, 9.697997, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree133" unique_id=995121723]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree487" unique_id=995121723]
 transform = Transform3D(0.952433, 0, -0.952433, 0, 1.346944, 0, 0.952433, 0, 0.952433, 0, 9.697997, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree134" type="Node3D" parent="Trees" unique_id=31469064]
+[node name="Tree488" type="Node3D" parent="Trees" unique_id=31469064]
 transform = Transform3D(0.756939, 0, -0.653485, 0, 1, 0, 0.653485, 0, 0.756939, -81.47442, -0.146695, -144.85703)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree134" unique_id=628244581]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree488" unique_id=628244581]
 transform = Transform3D(0.974862, 0, 0.974862, 0, 1.378663, 0, -0.974862, 0, 0.974862, 0, 9.926374, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree134" unique_id=1269773912]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree488" unique_id=1269773912]
 transform = Transform3D(0.974862, 0, -0.974862, 0, 1.378663, 0, 0.974862, 0, 0.974862, 0, 9.926374, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree135" type="Node3D" parent="Trees" unique_id=308739430]
+[node name="Tree489" type="Node3D" parent="Trees" unique_id=308739430]
 transform = Transform3D(0.78364, 0, -0.621215, 0, 1, 0, 0.621215, 0, 0.78364, -150.07014, -0.236254, 160.5845)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree135" unique_id=704855758]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree489" unique_id=704855758]
 transform = Transform3D(1.313836, 0, 1.313836, 0, 1.858045, 0, -1.313836, 0, 1.313836, 0, 13.377924, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree135" unique_id=2069596210]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree489" unique_id=2069596210]
 transform = Transform3D(1.313836, 0, -1.313836, 0, 1.858045, 0, 1.313836, 0, 1.313836, 0, 13.377924, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree136" type="Node3D" parent="Trees" unique_id=1637983847]
+[node name="Tree490" type="Node3D" parent="Trees" unique_id=1637983847]
 transform = Transform3D(0.808966, 0, -0.587855, 0, 1, 0, 0.587855, 0, 0.808966, -150.04407, 0.168857, 46.801147)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree136" unique_id=1699313923]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree490" unique_id=1699313923]
 transform = Transform3D(1.258286, 0, 1.258286, 0, 1.779485, 0, -1.258286, 0, 1.258286, 0, 12.812292, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree136" unique_id=672682974]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree490" unique_id=672682974]
 transform = Transform3D(1.258286, 0, -1.258286, 0, 1.779485, 0, 1.258286, 0, 1.258286, 0, 12.812292, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree137" type="Node3D" parent="Trees" unique_id=997550254]
+[node name="Tree491" type="Node3D" parent="Trees" unique_id=997550254]
 transform = Transform3D(0.832873, 0, -0.553464, 0, 1, 0, 0.553464, 0, 0.832873, 161.63303, 0.354564, -95.35604)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree137" unique_id=1369606692]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree491" unique_id=1369606692]
 transform = Transform3D(0.844332, 0, 0.844332, 0, 1.194066, 0, -0.844332, 0, 0.844332, 0, 8.597275, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree137" unique_id=1028255226]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree491" unique_id=1028255226]
 transform = Transform3D(0.844332, 0, -0.844332, 0, 1.194066, 0, 0.844332, 0, 0.844332, 0, 8.597275, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree138" type="Node3D" parent="Trees" unique_id=1964543084]
+[node name="Tree492" type="Node3D" parent="Trees" unique_id=1964543084]
 transform = Transform3D(0.855319, 0, -0.518102, 0, 1, 0, 0.518102, 0, 0.855319, -140.85907, 0.155818, -31.33911)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree138" unique_id=320323864]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree492" unique_id=320323864]
 transform = Transform3D(1.073066, 0, 1.073066, 0, 1.517544, 0, -1.073066, 0, 1.073066, 0, 10.926317, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree138" unique_id=1721795864]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree492" unique_id=1721795864]
 transform = Transform3D(1.073066, 0, -1.073066, 0, 1.517544, 0, 1.073066, 0, 1.073066, 0, 10.926317, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree139" type="Node3D" parent="Trees" unique_id=601633238]
+[node name="Tree493" type="Node3D" parent="Trees" unique_id=601633238]
 transform = Transform3D(0.876264, 0, -0.481831, 0, 1, 0, 0.481831, 0, 0.876264, 160.70691, 0.470286, 80.70336)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree139" unique_id=2145050877]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree493" unique_id=2145050877]
 transform = Transform3D(1.338286, 0, 1.338286, 0, 1.892622, 0, -1.338286, 0, 1.338286, 0, 13.626878, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree139" unique_id=1778607329]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree493" unique_id=1778607329]
 transform = Transform3D(1.338286, 0, -1.338286, 0, 1.892622, 0, 1.338286, 0, 1.338286, 0, 13.626878, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree140" type="Node3D" parent="Trees" unique_id=1751432562]
+[node name="Tree494" type="Node3D" parent="Trees" unique_id=1751432562]
 transform = Transform3D(0.895672, 0, -0.444715, 0, 1, 0, 0.444715, 0, 0.895672, 135.58907, -0.0965, -129.6423)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree140" unique_id=1956978771]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree494" unique_id=1956978771]
 transform = Transform3D(1.193083, 0, 1.193083, 0, 1.687274, 0, -1.193083, 0, 1.193083, 0, 12.148373, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree140" unique_id=1456509]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree494" unique_id=1456509]
 transform = Transform3D(1.193083, 0, -1.193083, 0, 1.687274, 0, 1.193083, 0, 1.193083, 0, 12.148373, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree141" type="Node3D" parent="Trees" unique_id=918808043]
+[node name="Tree495" type="Node3D" parent="Trees" unique_id=918808043]
 transform = Transform3D(0.913509, 0, -0.406819, 0, 1, 0, 0.406819, 0, 0.913509, -157.61469, -0.411968, 133.06987)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree141" unique_id=877927977]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree495" unique_id=877927977]
 transform = Transform3D(0.731874, 0, 0.731874, 0, 1.035027, 0, -0.731874, 0, 0.731874, 0, 7.452194, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree141" unique_id=792426855]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree495" unique_id=792426855]
 transform = Transform3D(0.731874, 0, -0.731874, 0, 1.035027, 0, 0.731874, 0, 0.731874, 0, 7.452194, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree142" type="Node3D" parent="Trees" unique_id=478825988]
+[node name="Tree496" type="Node3D" parent="Trees" unique_id=478825988]
 transform = Transform3D(0.929743, 0, -0.368209, 0, 1, 0, 0.368209, 0, 0.929743, 105.22387, -0.63572, -149.9875)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree142" unique_id=1093872695]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree496" unique_id=1093872695]
 transform = Transform3D(1.159653, 0, 1.159653, 0, 1.639997, 0, -1.159653, 0, 1.159653, 0, 11.807978, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree142" unique_id=1711933902]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree496" unique_id=1711933902]
 transform = Transform3D(1.159653, 0, -1.159653, 0, 1.639997, 0, 1.159653, 0, 1.159653, 0, 11.807978, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree143" type="Node3D" parent="Trees" unique_id=596157134]
+[node name="Tree497" type="Node3D" parent="Trees" unique_id=596157134]
 transform = Transform3D(0.944346, 0, -0.328953, 0, 1, 0, 0.328953, 0, 0.944346, 169.42944, -0.043152, 171.42387)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree143" unique_id=20481876]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree497" unique_id=20481876]
 transform = Transform3D(1.342699, 0, 1.342699, 0, 1.898863, 0, -1.342699, 0, 1.342699, 0, 13.671814, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree143" unique_id=1120270025]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree497" unique_id=1120270025]
 transform = Transform3D(1.342699, 0, -1.342699, 0, 1.898863, 0, 1.342699, 0, 1.342699, 0, 13.671814, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree144" type="Node3D" parent="Trees" unique_id=298672932]
+[node name="Tree498" type="Node3D" parent="Trees" unique_id=298672932]
 transform = Transform3D(0.957293, 0, -0.28912, 0, 1, 0, 0.28912, 0, 0.957293, -0.966875, 0.139642, 149.32256)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree144" unique_id=221754965]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree498" unique_id=221754965]
 transform = Transform3D(1.112452, 0, 1.112452, 0, 1.573245, 0, -1.112452, 0, 1.112452, 0, 11.327364, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree144" unique_id=993095186]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree498" unique_id=993095186]
 transform = Transform3D(1.112452, 0, -1.112452, 0, 1.573245, 0, 1.112452, 0, 1.112452, 0, 11.327364, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree145" type="Node3D" parent="Trees" unique_id=1993352164]
+[node name="Tree499" type="Node3D" parent="Trees" unique_id=1993352164]
 transform = Transform3D(0.96856, 0, -0.248779, 0, 1, 0, 0.248779, 0, 0.96856, -94.9084, -0.236667, -143.19905)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree145" unique_id=598213498]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree499" unique_id=598213498]
 transform = Transform3D(0.795583, 0, 0.795583, 0, 1.125125, 0, -0.795583, 0, 0.795583, 0, 8.1009, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree145" unique_id=1585815928]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree499" unique_id=1585815928]
 transform = Transform3D(0.795583, 0, -0.795583, 0, 1.125125, 0, 0.795583, 0, 0.795583, 0, 8.1009, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree146" type="Node3D" parent="Trees" unique_id=2067579258]
+[node name="Tree500" type="Node3D" parent="Trees" unique_id=2067579258]
 transform = Transform3D(0.978128, 0, -0.208003, 0, 1, 0, 0.208003, 0, 0.978128, 170.08936, 0.561006, 32.340202)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree146" unique_id=72368272]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree500" unique_id=72368272]
 transform = Transform3D(1.231873, 0, 1.231873, 0, 1.742132, 0, -1.231873, 0, 1.231873, 0, 12.54335, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree146" unique_id=1279354766]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree500" unique_id=1279354766]
 transform = Transform3D(1.231873, 0, -1.231873, 0, 1.742132, 0, 1.231873, 0, 1.231873, 0, 12.54335, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree147" type="Node3D" parent="Trees" unique_id=2029962228]
+[node name="Tree501" type="Node3D" parent="Trees" unique_id=2029962228]
 transform = Transform3D(0.98598, 0, -0.166861, 0, 1, 0, 0.166861, 0, 0.98598, 104.22194, -1.008729, -159.66467)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree147" unique_id=1432751735]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree501" unique_id=1432751735]
 transform = Transform3D(1.326935, 0, 1.326935, 0, 1.876569, 0, -1.326935, 0, 1.326935, 0, 13.511297, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree147" unique_id=1174582720]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree501" unique_id=1174582720]
 transform = Transform3D(1.326935, 0, -1.326935, 0, 1.876569, 0, 1.326935, 0, 1.326935, 0, 13.511297, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree148" type="Node3D" parent="Trees" unique_id=1762263257]
+[node name="Tree502" type="Node3D" parent="Trees" unique_id=1762263257]
 transform = Transform3D(0.992103, 0, -0.125427, 0, 1, 0, 0.125427, 0, 0.992103, -82.95918, -0.355167, -158.65196)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree148" unique_id=81558854]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree502" unique_id=81558854]
 transform = Transform3D(1.018954, 0, 1.018954, 0, 1.441019, 0, -1.018954, 0, 1.018954, 0, 10.375337, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree148" unique_id=1190562984]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree502" unique_id=1190562984]
 transform = Transform3D(1.018954, 0, -1.018954, 0, 1.441019, 0, 1.018954, 0, 1.018954, 0, 10.375337, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree149" type="Node3D" parent="Trees" unique_id=1309737405]
+[node name="Tree503" type="Node3D" parent="Trees" unique_id=1309737405]
 transform = Transform3D(0.996485, 0, -0.083772, 0, 1, 0, 0.083772, 0, 0.996485, 14.910778, 0.081348, 148.82117)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree149" unique_id=682057352]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree503" unique_id=682057352]
 transform = Transform3D(0.906018, 0, 0.906018, 0, 1.281304, 0, -0.906018, 0, 0.906018, 0, 9.225389, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree149" unique_id=386442860]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree503" unique_id=386442860]
 transform = Transform3D(0.906018, 0, -0.906018, 0, 1.281304, 0, 0.906018, 0, 0.906018, 0, 9.225389, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree150" type="Node3D" parent="Trees" unique_id=1022754734]
+[node name="Tree504" type="Node3D" parent="Trees" unique_id=1022754734]
 transform = Transform3D(0.999119, 0, -0.041971, 0, 1, 0, 0.041971, 0, 0.999119, -151.64471, -0.053309, -16.68577)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree150" unique_id=296899016]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree504" unique_id=296899016]
 transform = Transform3D(1.287435, 0, 1.287435, 0, 1.820709, 0, -1.287435, 0, 1.287435, 0, 13.109105, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree150" unique_id=1860469444]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree504" unique_id=1860469444]
 transform = Transform3D(1.287435, 0, -1.287435, 0, 1.820709, 0, 1.287435, 0, 1.287435, 0, 13.109105, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree151" type="Node3D" parent="Trees" unique_id=1806913428]
+[node name="Tree505" type="Node3D" parent="Trees" unique_id=1806913428]
 transform = Transform3D(1, 0, -0.000096, 0, 1, 0, 0.000096, 0, 1, -168.12486, -0.47066, 148.93391)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree151" unique_id=1881011175]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree505" unique_id=1881011175]
 transform = Transform3D(1.291495, 0, 1.291495, 0, 1.826449, 0, -1.291495, 0, 1.291495, 0, 13.150433, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree151" unique_id=802071554]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree505" unique_id=802071554]
 transform = Transform3D(1.291495, 0, -1.291495, 0, 1.826449, 0, 1.291495, 0, 1.291495, 0, 13.150433, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree152" type="Node3D" parent="Trees" unique_id=1721862780]
+[node name="Tree506" type="Node3D" parent="Trees" unique_id=1721862780]
 transform = Transform3D(0.999127, 0, 0.041779, 0, 1, 0, -0.041779, 0, 0.999127, 140.74773, 0.035569, -29.712408)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree152" unique_id=1504058117]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree506" unique_id=1504058117]
 transform = Transform3D(0.915556, 0, 0.915556, 0, 1.294792, 0, -0.915556, 0, 0.915556, 0, 9.322502, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree152" unique_id=1301337712]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree506" unique_id=1301337712]
 transform = Transform3D(0.915556, 0, -0.915556, 0, 1.294792, 0, 0.915556, 0, 0.915556, 0, 9.322502, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree153" type="Node3D" parent="Trees" unique_id=469867671]
+[node name="Tree507" type="Node3D" parent="Trees" unique_id=469867671]
 transform = Transform3D(0.996501, 0, 0.083581, 0, 1, 0, -0.083581, 0, 0.996501, -135.30717, -0.28603, 121.75688)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree153" unique_id=141049092]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree507" unique_id=141049092]
 transform = Transform3D(1.010139, 0, 1.010139, 0, 1.428553, 0, -1.010139, 0, 1.010139, 0, 10.285582, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree153" unique_id=2067544312]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree507" unique_id=2067544312]
 transform = Transform3D(1.010139, 0, -1.010139, 0, 1.428553, 0, 1.010139, 0, 1.010139, 0, 10.285582, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree154" type="Node3D" parent="Trees" unique_id=1195900034]
+[node name="Tree508" type="Node3D" parent="Trees" unique_id=1195900034]
 transform = Transform3D(0.992127, 0, 0.125236, 0, 1, 0, -0.125236, 0, 0.992127, -137.81752, 0.074412, -51.49668)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree154" unique_id=132633732]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree508" unique_id=132633732]
 transform = Transform3D(1.324575, 0, 1.324575, 0, 1.873232, 0, -1.324575, 0, 1.324575, 0, 13.48727, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree154" unique_id=1960200644]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree508" unique_id=1960200644]
 transform = Transform3D(1.324575, 0, -1.324575, 0, 1.873232, 0, 1.324575, 0, 1.324575, 0, 13.48727, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree155" type="Node3D" parent="Trees" unique_id=1288206839]
+[node name="Tree509" type="Node3D" parent="Trees" unique_id=1288206839]
 transform = Transform3D(0.986012, 0, 0.166672, 0, 1, 0, -0.166672, 0, 0.986012, -137.19316, -0.035558, 53.636486)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree155" unique_id=1476467481]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree509" unique_id=1476467481]
 transform = Transform3D(1.237503, 0, 1.237503, 0, 1.750094, 0, -1.237503, 0, 1.237503, 0, 12.600677, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree155" unique_id=1621661992]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree509" unique_id=1621661992]
 transform = Transform3D(1.237503, 0, -1.237503, 0, 1.750094, 0, 1.237503, 0, 1.237503, 0, 12.600677, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree156" type="Node3D" parent="Trees" unique_id=417814868]
+[node name="Tree510" type="Node3D" parent="Trees" unique_id=417814868]
 transform = Transform3D(0.978168, 0, 0.207815, 0, 1, 0, -0.207815, 0, 0.978168, 164.40787, 0.555198, 70.047264)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree156" unique_id=533587480]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree510" unique_id=533587480]
 transform = Transform3D(0.805542, 0, 0.805542, 0, 1.139208, 0, -0.805542, 0, 0.805542, 0, 8.202298, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree156" unique_id=122208708]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree510" unique_id=122208708]
 transform = Transform3D(0.805542, 0, -0.805542, 0, 1.139208, 0, 0.805542, 0, 0.805542, 0, 8.202298, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree157" type="Node3D" parent="Trees" unique_id=607285777]
+[node name="Tree511" type="Node3D" parent="Trees" unique_id=607285777]
 transform = Transform3D(0.968608, 0, 0.248593, 0, 1, 0, -0.248593, 0, 0.968608, -162.6028, 0.397752, 74.88917)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree157" unique_id=909206817]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree511" unique_id=909206817]
 transform = Transform3D(1.10464, 0, 1.10464, 0, 1.562198, 0, -1.10464, 0, 1.10464, 0, 11.247826, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree157" unique_id=1546998750]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree511" unique_id=1546998750]
 transform = Transform3D(1.10464, 0, -1.10464, 0, 1.562198, 0, 1.10464, 0, 1.10464, 0, 11.247826, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree158" type="Node3D" parent="Trees" unique_id=1724077324]
+[node name="Tree512" type="Node3D" parent="Trees" unique_id=1724077324]
 transform = Transform3D(0.957349, 0, 0.288935, 0, 1, 0, -0.288935, 0, 0.957349, 137.8537, 0.027615, 1.447252)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree158" unique_id=1602510344]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree512" unique_id=1602510344]
 transform = Transform3D(1.342113, 0, 1.342113, 0, 1.898035, 0, -1.342113, 0, 1.342113, 0, 13.665852, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree158" unique_id=1196693179]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree512" unique_id=1196693179]
 transform = Transform3D(1.342113, 0, -1.342113, 0, 1.898035, 0, 1.342113, 0, 1.342113, 0, 13.665852, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree159" type="Node3D" parent="Trees" unique_id=1236168953]
+[node name="Tree513" type="Node3D" parent="Trees" unique_id=1236168953]
 transform = Transform3D(0.94441, 0, 0.328771, 0, 1, 0, -0.328771, 0, 0.94441, -151.11798, -0.059007, 81.28417)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree159" unique_id=1637641894]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree513" unique_id=1637641894]
 transform = Transform3D(1.166674, 0, 1.166674, 0, 1.649926, 0, -1.166674, 0, 1.166674, 0, 11.879467, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree159" unique_id=1764688152]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree513" unique_id=1764688152]
 transform = Transform3D(1.166674, 0, -1.166674, 0, 1.649926, 0, 1.166674, 0, 1.166674, 0, 11.879467, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree160" type="Node3D" parent="Trees" unique_id=275312819]
+[node name="Tree514" type="Node3D" parent="Trees" unique_id=275312819]
 transform = Transform3D(0.929814, 0, 0.36803, 0, 1, 0, -0.36803, 0, 0.929814, -170.00444, 0.585603, 98.16518)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree160" unique_id=669472355]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree514" unique_id=669472355]
 transform = Transform3D(0.721812, 0, 0.721812, 0, 1.020796, 0, -0.721812, 0, 0.721812, 0, 7.349731, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree160" unique_id=353558738]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree514" unique_id=353558738]
 transform = Transform3D(0.721812, 0, -0.721812, 0, 1.020796, 0, 0.721812, 0, 0.721812, 0, 7.349731, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree161" type="Node3D" parent="Trees" unique_id=448531775]
+[node name="Tree515" type="Node3D" parent="Trees" unique_id=448531775]
 transform = Transform3D(0.913587, 0, 0.406643, 0, 1, 0, -0.406643, 0, 0.913587, 170.38316, 0.381871, -111.04199)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree161" unique_id=509487575]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree515" unique_id=509487575]
 transform = Transform3D(1.186522, 0, 1.186522, 0, 1.677996, 0, -1.186522, 0, 1.186522, 0, 12.081571, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree161" unique_id=1663286015]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree515" unique_id=1663286015]
 transform = Transform3D(1.186522, 0, -1.186522, 0, 1.677996, 0, 1.186522, 0, 1.186522, 0, 12.081571, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree162" type="Node3D" parent="Trees" unique_id=1206591290]
+[node name="Tree516" type="Node3D" parent="Trees" unique_id=1206591290]
 transform = Transform3D(0.895758, 0, 0.444543, 0, 1, 0, -0.444543, 0, 0.895758, 143.36993, 0.021278, -120.80012)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree162" unique_id=910232964]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree516" unique_id=910232964]
 transform = Transform3D(1.339493, 0, 1.339493, 0, 1.89433, 0, -1.339493, 0, 1.339493, 0, 13.639176, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree162" unique_id=413052539]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree516" unique_id=413052539]
 transform = Transform3D(1.339493, 0, -1.339493, 0, 1.89433, 0, 1.339493, 0, 1.339493, 0, 13.639176, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree163" type="Node3D" parent="Trees" unique_id=1433921357]
+[node name="Tree517" type="Node3D" parent="Trees" unique_id=1433921357]
 transform = Transform3D(0.876357, 0, 0.481662, 0, 1, 0, -0.481662, 0, 0.876357, 45.700356, 0.22017, -140.34361)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree163" unique_id=1500221016]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree517" unique_id=1500221016]
 transform = Transform3D(1.081256, 0, 1.081256, 0, 1.529127, 0, -1.081256, 0, 1.081256, 0, 11.009714, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree163" unique_id=746250104]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree517" unique_id=746250104]
 transform = Transform3D(1.081256, 0, -1.081256, 0, 1.529127, 0, 1.081256, 0, 1.081256, 0, 11.009714, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree164" type="Node3D" parent="Trees" unique_id=1295668387]
+[node name="Tree518" type="Node3D" parent="Trees" unique_id=1295668387]
 transform = Transform3D(0.855418, 0, 0.517938, 0, 1, 0, -0.517938, 0, 0.855418, 98.96614, -1.177839, -167.16562)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree164" unique_id=1068426638]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree518" unique_id=1068426638]
 transform = Transform3D(0.834484, 0, 0.834484, 0, 1.180139, 0, -0.834484, 0, 0.834484, 0, 8.497001, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree164" unique_id=159673850]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree518" unique_id=159673850]
 transform = Transform3D(0.834484, 0, -0.834484, 0, 1.180139, 0, 0.834484, 0, 0.834484, 0, 8.497001, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree165" type="Node3D" parent="Trees" unique_id=464665085]
+[node name="Tree519" type="Node3D" parent="Trees" unique_id=464665085]
 transform = Transform3D(0.832979, 0, 0.553304, 0, 1, 0, -0.553304, 0, 0.832979, -152.54024, -0.276761, -150.32082)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree165" unique_id=1814721539]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree519" unique_id=1814721539]
 transform = Transform3D(1.253185, 0, 1.253185, 0, 1.772271, 0, -1.253185, 0, 1.253185, 0, 12.760351, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree165" unique_id=524218663]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree519" unique_id=524218663]
 transform = Transform3D(1.253185, 0, -1.253185, 0, 1.772271, 0, 1.253185, 0, 1.253185, 0, 12.760351, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree166" type="Node3D" parent="Trees" unique_id=678693374]
+[node name="Tree520" type="Node3D" parent="Trees" unique_id=678693374]
 transform = Transform3D(0.809079, 0, 0.5877, 0, 1, 0, -0.5877, 0, 0.809079, -97.39755, -0.509945, -155.90028)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree166" unique_id=1133625360]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree520" unique_id=1133625360]
 transform = Transform3D(1.316798, 0, 1.316798, 0, 1.862234, 0, -1.316798, 0, 1.316798, 0, 13.408085, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree166" unique_id=370970713]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree520" unique_id=370970713]
 transform = Transform3D(1.316798, 0, -1.316798, 0, 1.862234, 0, 1.316798, 0, 1.316798, 0, 13.408085, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree167" type="Node3D" parent="Trees" unique_id=190422360]
+[node name="Tree521" type="Node3D" parent="Trees" unique_id=190422360]
 transform = Transform3D(0.78376, 0, 0.621064, 0, 1, 0, -0.621064, 0, 0.78376, 115.34543, -1.33448, -166.96281)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree167" unique_id=776104870]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree521" unique_id=776104870]
 transform = Transform3D(0.983961, 0, 0.983961, 0, 1.391531, 0, -0.983961, 0, 0.983961, 0, 10.019023, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree167" unique_id=1642247606]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree521" unique_id=1642247606]
 transform = Transform3D(0.983961, 0, -0.983961, 0, 1.391531, 0, 0.983961, 0, 0.983961, 0, 10.019023, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree168" type="Node3D" parent="Trees" unique_id=1097719343]
+[node name="Tree522" type="Node3D" parent="Trees" unique_id=1097719343]
 transform = Transform3D(0.757065, 0, 0.653339, 0, 1, 0, -0.653339, 0, 0.757065, -158.76608, -0.193065, -5.298092)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree168" unique_id=2126160007]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree522" unique_id=2126160007]
 transform = Transform3D(0.943114, 0, 0.943114, 0, 1.333764, 0, -0.943114, 0, 0.943114, 0, 9.603101, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree168" unique_id=914640705]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree522" unique_id=914640705]
 transform = Transform3D(0.943114, 0, -0.943114, 0, 1.333764, 0, 0.943114, 0, 0.943114, 0, 9.603101, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree169" type="Node3D" parent="Trees" unique_id=973247093]
+[node name="Tree523" type="Node3D" parent="Trees" unique_id=973247093]
 transform = Transform3D(0.729042, 0, 0.684469, 0, 1, 0, -0.684469, 0, 0.729042, 110.56456, -0.279041, 149.05508)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree169" unique_id=1802200162]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree523" unique_id=1802200162]
 transform = Transform3D(1.302512, 0, 1.302512, 0, 1.84203, 0, -1.302512, 0, 1.302512, 0, 13.262616, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree169" unique_id=619035203]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree523" unique_id=619035203]
 transform = Transform3D(1.302512, 0, -1.302512, 0, 1.84203, 0, 1.302512, 0, 1.302512, 0, 13.262616, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree170" type="Node3D" parent="Trees" unique_id=2116560325]
+[node name="Tree524" type="Node3D" parent="Trees" unique_id=2116560325]
 transform = Transform3D(0.699741, 0, 0.714397, 0, 1, 0, -0.714397, 0, 0.699741, -148.95152, 0.244279, -73.66934)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree170" unique_id=1249132496]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree524" unique_id=1249132496]
 transform = Transform3D(1.274749, 0, 1.274749, 0, 1.802767, 0, -1.274749, 0, 1.274749, 0, 12.979922, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree170" unique_id=897669552]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree524" unique_id=897669552]
 transform = Transform3D(1.274749, 0, -1.274749, 0, 1.802767, 0, 1.274749, 0, 1.274749, 0, 12.979922, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree171" type="Node3D" parent="Trees" unique_id=1058014297]
+[node name="Tree525" type="Node3D" parent="Trees" unique_id=1058014297]
 transform = Transform3D(0.669212, 0, 0.743072, 0, 1, 0, -0.743072, 0, 0.669212, 131.68623, -1.049788, -169.60297)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree171" unique_id=459369442]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree525" unique_id=459369442]
 transform = Transform3D(0.877877, 0, 0.877877, 0, 1.241506, 0, -0.877877, 0, 0.877877, 0, 8.938843, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree171" unique_id=1197798332]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree525" unique_id=1197798332]
 transform = Transform3D(0.877877, 0, -0.877877, 0, 1.241506, 0, 0.877877, 0, 0.877877, 0, 8.938843, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree172" type="Node3D" parent="Trees" unique_id=1248052383]
+[node name="Tree526" type="Node3D" parent="Trees" unique_id=1248052383]
 transform = Transform3D(0.637508, 0, 0.770443, 0, 1, 0, -0.770443, 0, 0.637508, 23.600973, 0.16698, 153.38011)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree172" unique_id=626246991]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree526" unique_id=626246991]
 transform = Transform3D(1.044251, 0, 1.044251, 0, 1.476794, 0, -1.044251, 0, 1.044251, 0, 10.632917, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree172" unique_id=140695681]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree526" unique_id=140695681]
 transform = Transform3D(1.044251, 0, -1.044251, 0, 1.476794, 0, 1.044251, 0, 1.044251, 0, 10.632917, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree173" type="Node3D" parent="Trees" unique_id=1356154907]
+[node name="Tree527" type="Node3D" parent="Trees" unique_id=1356154907]
 transform = Transform3D(0.604687, 0, 0.796463, 0, 1, 0, -0.796463, 0, 0.604687, -74.1273, -0.137566, -149.63387)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree173" unique_id=1325536281]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree527" unique_id=1325536281]
 transform = Transform3D(1.332938, 0, 1.332938, 0, 1.885059, 0, -1.332938, 0, 1.332938, 0, 13.572425, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree173" unique_id=325168957]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree527" unique_id=325168957]
 transform = Transform3D(1.332938, 0, -1.332938, 0, 1.885059, 0, 1.332938, 0, 1.332938, 0, 13.572425, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree174" type="Node3D" parent="Trees" unique_id=699577484]
+[node name="Tree528" type="Node3D" parent="Trees" unique_id=699577484]
 transform = Transform3D(0.570805, 0, 0.821086, 0, 1, 0, -0.821086, 0, 0.570805, 44.231518, 0.234265, 147.6521)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree174" unique_id=658673718]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree528" unique_id=658673718]
 transform = Transform3D(1.214679, 0, 1.214679, 0, 1.717816, 0, -1.214679, 0, 1.214679, 0, 12.368275, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree174" unique_id=2046081908]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree528" unique_id=2046081908]
 transform = Transform3D(1.214679, 0, -1.214679, 0, 1.717816, 0, 1.214679, 0, 1.214679, 0, 12.368275, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree175" type="Node3D" parent="Trees" unique_id=249996208]
+[node name="Tree529" type="Node3D" parent="Trees" unique_id=249996208]
 transform = Transform3D(0.535921, 0, 0.844268, 0, 1, 0, -0.844268, 0, 0.535921, 160.30682, 0.408877, 63.081055)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree175" unique_id=296835480]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree529" unique_id=296835480]
 transform = Transform3D(0.766372, 0, 0.766372, 0, 1.083814, 0, -0.766372, 0, 0.766372, 0, 7.803461, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree175" unique_id=1700806989]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree529" unique_id=1700806989]
 transform = Transform3D(0.766372, 0, -0.766372, 0, 1.083814, 0, 0.766372, 0, 0.766372, 0, 7.803461, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree176" type="Node3D" parent="Trees" unique_id=1400678601]
+[node name="Tree530" type="Node3D" parent="Trees" unique_id=1400678601]
 transform = Transform3D(0.500097, 0, 0.865969, 0, 1, 0, -0.865969, 0, 0.500097, 12.619202, 0.964135, -167.98671)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree176" unique_id=390418621]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree530" unique_id=390418621]
 transform = Transform3D(1.134686, 0, 1.134686, 0, 1.604688, 0, -1.134686, 0, 1.134686, 0, 11.553754, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree176" unique_id=403106976]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree530" unique_id=403106976]
 transform = Transform3D(1.134686, 0, -1.134686, 0, 1.604688, 0, 1.134686, 0, 1.134686, 0, 11.553754, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree177" type="Node3D" parent="Trees" unique_id=925679025]
+[node name="Tree531" type="Node3D" parent="Trees" unique_id=925679025]
 transform = Transform3D(0.463396, 0, 0.886151, 0, 1, 0, -0.886151, 0, 0.463396, -147.59668, -0.87053, -166.11768)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree177" unique_id=1187017523]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree531" unique_id=1187017523]
 transform = Transform3D(1.343498, 0, 1.343498, 0, 1.899993, 0, -1.343498, 0, 1.343498, 0, 13.67995, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree177" unique_id=352524907]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree531" unique_id=352524907]
 transform = Transform3D(1.343498, 0, -1.343498, 0, 1.899993, 0, 1.343498, 0, 1.343498, 0, 13.67995, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree178" type="Node3D" parent="Trees" unique_id=914730596]
+[node name="Tree532" type="Node3D" parent="Trees" unique_id=914730596]
 transform = Transform3D(0.425882, 0, 0.904779, 0, 1, 0, -0.904779, 0, 0.425882, -102.01368, -0.102141, -135.6728)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree178" unique_id=94317651]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree532" unique_id=94317651]
 transform = Transform3D(1.138497, 0, 1.138497, 0, 1.610078, 0, -1.138497, 0, 1.138497, 0, 11.592562, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree178" unique_id=604278258]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree532" unique_id=604278258]
 transform = Transform3D(1.138497, 0, -1.138497, 0, 1.610078, 0, 1.138497, 0, 1.138497, 0, 11.592562, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree179" type="Node3D" parent="Trees" unique_id=1058676557]
+[node name="Tree533" type="Node3D" parent="Trees" unique_id=1058676557]
 transform = Transform3D(0.387621, 0, 0.921819, 0, 1, 0, -0.921819, 0, 0.387621, -21.05281, -0.412731, 168.11761)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree179" unique_id=455011159]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree533" unique_id=455011159]
 transform = Transform3D(0.761227, 0, 0.761227, 0, 1.076538, 0, -0.761227, 0, 0.761227, 0, 7.751074, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree179" unique_id=1942348016]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree533" unique_id=1942348016]
 transform = Transform3D(0.761227, 0, -0.761227, 0, 1.076538, 0, 0.761227, 0, 0.761227, 0, 7.751074, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree180" type="Node3D" parent="Trees" unique_id=820041463]
+[node name="Tree534" type="Node3D" parent="Trees" unique_id=820041463]
 transform = Transform3D(0.34868, 0, 0.937242, 0, 1, 0, -0.937242, 0, 0.34868, 136.56924, -0.043083, 39.821117)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree180" unique_id=1300933488]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree534" unique_id=1300933488]
 transform = Transform3D(1.211547, 0, 1.211547, 0, 1.713386, 0, -1.211547, 0, 1.211547, 0, 12.336379, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree180" unique_id=1177305235]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree534" unique_id=1177305235]
 transform = Transform3D(1.211547, 0, -1.211547, 0, 1.713386, 0, 1.211547, 0, 1.211547, 0, 12.336379, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree181" type="Node3D" parent="Trees" unique_id=1011052873]
+[node name="Tree535" type="Node3D" parent="Trees" unique_id=1011052873]
 transform = Transform3D(0.309127, 0, 0.951021, 0, 1, 0, -0.951021, 0, 0.309127, -57.997982, -0.070181, -134.09131)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree181" unique_id=656828475]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree535" unique_id=656828475]
 transform = Transform3D(1.333855, 0, 1.333855, 0, 1.886356, 0, -1.333855, 0, 1.333855, 0, 13.581763, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree181" unique_id=1127644116]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree535" unique_id=1127644116]
 transform = Transform3D(1.333855, 0, -1.333855, 0, 1.886356, 0, 1.333855, 0, 1.333855, 0, 13.581763, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree182" type="Node3D" parent="Trees" unique_id=318357870]
+[node name="Tree536" type="Node3D" parent="Trees" unique_id=318357870]
 transform = Transform3D(0.269032, 0, 0.963131, 0, 1, 0, -0.963131, 0, 0.269032, -27.804295, 0.32933, -154.01157)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree182" unique_id=1891357911]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree536" unique_id=1891357911]
 transform = Transform3D(1.048621, 0, 1.048621, 0, 1.482974, 0, -1.048621, 0, 1.048621, 0, 10.677413, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree182" unique_id=627895526]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree536" unique_id=627895526]
 transform = Transform3D(1.048621, 0, -1.048621, 0, 1.482974, 0, 1.048621, 0, 1.048621, 0, 10.677413, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree183" type="Node3D" parent="Trees" unique_id=2001194925]
+[node name="Tree537" type="Node3D" parent="Trees" unique_id=2001194925]
 transform = Transform3D(0.228465, 0, 0.973552, 0, 1, 0, -0.973552, 0, 0.228465, 169.27885, -0.91685, -31.830025)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree183" unique_id=2147054339]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree537" unique_id=2147054339]
 transform = Transform3D(0.872896, 0, 0.872896, 0, 1.234461, 0, -0.872896, 0, 0.872896, 0, 8.888119, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree183" unique_id=670253298]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree537" unique_id=670253298]
 transform = Transform3D(0.872896, 0, -0.872896, 0, 1.234461, 0, 0.872896, 0, 0.872896, 0, 8.888119, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree184" type="Node3D" parent="Trees" unique_id=264655793]
+[node name="Tree538" type="Node3D" parent="Trees" unique_id=264655793]
 transform = Transform3D(0.187497, 0, 0.982265, 0, 1, 0, -0.982265, 0, 0.187497, 134.92232, -0.062782, 98.50214)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree184" unique_id=2138534549]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree538" unique_id=2138534549]
 transform = Transform3D(1.272395, 0, 1.272395, 0, 1.799438, 0, -1.272395, 0, 1.272395, 0, 12.955954, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree184" unique_id=574050163]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree538" unique_id=574050163]
 transform = Transform3D(1.272395, 0, -1.272395, 0, 1.799438, 0, 1.272395, 0, 1.272395, 0, 12.955954, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree185" type="Node3D" parent="Trees" unique_id=1357010081]
+[node name="Tree539" type="Node3D" parent="Trees" unique_id=1357010081]
 transform = Transform3D(0.1462, 0, 0.989255, 0, 1, 0, -0.989255, 0, 0.1462, 57.571648, 0.332513, 168.84906)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree185" unique_id=1544476677]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree539" unique_id=1544476677]
 transform = Transform3D(1.304316, 0, 1.304316, 0, 1.844582, 0, -1.304316, 0, 1.304316, 0, 13.28099, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree185" unique_id=1749280688]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree539" unique_id=1749280688]
 transform = Transform3D(1.304316, 0, -1.304316, 0, 1.844582, 0, 1.304316, 0, 1.304316, 0, 13.28099, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree186" type="Node3D" parent="Trees" unique_id=730607110]
+[node name="Tree540" type="Node3D" parent="Trees" unique_id=730607110]
 transform = Transform3D(0.104647, 0, 0.994509, 0, 1, 0, -0.994509, 0, 0.104647, -148.45137, -0.038162, 71.34524)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree186" unique_id=554817517]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree540" unique_id=554817517]
 transform = Transform3D(0.947903, 0, 0.947903, 0, 1.340537, 0, -0.947903, 0, 0.947903, 0, 9.651866, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree186" unique_id=587117106]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree540" unique_id=587117106]
 transform = Transform3D(0.947903, 0, -0.947903, 0, 1.340537, 0, 0.947903, 0, 0.947903, 0, 9.651866, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree187" type="Node3D" parent="Trees" unique_id=93197401]
+[node name="Tree541" type="Node3D" parent="Trees" unique_id=93197401]
 transform = Transform3D(0.06291, 0, 0.998019, 0, 1, 0, -0.998019, 0, 0.06291, -168.25859, -0.312122, -44.01656)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree187" unique_id=929008622]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree541" unique_id=929008622]
 transform = Transform3D(0.979301, 0, 0.979301, 0, 1.384941, 0, -0.979301, 0, 0.979301, 0, 9.971575, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree187" unique_id=1460116161]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree541" unique_id=1460116161]
 transform = Transform3D(0.979301, 0, -0.979301, 0, 1.384941, 0, 0.979301, 0, 0.979301, 0, 9.971575, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree188" type="Node3D" parent="Trees" unique_id=1145290291]
+[node name="Tree542" type="Node3D" parent="Trees" unique_id=1145290291]
 transform = Transform3D(0.021062, 0, 0.999778, 0, 1, 0, -0.999778, 0, 0.021062, -123.1617, 0.3672, 171.45744)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree188" unique_id=672660419]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree542" unique_id=672660419]
 transform = Transform3D(1.315298, 0, 1.315298, 0, 1.860112, 0, -1.315298, 0, 1.315298, 0, 13.392806, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree188" unique_id=1323154276]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree542" unique_id=1323154276]
 transform = Transform3D(1.315298, 0, -1.315298, 0, 1.860112, 0, 1.315298, 0, 1.315298, 0, 13.392806, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree189" type="Node3D" parent="Trees" unique_id=1602008964]
+[node name="Tree543" type="Node3D" parent="Trees" unique_id=1602008964]
 transform = Transform3D(-0.020822, 0, 0.999783, 0, 1, 0, -0.999783, 0, -0.020822, -29.495907, -0.39755, 169.897)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree189" unique_id=2023279215]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree543" unique_id=2023279215]
 transform = Transform3D(1.255819, 0, 1.255819, 0, 1.775996, 0, -1.255819, 0, 1.255819, 0, 12.787171, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree189" unique_id=1619065143]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree543" unique_id=1619065143]
 transform = Transform3D(1.255819, 0, -1.255819, 0, 1.775996, 0, 1.255819, 0, 1.255819, 0, 12.787171, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree190" type="Node3D" parent="Trees" unique_id=2138514639]
+[node name="Tree544" type="Node3D" parent="Trees" unique_id=2138514639]
 transform = Transform3D(-0.06267, 0, 0.998034, 0, 1, 0, -0.998034, 0, -0.06267, -37.392197, -0.237317, 166.87004)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree190" unique_id=202451999]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree544" unique_id=202451999]
 transform = Transform3D(0.839541, 0, 0.839541, 0, 1.187291, 0, -0.839541, 0, 0.839541, 0, 8.548495, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree190" unique_id=239565123]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree544" unique_id=239565123]
 transform = Transform3D(0.839541, 0, -0.839541, 0, 1.187291, 0, 0.839541, 0, 0.839541, 0, 8.548495, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree191" type="Node3D" parent="Trees" unique_id=1348435992]
+[node name="Tree545" type="Node3D" parent="Trees" unique_id=1348435992]
 transform = Transform3D(-0.104407, 0, 0.994535, 0, 1, 0, -0.994535, 0, -0.104407, 166.7932, -0.098629, 124.72213)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree191" unique_id=120859140]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree545" unique_id=120859140]
 transform = Transform3D(1.077066, 0, 1.077066, 0, 1.523201, 0, -1.077066, 0, 1.077066, 0, 10.967047, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree191" unique_id=1830865923]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree545" unique_id=1830865923]
 transform = Transform3D(1.077066, 0, -1.077066, 0, 1.523201, 0, 1.077066, 0, 1.077066, 0, 10.967047, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree192" type="Node3D" parent="Trees" unique_id=328644390]
+[node name="Tree546" type="Node3D" parent="Trees" unique_id=328644390]
 transform = Transform3D(-0.145961, 0, 0.98929, 0, 1, 0, -0.98929, 0, -0.145961, -94.8149, 0.134451, 162.2963)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree192" unique_id=200183271]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree546" unique_id=200183271]
 transform = Transform3D(1.338893, 0, 1.338893, 0, 1.893482, 0, -1.338893, 0, 1.338893, 0, 13.63307, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree192" unique_id=892347200]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree546" unique_id=892347200]
 transform = Transform3D(1.338893, 0, -1.338893, 0, 1.893482, 0, 1.338893, 0, 1.338893, 0, 13.63307, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree193" type="Node3D" parent="Trees" unique_id=1671047415]
+[node name="Tree547" type="Node3D" parent="Trees" unique_id=1671047415]
 transform = Transform3D(-0.18726, 0, 0.98231, 0, 1, 0, -0.98231, 0, -0.18726, 53.286736, 0.207018, -147.33209)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree193" unique_id=705942402]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree547" unique_id=705942402]
 transform = Transform3D(1.189903, 0, 1.189903, 0, 1.682777, 0, -1.189903, 0, 1.189903, 0, 12.115994, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree193" unique_id=233850953]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree547" unique_id=233850953]
 transform = Transform3D(1.189903, 0, -1.189903, 0, 1.682777, 0, 1.189903, 0, 1.189903, 0, 12.115994, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree194" type="Node3D" parent="Trees" unique_id=629023369]
+[node name="Tree548" type="Node3D" parent="Trees" unique_id=629023369]
 transform = Transform3D(-0.22823, 0, 0.973607, 0, 1, 0, -0.973607, 0, -0.22823, 166.48657, -0.782501, -15.029231)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree194" unique_id=572387948]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree548" unique_id=572387948]
 transform = Transform3D(0.726975, 0, 0.726975, 0, 1.028098, 0, -0.726975, 0, 0.726975, 0, 7.402306, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree194" unique_id=579655910]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree548" unique_id=579655910]
 transform = Transform3D(0.726975, 0, -0.726975, 0, 1.028098, 0, 0.726975, 0, 0.726975, 0, 7.402306, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree195" type="Node3D" parent="Trees" unique_id=1600232595]
+[node name="Tree549" type="Node3D" parent="Trees" unique_id=1600232595]
 transform = Transform3D(-0.2688, 0, 0.963196, 0, 1, 0, -0.963196, 0, -0.2688, -161.91922, -0.387886, -13.341952)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree195" unique_id=1567449309]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree549" unique_id=1567449309]
 transform = Transform3D(1.163086, 0, 1.163086, 0, 1.644852, 0, -1.163086, 0, 1.163086, 0, 11.842934, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree195" unique_id=939969915]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree549" unique_id=939969915]
 transform = Transform3D(1.163086, 0, -1.163086, 0, 1.644852, 0, 1.163086, 0, 1.163086, 0, 11.842934, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree196" type="Node3D" parent="Trees" unique_id=1682748649]
+[node name="Tree550" type="Node3D" parent="Trees" unique_id=1682748649]
 transform = Transform3D(-0.308898, 0, 0.951095, 0, 1, 0, -0.951095, 0, -0.308898, -8.218176, 0.337905, -143.28065)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree196" unique_id=568939488]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree550" unique_id=568939488]
 transform = Transform3D(1.342434, 0, 1.342434, 0, 1.898488, 0, -1.342434, 0, 1.342434, 0, 13.669114, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree196" unique_id=1731401599]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree550" unique_id=1731401599]
 transform = Transform3D(1.342434, 0, -1.342434, 0, 1.898488, 0, 1.342434, 0, 1.342434, 0, 13.669114, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree197" type="Node3D" parent="Trees" unique_id=912042714]
+[node name="Tree551" type="Node3D" parent="Trees" unique_id=912042714]
 transform = Transform3D(-0.348454, 0, 0.937326, 0, 1, 0, -0.937326, 0, -0.348454, 167.08212, 0.509314, -129.301)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree197" unique_id=720167234]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree551" unique_id=720167234]
 transform = Transform3D(1.108661, 0, 1.108661, 0, 1.567883, 0, -1.108661, 0, 1.108661, 0, 11.288758, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree197" unique_id=367977847]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree551" unique_id=367977847]
 transform = Transform3D(1.108661, 0, -1.108661, 0, 1.567883, 0, 1.108661, 0, 1.108661, 0, 11.288758, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="FarTree198" type="Node3D" parent="Trees" unique_id=1498929122]
+[node name="Tree552" type="Node3D" parent="Trees" unique_id=1498929122]
 transform = Transform3D(-0.387399, 0, 0.921912, 0, 1, 0, -0.921912, 0, -0.387399, -21.454145, 0.165772, 140.88153)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree198" unique_id=690575101]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree552" unique_id=690575101]
 transform = Transform3D(0.800435, 0, 0.800435, 0, 1.131986, 0, -0.800435, 0, 0.800435, 0, 8.150299, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree198" unique_id=253812287]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree552" unique_id=253812287]
 transform = Transform3D(0.800435, 0, -0.800435, 0, 1.131986, 0, 0.800435, 0, 0.800435, 0, 8.150299, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex2")
 
-[node name="FarTree199" type="Node3D" parent="Trees" unique_id=289434387]
+[node name="Tree553" type="Node3D" parent="Trees" unique_id=289434387]
 transform = Transform3D(-0.425664, 0, 0.904881, 0, 1, 0, -0.904881, 0, -0.425664, 159.51869, -0.42588, -33.944393)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree199" unique_id=123391366]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree553" unique_id=123391366]
 transform = Transform3D(1.234631, 0, 1.234631, 0, 1.746032, 0, -1.234631, 0, 1.234631, 0, 12.57143, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree199" unique_id=913069909]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree553" unique_id=913069909]
 transform = Transform3D(1.234631, 0, -1.234631, 0, 1.746032, 0, 1.234631, 0, 1.234631, 0, 12.57143, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex5")
 
-[node name="FarTree200" type="Node3D" parent="Trees" unique_id=1515872804]
+[node name="Tree554" type="Node3D" parent="Trees" unique_id=1515872804]
 transform = Transform3D(-0.463183, 0, 0.886263, 0, 1, 0, -0.886263, 0, -0.463183, -135.1647, 0.04636, -109.75599)
 
-[node name="CrossA" type="Sprite3D" parent="Trees/FarTree200" unique_id=21788403]
+[node name="CrossA" type="Sprite3D" parent="Trees/Tree554" unique_id=21788403]
 transform = Transform3D(1.325805, 0, 1.325805, 0, 1.874972, 0, -1.325805, 0, 1.325805, 0, 13.499798, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")
 
-[node name="CrossB" type="Sprite3D" parent="Trees/FarTree200" unique_id=1279825704]
+[node name="CrossB" type="Sprite3D" parent="Trees/Tree554" unique_id=1279825704]
 transform = Transform3D(1.325805, 0, -1.325805, 0, 1.874972, 0, 1.325805, 0, 1.325805, 0, 13.499798, 0)
 pixel_size = 0.02
 texture = ExtResource("tree_tex1")

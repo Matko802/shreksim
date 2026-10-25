@@ -27,6 +27,11 @@ func _ready() -> void:
 	_check_close(game.env.fog_density, 1.0, "fog not opaque at edge")
 	_check_close(game.env.fog_depth_begin, 150.0 * 0.85, "day fog begins too early", 0.5)
 	_check(game.env.fog_depth_begin < game.env.fog_depth_end, "fog begin past edge")
+	_check(game.fog_wall_materials.size() == 8, "fog wall layers %d" % game.fog_wall_materials.size())
+	for mat in game.fog_wall_materials:
+		_check(mat.get_shader_parameter("fog_color") != null, "fog wall color missing")
+		_check(float(mat.get_shader_parameter("opacity")) > 0.5, "fog wall too faint")
+		_check(float(mat.get_shader_parameter("wall_height")) >= 30.0, "fog wall too short")
 
 	for mat in game.far_tree_materials:
 		_check(mat.get_shader_parameter("render_origin") == null, "far tree still has render_origin")

@@ -29,6 +29,16 @@ chmod +x SwampSim-Linux-x86_64.AppImage
 ./SwampSim-Linux-x86_64.AppImage
 ```
 
+## What's new in v1.4.31
+
+- The first onion cutscene now starts Shrek's music immediately and brings him in from the fog instead of popping him in. The camera follows him as he runs toward you, then the cutscene spins you around for the shaking RUN!!! warning.
+- When Shrek respawns after an onion, he now runs in from the fog toward his spawn point instead of fading in at close range.
+- The world boundary now has animated fog curtains on all four sides, so the invisible collision walls look like the edge of the swamp fog.
+- The outer ring of 200 trees now uses the same near and far LODs as every other tree, so they no longer disappear when you get close, and they are named like normal trees.
+- Trees now darken with the night phases instead of staying lit after the swamp goes dark.
+- Hold C to look behind. While it is held, the camera locks onto Shrek and free-look is disabled, and a direction arrow at the bottom center shows which way you are moving relative to the camera. Your body and movement direction stay the same. Mobile gets a holdable LOOK button.
+- C is no longer bound to crouch. Crouch stays on Ctrl.
+
 ## What's new in v1.4.30
 
 - Mobile anti-aliasing can no longer be turned off. The Off option is removed from the mobile anti-aliasing list, FXAA is forced, and the remaining MSAA modes are still selectable. This prevents the visual glitching that appeared at native render scale without anti-aliasing.
@@ -82,7 +92,8 @@ The world uses absolute coordinates. There is no floating-origin shifting or wor
 | --- | --- |
 | Move | WASD / arrow keys |
 | Sprint | Shift |
-| Crouch | Ctrl or C |
+| Crouch | Ctrl |
+| Look behind (hold) | C |
 | Interact | E |
 | Flashlight | F |
 | Pause | Esc or P |

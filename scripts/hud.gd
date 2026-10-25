@@ -9,6 +9,8 @@ extends CanvasLayer
 @onready var result_label: Label = %ResultLabel
 @onready var run_label: Label = %RunLabel
 
+var direction_arrow: SwampDirectionArrow
+
 var _objective_tween: Tween
 var _last_prompt := " "
 var _last_time := -1
@@ -21,6 +23,17 @@ func _ready() -> void:
 		(c as Control).mouse_filter = Control.MOUSE_FILTER_IGNORE
 	static_overlay.modulate = Color(1, 1, 1, 0.0)
 	_run_base_pos = run_label.position
+	direction_arrow = SwampDirectionArrow.new()
+	direction_arrow.name = "DirectionArrow"
+	direction_arrow.anchor_left = 0.5
+	direction_arrow.anchor_right = 0.5
+	direction_arrow.anchor_top = 1.0
+	direction_arrow.anchor_bottom = 1.0
+	direction_arrow.offset_left = -46.0
+	direction_arrow.offset_right = 46.0
+	direction_arrow.offset_top = -176.0
+	direction_arrow.offset_bottom = -84.0
+	add_child(direction_arrow)
 
 func _process(delta: float) -> void:
 	if not run_label.visible:
@@ -57,6 +70,13 @@ func set_prompt(t: String) -> void:
 		return
 	_last_prompt = t
 	prompt_label.text = t
+
+func set_move_indicator(on: bool, angle: float, moving: bool) -> void:
+	if direction_arrow == null:
+		return
+	direction_arrow.visible = on
+	if on:
+		direction_arrow.set_state(angle, moving)
 
 func set_crosshair(v: bool) -> void:
 	crosshair.visible = v

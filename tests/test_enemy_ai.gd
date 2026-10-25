@@ -9,13 +9,18 @@ func _ready() -> void:
 	for i in range(4):
 		await get_tree().physics_frame
 	game.pages = 1
-	for i in range(12):
+	var first_spawned := false
+	for i in range(600):
 		await get_tree().physics_frame
+		if game.enemy_mode == "hunt":
+			first_spawned = true
+			break
 	if not game.enemy_active or game.nav == null:
 		print("FAIL: enemy/nav not active")
 		fails += 1
 		_finish()
 		return
+	_check(first_spawned, "first spawn never hunted: %s" % game.enemy_mode)
 	var nav = game.nav
 	var trunk: Node3D = game.get_node("Map/Trees/Tree003")
 	_check(nav.is_free_point(Vector2(0.0, 0.0)), "origin marked blocked")
@@ -78,8 +83,17 @@ func _ready() -> void:
 		game._collect(onion)
 		for i in range(4):
 			await get_tree().physics_frame
-		_check(game.enemy_mode == "hunt", "onion did not respawn enemy: %s" % game.enemy_mode)
+		_check(game.enemy_mode == "emerge", "onion did not emerge enemy: %s" % game.enemy_mode)
 		_check(game.enemy.visible, "respawned enemy invisible")
+		var emerge_rel := _enemy_offset()
+		_check(emerge_rel.length() > 100.0, "emerge not from fog: %f" % emerge_rel.length())
+		var respawned := false
+		for i in range(600):
+			await get_tree().physics_frame
+			if game.enemy_mode == "hunt":
+				respawned = true
+				break
+		_check(respawned, "emerged enemy never hunted: %s" % game.enemy_mode)
 		var rel := _enemy_offset()
 		_check(rel.length() >= 18.0 and rel.length() <= 26.0, "respawn distance %f" % rel.length())
 		_check(rel.normalized().dot(_front()) > 0.3, "respawn not in front")

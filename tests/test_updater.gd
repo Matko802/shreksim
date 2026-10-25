@@ -6,9 +6,9 @@ func _ready() -> void:
 	var menu := (load("res://scripts/menu.gd") as Script).new() as Control
 	menu.version_label = Label.new()
 	menu.update_button = Button.new()
-	_check(menu._tag_is_newer("v1.4.31"), "newer tag not detected")
-	_check(not menu._tag_is_newer("v1.4.30"), "same tag flagged as newer")
-	_check(not menu._tag_is_newer("v1.4.29"), "older tag flagged as newer")
+	_check(menu._tag_is_newer("v1.4.32"), "newer tag not detected")
+	_check(not menu._tag_is_newer("v1.4.31"), "same tag flagged as newer")
+	_check(not menu._tag_is_newer("v1.4.30"), "older tag flagged as newer")
 	var tags := [
 		{"name": "v1.4.29"},
 		{"name": "v1.4.32"},

@@ -36,19 +36,46 @@ func _ready() -> void:
 	var pool: Array = game.onions.duplicate()
 
 	game._collect(pool[0])
+	var cutscene_start := Vector2(game.enemy_anchor.global_position.x - game.player.global_position.x, game.enemy_anchor.global_position.z - game.player.global_position.z).length()
+	if cutscene_start < 90.0:
+		failures += 1
+		print("FAIL cutscene did not start in fog: ", cutscene_start)
+	if game.enemy_mode != "cutscene":
+		failures += 1
+		print("FAIL cutscene enemy mode: ", game.enemy_mode)
+	if game.enemy_chase_audio == null or not game.enemy_chase_audio.playing:
+		failures += 1
+		print("FAIL cutscene music did not start")
 	var saw_cutscene := false
 	var saw_run := false
+	var cutscene_closed := false
+	var saw_follow := false
 	for i in range(600):
 		if game.cutscene_active:
 			saw_cutscene = true
+			var fwd3: Vector3 = -game.player.camera.global_basis.z
+			var to_enemy3: Vector3 = game.enemy_anchor.global_position - game.player.global_position
+			fwd3.y = 0.0
+			to_enemy3.y = 0.0
+			if to_enemy3.length() > 20.0 and fwd3.normalized().dot(to_enemy3.normalized()) > 0.97:
+				saw_follow = true
 		if game.hud.run_label.visible:
 			saw_run = true
+		var current_dist := Vector2(game.enemy_anchor.global_position.x - game.player.global_position.x, game.enemy_anchor.global_position.z - game.player.global_position.z).length()
+		if current_dist < cutscene_start - 20.0:
+			cutscene_closed = true
 		if saw_cutscene and not game.cutscene_active:
 			break
 		await get_tree().physics_frame
 	if not saw_cutscene:
 		failures += 1
 		print("FAIL first onion cutscene missing")
+	if not cutscene_closed:
+		failures += 1
+		print("FAIL cutscene enemy did not travel from fog")
+	if not saw_follow:
+		failures += 1
+		print("FAIL cutscene camera did not follow Shrek")
 	if not saw_run:
 		failures += 1
 		print("FAIL RUN text missing")
@@ -61,6 +88,56 @@ func _ready() -> void:
 	if not game.enemy.visible or game.enemy_mode != "hunt":
 		failures += 1
 		print("FAIL enemy not hunting after cutscene")
+
+	var body_yaw: float = game.player.rotation.y
+	Input.action_press("look_behind")
+	for i in range(30):
+		await get_tree().process_frame
+	var head_yaw: float = game.player.head.rotation.y
+	if absf(angle_difference(0.0, head_yaw)) < 2.0:
+		failures += 1
+		print("FAIL look behind did not move camera: ", head_yaw)
+	if absf(angle_difference(body_yaw, game.player.rotation.y)) > 0.01:
+		failures += 1
+		print("FAIL look behind turned body: ", game.player.rotation.y)
+	var to_enemy: Vector3 = game.enemy_anchor.global_position - game.player.global_position
+	to_enemy.y = 0.0
+	var cam_fwd: Vector3 = -game.player.camera.global_basis.z
+	cam_fwd.y = 0.0
+	if to_enemy.length() > 1.0 and cam_fwd.normalized().dot(to_enemy.normalized()) < 0.9:
+		failures += 1
+		print("FAIL look behind camera not tracking Shrek: ", cam_fwd, " ", to_enemy)
+	if game.hud.direction_arrow == null or not game.hud.direction_arrow.visible:
+		failures += 1
+		print("FAIL direction arrow missing while looking behind")
+	var yaw_before: float = game.player._look_yaw_target
+	game.player.touch_look(Vector2(400.0, 0.0))
+	if absf(game.player._look_yaw_target - yaw_before) > 0.0001:
+		failures += 1
+		print("FAIL touch look changed camera while looking behind")
+	Input.action_release("look_behind")
+	for i in range(30):
+		await get_tree().process_frame
+	if absf(game.player.head.rotation.y) > 0.1:
+		failures += 1
+		print("FAIL look behind did not return: ", game.player.head.rotation.y)
+	if game.hud.direction_arrow != null and game.hud.direction_arrow.visible:
+		failures += 1
+		print("FAIL direction arrow still visible")
+	var crouch_has_c := false
+	for ev: InputEvent in InputMap.action_get_events("crouch"):
+		if ev is InputEventKey and (ev as InputEventKey).physical_keycode == KEY_C:
+			crouch_has_c = true
+	if crouch_has_c:
+		failures += 1
+		print("FAIL crouch still bound to C")
+	var look_has_c := false
+	for ev: InputEvent in InputMap.action_get_events("look_behind"):
+		if ev is InputEventKey and (ev as InputEventKey).physical_keycode == KEY_C:
+			look_has_c = true
+	if not look_has_c:
+		failures += 1
+		print("FAIL look behind not bound to C")
 	await get_tree().physics_frame
 	await get_tree().physics_frame
 	if game.pages != 1:
@@ -148,6 +225,19 @@ func _ready() -> void:
 	if game._fog_begin_ratio() < game.FOG_NIGHT_RATIO or game._fog_begin_ratio() > game.FOG_EDGE_RATIO:
 		failures += 1
 		print("FAIL fog begin ratio")
+	if game._far_tint.r > 0.15:
+		failures += 1
+		print("FAIL trees lit at night: ", game._far_tint)
+	for mat in game.far_tree_materials:
+		var tint: Color = mat.get_shader_parameter("tint")
+		if tint.r > 0.15:
+			failures += 1
+			print("FAIL far trees lit at night")
+	for mat in game.near_tree_materials:
+		var tint: Color = mat.get_shader_parameter("tint")
+		if tint.r > 0.15:
+			failures += 1
+			print("FAIL near trees lit at night")
 
 	game._collect(pool[7])
 	await get_tree().process_frame

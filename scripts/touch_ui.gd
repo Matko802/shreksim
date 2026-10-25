@@ -21,6 +21,7 @@ func _ready() -> void:
 	_build_ui()
 
 func _exit_tree() -> void:
+	Input.action_release("look_behind")
 	if DisplayServer.is_touchscreen_available():
 		Input.emulate_mouse_from_touch = true
 
@@ -100,12 +101,14 @@ func _build_ui() -> void:
 	_add_button("sprint", tr("RUN"), small)
 	_add_button("crouch", tr("DUCK"), small)
 	_add_button("light", tr("LIGHT"), small)
+	_add_button("look", tr("LOOK"), small)
 	_add_button("grab", tr("GRAB"), small)
 	_add_button("pauseb", "I I", small * 0.82)
 	_place(buttons["jump"], 1.0, 1.0, -(m + insets[2] + jump), -(m + insets[3] + jump), jump, jump)
 	_place(buttons["sprint"], 1.0, 1.0, -(m + insets[2] + small), -(m + insets[3] + jump + gap + small), small, small)
 	_place(buttons["crouch"], 1.0, 1.0, -(m + insets[2] + jump + gap + small), -(m + insets[3] + small), small, small)
 	_place(buttons["light"], 1.0, 1.0, -(m + insets[2] + jump + gap + small), -(m + insets[3] + small * 2.0 + gap), small, small)
+	_place(buttons["look"], 1.0, 0.58, -(m + insets[2] + small * 1.2), -(small * 1.5 + gap), small, small)
 	_place(buttons["grab"], 1.0, 0.58, -(m + insets[2] + small * 1.2), -small * 0.5, small, small)
 	_place(buttons["pauseb"], 1.0, 0.0, -(m + insets[2] + small * 0.82), m + insets[1], small * 0.82, small * 0.82)
 	var joy_size := 160.0 * ui_scale
@@ -213,6 +216,8 @@ func _handle_press(idx: int, pos: Vector2) -> void:
 					Input.action_release("sprint")
 			"light":
 				_fire_action("flashlight")
+			"look":
+				Input.action_press("look_behind")
 			"grab":
 				_fire_action("interact")
 			"pauseb":
@@ -237,6 +242,8 @@ func _handle_release(idx: int) -> void:
 			sb.bg_color = p.get_meta("base") as Color
 		if id == "jump":
 			Input.action_release("jump")
+		elif id == "look":
+			Input.action_release("look_behind")
 		return
 	if idx == look_pointer:
 		look_pointer = -1

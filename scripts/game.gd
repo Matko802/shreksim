@@ -25,9 +25,15 @@ const ENEMY_MEMORY := 5.0
 const ENEMY_RETREAT_SPEED := 30.0
 const ENEMY_RETREAT_EDGE_MARGIN := 4.0
 const ENEMY_RETREAT_FADE_DIST := 18.0
-const ENEMY_APPEAR_TIME := 0.7
+const ENEMY_EMERGE_SPEED := 45.0
+const ENEMY_EMERGE_FADE_TIME := 0.6
+const ENEMY_EMERGE_MAX_TIME := 8.0
+const ENEMY_FOG_MARGIN := 2.0
 const CUTSCENE_DIST := 14.0
-const CUTSCENE_APPEAR_TIME := 1.2
+const CUTSCENE_EMERGE_SPEED := 55.0
+const CUTSCENE_EMERGE_MIN_TIME := 1.2
+const CUTSCENE_EMERGE_MAX_TIME := 3.0
+const CUTSCENE_LOOK_SPEED := 3.2
 const CUTSCENE_RUN_HOLD := 1.3
 const ENEMY_PATH_INTERVAL := 0.6
 const ENEMY_WHISKER_DIST := 3.2
@@ -36,6 +42,7 @@ const WALL_SAFE := 6.0
 
 const FAR_TREE_SHADER: Shader = preload("res://scripts/far_tree_billboard.gdshader")
 const NEAR_TREE_SHADER: Shader = preload("res://scripts/near_tree_cross.gdshader")
+const FOG_WALL_SHADER: Shader = preload("res://scripts/fog_wall.gdshader")
 const TERRAIN_SHADER: Shader = preload("res://scripts/mobile_terrain_lite.gdshader")
 const TREE_FAR_MAX := 150.0
 const TREE_NEAR := 32.0
@@ -110,6 +117,7 @@ var _mobile := false
 var terrain_target: Node3D
 var far_tree_materials: Array[ShaderMaterial] = []
 var near_tree_materials: Array[ShaderMaterial] = []
+var fog_wall_materials: Array[ShaderMaterial] = []
 var snap_pending: Array = []
 var far_instances: Dictionary = {}
 var near_instances: Dictionary = {}
@@ -145,8 +153,15 @@ var enemy_whisker_offset := 0.0
 var enemy_whisker_last := Vector2.ZERO
 var cutscene_active := false
 var _first_cutscene_done := false
-var _enemy_appearing := false
-var _enemy_appear_t := 0.0
+var enemy_emerge_time := 0.0
+var cutscene_phase := 0
+var cutscene_phase_t := 0.0
+var cutscene_move_t := 0.0
+var cutscene_move_dur := 1.0
+var cutscene_from := Vector2.ZERO
+var cutscene_to := Vector2.ZERO
+var cutscene_turn_from := 0.0
+var cutscene_turn_to := 0.0
 var last_seen := Vector2.ZERO
 var sees_cache := false
 var sees_timer := 0.0
@@ -319,6 +334,7 @@ func _build_world() -> void:
 			terrain_mat.shader_override_enabled = true
 			terrain_mat.update()
 	_build_border_walls()
+	_build_fog_barrier()
 	if _sky_shader == null:
 		_sky_shader = Shader.new()
 		_sky_shader.code = SKY_CUBE_SHADER
@@ -349,6 +365,36 @@ func _build_world() -> void:
 	sun.directional_shadow_max_distance = 40.0
 	add_child(sun)
 	_build_nav()
+
+func _build_fog_barrier() -> void:
+	var quad := QuadMesh.new()
+	quad.size = Vector2(WORLD_HALF * 2.0 + 30.0, 32.0)
+	var layers := [
+		{"offset": 0.7, "opacity": 0.95, "seed": 0.0, "speed": 0.02},
+		{"offset": 4.5, "opacity": 0.6, "seed": 11.3, "speed": -0.012},
+	]
+	var normals: Array[Vector3] = [Vector3(0.0, 0.0, 1.0), Vector3(0.0, 0.0, -1.0), Vector3(1.0, 0.0, 0.0), Vector3(-1.0, 0.0, 0.0)]
+	var yaws: Array[float] = [0.0, PI, -PI * 0.5, PI * 0.5]
+	var layer_index := 0
+	for layer: Dictionary in layers:
+		for side in 4:
+			var mat := ShaderMaterial.new()
+			mat.shader = FOG_WALL_SHADER
+			mat.set_shader_parameter("opacity", layer["opacity"])
+			mat.set_shader_parameter("wall_height", 32.0)
+			mat.set_shader_parameter("seed", float(layer["seed"]) + side * 3.7)
+			mat.set_shader_parameter("scroll_speed", layer["speed"])
+			var node := MeshInstance3D.new()
+			node.name = "FogWall%d_%d" % [layer_index, side]
+			node.mesh = quad
+			node.material_override = mat
+			node.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+			var d := WORLD_HALF + float(layer["offset"])
+			node.position = Vector3(normals[side].x * d, 13.0, normals[side].z * d)
+			node.rotation.y = yaws[side]
+			add_child(node)
+			fog_wall_materials.append(mat)
+		layer_index += 1
 
 func _build_border_walls() -> void:
 	var wall_shape := BoxShape3D.new()
@@ -450,6 +496,9 @@ func _apply_fog() -> void:
 		env.fog_depth_begin = edge * _fog_begin_ratio()
 		env.fog_depth_end = edge
 		env.fog_density = 1.0
+		for mat in fog_wall_materials:
+			if mat != null:
+				mat.set_shader_parameter("fog_color", env.fog_light_color)
 
 func _on_setting_changed(setting_name: StringName, _value: Variant) -> void:
 	if setting_name == &"render_distance":
@@ -469,7 +518,7 @@ func _bake_far_trees() -> void:
 	for c in candidates:
 		var a := c.get_node_or_null("CrossA") as Sprite3D
 		var b: Node = c.get_node_or_null("CrossB")
-		var row := [c, null, 0.0, 0.0, inv * c.global_position, c is StaticBody3D]
+		var row := [c, null, 0.0, 0.0, inv * c.global_position, true]
 		if a != null:
 			var tex: Texture2D = a.texture
 			if tex != null:
@@ -680,6 +729,7 @@ func _process(delta: float) -> void:
 	if _snap_tick <= 0.0 and (not _far_trees_baked or not snap_pending.is_empty()):
 		_snap_tick = 0.12
 		_snap_pending_trees()
+	_update_look_behind()
 	if static_playing:
 		_static_tick(delta)
 		return
@@ -700,6 +750,15 @@ func _process(delta: float) -> void:
 	if not endless:
 		_time_tick(delta)
 	_lerp_phase(clampf(1.0 - exp(-PHASE_SMOOTHING * delta), 0.0, 1.0))
+
+func _update_look_behind() -> void:
+	if player == null or hud == null:
+		return
+	var tracking := enemy_active and enemy != null and is_instance_valid(enemy) and enemy.visible
+	player.look_behind_target = enemy_anchor if tracking else null
+	var active := Input.is_action_pressed("look_behind") and not paused and not game_over and not cutscene_active and not static_playing and not player.controls_locked
+	var moving := Vector2(player.velocity.x, player.velocity.z).length() > 0.25
+	hud.set_move_indicator(active, player.look_behind_move_angle(), moving)
 
 func _update_threat(delta: float) -> void:
 	if not enemy_active or enemy == null or not enemy.visible:
@@ -836,8 +895,10 @@ func _apply_phase(ph: int) -> void:
 		_phase_started = true
 		_lerp_phase(1.0)
 	var day_v := float(PHASES[ph]["day"])
-	var lit := clampf(0.55 + 0.45 * day_v, 0.55, 1.0)
+	var lit := clampf(0.1 + 0.9 * day_v, 0.1, 1.0)
+	var onion_lit := clampf(0.55 + 0.45 * day_v, 0.55, 1.0)
 	var tint_v := Color(lit, lit, lit)
+	var onion_tint := Color(onion_lit, onion_lit, onion_lit)
 	_far_tint = tint_v
 	for m in far_tree_materials:
 		m.set_shader_parameter("tint", tint_v)
@@ -845,7 +906,7 @@ func _apply_phase(ph: int) -> void:
 		m.set_shader_parameter("tint", tint_v)
 	for o in onions:
 		if is_instance_valid(o):
-			(o.get_child(0) as Sprite3D).modulate = tint_v
+			(o.get_child(0) as Sprite3D).modulate = onion_tint
 
 func _color_close(a: Color, b: Color, eps: float) -> bool:
 	return absf(a.r - b.r) < eps and absf(a.g - b.g) < eps and absf(a.b - b.b) < eps and absf(a.a - b.a) < eps
@@ -911,7 +972,10 @@ func _start_music_phase(ph: int) -> void:
 	music.play()
 
 func _physics_process(delta: float) -> void:
-	if game_over or paused or cutscene_active:
+	if game_over or paused:
+		return
+	if cutscene_active:
+		_tick_cutscene(delta)
 		return
 	_sync_terrain_target()
 	_tick_enemy(delta)
@@ -925,7 +989,9 @@ func _tick_enemy(delta: float) -> void:
 	if not enemy_active or enemy_mode == "hidden":
 		return
 	enemy_bob_t += delta
-	if enemy_mode == "hunt":
+	if enemy_mode == "emerge":
+		_tick_enemy_emerge(delta)
+	elif enemy_mode == "hunt":
 		sees_timer -= delta
 		if sees_timer <= 0.0:
 			sees_timer = 0.1
@@ -945,14 +1011,6 @@ func _tick_enemy(delta: float) -> void:
 				return
 			var base := minf(ENEMY_FOLLOW_BASE + ENEMY_FOLLOW_PER_PAGE * pages, ENEMY_SPEED_CAP)
 			_enemy_advance(delta, last_seen, base)
-			if _enemy_appearing:
-				_enemy_appear_t = minf(_enemy_appear_t + delta, ENEMY_APPEAR_TIME)
-				var appear := smoothstep(0.0, 1.0, _enemy_appear_t / ENEMY_APPEAR_TIME)
-				enemy_fade = appear
-				enemy.scale = Vector3.ONE * lerpf(0.72, 1.0, appear)
-				if appear >= 1.0:
-					_enemy_appearing = false
-					enemy.scale = Vector3.ONE
 	if enemy_mode == "retreat":
 		enemy_retreat_time += delta
 		if not enemy_retreat_goal_ok:
@@ -967,26 +1025,76 @@ func _tick_enemy(delta: float) -> void:
 		if remaining <= 0.8 or enemy_fade <= 0.0:
 			_set_enemy_mode("hidden")
 			return
-	var chasing := enemy_mode == "hunt"
-	if enemy_chase_audio != null:
-		if chasing:
-			var track: AudioStream = music_streams[mini((pages + 1) / 2, 4)]
-			if track != null and enemy_chase_audio.stream != track:
-				enemy_chase_audio.stream = track
-				enemy_chase_audio.play()
-			elif track != null and not enemy_chase_audio.playing:
-				enemy_chase_audio.play()
-		elif enemy_chase_audio.playing:
-			enemy_chase_audio.stop()
+	var chasing := enemy_mode == "hunt" or enemy_mode == "emerge"
+	if chasing:
+		_start_chase_audio()
+	else:
+		_stop_chase_audio()
 	enemy.visible = true
 	enemy.modulate = Color(1.0, 1.0, 1.0, enemy_fade)
 	enemy_anchor.global_position.y = _terrain_height(enemy_anchor.global_position.x, enemy_anchor.global_position.z) + 5.0 + sin(enemy_bob_t * 2.2) * 0.24
+
+func _start_chase_audio() -> void:
+	if enemy_chase_audio == null:
+		return
+	var track: AudioStream = music_streams[mini((pages + 1) / 2, 4)]
+	if track == null:
+		return
+	if enemy_chase_audio.stream != track:
+		enemy_chase_audio.stream = track
+		enemy_chase_audio.play()
+	elif not enemy_chase_audio.playing:
+		enemy_chase_audio.play()
+
+func _stop_chase_audio() -> void:
+	if enemy_chase_audio != null and enemy_chase_audio.playing:
+		enemy_chase_audio.stop()
+
+func _tick_enemy_emerge(delta: float) -> void:
+	enemy_emerge_time += delta
+	var pos := Vector2(enemy_anchor.global_position.x, enemy_anchor.global_position.z)
+	var to_goal := enemy_goal - pos
+	var dist := to_goal.length()
+	if dist <= 1.0 or enemy_emerge_time >= ENEMY_EMERGE_MAX_TIME:
+		_begin_enemy_hunt()
+		return
+	var dir := to_goal / dist
+	dir = _whisker_dir(dir, delta)
+	var step := minf(ENEMY_EMERGE_SPEED * delta, dist)
+	var next_pos := enemy_anchor.global_position
+	next_pos.x += dir.x * step
+	next_pos.z += dir.y * step
+	enemy_anchor.global_position = next_pos
+	enemy_yaw = lerp_angle(enemy_yaw, dir.angle(), clampf(12.0 * delta, 0.0, 1.0))
+	var fade := clampf(enemy_emerge_time / ENEMY_EMERGE_FADE_TIME, 0.0, 1.0)
+	enemy_fade = fade
+	enemy.scale = Vector3.ONE * lerpf(0.86, 1.0, fade)
+
+func _best_fog_edge_point(pc: Vector2, base_dir: Vector2, max_angle := PI) -> Vector2:
+	var best := _fog_edge_point(pc, base_dir)
+	var best_dist := best.distance_to(pc)
+	for a: float in [0.0, 0.5, -0.5, 1.0, -1.0, 1.6, -1.6, PI]:
+		if absf(a) > max_angle:
+			continue
+		var candidate := _fog_edge_point(pc, base_dir.rotated(a))
+		var candidate_dist := candidate.distance_to(pc)
+		if candidate_dist > best_dist:
+			best_dist = candidate_dist
+			best = candidate
+	return best
+
+func _fog_edge_point(pc: Vector2, dir: Vector2) -> Vector2:
+	var d := maxf(_fog_distance() - ENEMY_FOG_MARGIN, 12.0)
+	var p := pc + dir * d
+	p.x = clampf(p.x, -WORLD_HALF + WALL_SAFE, WORLD_HALF - WALL_SAFE)
+	p.y = clampf(p.y, -WORLD_HALF + WALL_SAFE, WORLD_HALF - WALL_SAFE)
+	return p
 
 func _begin_retreat() -> void:
 	enemy_mode = "retreat"
 	enemy_retreat_time = 0.0
 	enemy_retreat_goal_ok = false
-	_enemy_appearing = false
+	enemy_emerge_time = 0.0
 	enemy.scale = Vector3.ONE
 	enemy_fade = 1.0
 	enemy_goal_ok = false
@@ -1107,7 +1215,7 @@ func _set_enemy_mode(m: String) -> void:
 	enemy_arrived = false
 	if m == "hidden":
 		enemy_fade = 0.0
-		_enemy_appearing = false
+		enemy_emerge_time = 0.0
 		enemy.scale = Vector3.ONE
 		enemy.visible = false
 		enemy.modulate = Color(1.0, 1.0, 1.0, 0.0)
@@ -1121,6 +1229,9 @@ func _on_onion_collected() -> void:
 
 func _begin_first_onion_cutscene() -> void:
 	cutscene_active = true
+	cutscene_phase = 0
+	cutscene_phase_t = 0.0
+	cutscene_move_t = 0.0
 	enemy_active = true
 	if nav == null:
 		_build_nav()
@@ -1131,37 +1242,90 @@ func _begin_first_onion_cutscene() -> void:
 	_set_touch_grab(false)
 	var pc := Vector2(player.global_position.x, player.global_position.z)
 	var spot := _cutscene_spot(pc)
-	enemy_anchor.global_position = Vector3(spot.x, _terrain_height(spot.x, spot.y) + 5.0, spot.y)
+	var dir := spot - pc
+	if dir.length() < 0.01:
+		var back := player.camera.global_basis.z
+		dir = Vector2(back.x, back.z)
+	if dir.length() < 0.01:
+		dir = Vector2(0.0, -1.0)
+	dir = dir.normalized()
+	var start := _best_fog_edge_point(pc, dir, deg_to_rad(55.0))
+	if start.distance_to(pc) < CUTSCENE_DIST + 8.0:
+		start = spot
+	cutscene_from = start
+	cutscene_to = spot
+	var travel := start.distance_to(spot)
+	cutscene_move_dur = clampf(travel / CUTSCENE_EMERGE_SPEED, CUTSCENE_EMERGE_MIN_TIME, CUTSCENE_EMERGE_MAX_TIME)
+	enemy_anchor.global_position = Vector3(start.x, _terrain_height(start.x, start.y) + 5.0, start.y)
 	enemy_anchor.reset_physics_interpolation()
 	enemy_mode = "cutscene"
-	enemy_yaw = (pc - spot).angle()
+	enemy_yaw = (pc - start).angle()
 	_enemy_visible_reset()
+	enemy_fade = 0.0
 	enemy.visible = true
 	enemy.modulate = Color(1.0, 1.0, 1.0, 0.0)
-	enemy.scale = Vector3(0.72, 0.72, 0.72)
-	var appear := create_tween()
-	appear.set_parallel(true)
-	appear.tween_property(enemy, "modulate:a", 1.0, CUTSCENE_APPEAR_TIME).set_trans(Tween.TRANS_SINE)
-	appear.tween_property(enemy, "scale", Vector3.ONE, CUTSCENE_APPEAR_TIME).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	await appear.finished
-	await get_tree().create_timer(0.35).timeout
-	hud.show_run()
-	var away := player.global_position - enemy_anchor.global_position
-	away.y = 0.0
-	if away.length() < 0.01:
-		away = player.camera.global_basis.z
-	away = away.normalized()
-	var target_yaw := atan2(-away.x, -away.z)
-	player.level_look(CUTSCENE_RUN_HOLD)
-	var turn := create_tween()
-	turn.tween_property(player, "rotation:y", target_yaw, CUTSCENE_RUN_HOLD).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	await turn.finished
-	player.sync_look_yaw()
-	await get_tree().create_timer(CUTSCENE_RUN_HOLD).timeout
+	enemy.scale = Vector3(0.86, 0.86, 0.86)
+	_start_chase_audio()
+
+func _tick_cutscene(delta: float) -> void:
+	if not cutscene_active:
+		return
+	cutscene_phase_t += delta
+	enemy_bob_t += delta
+	var pc := Vector2(player.global_position.x, player.global_position.z)
+	if cutscene_phase == 0:
+		cutscene_move_t += delta
+		var t := clampf(cutscene_move_t / cutscene_move_dur, 0.0, 1.0)
+		var eased := t * t * (3.0 - 2.0 * t)
+		var pos := cutscene_from.lerp(cutscene_to, eased)
+		enemy_anchor.global_position = Vector3(pos.x, _terrain_height(pos.x, pos.y) + 5.0 + sin(enemy_bob_t * 2.2) * 0.24, pos.y)
+		enemy_yaw = lerp_angle(enemy_yaw, (pc - pos).angle(), clampf(8.0 * delta, 0.0, 1.0))
+		var to_enemy := pos - pc
+		if to_enemy.length() > 0.01:
+			var look_yaw := atan2(-to_enemy.x, -to_enemy.y)
+			player.rotation.y = lerp_angle(player.rotation.y, look_yaw, 1.0 - exp(-CUTSCENE_LOOK_SPEED * delta))
+			player.sync_look_yaw()
+		var fade := clampf(cutscene_move_t / ENEMY_EMERGE_FADE_TIME, 0.0, 1.0)
+		enemy_fade = smoothstep(0.0, 1.0, fade)
+		enemy.modulate = Color(1.0, 1.0, 1.0, enemy_fade)
+		enemy.scale = Vector3.ONE * lerpf(0.86, 1.0, enemy_fade)
+		if t >= 1.0:
+			cutscene_phase = 1
+			cutscene_phase_t = 0.0
+			hud.show_run()
+			player.level_look(CUTSCENE_RUN_HOLD)
+			var away := player.global_position - enemy_anchor.global_position
+			away.y = 0.0
+			if away.length() < 0.01:
+				away = player.camera.global_basis.z
+			away = away.normalized()
+			cutscene_turn_from = player.rotation.y
+			cutscene_turn_to = atan2(-away.x, -away.z)
+	elif cutscene_phase == 1:
+		var k := clampf(cutscene_phase_t / CUTSCENE_RUN_HOLD, 0.0, 1.0)
+		var eased := k * k * (3.0 - 2.0 * k)
+		player.rotation.y = lerp_angle(cutscene_turn_from, cutscene_turn_to, eased)
+		player.sync_look_yaw()
+		if k >= 1.0:
+			cutscene_phase = 2
+			cutscene_phase_t = 0.0
+	elif cutscene_phase == 2 and cutscene_phase_t >= CUTSCENE_RUN_HOLD:
+		_finish_cutscene()
+		return
+	if cutscene_phase > 0:
+		enemy_anchor.global_position.y = _terrain_height(enemy_anchor.global_position.x, enemy_anchor.global_position.z) + 5.0 + sin(enemy_bob_t * 2.2) * 0.24
+		enemy_yaw = lerp_angle(enemy_yaw, (pc - Vector2(enemy_anchor.global_position.x, enemy_anchor.global_position.z)).angle(), clampf(8.0 * delta, 0.0, 1.0))
+		enemy_fade = 1.0
+		enemy.modulate = Color(1.0, 1.0, 1.0, 1.0)
+		enemy.scale = Vector3.ONE
+
+func _finish_cutscene() -> void:
+	cutscene_active = false
+	cutscene_phase = 0
 	hud.hide_run()
 	hud.set_crosshair(true)
 	player.controls_locked = false
-	cutscene_active = false
+	player.sync_look_yaw()
 	_begin_enemy_hunt()
 	cutscene_finished.emit()
 
@@ -1171,19 +1335,26 @@ func _cutscene_spot(pc: Vector2) -> Vector2:
 	if front.length() < 0.001:
 		front = Vector2(0.0, -1.0)
 	front = front.normalized()
+	var best := pc + front * CUTSCENE_DIST
+	best.x = clampf(best.x, -WORLD_HALF + WALL_SAFE, WORLD_HALF - WALL_SAFE)
+	best.y = clampf(best.y, -WORLD_HALF + WALL_SAFE, WORLD_HALF - WALL_SAFE)
+	var best_room := -1.0
 	for d: float in [CUTSCENE_DIST, CUTSCENE_DIST - 2.0, CUTSCENE_DIST + 2.0, 10.0, 18.0]:
 		for a: float in [0.0, 0.35, -0.35, 0.7, -0.7]:
 			var p: Vector2 = pc + front.rotated(a) * d
 			p.x = clampf(p.x, -WORLD_HALF + WALL_SAFE, WORLD_HALF - WALL_SAFE)
 			p.y = clampf(p.y, -WORLD_HALF + WALL_SAFE, WORLD_HALF - WALL_SAFE)
-			if nav == null or (nav.is_free_point(p) and nav.has_los(pc, p)):
-				return p
-	return pc + front * CUTSCENE_DIST
+			if nav != null and not (nav.is_free_point(p) and nav.has_los(pc, p)):
+				continue
+			var room := _fog_edge_point(pc, (p - pc).normalized()).distance_to(pc)
+			if room > best_room + 0.01:
+				best_room = room
+				best = p
+	return best
 
 func _enemy_visible_reset() -> void:
 	enemy_fade = 1.0
-	_enemy_appearing = false
-	_enemy_appear_t = 0.0
+	enemy_emerge_time = 0.0
 	enemy.scale = Vector3.ONE
 
 func _begin_enemy_hunt() -> void:
@@ -1223,17 +1394,26 @@ func _build_nav() -> void:
 
 func _spawn_enemy_front(smooth := false) -> void:
 	var fwd := -player.camera.global_basis.z
-	var front := Vector2(fwd.x, fwd.z).normalized()
+	var front := Vector2(fwd.x, fwd.z)
+	if front.length() < 0.001:
+		front = Vector2(0.0, -1.0)
+	front = front.normalized()
 	var pc := Vector2(player.global_position.x, player.global_position.z)
-	var p: Vector2 = _pick_spawn_point(pc, front)
-	enemy_anchor.global_position = Vector3(p.x, _terrain_height(p.x, p.y) + 5.0, p.y)
+	var target := _pick_spawn_point(pc, front)
+	var start := target
+	if smooth:
+		var base_dir := (target - pc).normalized()
+		start = _best_fog_edge_point(pc, base_dir)
+		if start.distance_to(pc) < ENEMY_RESPAWN_DIST_MAX + 4.0:
+			start = target
+			smooth = false
+	enemy_anchor.global_position = Vector3(start.x, _terrain_height(start.x, start.y) + 5.0, start.y)
 	enemy_anchor.reset_physics_interpolation()
 	enemy.visible = true
-	enemy.modulate = Color(1.0, 1.0, 1.0, 1.0)
-	enemy_yaw = (pc - p).angle()
-	enemy_mode = "hunt"
+	enemy_yaw = (pc - start).angle()
 	enemy_arrived = false
 	enemy_goal_ok = false
+	enemy_goal = target
 	enemy_path = PackedVector2Array()
 	enemy_path_i = 0
 	enemy_path_time = 0.0
@@ -1242,18 +1422,20 @@ func _spawn_enemy_front(smooth := false) -> void:
 	enemy_retreat_goal_ok = false
 	enemy_whisker_timer = 0.0
 	enemy_whisker_offset = 0.0
+	enemy_emerge_time = 0.0
 	last_seen = pc
 	sees_cache = false
 	sees_timer = 0.0
 	if smooth:
-		_enemy_appearing = true
-		_enemy_appear_t = 0.0
+		enemy_mode = "emerge"
 		enemy_fade = 0.0
-		enemy.modulate.a = 0.0
-		enemy.scale = Vector3(0.72, 0.72, 0.72)
+		enemy.modulate = Color(1.0, 1.0, 1.0, 0.0)
+		enemy.scale = Vector3(0.86, 0.86, 0.86)
+		_start_chase_audio()
 	else:
+		enemy_mode = "hunt"
 		_enemy_visible_reset()
-		enemy.modulate.a = 1.0
+		enemy.modulate = Color(1.0, 1.0, 1.0, 1.0)
 
 func _pick_spawn_point(from: Vector2, first_dir: Vector2) -> Vector2:
 	var dirs: Array[Vector2] = [first_dir, first_dir.rotated(0.5), first_dir.rotated(-0.5)]

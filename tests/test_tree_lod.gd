@@ -10,7 +10,7 @@ func _ready() -> void:
 		await get_tree().physics_frame
 	var trees: Node3D = game.get_node("Map/Trees")
 	_check(game.far_instances.size() == 554, "far instances %d" % game.far_instances.size())
-	_check(game.near_instances.size() == 354, "near instances %d" % game.near_instances.size())
+	_check(game.near_instances.size() == 554, "near instances %d" % game.near_instances.size())
 	_check(game.player.camera.far >= 200.0, "camera far %f" % game.player.camera.far)
 	var batches := 0
 	for c in trees.get_children():
@@ -26,6 +26,10 @@ func _ready() -> void:
 	_check(tree.get_node_or_null("CrossA") == null, "source sprite not freed")
 	_check(game.far_instances.has(tree), "Tree003 not in far batch")
 	_check(game.near_instances.has(tree), "Tree003 not in near batch")
+	var outer: Node3D = trees.get_node("Tree355")
+	_check(outer.get_node_or_null("CrossA") == null, "outer sprite not freed")
+	_check(game.far_instances.has(outer), "Tree355 not in far batch")
+	_check(game.near_instances.has(outer), "Tree355 not in near batch")
 	var buried := 0
 	for c in game.far_instances.keys():
 		var t: Transform3D = game.far_instances[c][2]

@@ -15,6 +15,11 @@ const STRAFE_SMOOTHING: float = 8.0
 const BOB_OMEGA_SMOOTHING: float = 18.0
 const BOB_HZ: float = 1.8
 const BOB_DEADZONE: float = 0.3
+const LOOK_BEHIND_TIME: float = 0.22
+const LOOK_BEHIND_ANGLE: float = PI
+const LOOK_BEHIND_TRACK_SPEED: float = 10.0
+const LOOK_BEHIND_ROLL: float = 0.06
+const LOOK_BEHIND_SIDE: float = 0.035
 
 const STANDING_HEAD_Y: float = 1.68
 const CROUCHING_HEAD_Y: float = 0.896
@@ -62,6 +67,9 @@ var _head_pos: Vector3 = head_rest_pos
 var _is_crouching: bool = false
 var _crouch_blend: float = 0.0
 var _crouch_t: float = 0.0
+var _look_behind_blend: float = 0.0
+var _look_behind_yaw: float = LOOK_BEHIND_ANGLE
+var look_behind_target: Node3D
 
 var _zoom_fov: float = ZOOM_FOV_MAX
 var _zoom_target: float = ZOOM_FOV_MAX
@@ -150,6 +158,24 @@ func _process(delta: float) -> void:
 		flashlight_model.rotate_x(-pending_pitch * FLASHLIGHT_LAG_FACTOR)
 	_look_yaw_applied = _look_yaw_target
 	_look_pitch_applied = _look_pitch
+	if controls_locked:
+		_look_behind_blend = 0.0
+		_look_behind_yaw = LOOK_BEHIND_ANGLE
+	else:
+		var behind := Input.is_action_pressed("look_behind")
+		if behind:
+			var target_yaw := LOOK_BEHIND_ANGLE
+			if is_instance_valid(look_behind_target):
+				var to_target := look_behind_target.global_position - global_position
+				to_target.y = 0.0
+				if to_target.length() > 0.25:
+					target_yaw = wrapf(atan2(-to_target.x, -to_target.z) - rotation.y, -PI, PI)
+			_look_behind_yaw = lerp_angle(_look_behind_yaw, target_yaw, 1.0 - exp(-LOOK_BEHIND_TRACK_SPEED * delta))
+			_look_behind_blend = move_toward(_look_behind_blend, 1.0, delta / LOOK_BEHIND_TIME)
+		else:
+			_look_behind_blend = move_toward(_look_behind_blend, 0.0, delta / LOOK_BEHIND_TIME)
+			if _look_behind_blend <= 0.0:
+				_look_behind_yaw = LOOK_BEHIND_ANGLE
 	_update_camera_tilt(delta)
 	_update_head_position(delta)
 	_apply_head_transform()
@@ -182,11 +208,22 @@ func is_flashlight_on() -> bool:
 	return _flashlight_on
 
 func touch_look(delta: Vector2) -> void:
-	if controls_locked:
+	if controls_locked or Input.is_action_pressed("look_behind"):
 		return
 	_look_yaw_target += -delta.x * SettingsBus.mouse_sensitivity
 	_look_pitch += -delta.y * SettingsBus.mouse_sensitivity
 	_look_pitch = clampf(_look_pitch, deg_to_rad(-89.0), deg_to_rad(89.0))
+
+func look_behind_move_angle() -> float:
+	var move_dir := Vector3(velocity.x, 0.0, velocity.z)
+	if move_dir.length() < 0.2:
+		move_dir = transform.basis * Vector3(_input_dir.x, 0.0, _input_dir.y)
+	if move_dir.length() < 0.01:
+		return 0.0
+	var cam_fwd: Vector3 = -camera.global_basis.z
+	var cam_yaw := atan2(-cam_fwd.x, -cam_fwd.z)
+	var move_yaw := atan2(-move_dir.x, -move_dir.z)
+	return wrapf(cam_yaw - move_yaw, -PI, PI)
 
 func sync_look_yaw() -> void:
 	_look_yaw_target = rotation.y
@@ -200,7 +237,7 @@ func level_look(duration: float) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if controls_locked:
 		return
-	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED and not Input.is_action_pressed("look_behind"):
 		_look_yaw_target += -event.relative.x * SettingsBus.mouse_sensitivity
 		_look_pitch += -event.relative.y * SettingsBus.mouse_sensitivity
 		_look_pitch = clampf(_look_pitch, deg_to_rad(-89.0), deg_to_rad(89.0))
@@ -344,10 +381,12 @@ func _apply_head_transform() -> void:
 	var bob: float = bob_shape * BOB_AMPLITUDE * _move_factor * _bob_factor * fx
 	var sway: float = sin(phase * 2.0) * SWAY_AMPLITUDE * _move_factor * _bob_factor * fx
 	var roll_amount: float = -_strafe_tilt * TILT_AMPLITUDE * _move_factor * fx
-	var target_rotation := Vector3(_look_pitch_applied + bob, sway, roll_amount)
+	var behind := smoothstep(0.0, 1.0, _look_behind_blend)
+	var behind_swing := sin(behind * PI)
+	var target_rotation := Vector3(_look_pitch_applied + bob, sway + _look_behind_yaw * behind, roll_amount + behind_swing * LOOK_BEHIND_ROLL)
 	if head.rotation != target_rotation:
 		head.rotation = target_rotation
-	var target_position := _head_pos + Vector3(0.0, _land_bounce, 0.0)
+	var target_position := _head_pos + Vector3(behind_swing * LOOK_BEHIND_SIDE, _land_bounce, 0.0)
 	if head.position != target_position:
 		head.position = target_position
 
