@@ -18,11 +18,8 @@ func _ready() -> void:
 	if bus.quality_preset != 2 or absf(bus.render_distance - 200.0) > 0.001:
 		print("FAIL: desktop quality defaults ", bus.quality_preset, " ", bus.render_distance)
 		fails += 1
-	if bus.anti_aliasing_mode != 0:
-		print("FAIL: default aa ", bus.anti_aliasing_mode)
-		fails += 1
-	if root_vp.msaa_3d != Viewport.MSAA_DISABLED:
-		print("FAIL: boot msaa ", root_vp.msaa_3d)
+	if bus.anti_aliasing_mode != 1 or root_vp.screen_space_aa != Viewport.SCREEN_SPACE_AA_FXAA:
+		print("FAIL: default aa ", bus.anti_aliasing_mode, " ", root_vp.screen_space_aa)
 		fails += 1
 	bus.set_anti_aliasing_mode(5)
 	if root_vp.use_taa != true or root_vp.msaa_3d != Viewport.MSAA_DISABLED:
@@ -56,8 +53,11 @@ func _ready() -> void:
 		print("FAIL: F11 windowed")
 		fails += 1
 	bus.reset_settings()
-	if bus.anti_aliasing_mode != 0 or root_vp.msaa_3d != Viewport.MSAA_DISABLED:
-		print("FAIL: reset aa")
+	if bus.anti_aliasing_mode != 1 or root_vp.screen_space_aa != Viewport.SCREEN_SPACE_AA_FXAA:
+		print("FAIL: reset aa ", bus.anti_aliasing_mode, " ", root_vp.screen_space_aa)
+		fails += 1
+	if bus.render_distance != 200.0 or absf(root_vp.scaling_3d_scale - 1.0) > 0.001:
+		print("FAIL: reset quality values ", bus.render_distance, " ", root_vp.scaling_3d_scale)
 		fails += 1
 	if bus.fps_limit != 0 or Engine.max_fps != 0:
 		print("FAIL: reset fps")
@@ -75,11 +75,14 @@ func _ready() -> void:
 	cfg3.set_value("video", "render_scale", 0.7)
 	cfg3.save("user://settings.cfg")
 	bus.load_settings()
-	if bus.anti_aliasing_mode != 0 or root_vp.msaa_3d != Viewport.MSAA_DISABLED:
+	if bus.anti_aliasing_mode != 1 or root_vp.screen_space_aa != Viewport.SCREEN_SPACE_AA_FXAA:
 		print("FAIL: desktop migration aa ", bus.anti_aliasing_mode)
 		fails += 1
 	if absf(root_vp.scaling_3d_scale - 1.0) > 0.001:
 		print("FAIL: desktop migration render scale ", root_vp.scaling_3d_scale)
+		fails += 1
+	if bus.render_distance != 200.0:
+		print("FAIL: desktop migration distance ", bus.render_distance)
 		fails += 1
 	bus._mobile = true
 	var cfg2 := ConfigFile.new()
@@ -104,6 +107,24 @@ func _ready() -> void:
 	if bus.quality_preset != 1 or absf(root_vp.scaling_3d_scale - 0.8) > 0.001 or root_vp.screen_space_aa != Viewport.SCREEN_SPACE_AA_FXAA:
 		print("FAIL: medium preset ", bus.quality_preset, " ", root_vp.scaling_3d_scale, " ", root_vp.screen_space_aa)
 		fails += 1
+	if absf(bus.render_distance - 128.0) > 0.001:
+		print("FAIL: medium preset distance ", bus.render_distance)
+		fails += 1
+	bus.set_quality_preset(2)
+	if bus.quality_preset != 2 or absf(root_vp.scaling_3d_scale - 1.0) > 0.001 or root_vp.screen_space_aa != Viewport.SCREEN_SPACE_AA_FXAA:
+		print("FAIL: high preset ", bus.quality_preset, " ", root_vp.scaling_3d_scale, " ", root_vp.screen_space_aa)
+		fails += 1
+	if absf(bus.render_distance - 200.0) > 0.001:
+		print("FAIL: high preset distance ", bus.render_distance)
+		fails += 1
+	bus.set_quality_preset(0)
+	if bus.quality_preset != 0 or absf(root_vp.scaling_3d_scale - 0.65) > 0.001 or root_vp.screen_space_aa != Viewport.SCREEN_SPACE_AA_DISABLED:
+		print("FAIL: low preset ", bus.quality_preset, " ", root_vp.scaling_3d_scale, " ", root_vp.screen_space_aa)
+		fails += 1
+	if absf(bus.render_distance - 64.0) > 0.001:
+		print("FAIL: low preset distance ", bus.render_distance)
+		fails += 1
+	bus.set_quality_preset(1)
 	bus.set_render_distance(96.0)
 	if absf(bus.render_distance - 96.0) > 0.001:
 		print("FAIL: render distance setter ", bus.render_distance)
@@ -136,6 +157,9 @@ func _ready() -> void:
 	bus.load_settings()
 	if bus.quality_preset != 2 or absf(bus.render_distance - 200.0) > 0.001:
 		print("FAIL: desktop reload quality ", bus.quality_preset, " ", bus.render_distance)
+		fails += 1
+	if bus.anti_aliasing_mode != 1 or root_vp.screen_space_aa != Viewport.SCREEN_SPACE_AA_FXAA or absf(root_vp.scaling_3d_scale - 1.0) > 0.001:
+		print("FAIL: desktop reload graphics ", bus.anti_aliasing_mode, " ", root_vp.screen_space_aa, " ", root_vp.scaling_3d_scale)
 		fails += 1
 	print("SETTINGS FAILS=", fails)
 	get_tree().quit(1 if fails > 0 else 0)

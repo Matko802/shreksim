@@ -6,25 +6,25 @@ func _ready() -> void:
 	var menu := (load("res://scripts/menu.gd") as Script).new() as Control
 	menu.version_label = Label.new()
 	menu.update_button = Button.new()
-	_check(menu._tag_is_newer("v1.4.29"), "newer tag not detected")
-	_check(not menu._tag_is_newer("v1.4.28"), "same tag flagged as newer")
-	_check(not menu._tag_is_newer("v1.4.27"), "older tag flagged as newer")
+	_check(menu._tag_is_newer("v1.4.30"), "newer tag not detected")
+	_check(not menu._tag_is_newer("v1.4.29"), "same tag flagged as newer")
+	_check(not menu._tag_is_newer("v1.4.28"), "older tag flagged as newer")
 	var tags := [
-		{"name": "v1.4.27"},
+		{"name": "v1.4.28"},
+		{"name": "v1.4.31"},
 		{"name": "v1.4.30"},
-		{"name": "v1.4.29"},
-		{"name": "v1.4.26-test"},
+		{"name": "v1.4.27-test"},
 	]
-	_check(menu._best_tag(tags) == "v1.4.30", "best tag %s" % menu._best_tag(tags))
+	_check(menu._best_tag(tags) == "v1.4.31", "best tag %s" % menu._best_tag(tags))
 	var releases := [
+		{"name": "Swamp Horror Simulator 3D v1.4.32", "tag_name": "v1.4.32"},
 		{"name": "Swamp Horror Simulator 3D v1.4.31", "tag_name": "v1.4.31"},
-		{"name": "Swamp Horror Simulator 3D v1.4.30", "tag_name": "v1.4.30"},
 	]
-	_check(menu._best_tag(releases) == "v1.4.31", "best release %s" % menu._best_tag(releases))
+	_check(menu._best_tag(releases) == "v1.4.32", "best release %s" % menu._best_tag(releases))
 	var body := JSON.stringify(tags).to_utf8_buffer()
 	_check(menu._consume_tag_list(HTTPRequest.RESULT_SUCCESS, 200, body), "tag list not consumed")
 	_check(menu.update_button.visible, "update button hidden")
-	_check(menu.version_label.text.contains("1.4.30"), "update label %s" % menu.version_label.text)
+	_check(menu.version_label.text.contains("1.4.31"), "update label %s" % menu.version_label.text)
 	_check(menu.update_page == menu.RELEASES_PAGE, "update page %s" % menu.update_page)
 	menu.free()
 	print("UPDATER FAILS=%d" % fails)

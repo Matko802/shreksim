@@ -29,6 +29,11 @@ chmod +x SwampSim-Linux-x86_64.AppImage
 ./SwampSim-Linux-x86_64.AppImage
 ```
 
+## What's new in v1.4.29
+
+- Quality presets now change every graphics quality setting at once. Low sets a 64 m render distance, 65% render scale, and anti-aliasing off. Medium sets 128 m, 80%, and FXAA. High sets 200 m, 100%, and FXAA. The render distance, render scale, and anti-aliasing controls update immediately when a preset is selected.
+- Mobile still starts on Low (64 m) and PC still starts on High (200 m).
+
 ## What's new in v1.4.28
 
 - Removed the floating-origin world shifting entirely. The map, camera, terrain, trees, onions, and Shrek now stay in absolute world coordinates, so there are no 32 m world teleports and no map or camera recentering while moving or turning.
@@ -59,7 +64,7 @@ chmod +x SwampSim-Linux-x86_64.AppImage
 
 The swamp is full of onions. Grab all eight before the 150 second timer runs out. Shrek hunts by sound and sight, and the fog thickens as the night goes on. There is also an endless mode for chasing a high score.
 
-The game runs on the Mobile renderer on Android and Forward+ on desktop, with the same terrain shader and tree LOD system. Terrain3D uses a lightweight per-pixel Lambert shader with bilinear control-map blending, plus a mobile-tuned clipmap. Trees use a hybrid LOD system so the forest stays dense without overwhelming low-end phones. Graphics presets and render distance are adjustable in the pause menu: mobile starts at Low quality and a 64 m render distance, while PC starts at High quality and 200 m. Android runs physics at 30 Hz.
+The game runs on the Mobile renderer on Android and Forward+ on desktop, with the same terrain shader and tree LOD system. Terrain3D uses a lightweight per-pixel Lambert shader with bilinear control-map blending, plus a mobile-tuned clipmap. Trees use a hybrid LOD system so the forest stays dense without overwhelming low-end phones. Quality presets set render distance, render scale, and anti-aliasing together, and each can still be adjusted individually in the pause menu: mobile starts at Low quality and a 64 m render distance, while PC starts at High quality and 200 m. Android runs physics at 30 Hz.
 
 The world uses absolute coordinates. There is no floating-origin shifting or world teleporting: terrain, trees, onions, Shrek, physics, navigation, and the camera all stay in the same coordinate space. Terrain3D's clipmap target follows the player directly, so terrain LOD, bounds, and frustum culling keep working without moving the map.
 
