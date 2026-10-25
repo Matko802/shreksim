@@ -1,5 +1,7 @@
 extends Node3D
 
+signal cutscene_finished
+
 const WORLD_HALF := 128.0
 const NAV := preload("res://scripts/enemy_nav.gd")
 const TOTAL_PAGES := 8
@@ -20,10 +22,13 @@ const ENEMY_FOV_HALF := 0.85
 const ENEMY_VISION_DIST := 30.0
 const ENEMY_HEAR_RUN := 16.0
 const ENEMY_MEMORY := 5.0
-const ENEMY_RETREAT_FADE := 3.0
-const ENEMY_RETREAT_SPEED := 15.0
-const ENEMY_RETREAT_DIST_MIN := 70.0
-const ENEMY_RETREAT_DIST_MAX := 110.0
+const ENEMY_RETREAT_SPEED := 30.0
+const ENEMY_RETREAT_EDGE_MARGIN := 4.0
+const ENEMY_RETREAT_FADE_DIST := 18.0
+const ENEMY_APPEAR_TIME := 0.7
+const CUTSCENE_DIST := 14.0
+const CUTSCENE_APPEAR_TIME := 1.2
+const CUTSCENE_RUN_HOLD := 1.3
 const ENEMY_PATH_INTERVAL := 0.6
 const ENEMY_WHISKER_DIST := 3.2
 const ENEMY_WHISKER_INTERVAL := 0.1
@@ -34,6 +39,10 @@ const NEAR_TREE_SHADER: Shader = preload("res://scripts/near_tree_cross.gdshader
 const TERRAIN_SHADER: Shader = preload("res://scripts/mobile_terrain_lite.gdshader")
 const TREE_FAR_MAX := 150.0
 const TREE_NEAR := 32.0
+const FOG_EDGE_RATIO := 0.85
+const FOG_NIGHT_RATIO := 0.7
+const FOG_MAX_PHASE := 0.125
+const FOG_DEPTH_CURVE := 2.0
 const STATIC_BLINK_TIME := 0.5
 const STATIC_BLINK_COUNT := 3
 const MOBILE_PHYSICS_TICKS := 30
@@ -134,6 +143,10 @@ var enemy_fade := 1.0
 var enemy_whisker_timer := 0.0
 var enemy_whisker_offset := 0.0
 var enemy_whisker_last := Vector2.ZERO
+var cutscene_active := false
+var _first_cutscene_done := false
+var _enemy_appearing := false
+var _enemy_appear_t := 0.0
 var last_seen := Vector2.ZERO
 var sees_cache := false
 var sees_timer := 0.0
@@ -323,6 +336,8 @@ func _build_world() -> void:
 	env.ambient_light_color = Color(0.18, 0.26, 0.2)
 	env.ambient_light_energy = 1.0
 	env.fog_enabled = true
+	env.fog_mode = Environment.FOG_MODE_DEPTH
+	env.fog_depth_curve = FOG_DEPTH_CURVE
 	env.fog_sky_affect = 0.0
 	var world_env := WorldEnvironment.new()
 	world_env.environment = env
@@ -422,9 +437,24 @@ func _apply_tree_distances() -> void:
 		if mat != null:
 			mat.set_shader_parameter("tree_near", distances.y)
 
+func _fog_distance() -> float:
+	return maxf(minf(SettingsBus.render_distance, TREE_FAR_MAX), 1.0)
+
+func _fog_begin_ratio() -> float:
+	var strength := clampf(_phase_fog / FOG_MAX_PHASE, 0.0, 1.0)
+	return lerpf(FOG_EDGE_RATIO, FOG_NIGHT_RATIO, strength * strength)
+
+func _apply_fog() -> void:
+	if env != null:
+		var edge := _fog_distance()
+		env.fog_depth_begin = edge * _fog_begin_ratio()
+		env.fog_depth_end = edge
+		env.fog_density = 1.0
+
 func _on_setting_changed(setting_name: StringName, _value: Variant) -> void:
 	if setting_name == &"render_distance":
 		_apply_tree_distances()
+		_apply_fog()
 
 func _bake_far_trees() -> void:
 	_far_trees_baked = true
@@ -655,6 +685,9 @@ func _process(delta: float) -> void:
 		return
 	if game_over or paused:
 		return
+	if cutscene_active:
+		_lerp_phase(clampf(1.0 - exp(-PHASE_SMOOTHING * delta), 0.0, 1.0))
+		return
 	for o in onions:
 		if is_instance_valid(o):
 			o.position.y = float(o.get_meta("base_y"))
@@ -768,7 +801,7 @@ func _try_collect_center() -> void:
 		_collect(on)
 
 func _collect(onion: Area3D) -> void:
-	if game_over:
+	if game_over or cutscene_active:
 		return
 	onion_sound.play()
 	pages += 1
@@ -779,6 +812,11 @@ func _collect(onion: Area3D) -> void:
 	hud.set_pages_text(_pages_text())
 	onions.erase(onion)
 	_onion_deactivate(onion)
+	if not endless and pages == 1 and not _first_cutscene_done:
+		_first_cutscene_done = true
+		_apply_phase(pages)
+		_begin_first_onion_cutscene()
+		return
 	_on_onion_collected()
 	if endless:
 		var spot := _next_onion()
@@ -827,7 +865,7 @@ func _lerp_phase(weight: float) -> void:
 	var sun_c: Color = t["sun_color"]
 	env.fog_light_color = env.fog_light_color.lerp(fog_color_t, weight)
 	_phase_fog = lerpf(_phase_fog, fog_t, weight)
-	env.fog_density = _phase_fog
+	_apply_fog()
 	env.fog_sky_affect = lerpf(env.fog_sky_affect, affect_t, weight)
 	env.ambient_light_energy = lerpf(env.ambient_light_energy, amb_t, weight)
 	_day_mix = lerpf(_day_mix, day_t, weight)
@@ -845,7 +883,7 @@ func _lerp_phase(weight: float) -> void:
 	if settled:
 		env.fog_light_color = fog_color_t
 		_phase_fog = fog_t
-		env.fog_density = _phase_fog
+		_apply_fog()
 		env.fog_sky_affect = affect_t
 		env.ambient_light_energy = amb_t
 		_day_mix = day_t
@@ -873,7 +911,7 @@ func _start_music_phase(ph: int) -> void:
 	music.play()
 
 func _physics_process(delta: float) -> void:
-	if game_over or paused:
+	if game_over or paused or cutscene_active:
 		return
 	_sync_terrain_target()
 	_tick_enemy(delta)
@@ -883,7 +921,7 @@ func _tick_enemy(delta: float) -> void:
 		enemy_active = true
 		if nav == null:
 			_build_nav()
-		_spawn_enemy_front()
+		_spawn_enemy_front(true)
 	if not enemy_active or enemy_mode == "hidden":
 		return
 	enemy_bob_t += delta
@@ -907,14 +945,26 @@ func _tick_enemy(delta: float) -> void:
 				return
 			var base := minf(ENEMY_FOLLOW_BASE + ENEMY_FOLLOW_PER_PAGE * pages, ENEMY_SPEED_CAP)
 			_enemy_advance(delta, last_seen, base)
+			if _enemy_appearing:
+				_enemy_appear_t = minf(_enemy_appear_t + delta, ENEMY_APPEAR_TIME)
+				var appear := smoothstep(0.0, 1.0, _enemy_appear_t / ENEMY_APPEAR_TIME)
+				enemy_fade = appear
+				enemy.scale = Vector3.ONE * lerpf(0.72, 1.0, appear)
+				if appear >= 1.0:
+					_enemy_appearing = false
+					enemy.scale = Vector3.ONE
 	if enemy_mode == "retreat":
 		enemy_retreat_time += delta
 		if not enemy_retreat_goal_ok:
 			enemy_goal = _pick_retreat_target()
 			enemy_retreat_goal_ok = true
 		_enemy_retreat_advance(delta)
-		enemy_fade = maxf(0.0, 1.0 - enemy_retreat_time / ENEMY_RETREAT_FADE)
-		if enemy_fade <= 0.0:
+		var retreat_pos := Vector2(enemy_anchor.global_position.x, enemy_anchor.global_position.z)
+		var remaining := retreat_pos.distance_to(enemy_goal)
+		enemy_fade = clampf(remaining / ENEMY_RETREAT_FADE_DIST, 0.0, 1.0)
+		if enemy_retreat_time > 9.0:
+			enemy_fade = minf(enemy_fade, clampf(1.0 - (enemy_retreat_time - 9.0), 0.0, 1.0))
+		if remaining <= 0.8 or enemy_fade <= 0.0:
 			_set_enemy_mode("hidden")
 			return
 	var chasing := enemy_mode == "hunt"
@@ -936,6 +986,8 @@ func _begin_retreat() -> void:
 	enemy_mode = "retreat"
 	enemy_retreat_time = 0.0
 	enemy_retreat_goal_ok = false
+	_enemy_appearing = false
+	enemy.scale = Vector3.ONE
 	enemy_fade = 1.0
 	enemy_goal_ok = false
 	enemy_whisker_timer = 0.0
@@ -952,21 +1004,22 @@ func _pick_retreat_target() -> Vector2:
 	if away.length() < 0.5:
 		away = Vector2(cos(enemy_yaw), sin(enemy_yaw))
 	away = away.normalized()
-	var best := ec
-	for i in 24:
-		var p: Vector2 = ec + away.rotated(randf_range(-0.7, 0.7)) * randf_range(ENEMY_RETREAT_DIST_MIN, ENEMY_RETREAT_DIST_MAX)
+	var edge := maxf(_fog_distance() - ENEMY_RETREAT_EDGE_MARGIN, 10.0)
+	for a: float in [0.0, 0.22, -0.22, 0.45, -0.45, 0.75, -0.75, 1.1, -1.1]:
+		var p: Vector2 = pc + away.rotated(a) * edge
 		p.x = clampf(p.x, -WORLD_HALF + WALL_SAFE, WORLD_HALF - WALL_SAFE)
 		p.y = clampf(p.y, -WORLD_HALF + WALL_SAFE, WORLD_HALF - WALL_SAFE)
-		best = p
 		if nav == null or nav.is_free_point(p):
 			return p
-	return best
+	var fallback := pc + away * edge
+	fallback.x = clampf(fallback.x, -WORLD_HALF + WALL_SAFE, WORLD_HALF - WALL_SAFE)
+	fallback.y = clampf(fallback.y, -WORLD_HALF + WALL_SAFE, WORLD_HALF - WALL_SAFE)
+	return fallback
 
 func _enemy_retreat_advance(delta: float) -> void:
 	var pos := Vector2(enemy_anchor.global_position.x, enemy_anchor.global_position.z)
 	var dir := enemy_goal - pos
 	if dir.length() < 0.5:
-		enemy_goal = _pick_retreat_target()
 		return
 	dir = dir.normalized()
 	dir = _whisker_dir(dir, delta)
@@ -1054,6 +1107,8 @@ func _set_enemy_mode(m: String) -> void:
 	enemy_arrived = false
 	if m == "hidden":
 		enemy_fade = 0.0
+		_enemy_appearing = false
+		enemy.scale = Vector3.ONE
 		enemy.visible = false
 		enemy.modulate = Color(1.0, 1.0, 1.0, 0.0)
 		enemy_retreat_goal_ok = false
@@ -1062,7 +1117,93 @@ func _set_enemy_mode(m: String) -> void:
 
 func _on_onion_collected() -> void:
 	if enemy_active and enemy_mode == "hidden":
-		_spawn_enemy_front()
+		_spawn_enemy_front(true)
+
+func _begin_first_onion_cutscene() -> void:
+	cutscene_active = true
+	enemy_active = true
+	if nav == null:
+		_build_nav()
+	player.controls_locked = true
+	player.velocity = Vector3.ZERO
+	hud.set_crosshair(false)
+	hud.set_prompt("")
+	_set_touch_grab(false)
+	var pc := Vector2(player.global_position.x, player.global_position.z)
+	var spot := _cutscene_spot(pc)
+	enemy_anchor.global_position = Vector3(spot.x, _terrain_height(spot.x, spot.y) + 5.0, spot.y)
+	enemy_anchor.reset_physics_interpolation()
+	enemy_mode = "cutscene"
+	enemy_yaw = (pc - spot).angle()
+	_enemy_visible_reset()
+	enemy.visible = true
+	enemy.modulate = Color(1.0, 1.0, 1.0, 0.0)
+	enemy.scale = Vector3(0.72, 0.72, 0.72)
+	var appear := create_tween()
+	appear.set_parallel(true)
+	appear.tween_property(enemy, "modulate:a", 1.0, CUTSCENE_APPEAR_TIME).set_trans(Tween.TRANS_SINE)
+	appear.tween_property(enemy, "scale", Vector3.ONE, CUTSCENE_APPEAR_TIME).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	await appear.finished
+	await get_tree().create_timer(0.35).timeout
+	hud.show_run()
+	var away := player.global_position - enemy_anchor.global_position
+	away.y = 0.0
+	if away.length() < 0.01:
+		away = player.camera.global_basis.z
+	away = away.normalized()
+	var target_yaw := atan2(-away.x, -away.z)
+	player.level_look(CUTSCENE_RUN_HOLD)
+	var turn := create_tween()
+	turn.tween_property(player, "rotation:y", target_yaw, CUTSCENE_RUN_HOLD).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	await turn.finished
+	player.sync_look_yaw()
+	await get_tree().create_timer(CUTSCENE_RUN_HOLD).timeout
+	hud.hide_run()
+	hud.set_crosshair(true)
+	player.controls_locked = false
+	cutscene_active = false
+	_begin_enemy_hunt()
+	cutscene_finished.emit()
+
+func _cutscene_spot(pc: Vector2) -> Vector2:
+	var fwd := -player.camera.global_basis.z
+	var front := Vector2(fwd.x, fwd.z)
+	if front.length() < 0.001:
+		front = Vector2(0.0, -1.0)
+	front = front.normalized()
+	for d: float in [CUTSCENE_DIST, CUTSCENE_DIST - 2.0, CUTSCENE_DIST + 2.0, 10.0, 18.0]:
+		for a: float in [0.0, 0.35, -0.35, 0.7, -0.7]:
+			var p: Vector2 = pc + front.rotated(a) * d
+			p.x = clampf(p.x, -WORLD_HALF + WALL_SAFE, WORLD_HALF - WALL_SAFE)
+			p.y = clampf(p.y, -WORLD_HALF + WALL_SAFE, WORLD_HALF - WALL_SAFE)
+			if nav == null or (nav.is_free_point(p) and nav.has_los(pc, p)):
+				return p
+	return pc + front * CUTSCENE_DIST
+
+func _enemy_visible_reset() -> void:
+	enemy_fade = 1.0
+	_enemy_appearing = false
+	_enemy_appear_t = 0.0
+	enemy.scale = Vector3.ONE
+
+func _begin_enemy_hunt() -> void:
+	_enemy_visible_reset()
+	enemy_mode = "hunt"
+	enemy.visible = true
+	enemy.modulate = Color(1.0, 1.0, 1.0, 1.0)
+	enemy_arrived = false
+	enemy_goal_ok = false
+	enemy_path = PackedVector2Array()
+	enemy_path_i = 0
+	enemy_path_time = 0.0
+	enemy_lose_time = 0.0
+	enemy_retreat_time = 0.0
+	enemy_retreat_goal_ok = false
+	enemy_whisker_timer = 0.0
+	enemy_whisker_offset = 0.0
+	last_seen = Vector2(player.global_position.x, player.global_position.z)
+	sees_cache = true
+	sees_timer = 0.0
 
 func _build_nav() -> void:
 	nav = NAV.new()
@@ -1080,7 +1221,7 @@ func _build_nav() -> void:
 		rs.append(cyl.radius)
 	nav.build(xs, zs, rs)
 
-func _spawn_enemy_front() -> void:
+func _spawn_enemy_front(smooth := false) -> void:
 	var fwd := -player.camera.global_basis.z
 	var front := Vector2(fwd.x, fwd.z).normalized()
 	var pc := Vector2(player.global_position.x, player.global_position.z)
@@ -1099,12 +1240,20 @@ func _spawn_enemy_front() -> void:
 	enemy_lose_time = 0.0
 	enemy_retreat_time = 0.0
 	enemy_retreat_goal_ok = false
-	enemy_fade = 1.0
 	enemy_whisker_timer = 0.0
 	enemy_whisker_offset = 0.0
 	last_seen = pc
 	sees_cache = false
 	sees_timer = 0.0
+	if smooth:
+		_enemy_appearing = true
+		_enemy_appear_t = 0.0
+		enemy_fade = 0.0
+		enemy.modulate.a = 0.0
+		enemy.scale = Vector3(0.72, 0.72, 0.72)
+	else:
+		_enemy_visible_reset()
+		enemy.modulate.a = 1.0
 
 func _pick_spawn_point(from: Vector2, first_dir: Vector2) -> Vector2:
 	var dirs: Array[Vector2] = [first_dir, first_dir.rotated(0.5), first_dir.rotated(-0.5)]
@@ -1137,9 +1286,12 @@ func _die(caught: bool = true) -> void:
 	_end_sequence("res://assets/images/results/fail2.png", caught)
 
 func _end_sequence(result_path: String, with_static: bool) -> void:
+	cutscene_active = false
+	player.controls_locked = false
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	hud.set_crosshair(false)
 	hud.set_prompt("")
+	hud.hide_run()
 	_set_touch_grab(false)
 	hud.hide_static()
 	if music != null:
@@ -1186,7 +1338,7 @@ func _static_tick(delta: float) -> void:
 	hud.show_result(load(get_meta("result_path")), true, get_meta("result_text"))
 
 func _toggle_pause() -> void:
-	if game_over:
+	if game_over or cutscene_active:
 		return
 	paused = not paused
 	get_tree().paused = paused

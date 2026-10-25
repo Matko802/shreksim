@@ -7,16 +7,36 @@ extends CanvasLayer
 @onready var objective_label: Label = %ObjectiveLabel
 @onready var static_overlay: TextureRect = %StaticOverlay
 @onready var result_label: Label = %ResultLabel
+@onready var run_label: Label = %RunLabel
 
 var _objective_tween: Tween
 var _last_prompt := " "
 var _last_time := -1
 var _last_low := false
+var _run_base_pos := Vector2.ZERO
+var _run_shake_t := 0.0
 
 func _ready() -> void:
 	for c in find_children("*", "Control", true, false):
 		(c as Control).mouse_filter = Control.MOUSE_FILTER_IGNORE
 	static_overlay.modulate = Color(1, 1, 1, 0.0)
+	_run_base_pos = run_label.position
+
+func _process(delta: float) -> void:
+	if not run_label.visible:
+		return
+	_run_shake_t += delta
+	var amp := 7.0 + 3.0 * sin(_run_shake_t * 17.0)
+	run_label.position = _run_base_pos + Vector2(randf_range(-amp, amp), randf_range(-amp, amp))
+
+func show_run() -> void:
+	_run_shake_t = 0.0
+	run_label.position = _run_base_pos
+	run_label.visible = true
+
+func hide_run() -> void:
+	run_label.visible = false
+	run_label.position = _run_base_pos
 
 func set_pages_text(t: String) -> void:
 	pages_label.text = t

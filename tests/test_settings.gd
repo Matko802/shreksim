@@ -65,6 +65,10 @@ func _ready() -> void:
 	if bus.vsync_enabled != true:
 		print("FAIL: reset vsync")
 		fails += 1
+	bus.set_anti_aliasing_mode(0)
+	if bus.anti_aliasing_mode != 0 or root_vp.screen_space_aa != Viewport.SCREEN_SPACE_AA_DISABLED:
+		print("FAIL: desktop off aa ", bus.anti_aliasing_mode, " ", root_vp.screen_space_aa)
+		fails += 1
 	bus.set_render_scale(0.8)
 	if absf(root_vp.scaling_3d_scale - 0.8) > 0.001:
 		print("FAIL: desktop render scale apply ", root_vp.scaling_3d_scale)
@@ -94,8 +98,8 @@ func _ready() -> void:
 	if bus.fps_limit != 0:
 		print("FAIL: mobile migration fps ", bus.fps_limit)
 		fails += 1
-	if bus.anti_aliasing_mode != 0 or root_vp.msaa_3d != Viewport.MSAA_DISABLED:
-		print("FAIL: mobile migration aa ", bus.anti_aliasing_mode)
+	if bus.anti_aliasing_mode != 1 or root_vp.screen_space_aa != Viewport.SCREEN_SPACE_AA_FXAA:
+		print("FAIL: mobile migration aa ", bus.anti_aliasing_mode, " ", root_vp.screen_space_aa)
 		fails += 1
 	if absf(root_vp.scaling_3d_scale - 0.65) > 0.001:
 		print("FAIL: mobile render scale ", root_vp.scaling_3d_scale)
@@ -118,7 +122,7 @@ func _ready() -> void:
 		print("FAIL: high preset distance ", bus.render_distance)
 		fails += 1
 	bus.set_quality_preset(0)
-	if bus.quality_preset != 0 or absf(root_vp.scaling_3d_scale - 0.65) > 0.001 or root_vp.screen_space_aa != Viewport.SCREEN_SPACE_AA_DISABLED:
+	if bus.quality_preset != 0 or absf(root_vp.scaling_3d_scale - 0.65) > 0.001 or root_vp.screen_space_aa != Viewport.SCREEN_SPACE_AA_FXAA:
 		print("FAIL: low preset ", bus.quality_preset, " ", root_vp.scaling_3d_scale, " ", root_vp.screen_space_aa)
 		fails += 1
 	if absf(bus.render_distance - 64.0) > 0.001:
@@ -140,9 +144,16 @@ func _ready() -> void:
 	if root_vp.screen_space_aa != Viewport.SCREEN_SPACE_AA_DISABLED:
 		print("FAIL: mobile msaa still fxaa ", root_vp.screen_space_aa)
 		fails += 1
+	bus.set_anti_aliasing_mode(0)
+	if bus.anti_aliasing_mode != 1 or root_vp.screen_space_aa != Viewport.SCREEN_SPACE_AA_FXAA:
+		print("FAIL: mobile forced fxaa ", bus.anti_aliasing_mode, " ", root_vp.screen_space_aa)
+		fails += 1
 	bus.reset_settings()
-	if bus.fps_limit != 0 or bus.anti_aliasing_mode != 0:
+	if bus.fps_limit != 0 or bus.anti_aliasing_mode != 1:
 		print("FAIL: mobile reset")
+		fails += 1
+	if root_vp.screen_space_aa != Viewport.SCREEN_SPACE_AA_FXAA:
+		print("FAIL: mobile reset aa ", root_vp.screen_space_aa)
 		fails += 1
 	if absf(root_vp.scaling_3d_scale - 0.65) > 0.001:
 		print("FAIL: mobile reset render scale ", root_vp.scaling_3d_scale)
@@ -161,5 +172,20 @@ func _ready() -> void:
 	if bus.anti_aliasing_mode != 1 or root_vp.screen_space_aa != Viewport.SCREEN_SPACE_AA_FXAA or absf(root_vp.scaling_3d_scale - 1.0) > 0.001:
 		print("FAIL: desktop reload graphics ", bus.anti_aliasing_mode, " ", root_vp.screen_space_aa, " ", root_vp.scaling_3d_scale)
 		fails += 1
+	bus._mobile = true
+	var pause_menu := (load("res://scenes/pause_menu.tscn") as PackedScene).instantiate()
+	add_child(pause_menu)
+	await get_tree().process_frame
+	if pause_menu._aa_modes.has(0) or not pause_menu._aa_modes.has(1):
+		print("FAIL: mobile aa list ", pause_menu._aa_modes)
+		fails += 1
+	if pause_menu.aa_option.item_count != 4:
+		print("FAIL: mobile aa option count ", pause_menu.aa_option.item_count)
+		fails += 1
+	for i in pause_menu.aa_option.item_count:
+		if pause_menu.aa_option.get_item_text(i) == "Off":
+			print("FAIL: mobile aa still lists Off")
+			fails += 1
+	pause_menu.queue_free()
 	print("SETTINGS FAILS=", fails)
 	get_tree().quit(1 if fails > 0 else 0)

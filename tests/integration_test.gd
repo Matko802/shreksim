@@ -36,6 +36,31 @@ func _ready() -> void:
 	var pool: Array = game.onions.duplicate()
 
 	game._collect(pool[0])
+	var saw_cutscene := false
+	var saw_run := false
+	for i in range(600):
+		if game.cutscene_active:
+			saw_cutscene = true
+		if game.hud.run_label.visible:
+			saw_run = true
+		if saw_cutscene and not game.cutscene_active:
+			break
+		await get_tree().physics_frame
+	if not saw_cutscene:
+		failures += 1
+		print("FAIL first onion cutscene missing")
+	if not saw_run:
+		failures += 1
+		print("FAIL RUN text missing")
+	if game.player.controls_locked:
+		failures += 1
+		print("FAIL controls still locked after cutscene")
+	if absf(angle_difference(0.0, game.player.rotation.y)) < 2.0:
+		failures += 1
+		print("FAIL cutscene did not turn player: ", game.player.rotation.y)
+	if not game.enemy.visible or game.enemy_mode != "hunt":
+		failures += 1
+		print("FAIL enemy not hunting after cutscene")
 	await get_tree().physics_frame
 	await get_tree().physics_frame
 	if game.pages != 1:
@@ -104,13 +129,25 @@ func _ready() -> void:
 		game._collect(pool[i])
 		await get_tree().process_frame
 	game._lerp_phase(1.0)
-	print("DEBUG pages=", game.pages, " fog=", game.env.fog_density, " phase7fog=", game.PHASES[7]["fog"])
+	print("DEBUG pages=", game.pages, " fog_begin=", game.env.fog_depth_begin, " fog_end=", game.env.fog_depth_end, " phase7fog=", game.PHASES[7]["fog"])
 	if game.pages != 7:
 		failures += 1
 		print("FAIL pages count after 7")
-	if not is_equal_approx(game.env.fog_density, game.PHASES[7]["fog"]):
+	if not is_equal_approx(game._phase_fog, game.PHASES[7]["fog"]):
 		failures += 1
 		print("FAIL deep night fog")
+	if game.env.fog_mode != Environment.FOG_MODE_DEPTH or not is_equal_approx(game.env.fog_depth_end, game._fog_distance()):
+		failures += 1
+		print("FAIL fog edge")
+	if not is_equal_approx(game.env.fog_density, 1.0):
+		failures += 1
+		print("FAIL fog not opaque")
+	if not is_equal_approx(game.env.fog_depth_begin, game._fog_distance() * game._fog_begin_ratio()):
+		failures += 1
+		print("FAIL night fog begin")
+	if game._fog_begin_ratio() < game.FOG_NIGHT_RATIO or game._fog_begin_ratio() > game.FOG_EDGE_RATIO:
+		failures += 1
+		print("FAIL fog begin ratio")
 
 	game._collect(pool[7])
 	await get_tree().process_frame

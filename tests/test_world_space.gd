@@ -22,6 +22,11 @@ func _ready() -> void:
 	_check(terrain.light_target == game.sun, "light target not sun")
 	_check(game.player.footstep_player.position == Vector3.ZERO, "footstep offset %s" % game.player.footstep_player.position)
 	_check_close(game.player.camera.far, 200.0, "camera far")
+	_check(game.env.fog_mode == Environment.FOG_MODE_DEPTH, "fog mode not depth")
+	_check_close(game.env.fog_depth_end, 150.0, "fog edge at 200")
+	_check_close(game.env.fog_density, 1.0, "fog not opaque at edge")
+	_check_close(game.env.fog_depth_begin, 150.0 * 0.85, "day fog begins too early", 0.5)
+	_check(game.env.fog_depth_begin < game.env.fog_depth_end, "fog begin past edge")
 
 	for mat in game.far_tree_materials:
 		_check(mat.get_shader_parameter("render_origin") == null, "far tree still has render_origin")
@@ -31,6 +36,7 @@ func _ready() -> void:
 	SettingsBus.set_render_distance(96.0)
 	await get_tree().process_frame
 	_check_close(game.player.camera.far, 96.0, "camera far after change")
+	_check_close(game.env.fog_depth_end, 96.0, "fog edge after change")
 	for mat in game.far_tree_materials:
 		_check_close(float(mat.get_shader_parameter("tree_far")), 96.0, "far tree cull after change")
 		_check_close(float(mat.get_shader_parameter("tree_near")), 21.12, "far tree near after change")
@@ -39,6 +45,13 @@ func _ready() -> void:
 	SettingsBus.set_render_distance(200.0)
 	await get_tree().process_frame
 	_check_close(game.player.camera.far, 200.0, "camera far restored")
+	_check_close(game.env.fog_depth_end, 150.0, "fog edge restored")
+	var retreat_target: Vector2 = game._pick_retreat_target()
+	var player_flat := Vector2(game.player.global_position.x, game.player.global_position.z)
+	_check(retreat_target.distance_to(player_flat) >= 100.0, "retreat target too close: %s" % retreat_target)
+	_check(absf(retreat_target.x) <= game.WORLD_HALF - game.WALL_SAFE + 0.01, "retreat target past wall x")
+	_check(absf(retreat_target.y) <= game.WORLD_HALF - game.WALL_SAFE + 0.01, "retreat target past wall z")
+	_check(game.ENEMY_RETREAT_SPEED >= 25.0, "retreat not fast")
 
 	var terrain_node := game.get_node("Map/Terrain") as Node3D
 	var terrain_xform := terrain_node.global_transform

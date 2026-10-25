@@ -67,6 +67,8 @@ var _zoom_fov: float = ZOOM_FOV_MAX
 var _zoom_target: float = ZOOM_FOV_MAX
 var _last_zoom: float = ZOOM_FOV_MAX - ZOOM_SCROLL_STEP * ZOOM_MIN_STEPS
 
+var controls_locked := false
+
 var footstep_surfaces: Resource = FOOTSTEP_SURFACES
 var _footstep_timer: float = 0.0
 var _step_side: bool = false
@@ -180,11 +182,24 @@ func is_flashlight_on() -> bool:
 	return _flashlight_on
 
 func touch_look(delta: Vector2) -> void:
+	if controls_locked:
+		return
 	_look_yaw_target += -delta.x * SettingsBus.mouse_sensitivity
 	_look_pitch += -delta.y * SettingsBus.mouse_sensitivity
 	_look_pitch = clampf(_look_pitch, deg_to_rad(-89.0), deg_to_rad(89.0))
 
+func sync_look_yaw() -> void:
+	_look_yaw_target = rotation.y
+	_last_applied_yaw = rotation.y
+	_look_yaw_applied = rotation.y
+
+func level_look(duration: float) -> void:
+	var tw := create_tween()
+	tw.tween_property(self, "_look_pitch", 0.0, duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+
 func _unhandled_input(event: InputEvent) -> void:
+	if controls_locked:
+		return
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		_look_yaw_target += -event.relative.x * SettingsBus.mouse_sensitivity
 		_look_pitch += -event.relative.y * SettingsBus.mouse_sensitivity
@@ -214,6 +229,14 @@ func _unhandled_input(event: InputEvent) -> void:
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity += get_gravity() * delta
+
+	if controls_locked:
+		velocity.x = move_toward(velocity.x, 0.0, WALK_SPEED)
+		velocity.z = move_toward(velocity.z, 0.0, WALK_SPEED)
+		move_and_slide()
+		_update_crouch_transition(delta)
+		_update_footsteps(delta)
+		return
 
 	if Input.is_action_just_pressed("crouch"):
 		if _is_crouching and not _can_stand_up():

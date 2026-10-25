@@ -39,7 +39,9 @@ func _ready() -> void:
 	for label in SettingsBus.QUALITY_LABELS:
 		quality_option.add_item(tr(label))
 	_aa_modes = [0, 1, 2, 3, 4]
-	if SettingsBus.taa_supported():
+	if SettingsBus._is_mobile():
+		_aa_modes.remove_at(0)
+	elif SettingsBus.taa_supported():
 		_aa_modes.append(5)
 	for mode in _aa_modes:
 		aa_option.add_item(AA_LABELS[mode])

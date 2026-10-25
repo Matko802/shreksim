@@ -87,6 +87,8 @@ func load_settings() -> void:
 	if quality_preset < 0 or quality_preset >= QUALITY_PRESETS.size():
 		quality_preset = _default_quality_preset()
 		_use_quality_profile(quality_preset)
+	if _mobile and anti_aliasing_mode == AntiAliasingMode.OFF:
+		anti_aliasing_mode = AntiAliasingMode.FXAA
 	render_distance = clampf(render_distance, RENDER_DISTANCE_MIN, RENDER_DISTANCE_MAX)
 	if not had_file or version != SETTINGS_VERSION:
 		save_settings()
@@ -209,6 +211,8 @@ func _profile_for(preset: int) -> Dictionary:
 	var profile: Dictionary = QUALITY_PRESETS[preset].duplicate()
 	if int(profile["anti_aliasing"]) == AntiAliasingMode.TAA and not taa_supported():
 		profile["anti_aliasing"] = AntiAliasingMode.FXAA
+	if _mobile and int(profile["anti_aliasing"]) == AntiAliasingMode.OFF:
+		profile["anti_aliasing"] = AntiAliasingMode.FXAA
 	return profile
 
 func _use_quality_profile(preset: int) -> void:
@@ -228,6 +232,8 @@ func _default_quality_preset() -> int:
 func set_anti_aliasing_mode(mode: int) -> void:
 	if mode == AntiAliasingMode.TAA and not taa_supported():
 		mode = AntiAliasingMode.FXAA
+	if _mobile and mode == AntiAliasingMode.OFF:
+		mode = AntiAliasingMode.FXAA
 	anti_aliasing_mode = clampi(mode, 0, AntiAliasingMode.TAA)
 	_apply_anti_aliasing(anti_aliasing_mode)
 	save_settings()
@@ -236,6 +242,8 @@ func set_anti_aliasing_mode(mode: int) -> void:
 func _apply_anti_aliasing(mode: int) -> void:
 	var method := String(RenderingServer.get_current_rendering_method())
 	if mode == AntiAliasingMode.TAA and method != "forward_plus":
+		mode = AntiAliasingMode.FXAA
+	if _mobile and mode == AntiAliasingMode.OFF:
 		mode = AntiAliasingMode.FXAA
 	var root := get_tree().root
 	var msaa_value := Viewport.MSAA_DISABLED
