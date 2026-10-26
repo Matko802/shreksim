@@ -15,7 +15,8 @@ const RENDER_DISTANCE_MIN := 48.0
 const RENDER_DISTANCE_MAX := 200.0
 
 const SAVE_PATH := "user://settings.cfg"
-const SETTINGS_VERSION := 7
+const SETTINGS_VERSION := 8
+const AUDIO_BUSES := [&"Music", &"SFX"]
 
 const LANGUAGES := [
 	["en", "English"],
@@ -38,6 +39,9 @@ var anti_aliasing_mode: int = AntiAliasingMode.OFF
 var render_scale := 1.0
 var quality_preset: int = QualityPreset.HIGH
 var render_distance := RENDER_DISTANCE_MAX
+var master_volume := 1.0
+var music_volume := 1.0
+var sfx_volume := 1.0
 var language := ""
 var _config := ConfigFile.new()
 var _mobile := OS.has_feature("android") or OS.has_feature("ios")
@@ -46,6 +50,8 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	if _mobile:
 		fullscreen_enabled = true
+	_ensure_audio_buses()
+	get_tree().node_added.connect(_on_node_added)
 	load_settings()
 
 func _input(event: InputEvent) -> void:
@@ -57,6 +63,43 @@ func _input(event: InputEvent) -> void:
 
 func _is_mobile() -> bool:
 	return _mobile
+
+func _ensure_audio_buses() -> void:
+	for bus_name in AUDIO_BUSES:
+		if AudioServer.get_bus_index(bus_name) >= 0:
+			continue
+		var idx := AudioServer.bus_count
+		AudioServer.add_bus(idx)
+		AudioServer.set_bus_name(idx, bus_name)
+		AudioServer.set_bus_send(idx, &"Master")
+
+func _on_node_added(node: Node) -> void:
+	if node is AudioStreamPlayer or node is AudioStreamPlayer3D:
+		_assign_audio_bus.call_deferred(node)
+
+func _assign_audio_bus(node: Node) -> void:
+	if not is_instance_valid(node):
+		return
+	if node.get("bus") != &"Master":
+		return
+	var stream: AudioStream = node.get("stream")
+	if stream == null:
+		return
+	var path := stream.resource_path.to_lower()
+	node.set("bus", &"Music" if path.contains("music") else &"SFX")
+
+func _set_bus_volume(bus_name: StringName, value: float) -> void:
+	var idx := AudioServer.get_bus_index(bus_name)
+	if idx < 0:
+		return
+	var v := clampf(value, 0.0, 1.0)
+	AudioServer.set_bus_mute(idx, v <= 0.001)
+	AudioServer.set_bus_volume_db(idx, linear_to_db(maxf(v, 0.001)))
+
+func _apply_audio() -> void:
+	_set_bus_volume(&"Master", master_volume)
+	for bus_name in AUDIO_BUSES:
+		_set_bus_volume(bus_name, music_volume if bus_name == &"Music" else sfx_volume)
 
 func load_settings() -> void:
 	var had_file := _config.load(SAVE_PATH) == OK
@@ -72,6 +115,9 @@ func load_settings() -> void:
 		render_scale = float(_config.get_value("video", "render_scale", 1.0))
 		quality_preset = int(_config.get_value("video", "quality_preset", QualityPreset.HIGH))
 		render_distance = float(_config.get_value("video", "render_distance", RENDER_DISTANCE_MAX))
+		master_volume = float(_config.get_value("audio", "master_volume", 1.0))
+		music_volume = float(_config.get_value("audio", "music_volume", 1.0))
+		sfx_volume = float(_config.get_value("audio", "sfx_volume", 1.0))
 		language = str(_config.get_value("locale", "language", ""))
 	if _mobile:
 		fullscreen_enabled = true
@@ -90,10 +136,14 @@ func load_settings() -> void:
 	if _mobile and anti_aliasing_mode == AntiAliasingMode.OFF:
 		anti_aliasing_mode = AntiAliasingMode.FXAA
 	render_distance = clampf(render_distance, RENDER_DISTANCE_MIN, RENDER_DISTANCE_MAX)
+	master_volume = clampf(master_volume, 0.0, 1.0)
+	music_volume = clampf(music_volume, 0.0, 1.0)
+	sfx_volume = clampf(sfx_volume, 0.0, 1.0)
 	if not had_file or version != SETTINGS_VERSION:
 		save_settings()
 	_apply_anti_aliasing(anti_aliasing_mode)
 	_apply_display()
+	_apply_audio()
 	_apply_language()
 	_apply_render_scale()
 
@@ -108,6 +158,9 @@ func save_settings() -> void:
 	_config.set_value("video", "render_scale", render_scale)
 	_config.set_value("video", "quality_preset", quality_preset)
 	_config.set_value("video", "render_distance", render_distance)
+	_config.set_value("audio", "master_volume", master_volume)
+	_config.set_value("audio", "music_volume", music_volume)
+	_config.set_value("audio", "sfx_volume", sfx_volume)
 	_config.set_value("locale", "language", language)
 	_config.save(SAVE_PATH)
 
@@ -226,6 +279,24 @@ func set_render_distance(value: float) -> void:
 	save_settings()
 	setting_changed.emit(&"render_distance", render_distance)
 
+func set_master_volume(value: float) -> void:
+	master_volume = clampf(value, 0.0, 1.0)
+	_apply_audio()
+	save_settings()
+	setting_changed.emit(&"master_volume", master_volume)
+
+func set_music_volume(value: float) -> void:
+	music_volume = clampf(value, 0.0, 1.0)
+	_apply_audio()
+	save_settings()
+	setting_changed.emit(&"music_volume", music_volume)
+
+func set_sfx_volume(value: float) -> void:
+	sfx_volume = clampf(value, 0.0, 1.0)
+	_apply_audio()
+	save_settings()
+	setting_changed.emit(&"sfx_volume", sfx_volume)
+
 func _default_quality_preset() -> int:
 	return QualityPreset.LOW if _mobile else QualityPreset.HIGH
 
@@ -279,12 +350,16 @@ func reset_settings() -> void:
 	fps_limit = 0
 	quality_preset = _default_quality_preset()
 	_use_quality_profile(quality_preset)
+	master_volume = 1.0
+	music_volume = 1.0
+	sfx_volume = 1.0
 	language = ""
 	if _mobile:
 		fullscreen_enabled = true
 		vsync_enabled = false
 	_apply_anti_aliasing(anti_aliasing_mode)
 	_apply_display()
+	_apply_audio()
 	_apply_language()
 	_apply_render_scale()
 	save_settings()
@@ -293,3 +368,6 @@ func reset_settings() -> void:
 	setting_changed.emit(&"render_scale", render_scale)
 	setting_changed.emit(&"anti_aliasing_mode", anti_aliasing_mode)
 	setting_changed.emit(&"language", language)
+	setting_changed.emit(&"master_volume", master_volume)
+	setting_changed.emit(&"music_volume", music_volume)
+	setting_changed.emit(&"sfx_volume", sfx_volume)

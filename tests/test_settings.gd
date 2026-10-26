@@ -15,6 +15,41 @@ func _ready() -> void:
 	bus.reset_settings()
 	await get_tree().process_frame
 	var root_vp: Viewport = get_tree().root
+	if bus.master_volume != 1.0 or bus.music_volume != 1.0 or bus.sfx_volume != 1.0:
+		print("FAIL: default volumes ", bus.master_volume, " ", bus.music_volume, " ", bus.sfx_volume)
+		fails += 1
+	for bus_name in ["Music", "SFX"]:
+		if AudioServer.get_bus_index(bus_name) < 0:
+			print("FAIL: missing audio bus ", bus_name)
+			fails += 1
+	bus.set_master_volume(0.5)
+	bus.set_music_volume(0.25)
+	bus.set_sfx_volume(0.0)
+	if absf(AudioServer.get_bus_volume_db(AudioServer.get_bus_index("Master")) - linear_to_db(0.5)) > 0.01:
+		print("FAIL: master volume db")
+		fails += 1
+	if absf(AudioServer.get_bus_volume_db(AudioServer.get_bus_index("Music")) - linear_to_db(0.25)) > 0.01:
+		print("FAIL: music volume db")
+		fails += 1
+	if not AudioServer.is_bus_mute(AudioServer.get_bus_index("SFX")):
+		print("FAIL: sfx zero not muted")
+		fails += 1
+	bus.reset_settings()
+	if bus.master_volume != 1.0 or bus.music_volume != 1.0 or bus.sfx_volume != 1.0:
+		print("FAIL: volume reset")
+		fails += 1
+	if AudioServer.is_bus_mute(AudioServer.get_bus_index("SFX")):
+		print("FAIL: sfx still muted")
+		fails += 1
+	var bus_player := AudioStreamPlayer.new()
+	bus_player.stream = load("res://assets/sounds/music_title.ogg")
+	add_child(bus_player)
+	await get_tree().process_frame
+	await get_tree().process_frame
+	if bus_player.bus != &"Music":
+		print("FAIL: music player bus ", bus_player.bus)
+		fails += 1
+	bus_player.queue_free()
 	if bus.quality_preset != 2 or absf(bus.render_distance - 200.0) > 0.001:
 		print("FAIL: desktop quality defaults ", bus.quality_preset, " ", bus.render_distance)
 		fails += 1
@@ -186,6 +221,31 @@ func _ready() -> void:
 		if pause_menu.aa_option.get_item_text(i) == "Off":
 			print("FAIL: mobile aa still lists Off")
 			fails += 1
+	if pause_menu.settings_tabs == null or pause_menu.tab_buttons.size() != 3:
+		print("FAIL: settings tabs missing")
+		fails += 1
+	if pause_menu.master_slider == null or pause_menu.music_slider == null or pause_menu.sfx_slider == null:
+		print("FAIL: volume sliders missing")
+		fails += 1
+	else:
+		pause_menu._select_tab(1)
+		if not pause_menu.audio_page.visible or pause_menu.video_page.visible:
+			print("FAIL: audio tab not shown")
+			fails += 1
+		pause_menu.master_slider.value = 40.0
+		pause_menu.music_slider.value = 30.0
+		pause_menu.sfx_slider.value = 20.0
+		if absf(bus.master_volume - 0.4) > 0.001 or absf(bus.music_volume - 0.3) > 0.001 or absf(bus.sfx_volume - 0.2) > 0.001:
+			print("FAIL: volume sliders ", bus.master_volume, " ", bus.music_volume, " ", bus.sfx_volume)
+			fails += 1
+		pause_menu._select_tab(0)
+		if not pause_menu.video_page.visible or pause_menu.audio_page.visible:
+			print("FAIL: video tab not shown")
+			fails += 1
 	pause_menu.queue_free()
+	bus.reset_settings()
+	var final_cleanup := DirAccess.open("user://")
+	if final_cleanup != null and final_cleanup.file_exists("settings.cfg"):
+		final_cleanup.remove("settings.cfg")
 	print("SETTINGS FAILS=", fails)
 	get_tree().quit(1 if fails > 0 else 0)

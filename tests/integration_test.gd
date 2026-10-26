@@ -131,13 +131,19 @@ func _ready() -> void:
 	if crouch_has_c:
 		failures += 1
 		print("FAIL crouch still bound to C")
+	var look_has_tab := false
 	var look_has_c := false
 	for ev: InputEvent in InputMap.action_get_events("look_behind"):
+		if ev is InputEventKey and (ev as InputEventKey).physical_keycode == KEY_TAB:
+			look_has_tab = true
 		if ev is InputEventKey and (ev as InputEventKey).physical_keycode == KEY_C:
 			look_has_c = true
-	if not look_has_c:
+	if not look_has_tab:
 		failures += 1
-		print("FAIL look behind not bound to C")
+		print("FAIL look behind not bound to Tab")
+	if look_has_c:
+		failures += 1
+		print("FAIL look behind still bound to C")
 	await get_tree().physics_frame
 	await get_tree().physics_frame
 	if game.pages != 1:

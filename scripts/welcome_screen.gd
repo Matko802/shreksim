@@ -8,6 +8,7 @@ const WELCOME_FPS := 60
 func _ready() -> void:
 	Engine.max_fps = WELCOME_FPS
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	audio_player.bus = &"SFX"
 	logo.modulate.a = 0.0
 	logo.scale = Vector2.ZERO
 	var tween: Tween = create_tween()

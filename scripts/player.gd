@@ -123,6 +123,7 @@ func _ready() -> void:
 	SettingsBus.setting_changed.connect(_on_setting_changed)
 
 	footstep_player = AudioStreamPlayer3D.new()
+	footstep_player.bus = &"SFX"
 	footstep_player.attenuation_model = AudioStreamPlayer3D.ATTENUATION_INVERSE_SQUARE_DISTANCE
 	footstep_player.unit_size = 4.0
 	footstep_player.max_distance = 30.0
@@ -137,6 +138,7 @@ func _ready() -> void:
 	flashlight_model = flashlight_container.get_node("Model") as Node3D
 	flashlight_model_animator = flashlight_container.get_node("%ModelAnimator") as AnimationPlayer
 	flashlight_toggle_player = flashlight_container.get_node("%TogglePlayer") as AudioStreamPlayer3D
+	flashlight_toggle_player.bus = &"SFX"
 	flashlight_light.visible = false
 	flashlight_container.visible = false
 

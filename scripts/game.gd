@@ -696,12 +696,13 @@ func _build_enemy() -> void:
 	enemy_chase_audio = AudioStreamPlayer3D.new()
 	enemy_chase_audio.max_distance = ENEMY_CHASE_RADIUS
 	enemy_chase_audio.unit_size = 16.0
-	enemy_chase_audio.bus = &"Master"
+	enemy_chase_audio.bus = &"Music"
 	enemy.add_child(enemy_chase_audio)
 
 func _build_audio() -> void:
 	onion_sound = AudioStreamPlayer.new()
 	onion_sound.stream = load("res://assets/sounds/sfx_onion.ogg")
+	onion_sound.bus = &"SFX"
 	add_child(onion_sound)
 
 	for path in ["", "res://assets/sounds/music_pages_1_2.ogg", "res://assets/sounds/music_pages_3_4.ogg", "res://assets/sounds/music_pages_5_6.ogg", "res://assets/sounds/music_pages_7_8.ogg"]:
@@ -848,6 +849,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			if allstar == null:
 				allstar = AudioStreamPlayer.new()
 				allstar.stream = load("res://assets/sounds/music_allstar.ogg")
+				allstar.bus = &"Music"
 				add_child(allstar)
 			allstar.stop()
 			allstar.play()
@@ -965,6 +967,7 @@ func _start_music_phase(ph: int) -> void:
 	if music == null:
 		music = AudioStreamPlayer.new()
 		music.finished.connect(func() -> void: music.play())
+		music.bus = &"Music"
 		add_child(music)
 	if music.stream == stream and music.playing:
 		return
@@ -1492,6 +1495,7 @@ func _end_sequence(result_path: String, with_static: bool) -> void:
 		if static_sound == null:
 			static_sound = AudioStreamPlayer.new()
 			static_sound.stream = load("res://assets/sounds/sfx_static.ogg")
+			static_sound.bus = &"SFX"
 			add_child(static_sound)
 		static_sound.play()
 		hud.show_static(static_frames[1], 1.0)

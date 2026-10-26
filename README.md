@@ -29,6 +29,12 @@ chmod +x SwampSim-Linux-x86_64.AppImage
 ./SwampSim-Linux-x86_64.AppImage
 ```
 
+## What's new in v1.4.32
+
+- Look behind is now on Tab on PC instead of C, so crouch and look behind no longer share the same key. Mobile still uses the holdable LOOK button.
+- The settings screen now has VIDEO, AUDIO, and CONTROLS tabs instead of one long list.
+- Added Master, Music, and Effects volume sliders. Music and effects use separate audio buses, so you can change the mix independently, and the volumes are saved with the rest of your settings.
+
 ## What's new in v1.4.31
 
 - The first onion cutscene now starts Shrek's music immediately and brings him in from the fog instead of popping him in. The camera follows him as he runs toward you, then the cutscene spins you around for the shaking RUN!!! warning.
@@ -93,7 +99,7 @@ The world uses absolute coordinates. There is no floating-origin shifting or wor
 | Move | WASD / arrow keys |
 | Sprint | Shift |
 | Crouch | Ctrl |
-| Look behind (hold) | C |
+| Look behind (hold) | Tab |
 | Interact | E |
 | Flashlight | F |
 | Pause | Esc or P |
