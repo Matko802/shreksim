@@ -109,35 +109,35 @@ func _setup_version() -> void:
 	add_child(version_label)
 	version_label.gui_input.connect(_on_version_input)
 	update_button = Button.new()
-	update_button.text = tr("UPDATE")
+	update_button.text = tr("UPDATE AVAILABLE")
 	update_button.add_theme_font_size_override("font_size", 30)
-	update_button.add_theme_color_override("font_color", Color(0.95, 1.0, 0.95))
+	update_button.add_theme_color_override("font_color", Color(0.02, 0.12, 0.04))
 	var sb := StyleBoxFlat.new()
-	sb.bg_color = DARK_GREEN
-	sb.set_corner_radius_all(10)
+	sb.bg_color = GREEN
+	sb.set_corner_radius_all(8)
 	var sb_hover := sb.duplicate() as StyleBoxFlat
-	sb_hover.bg_color = GREEN
+	sb_hover.bg_color = Color(0.25, 1.0, 0.45)
+	var sb_pressed := sb.duplicate() as StyleBoxFlat
+	sb_pressed.bg_color = Color(0.0, 0.6, 0.2)
 	update_button.add_theme_stylebox_override("normal", sb)
 	update_button.add_theme_stylebox_override("hover", sb_hover)
-	update_button.add_theme_stylebox_override("pressed", sb_hover)
-	update_button.add_theme_stylebox_override("focus", sb)
-	update_button.anchor_left = 1.0
-	update_button.anchor_top = 1.0
-	update_button.anchor_right = 1.0
-	update_button.anchor_bottom = 1.0
-	update_button.offset_left = -680.0
-	update_button.offset_top = -74.0
-	update_button.offset_right = -440.0
-	update_button.offset_bottom = -18.0
+	update_button.add_theme_stylebox_override("pressed", sb_pressed)
+	update_button.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
 	update_button.visible = false
 	update_button.pressed.connect(_on_update_pressed)
-	add_child(update_button)
+	var box := get_node_or_null("ButtonBox") as VBoxContainer
+	if box != null:
+		box.add_child(update_button)
+		box.move_child(update_button, 0)
+	else:
+		add_child(update_button)
 
 func _show_update(tag: String) -> void:
 	update_page = RELEASES_PAGE
-	version_label.text = tr("v%s - tap to update") % tag.lstrip("v")
-	version_label.add_theme_color_override("font_color", GREEN)
+	update_button.text = tr("UPDATE AVAILABLE")
+	update_button.tooltip_text = "v" + tag.lstrip("v")
 	update_button.visible = true
+	version_label.add_theme_color_override("font_color", GREEN)
 
 func _check_update() -> void:
 	update_stage = 0

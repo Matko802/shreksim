@@ -29,6 +29,12 @@ chmod +x SwampSim-Linux-x86_64.AppImage
 ./SwampSim-Linux-x86_64.AppImage
 ```
 
+## What's new in v1.4.33
+
+- The main menu now shows a bright UPDATE AVAILABLE button as the first menu item when a newer release exists, so it is obvious when there is something to download.
+- The button opens the releases page, and the version label keeps showing your current version instead of being replaced by a long update message.
+- The update check still tries GitHub tags, releases, and the Atom feed, so it can find new versions even if one endpoint is unavailable.
+
 ## What's new in v1.4.32
 
 - Look behind is now on Tab on PC instead of C, so crouch and look behind no longer share the same key. Mobile still uses the holdable LOOK button.
